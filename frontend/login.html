@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Login | CodeStreak</title>
+  <title>Login | The Habit Loop</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" href="logo.png">
   <!-- Google Fonts: Poppins -->
@@ -202,7 +202,7 @@
   <div class="form-container">
     <div class="form-header">
       <div class="logo"><i class="fa-solid fa-fire"></i></div>
-      <h2>Login to CodeStreak</h2>
+      <h2>Login to The Habit Loop</h2>
     </div>
      <div class="action-buttons">
   <button type="button" id="backBtn"><i class="fa-solid fa-arrow-left"></i> Back</button>
@@ -234,8 +234,8 @@
     </div>
   </div>
 
-  <script>
-    const backBtn = document.getElementById('backBtn');
+ <script>
+  const backBtn = document.getElementById('backBtn');
   const homeBtn = document.getElementById('homeBtn');
 
   backBtn.addEventListener('click', () => {
@@ -243,68 +243,68 @@
   });
 
   homeBtn.addEventListener('click', () => {
-    window.location.href = 'index.html'; // Or your actual home page path
+    window.location.href = 'index.html'; 
   });
-    const loginForm = document.getElementById('loginForm');
-    const loginBtn = document.getElementById('loginBtn');
-    const messageEl = document.getElementById('message');
- const togglePassword = document.getElementById('togglePassword');
+
+  const loginForm = document.getElementById('loginForm');
+  const loginBtn = document.getElementById('loginBtn');
+  const messageEl = document.getElementById('message');
+  const togglePassword = document.getElementById('togglePassword');
   const passwordInput = document.getElementById('password');
 
   togglePassword.addEventListener('click', () => {
     const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
     passwordInput.setAttribute('type', type);
-
-    // Toggle the icon style
     togglePassword.classList.toggle('fa-eye');
     togglePassword.classList.toggle('fa-eye-slash');
   });
-    loginForm.addEventListener('submit', async (e) => {
-      e.preventDefault(); // Prevent default form submission
 
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value;
-      
-      // --- UI Feedback Start ---
-      messageEl.textContent = '';
-      loginBtn.disabled = true;
-      loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging In...';
+  loginForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
 
-      if (!email || !password) {
-        messageEl.textContent = 'Please fill all fields';
-        loginBtn.disabled = false;
-        loginBtn.innerHTML = 'Login';
-        return;
-      }
-      
-      // --- UNCHANGED BACKEND LOGIC ---
-      try {
-        const res = await fetch('/api/auth/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, password })
-        });
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
 
-        const data = await res.json();
-        
-        if (res.ok) {
-          // Success: Store token and redirect
+    messageEl.textContent = '';
+    loginBtn.disabled = true;
+    loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging In...';
+
+    if (!email || !password) {
+      messageEl.textContent = 'Please fill all fields';
+      loginBtn.disabled = false;
+      loginBtn.innerHTML = 'Login';
+      return;
+    }
+
+    try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        if (data.isAdmin) {
+          // ✅ If admin, redirect to admin page:
+          window.location.href = 'admin.html';
+        } else {
+          // ✅ Else normal user → store token, go to dashboard
           localStorage.setItem('token', data.token);
           window.location.href = 'dashboard.html';
-        } else {
-          // Error: Show message and re-enable button
-          messageEl.textContent = data.message || 'Login failed. Please check your credentials.';
-          loginBtn.disabled = false;
-          loginBtn.innerHTML = 'Login';
         }
-      } catch (error) {
-        // Network or other unexpected error
-        messageEl.textContent = 'An error occurred. Please try again later.';
-        loginBtn.disabled = false;
-        loginBtn.innerHTML = 'Login';
+      } else {
+        messageEl.textContent = data.message || 'Login failed. Please check your credentials.';
       }
-      // --- END OF UNCHANGED BACKEND LOGIC ---
-    });
-  </script>
+    } catch (error) {
+      messageEl.textContent = 'An error occurred. Please try again later.';
+    } finally {
+      loginBtn.disabled = false;
+      loginBtn.innerHTML = 'Login';
+    }
+  });
+</script>
+
 </body>
 </html>

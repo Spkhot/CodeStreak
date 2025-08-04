@@ -71,8 +71,17 @@ export const verify = async (req, res) => {
 
 export const login = async (req, res) => {
   const { email, password } = req.body;
-  const user = await User.findOne({ email });
 
+  // ✅ Check if admin login
+  if (
+    email === process.env.ADMIN_EMAIL &&
+    password === process.env.ADMIN_PASS
+  ) {
+    return res.json({ isAdmin: true });
+  }
+
+  // 🔐 Normal user login
+  const user = await User.findOne({ email });
   if (!user) return res.status(404).json({ message: 'No user found' });
   if (!user.isVerified) return res.status(400).json({ message: 'Email not verified' });
 
@@ -80,7 +89,8 @@ export const login = async (req, res) => {
   if (!valid) return res.status(400).json({ message: 'Wrong password' });
 
   const jwtToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
-  res.json({ token: jwtToken });
+
+  res.json({ token: jwtToken, isAdmin: false }); // 👈 add isAdmin: false
 };
 
 export const googleAuth = async (req, res) => {

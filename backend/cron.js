@@ -53,7 +53,7 @@ cron.schedule('*/1 * * * *', async () => {
       });
     }
 
-    const links = `🔗 Resources:\nLeetCode: ${topic.leetcode}\nYouTube: ${topic.youtube}`;
+    const links = `🔗 Resources:\nQuestion: ${topic.leetcode}\nYouTube: ${topic.youtube}`;
     await twilio.messages.create({
       body: links,
       from: 'whatsapp:+14155238886',

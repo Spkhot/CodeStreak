@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>CodeStreak | Daily Code. Daily Win.</title>
+  <title>The Habit Loop | Daily Code. Daily Win.</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <link rel="icon" href="logo.png">
@@ -135,8 +135,20 @@
     /* UNCHANGED STYLES BELOW */
     #home { padding-top: 60px; padding-bottom: 60px; min-height: calc(100vh - var(--nav-height)); display: flex; align-items: center; }
     .hero-content { display: grid; grid-template-columns: 1.1fr 0.9fr; align-items: center; gap: 4rem; }
-    .hero-text h1 { font-size: 3.8rem; font-weight: 800; line-height: 1.2; margin-bottom: 1rem; background: linear-gradient(90deg, var(--text-light), var(--text-muted)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: slideInUp 0.8s ease-out; }
-    .hero-text .tagline { font-size: 1.75rem; font-weight: 600; color: var(--primary-blue); margin-bottom: 1.5rem; animation: slideInUp 0.8s ease-out 0.2s backwards; }
+.hero-text h1 {
+  font-size: 3.8rem;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+  background: linear-gradient(90deg, var(--text-light), var(--text-muted));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  
+  /* ✅✅✅ NEW ATTRACTIVE STYLE ADDED ✅✅✅ */
+  /* This creates the glowing text shadow and applies the new pulse animation */
+  text-shadow: 0 0 8px rgba(230, 237, 243, 0.15); /* A subtle base glow */
+  animation: slideInUp 0.8s ease-out, pulse-glow 3s infinite ease-in-out;
+}    .hero-text .tagline { font-size: 1.75rem; font-weight: 600; color: var(--primary-blue); margin-bottom: 1.5rem; animation: slideInUp 0.8s ease-out 0.2s backwards; }
     .hero-text .description { font-size: 1.1rem; color: var(--text-muted); max-width: 500px; margin-bottom: 2.5rem; animation: slideInUp 0.8s ease-out 0.4s backwards; }
     .hero-actions { display: flex; gap: 1rem; animation: slideInUp 0.8s ease-out 0.6s backwards; }
     .hero-image { animation: fadeIn 1.2s ease-out; }
@@ -184,6 +196,15 @@
     .social-icons a:hover { color: var(--primary-blue); transform: translateY(-5px); }
     .copyright { color: var(--text-muted); font-size: 0.9rem; }
     @media (max-width: 992px) { .hero-content { grid-template-columns: 1fr; text-align: center; gap: 3rem; } .hero-image { grid-row: 1; margin: 0 auto; } .hero-text .description { margin: 0 auto 2.5rem auto; } .hero-actions { justify-content: center; } .about-content { grid-template-columns: 1fr; text-align: center; gap: 2rem; padding: 2.5rem; } .about-icon { grid-row: 1; } .about-text p { margin: 0 auto; } }
+    /* ✅✅✅ ADD THIS NEW KEYFRAMES RULE ✅✅✅ */
+@keyframes pulse-glow {
+  0%, 100% {
+    text-shadow: 0 0 8px rgba(230, 237, 243, 0.15); /* Base glow */
+  }
+  50% {
+    text-shadow: 0 0 16px rgba(230, 237, 243, 0.3); /* Brighter glow at the peak */
+  }
+}
     @media (max-width: 768px) { section { padding: 80px 0; } .hamburger { display: block; font-size: 1.5rem; color: var(--text-light); z-index: 1001; } .nav-menu { position: fixed; top: 0; left: -100%; width: 100%; height: 100vh; background-color: var(--bg-dark); flex-direction: column; justify-content: center; align-items: center; gap: 2rem; transition: left 0.3s ease-in-out; } .nav-menu.active { left: 0; } .nav-links { flex-direction: column; text-align: center; font-size: 1.5rem; } #actions { flex-direction: column; } .hero-text h1 { font-size: 2.8rem; } .hero-text .tagline { font-size: 1.5rem; } .section-header h2, .about-text h2 { font-size: 2.2rem; } .how-it-works-timeline::after { left: 20px; } .timeline-item { width: 100%; padding-left: 60px; padding-right: 15px; } .timeline-item:nth-child(even) { left: 0%; } .timeline-dot { left: 12px; } }
   </style>
   <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
@@ -191,12 +212,12 @@
 <body>
 
   <header class="navbar">
-    <a href="#home" class="logo"><i class="fa-solid fa-fire"></i>CodeStreak</a>
+    <a href="#home" class="logo"><i class="fa-solid fa-fire"></i>The Habit Loop</a>
     <nav class="nav-menu">
       <ul class="nav-links">
         <li><a href="#home" class="nav-link active">Home</a></li>
         <li><a href="#how-it-works" class="nav-link">How It Works</a></li>
-        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
         <li><a href="#courses" class="nav-link">Courses</a></li>
       </ul>
       <div id="actions"></div>
@@ -205,20 +226,34 @@
   </header>
 
   <main>
+       <!-- =================================================================== -->
+    <!-- ============== NEW, MORE ATTRACTIVE HERO SECTION ============== -->
+    <!-- =================================================================== -->
     <section id="home">
       <div class="container">
         <div class="hero-content">
           <div class="hero-text">
-            <h1>CodeStreak</h1>
-            <p class="tagline">Daily code. Daily win.</p>
-            <p class="description">Transform your free time: receive short daily coding tasks on WhatsApp and build real-life coding consistency.</p>
+            <!-- ✅✅✅ ADD THE data-text ATTRIBUTE HERE ✅✅✅ -->
+            <h1 data-text="Build a Coding Habit That Actually Sticks">
+              Build a Coding Habit That <span class="gradient-text">Actually Sticks</span>
+            </h1>
+            <p class="description">
+              The Habit Loop turns your daily routine into a powerful learning tool. Receive one bite-sized coding challenge on WhatsApp every day. No logins, no pressure—just the simple, consistent practice you need to go from beginner to pro.
+            </p>
             <div class="hero-actions">
-              <a href="signup.html" class="btn btn-primary">Start Your Streak</a>
-              <a href="#how-it-works" class="btn btn-secondary">How It Works</a>
+              <a href="signup.html" class="btn btn-primary"><i class="fa-solid fa-rocket"></i> Start Your Streak for Free</a>
+              <a href="#how-it-works" class="btn btn-secondary"><i class="fa-solid fa-circle-question"></i> How It Works</a>
             </div>
           </div>
           <div class="hero-image">
-              <lottie-player src="Online Learning.json" background="transparent" speed="1" style="width: 100%; max-width: 450px; height: auto;" loop autoplay></lottie-player>
+              <lottie-player
+                src="Online Learning.json"
+                background="transparent"
+                speed="1"
+                style="width: 100%; max-width: 500px; height: auto;"
+                loop
+                autoplay>
+              </lottie-player>
           </div>
         </div>
       </div>
@@ -245,7 +280,7 @@
           <div class="about-icon"><i class="fa-solid fa-lightbulb"></i></div>
           <div class="about-text">
             <h2>Our Mission</h2>
-            <p>Consistency beats talent. We believe the single biggest barrier to becoming a great developer isn't intelligence—it's the daily discipline to practice. CodeStreak was created to make that daily practice simple, motivating, and accessible for everyone, right from your phone.</p>
+            <p>Consistency beats talent. We believe the single biggest barrier to becoming a great developer isn't intelligence—it's the daily discipline to practice. The Habit Loop was created to make that daily practice simple, motivating, and accessible for everyone, right from your phone.</p>
           </div>
         </div>
       </div>
@@ -268,7 +303,7 @@
         <a href="https://www.linkedin.com/in/sohamkhot75/" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
         <a href="https://github.com/Spkhot" aria-label="GitHub"><i class="fab fa-github"></i></a>
       </div>
-      <p class="copyright">© 2024 CodeStreak. All Rights Reserved.</p>
+      <p class="copyright">© 2024 The Habit Loop. All Rights Reserved.</p>
     </div>
   </footer>
 
