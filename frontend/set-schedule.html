@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Set Schedule | CodeStreak</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <!-- Google Fonts: Poppins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="logo.png">
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+  <style>
+    :root {
+      --bg-dark: #0D1117;
+      --bg-secondary: #161B22;
+      --primary-blue: #3B82F6;
+      --primary-blue-hover: #60A5FA;
+      --text-light: #E6EDF3;
+      --text-muted: #8D96A0;
+      --border-color: #30363D;
+      --success-color: #28a745;
+      --error-color: #dc3545;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+    }
+    
+    /* --- Main Navigation Header --- */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 2rem;
+      height: 70px;
+      background-color: var(--bg-secondary);
+      border-bottom: 1px solid var(--border-color);
+    }
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      text-decoration: none;
+      color: var(--text-light);
+    }
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .btn-nav {
+      background: none;
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    .btn-nav:hover {
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+    }
+    .btn-nav .fa-solid { margin-right: 6px; }
+
+    .main-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 3rem 20px;
+    }
+
+    .form-wrapper {
+      background-color: var(--bg-secondary);
+      padding: 2.5rem;
+      border-radius: 16px; /* Slightly more rounded for a friendlier feel */
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35); /* Softer, deeper shadow instead of a border */
+      width: 100%;
+      max-width: 480px;
+      animation: slideInUp 0.6s ease-out;
+    }
+
+    @keyframes slideInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .form-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .form-header .icon {
+      color: var(--primary-blue);
+      font-size: 2.2rem;
+      margin-bottom: 0.75rem;
+    }
+    .form-header h2 {
+      font-size: 1.75rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+    .form-header .subtitle {
+        color: var(--text-muted);
+        font-size: 1rem;
+    }
+
+    .activation-note {
+        background-color: var(--bg-dark);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        display: flex;
+        gap: 1.5rem;
+        align-items: center;
+    }
+    .activation-note .icon {
+        font-size: 2.5rem;
+        color: #25D366; /* WhatsApp Green */
+    }
+    .activation-note h3 {
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+    }
+    .activation-note p {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        line-height: 1.6;
+    }
+    .activation-note code {
+        background-color: #0d1117;
+        border: 1px solid var(--border-color);
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-family: 'Courier New', Courier, monospace;
+        color: var(--text-light);
+    }
+
+    .input-group {
+      margin-bottom: 1.25rem;
+    }
+    .input-group label {
+      display: block;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      color: var(--text-muted);
+    }
+    .input-group input, .input-group select {
+      width: 100%;
+      padding: 12px 15px;
+      background-color: var(--bg-dark);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      color: var(--text-light);
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem;
+      transition: border-color 0.3s, box-shadow 0.3s;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+    }
+     fieldset {
+    border: none;
+    padding: 0;
+    margin: 0;
+  }
+    .input-group select {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%238D96A0' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+        background-position: right 0.75rem center;
+        background-repeat: no-repeat;
+        background-size: 1.5em 1.5em;
+    }
+    .input-group input:focus, .input-group select:focus {
+      outline: none;
+      border-color: var(--primary-blue);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+    }
+    
+    #saveBtn {
+      width: 100%;
+      padding: 14px;
+      background-color: var(--primary-blue);
+      color: var(--text-light);
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+    #saveBtn:hover:not(:disabled) {
+      background-color: var(--primary-blue-hover);
+      transform: translateY(-2px);
+    }
+    #saveBtn:disabled {
+        background-color: #2c5ba7;
+        cursor: not-allowed;
+        opacity: 0.7;
+    }
+    #saveBtn .fa-spinner {
+        margin-right: 8px;
+    }
+
+    #message {
+        text-align: center;
+        margin-bottom: 1rem;
+        font-weight: 500;
+        min-height: 24px;
+    }
+    .message.success { color: var(--success-color); }
+    .message.error { color: var(--error-color); }
+
+    @media (max-width: 768px) {
+      .navbar { padding: 0 1rem; }
+      .main-container { padding: 1.5rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="navbar">
+    <a href="index.html" class="logo">CodeStreak</a>
+    <div class="nav-actions">
+      <a href="dashboard.html" class="btn-nav"><i class="fa-solid fa-table-columns"></i> Go to Dashboard</a>
+    </div>
+  </header>
+
+  <main class="main-container">
+    <div class="form-wrapper">
+      <div class="form-header">
+        <div class="icon"><i class="fa-solid fa-calendar-check"></i></div>
+        <h2>Set Your Schedule</h2>
+        <p class="subtitle">This is the final step to start your streak!</p>
+      </div>
+
+      <div class="activation-note">
+        <div class="icon"><i class="fab fa-whatsapp"></i></div>
+        <div>
+          <h3>Activate Daily Delivery</h3>
+          <p>1. Save <code>+1 415 523 8886</code> to your contacts.<br>2. Send <code>join teeth-lunch</code> on WhatsApp.</p>
+        </div>
+      </div>
+
+      <form id="scheduleForm">
+        <div id="message" class="message"></div>
+
+        <fieldset id="formFields">
+          <div class="input-group">
+            <label for="language">Language:</label>
+            <select id="language" required>
+              <option value="">-- Select a language --</option>
+              <option value="C++" selected>C++</option>
+              <option value="Java">Java</option>
+              <option value="Python">Python</option>
+              <option value="JavaScript">JavaScript</option>
+            </select>
+          </div>
+
+          <div class="input-group">
+            <label for="level">Level:</label>
+            <select id="level" required>
+              <option value="">-- Select a level --</option>
+              <option value="Beginner" selected>Beginner</option>
+              <option value="Intermediate">Intermediate</option>
+              <option value="Advanced">Advanced</option>
+              <option value="Pro">Pro</option>
+            </select>
+          </div>
+
+          <div class="input-group">
+            <label for="time">Delivery Time (24h format):</label>
+            <input type="time" id="time" required />
+          </div>
+
+          <div class="input-group">
+            <label for="whatsapp">WhatsApp Number:</label>
+            <input type="tel" id="whatsapp" placeholder="+1234567890" required />
+          </div>
+
+          <button type="submit" id="saveBtn">Save & Start Streak</button>
+        </fieldset>
+      </form>
+    </div>
+  </main>
+
+  <script>
+    const scheduleForm = document.getElementById('scheduleForm');
+    const saveBtn = document.getElementById('saveBtn');
+    const messageEl = document.getElementById('message');
+    const formFields = document.getElementById('formFields');
+   // Set default time input to current time (HH:MM, 24h format)
+const timeInput = document.getElementById('time');
+const now = new Date();
+const hours = String(now.getHours()).padStart(2, '0');
+const minutes = String(now.getMinutes()).padStart(2, '0');
+timeInput.value = `${hours}:${minutes}`;
+
+    // ✅ ✅ ✅ NEW — handle ?token= in URL
+    const params = new URLSearchParams(window.location.search);
+    const urlToken = params.get('token');
+
+    if (urlToken) {
+      localStorage.setItem('token', urlToken);
+    }
+
+    // ✅ Read token from localStorage for protect
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      messageEl.textContent = 'Authorization failed. Please login first!';
+      messageEl.classList.add('error');
+      formFields.disabled = true;
+      saveBtn.disabled = true;
+      setTimeout(() => {
+        window.location.href = 'login.html';
+      }, 2500);
+    }
+
+    scheduleForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      messageEl.textContent = '';
+      messageEl.className = 'message';
+      saveBtn.disabled = true;
+      saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+
+      const language = document.getElementById('language').value;
+      const level = document.getElementById('level').value;
+      const deliveryTime = document.getElementById('time').value;
+      const whatsapp = document.getElementById('whatsapp').value.trim();
+
+      if (!language || !level || !deliveryTime || !whatsapp) {
+        messageEl.textContent = 'Please fill all fields.';
+        messageEl.classList.add('error');
+        saveBtn.disabled = false;
+        saveBtn.innerHTML = 'Save & Start Streak';
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/user/set-schedule', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({ language, level, deliveryTime, whatsapp })
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          messageEl.textContent = '✅ Schedule saved! Redirecting to dashboard...';
+          messageEl.classList.add('success');
+          setTimeout(() => {
+            window.location.href = 'dashboard.html';
+          }, 2000);
+        } else {
+          messageEl.textContent = data.message || 'Failed to set schedule. Please try again.';
+          messageEl.classList.add('error');
+          saveBtn.disabled = false;
+          saveBtn.innerHTML = 'Save & Start Streak';
+        }
+      } catch (error) {
+        messageEl.textContent = 'An error occurred. Please check your connection.';
+        messageEl.classList.add('error');
+        saveBtn.disabled = false;
+        saveBtn.innerHTML = 'Save & Start Streak';
+      }
+    });
+  </script>
+</body>
+</html>

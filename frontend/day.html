@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Day Details | CodeStreak</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <!-- Google Fonts: Poppins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.1.0/github-markdown-dark.min.css"/>
+ <link rel="icon" href="logo.png">
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <!-- LeetCode Icon from a CDN for Brand Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
+
+  <style>
+    :root {
+      --bg-dark: #0D1117;
+      --bg-secondary: #161B22;
+      --primary-blue: #3B82F6;
+      --text-light: #E6EDF3;
+      --text-muted: #8D96A0;
+      --border-color: #30363D;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+    }
+
+    /* --- Navbar/Header --- */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 2rem;
+      height: 70px;
+      background-color: var(--bg-secondary);
+      border-bottom: 1px solid var(--border-color);
+    }
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      text-decoration: none;
+      color: var(--text-light);
+    }
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .btn-nav {
+      background: none;
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    .btn-nav:hover {
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+    }
+    .btn-nav .fa-solid { margin-right: 6px; }
+
+    /* --- Main Container --- */
+    .container {
+      max-width: 800px;
+      margin: 2.5rem auto;
+      padding: 0 20px;
+    }
+    
+    .card {
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 2.5rem;
+      animation: slideInUp 0.6s ease-out;
+    }
+
+    @keyframes slideInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    #dayTitle {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    #topicName {
+        font-size: 1.25rem;
+        color: var(--primary-blue);
+        font-weight: 500;
+        margin-bottom: 2rem;
+        display: block;
+    }
+
+    .explanation-container {
+        border-top: 1px solid var(--border-color);
+        padding-top: 2rem;
+    }
+    .explanation-container h3 {
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+        color: var(--text-muted);
+    }
+    #explanation {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: var(--text-light);
+    }
+
+    .resource-links {
+        margin-top: 2.5rem;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+    }
+    .resource-card {
+        background-color: var(--bg-dark);
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        padding: 1.5rem;
+        text-decoration: none;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+    .resource-card:hover {
+        transform: translateY(-5px);
+        border-color: var(--primary-blue);
+    }
+    .resource-card .icon {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+    .resource-card .icon.fa-youtube { color: #FF0000; }
+    .resource-card .icon.devicon-leetcode-plain { color: #f89f1b; }
+    .resource-card .title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--text-light);
+    }
+    .resource-card .subtitle {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+    }
+
+    /* --- Error/Loading States --- */
+    .centered-message {
+        text-align: center;
+        padding: 4rem 2rem;
+    }
+    #explanation {
+    font-size: 1.05rem;
+    line-height: 1.8;
+  }
+  .markdown-body {
+    background: transparent;
+    color: var(--text-light);
+  }
+
+    /* --- Responsive --- */
+    @media (max-width: 768px) {
+        .resource-links {
+            grid-template-columns: 1fr;
+        }
+        .navbar { padding: 0 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="navbar">
+    <a href="index.html" class="logo">CodeStreak</a>
+    <div class="nav-actions">
+      <a href="dashboard.html" class="btn-nav"><i class="fa-solid fa-arrow-left"></i> Back to Dashboard</a>
+    </div>
+  </header>
+
+  <main class="container" id="main-content">
+    <!-- Content will be injected here by JavaScript -->
+  </main>
+
+  <script>
+    const token = localStorage.getItem('token');
+    const mainContent = document.getElementById('main-content');
+
+    // Function to render an error message
+    const renderError = (message) => {
+      mainContent.innerHTML = `
+        <div class="card centered-message">
+          <h1><i class="fa-solid fa-circle-exclamation"></i> Error</h1>
+          <p style="margin-top: 1rem;">${message}</p>
+          <a href="login.html" class="btn-nav" style="margin-top: 2rem; display: inline-block;">Go to Login</a>
+        </div>
+      `;
+    };
+    
+    // Initial check for token
+    if (!token) {
+      renderError('You must be logged in to view this page.');
+    } else {
+      loadContent();
+    }
+
+    async function loadContent() {
+      mainContent.innerHTML = `<div class="card centered-message"><p>Loading day details...</p></div>`;
+      
+      const params = new URLSearchParams(window.location.search);
+      const day = params.get('day');
+
+      if (!day) {
+        renderError('No day specified in the URL.');
+        return;
+      }
+
+      // --- UNCHANGED BACKEND LOGIC ---
+      try {
+  const res = await fetch('/api/user/me', {
+    headers: { 'Authorization': `Bearer ${token}` }
+  });
+
+  if (!res.ok) throw new Error('Failed to fetch user data.');
+
+  const data = await res.json();
+  const topic = data.completedTopics.find(t => t.order == day);
+
+  if (!topic) {
+    renderError(`Topic for Day ${day} was not found.`);
+    return;
+  }
+
+  mainContent.innerHTML = `
+    <div class="card">
+      <h1 id="dayTitle">Day ${topic.order}</h1>
+      <span id="topicName">${topic.topic || 'Topic Details'}</span>
+
+      <div class="explanation-container">
+        <h3>Explanation</h3>
+        <div id="explanation" class="markdown-body"></div>
+      </div>
+
+      <div class="resource-links">
+        <a href="${topic.leetcode}" target="_blank" class="resource-card">
+          <i class="icon devicon-leetcode-plain"></i>
+          <span class="title">View on LeetCode</span>
+          <span class="subtitle">Practice this problem</span>
+        </a>
+        <a href="${topic.youtube}" target="_blank" class="resource-card">
+          <i class="icon fa-brands fa-youtube"></i>
+          <span class="title">Watch on YouTube</span>
+          <span class="subtitle">See the video explanation</span>
+        </a>
+      </div>
+    </div>
+  `;
+
+  // ✅ This must be INSIDE the try
+  document.getElementById('explanation').innerHTML = marked.parse(topic.explanation);
+
+} catch (error) {
+  renderError(error.message);
+}}
+  </script>
+</body>
+</html>

@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>CodeStreak | Daily Code. Daily Win.</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <!-- Google Fonts: Poppins -->
+  <link rel="icon" href="logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+  <style>
+    /* --- Modern CSS Setup & Variables --- */
+    :root {
+      --bg-dark: #0D1117;
+      --bg-secondary: #161B22;
+      --primary-blue: #3B82F6;
+      --primary-blue-hover: #60A5FA;
+      --primary-blue-glow: rgba(59, 130, 246, 0.4);
+      --text-light: #E6EDF3;
+      --text-muted: #8D96A0;
+      --border-color: #30363D;
+      --nav-height: 70px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--bg-dark);
+      background-image: radial-gradient(ellipse at top, #161b22, #0d1117);
+      color: var(--text-light);
+      line-height: 1.7;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    section {
+      padding: 100px 0;
+      overflow: hidden; /* Prevents horizontal scroll from animations */
+    }
+
+    /* Animation on Scroll */
+    .animate-on-scroll {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+    .animate-on-scroll.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    /* --- 1. Sticky Navbar --- */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: var(--nav-height);
+      padding: 0 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background-color: rgba(13, 17, 23, 0.8);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border-color);
+      transition: box-shadow 0.3s ease;
+    }
+
+    .navbar.scrolled {
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    }
+    
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-light);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .logo .fa-fire {
+      color: var(--primary-blue);
+    }
+
+    .nav-menu { display: flex; align-items: center; gap: 2.5rem; }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+      position: relative;
+      padding: 5px 0;
+    }
+    .nav-links a::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background-color: var(--primary-blue);
+        transition: width 0.3s ease;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--text-light); }
+    .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+
+    #actions { display: flex; align-items: center; gap: 1rem; }
+
+    .btn {
+      padding: 10px 22px;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+    }
+    .btn-primary {
+      background-color: var(--primary-blue);
+      color: var(--text-light);
+      box-shadow: 0 4px 15px rgba(59, 130, 246, 0.1);
+    }
+    .btn-primary:hover {
+      background-color: var(--primary-blue-hover);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(59, 130, 246, 0.3);
+    }
+    .btn-secondary {
+        color: var(--text-light);
+        background-color: transparent;
+        border: 1px solid var(--border-color);
+    }
+    .btn-secondary:hover {
+        background-color: var(--bg-secondary);
+        border-color: var(--text-light);
+        transform: translateY(-2px);
+    }
+    .btn-danger { background-color: #ef4444; color: #fff; }
+    .btn-danger:hover { background-color: #f87171; transform: translateY(-2px); }
+    
+    .hamburger { display: none; cursor: pointer; }
+    
+    /* --- 2. Hero Section --- */
+    #home {
+      padding-top: 60px;
+      padding-bottom: 60px;
+      min-height: calc(100vh - var(--nav-height));
+      display: flex;
+      align-items: center;
+    }
+    .hero-content {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      align-items: center;
+      gap: 4rem;
+    }
+    .hero-text h1 {
+      font-size: 3.8rem;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+      background: linear-gradient(90deg, var(--text-light), var(--text-muted));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: slideInUp 0.8s ease-out;
+    }
+    .hero-text .tagline {
+      font-size: 1.75rem;
+      font-weight: 600;
+      color: var(--primary-blue);
+      margin-bottom: 1.5rem;
+      animation: slideInUp 0.8s ease-out 0.2s backwards;
+    }
+    .hero-text .description {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 500px;
+      margin-bottom: 2.5rem;
+      animation: slideInUp 0.8s ease-out 0.4s backwards;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      animation: slideInUp 0.8s ease-out 0.6s backwards;
+    }
+    .hero-image {
+        animation: fadeIn 1.2s ease-out;
+    }
+    @keyframes slideInUp { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+
+    /* --- 3. Welcome Section --- */
+    #welcome-section {
+        background-color: var(--bg-secondary);
+        text-align: center;
+        padding: 80px 0;
+    }
+    .welcome-badge {
+        display: inline-block;
+        background-color: rgba(59, 130, 246, 0.1);
+        color: var(--primary-blue);
+        padding: 8px 16px;
+        border-radius: 50px;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        border: 1px solid rgba(59, 130, 246, 0.3);
+    }
+    #welcome-section h2 { font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem; }
+    #welcome-section p { font-size: 1.1rem; color: var(--text-muted); max-width: 650px; margin: 0 auto; }
+    
+    /* --- 4. NEW How It Works Section (Tree Style) --- */
+    .section-header { text-align: center; margin-bottom: 5rem; }
+    .section-header h2 { font-size: 2.8rem; margin-bottom: 1rem; }
+    .section-header p { color: var(--text-muted); max-width: 600px; margin: 0 auto; }
+    
+    .how-it-works-timeline {
+        position: relative;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    /* The central timeline vertical line */
+    .how-it-works-timeline::after {
+        content: '';
+        position: absolute;
+        width: 4px;
+        background-color: var(--border-color);
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        margin-left: -2px;
+        z-index: 1;
+        border-radius: 2px;
+    }
+    .timeline-item {
+        padding: 10px 40px;
+        position: relative;
+        width: 50%;
+    }
+    /* Position items to the left */
+    .timeline-item:nth-child(odd) { left: 0; }
+    /* Position items to the right */
+    .timeline-item:nth-child(even) { left: 50%; }
+
+    /* The circle on the timeline */
+    .timeline-dot {
+        content: '';
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        background-color: var(--bg-dark);
+        border: 4px solid var(--primary-blue);
+        top: 32px;
+        border-radius: 50%;
+        z-index: 2;
+        transition: background-color 0.3s ease;
+    }
+    .timeline-item:nth-child(odd) .timeline-dot { right: -8px; }
+    .timeline-item:nth-child(even) .timeline-dot { left: -8px; }
+    
+    /* The content card */
+    .timeline-content {
+        padding: 2rem;
+        background-color: var(--bg-secondary);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        position: relative;
+        transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+
+    /* Hover effect */
+    .timeline-item:hover .timeline-dot { background-color: var(--primary-blue-hover); }
+    .timeline-item:hover .timeline-content {
+        transform: scale(1.05);
+        border-color: var(--primary-blue);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    
+    .timeline-content .icon {
+        font-size: 1.8rem;
+        width: 50px;
+        height: 50px;
+        line-height: 50px;
+        border-radius: 50%;
+        background: linear-gradient(145deg, var(--primary-blue), var(--primary-blue-hover));
+        color: var(--text-light);
+        margin-bottom: 1.5rem;
+        text-align: center;
+        display: inline-block;
+    }
+    .timeline-content h3 { font-size: 1.3rem; margin-bottom: 0.5rem; color: var(--text-light); }
+    .timeline-content p { color: var(--text-muted); font-size: 0.95rem; }
+
+    /* --- 5. About Section --- */
+    #about { background-color: var(--bg-secondary); }
+    .about-content {
+        display: flex;
+        align-items: center;
+        gap: 4rem;
+        background-color: var(--bg-dark);
+        padding: 4rem;
+        border-radius: 16px;
+        border: 1px solid var(--border-color);
+    }
+    .about-text, .about-icon { flex: 1; }
+    .about-text h2 { font-size: 2.5rem; margin-bottom: 1rem; }
+    .about-text p { color: var(--text-muted); }
+    .about-icon { text-align: center; }
+    .about-icon i {
+        font-size: 6rem;
+        color: var(--primary-blue);
+        text-shadow: 0 0 25px var(--primary-blue-glow);
+        animation: pulse 2.5s infinite ease-in-out;
+    }
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+        100% { transform: scale(1); }
+    }
+    
+    /* --- 6. Footer --- */
+    footer { padding: 50px 0; text-align: center; border-top: 1px solid var(--border-color); }
+    .social-icons { margin-bottom: 1.5rem; }
+    .social-icons a {
+        color: var(--text-muted);
+        font-size: 1.5rem;
+        margin: 0 1rem;
+        transition: all 0.3s ease;
+    }
+    .social-icons a:hover { color: var(--primary-blue); transform: translateY(-5px); }
+    .copyright { color: var(--text-muted); font-size: 0.9rem; }
+    
+    /* --- Responsive Design --- */
+    @media (max-width: 992px) {
+        .hero-content { grid-template-columns: 1fr; text-align: center; gap: 3rem; }
+        .hero-image { grid-row: 1; margin: 0 auto; }
+        .hero-text .description { margin: 0 auto 2.5rem auto; }
+        .hero-actions { justify-content: center; }
+        .about-content { flex-direction: column; text-align: center; }
+    }
+    
+    @media (max-width: 768px) {
+        .hamburger { display: block; font-size: 1.5rem; color: var(--text-light); z-index: 1001; }
+        .nav-menu {
+            position: fixed; top: 0; left: -100%; width: 100%; height: 100vh;
+            background-color: var(--bg-dark); flex-direction: column; justify-content: center;
+            align-items: center; gap: 2rem; transition: left 0.3s ease-in-out;
+        }
+        .nav-menu.active { left: 0; }
+        .nav-links { flex-direction: column; text-align: center; font-size: 1.5rem; }
+        #actions { flex-direction: column; }
+        .hero-text h1 { font-size: 2.8rem; }
+        .hero-text .tagline { font-size: 1.5rem; }
+        #welcome-section h2, .section-header h2, .about-text h2 { font-size: 2.2rem; }
+
+        /* Timeline on mobile */
+        .how-it-works-timeline::after { left: 20px; }
+        .timeline-item { width: 100%; padding-left: 60px; padding-right: 15px; }
+        .timeline-item:nth-child(even) { left: 0%; }
+        .timeline-dot { left: 12px; }
+    }
+  </style>
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+</head>
+<body>
+
+  <!-- 1. Sticky Navbar -->
+  <header class="navbar">
+    <a href="#home" class="logo"><i class="fa-solid fa-fire"></i>CodeStreak</a>
+    <nav class="nav-menu">
+      <ul class="nav-links">
+        <li><a href="#home" class="nav-link active">Home</a></li>
+        <li><a href="#welcome-section" class="nav-link">Welcome</a></li>
+        <li><a href="#how-it-works" class="nav-link">How It Works</a></li>
+        <li><a href="#about" class="nav-link">About</a></li>
+      </ul>
+      <!-- This div is populated by your original JS logic -->
+      <div id="actions">
+        <!-- Buttons are rendered here -->
+      </div>
+    </nav>
+    <div class="hamburger"><i class="fa-solid fa-bars"></i></div>
+  </header>
+
+  <main>
+    <!-- 2. Hero Section -->
+    <section id="home">
+      <div class="container">
+        <div class="hero-content">
+          <div class="hero-text">
+            <h1>CodeStreak</h1>
+            <p class="tagline">Daily code. Daily win.</p>
+            <p class="description">Build a powerful coding habit with bite-sized daily challenges. We make consistency simple, delivering tasks straight to your WhatsApp.</p>
+            <div class="hero-actions">
+              <a href="#how-it-works" class="btn btn-primary">Get Started</a>
+              <a href="#about" class="btn btn-secondary">Learn More</a>
+            </div>
+          </div>
+          <div class="hero-image">
+              <lottie-player
+                src="Online Learning.json"
+                background="transparent"
+                speed="1"
+                style="width: 100%; max-width: 450px; height: auto;"
+                loop
+                autoplay>
+              </lottie-player>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Welcome Section -->
+    <section id="welcome-section" class="animate-on-scroll">
+      <div class="container">
+        <div class="welcome-badge"><i class="fa-brands fa-whatsapp"></i> Delivered via WhatsApp</div>
+        <h2>Welcome to Your Daily Coding Companion!</h2>
+        <p>We help you build strong, lasting coding habits by sending you engaging, achievable tasks right on WhatsApp. No new apps, no complicated setup.</p>
+      </div>
+    </section>
+
+    <!-- 4. How It Works Section - NEW Tree Style -->
+    <section id="how-it-works">
+      <div class="container">
+        <div class="section-header animate-on-scroll">
+          <h2>Get Started in 4 Simple Steps</h2>
+          <p>Launch your journey to coding mastery in just a few minutes. It's quick, easy, and effective.</p>
+        </div>
+        <div class="how-it-works-timeline">
+            <!-- Step 1 -->
+            <div class="timeline-item animate-on-scroll">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="icon"><i class="fa-solid fa-user-plus"></i></div>
+                    <h3>Step 1: Sign Up</h3>
+                    <p>Create your free account and verify your email to get started.</p>
+                </div>
+            </div>
+            <!-- Step 2 -->
+            <div class="timeline-item animate-on-scroll" style="transition-delay: 0.1s;">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="icon"><i class="fa-solid fa-mobile-screen-button"></i></div>
+                    <h3>Step 2: Set Schedule</h3>
+                    <p>Link your WhatsApp and choose your preferred time for daily tasks.</p>
+                </div>
+            </div>
+            <!-- Step 3 -->
+            <div class="timeline-item animate-on-scroll" style="transition-delay: 0.2s;">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="icon"><i class="fa-solid fa-paper-plane"></i></div>
+                    <h3>Step 3: Get Tasks</h3>
+                    <p>Receive your unique coding challenge automatically every day.</p>
+                </div>
+            </div>
+            <!-- Step 4 -->
+            <div class="timeline-item animate-on-scroll" style="transition-delay: 0.3s;">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="icon"><i class="fa-solid fa-arrow-trend-up"></i></div>
+                    <h3>Step 4: Grow Streak</h3>
+                    <p>Complete tasks, build your streak, and watch your skills grow!</p>
+                </div>
+            </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. About Section -->
+    <section id="about">
+      <div class="container animate-on-scroll">
+        <div class="about-content">
+          <div class="about-icon">
+            <i class="fa-solid fa-lightbulb"></i>
+          </div>
+          <div class="about-text">
+            <h2>Why CodeStreak Exists</h2>
+            <p>Consistency beats talent. We believe the single biggest barrier to becoming a great developer isn't intelligence—it's the daily discipline to practice. CodeStreak was created to make that daily practice simple, motivating, and accessible for everyone.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <!-- 6. Footer -->
+  <footer>
+    <div class="container">
+      <div class="social-icons">
+        <a href="https://www.linkedin.com/in/sohamkhot75/" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        <a href="https://github.com/Spkhot" aria-label="GitHub"><i class="fab fa-github"></i></a>
+      </div>
+      <p class="copyright">© 2024 CodeStreak. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // --- YOUR ORIGINAL SCRIPT - LOGIC UNCHANGED ---
+    const token = localStorage.getItem('token');
+    const actionsContainer = document.getElementById('actions');
+    
+    if (token) {
+      fetch('/api/user/me', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      })
+      .then(res => res.ok ? res.json() : Promise.reject(res))
+      .then(data => {
+        if (data && data.name) {
+          actionsContainer.innerHTML = `
+            <a href="dashboard.html" class="btn btn-primary">Go to Dashboard</a>
+            <a href="#" onclick="logout()" class="btn btn-danger">Logout</a>
+          `;
+        } else {
+            renderLoggedOutState();
+        }
+      }).catch(() => {
+          renderLoggedOutState();
+      });
+    } else {
+      renderLoggedOutState();
+    }
+
+    function renderLoggedOutState() {
+      actionsContainer.innerHTML = `
+        <a href="login.html" class="btn btn-secondary">Login</a>
+        <a href="signup.html" class="btn btn-primary">Sign Up</a>
+      `;
+    }
+
+    function logout() {
+      localStorage.removeItem('token');
+      location.reload();
+    }
+    // --- END OF ORIGINAL SCRIPT ---
+
+    // --- NEW SCRIPT FOR UI ENHANCEMENTS ---
+    document.addEventListener('DOMContentLoaded', () => {
+
+        // 1. Mobile Hamburger Menu
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+        const navMenuLinks = document.querySelectorAll('.nav-menu a');
+
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            const icon = hamburger.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
+        });
+
+        // Close mobile menu when a link is clicked
+        navMenuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (navMenu.classList.contains('active')) {
+                    navMenu.classList.remove('active');
+                    hamburger.querySelector('i').classList.add('fa-bars');
+                    hamburger.querySelector('i').classList.remove('fa-times');
+                }
+            });
+        });
+
+        // 2. Scroll-triggered animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        const elementsToAnimate = document.querySelectorAll('.animate-on-scroll');
+        elementsToAnimate.forEach(el => observer.observe(el));
+        
+        // 3. Active nav link highlighting & Navbar scroll effect
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-links a');
+        const navbar = document.querySelector('.navbar');
+        const navHeight = navbar.offsetHeight;
+
+        window.addEventListener('scroll', () => {
+            // Navbar shadow on scroll
+            if (window.scrollY > 10) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+            
+            // Active link highlighting
+            let current = 'home';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - navHeight - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').substring(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    });
+
+  </script>
+</body>
+</html>

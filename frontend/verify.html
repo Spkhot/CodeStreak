@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Check Your Email | CodeStreak</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <!-- Google Fonts: Poppins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="logo.png">
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+  <style>
+    :root {
+      --bg-dark: #0D1117;
+      --bg-secondary: #161B22;
+      --primary-blue: #3B82F6;
+      --text-light: #E6EDF3;
+      --text-muted: #8D96A0;
+      --border-color: #30363D;
+      --success-color: #28a745;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .message-container {
+      background-color: var(--bg-secondary);
+      padding: 3rem 2.5rem;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-width: 500px;
+      text-align: center;
+      animation: slideInUp 0.6s ease-out;
+    }
+
+    @keyframes slideInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .icon-container {
+      font-size: 4rem;
+      color: var(--primary-blue);
+      margin-bottom: 1.5rem;
+      line-height: 1;
+    }
+
+    .message-title {
+      font-size: 1.75rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+    }
+
+    .message-text {
+      font-size: 1rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+
+    .info-box {
+        background-color: rgba(59, 130, 246, 0.1);
+        border: 1px solid rgba(59, 130, 246, 0.2);
+        padding: 1rem;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        margin-bottom: 2rem;
+    }
+    .info-box strong {
+        color: var(--text-light);
+    }
+    
+    .action-button {
+      display: inline-block;
+      background: none;
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      padding: 10px 24px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    .action-button:hover {
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+    }
+  </style>
+</head>
+<body>
+
+  <main class="message-container">
+    <div class="icon-container">
+      <i class="fa-solid fa-envelope-circle-check"></i>
+    </div>
+    
+    <h2 class="message-title">Almost there!</h2>
+    
+    <p class="message-text">We've sent a verification link to your email address.<br>Please click the link in the email to activate your account.</p>
+
+    <div class="info-box">
+      <strong>Didn't receive an email?</strong> Be sure to check your spam or junk folder.
+    </div>
+    
+    <a href="index.html" class="action-button">Back to Home</a>
+  </main>
+
+</body>
+</html>

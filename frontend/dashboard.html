@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dashboard | CodeStreak</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Google Fonts: Poppins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" href="logo.png">
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+  <style>
+    :root {
+      --bg-dark: #0D1117;
+      --bg-secondary: #161B22;
+      --primary-blue: #3B82F6;
+      --text-light: #E6EDF3;
+      --text-muted: #8D96A0;
+      --border-color: #30363D;
+      --pause-yellow: #f59e0b;
+      --resume-green: #10b981;
+      --danger-red: #ef4444;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+    }
+
+    /* --- Navbar --- */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 2rem;
+      height: 70px;
+      background-color: var(--bg-secondary);
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      text-decoration: none;
+      color: var(--text-light);
+    }
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .streak-counter {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      background-color: var(--bg-dark);
+      padding: 8px 16px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+    }
+    .streak-counter .fa-fire {
+      color: #f97316; /* Orange Fire */
+      animation: flame 1.5s infinite;
+    }
+    @keyframes flame {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+    .btn-logout {
+      background: none;
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+    .btn-logout:hover {
+      background-color: var(--danger-red);
+      color: white;
+      border-color: var(--danger-red);
+    }
+
+    /* --- Main Container --- */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 20px;
+    }
+    
+    .welcome-header {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 2.5rem;
+    }
+    
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: 300px 1fr;
+        gap: 2rem;
+    }
+
+    /* --- Settings & Controls Card --- */
+    .card {
+        background-color: var(--bg-secondary);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 1.5rem;
+    }
+    .card-header {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--border-color);
+    }
+    
+    .settings-list dt {
+        font-weight: 500;
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        margin-top: 1rem;
+    }
+    .settings-list dd {
+        font-weight: 600;
+        font-size: 1rem;
+    }
+
+    .card-actions {
+        margin-top: 1.5rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--border-color);
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+    .btn-action {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: opacity 0.3s ease;
+    }
+    .btn-action:hover {
+        opacity: 0.85;
+    }
+    .btn-edit { background-color: var(--primary-blue); color: white; }
+    .btn-pause { background-color: var(--pause-yellow); color: white; }
+    .btn-resume { background-color: var(--resume-green); color: white; }
+
+    /* --- Completed Days Log --- */
+    .log-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: 1rem;
+    }
+    .log-card {
+        background-color: var(--bg-secondary);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 1rem;
+        text-align: center;
+        text-decoration: none;
+        color: var(--text-light);
+        transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+    .log-card:hover {
+        transform: translateY(-5px);
+        border-color: var(--primary-blue);
+    }
+    .log-card .day-number {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--primary-blue);
+    }
+    .log-card .day-title {
+        font-weight: 600;
+        margin-top: 0.25rem;
+    }
+    .log-card .day-level {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+    }
+    #logList p {
+        grid-column: 1 / -1; /* Make message span full width */
+        text-align: center;
+        color: var(--text-muted);
+        padding: 2rem;
+    }
+
+    /* --- Responsive --- */
+    @media (max-width: 768px) {
+        .dashboard-grid {
+            grid-template-columns: 1fr;
+        }
+        .navbar { padding: 0 1rem; }
+        .logo { font-size: 1.2rem; }
+        .streak-counter { font-size: 1rem; padding: 6px 12px;}
+    }
+
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <a href="index.html" class="logo">CodeStreak</a>
+    <div class="nav-actions">
+      <div class="streak-counter">
+        <i class="fa-solid fa-fire"></i>
+        <span>Streak: <span id="nav-streak">...</span></span>
+      </div>
+      <button id="logoutBtn" class="btn-logout">Logout</button>
+    </div>
+  </nav>
+
+  <main class="container">
+    <h1 class="welcome-header">🫡Welcome, <span id="welcomeName">...</span>!</h1>
+
+    <div class="dashboard-grid">
+      <!-- Left Column: Settings & Controls -->
+      <aside>
+        <div class="card">
+          <div class="card-header">
+            <i class="fa-solid fa-gears"></i>
+            <span>Settings & Controls</span>
+          </div>
+          <dl class="settings-list">
+            <dt>Language</dt>
+            <dd id="lang"></dd>
+            <dt>Level</dt>
+            <dd id="level"></dd>
+            <dt>WhatsApp</dt>
+            <dd id="wa"></dd>
+            <dt>Daily Time</dt>
+            <dd id="time"></dd>
+          </dl>
+          <div class="card-actions">
+            <button class="btn-action btn-edit" id="editBtn">Edit Schedule</button>
+            <button class="btn-action" id="pauseBtn">Pause</button>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Right Column: Progress Log -->
+      <section>
+        <div class="card">
+          <div class="card-header">
+            <i class="fa-solid fa-list-check"></i>
+            <span>Progress Log</span>
+          </div>
+          <div class="log-grid" id="logList">
+            <p>Loading your progress...</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+  
+  <script>
+    const token = localStorage.getItem('token');
+    if (!token) {
+      alert('Please login first!');
+      window.location.href = 'login.html';
+    }
+
+    let isPaused = false;
+
+    async function loadDashboard() {
+      try {
+        const res = await fetch('/api/user/me', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+
+        if (!res.ok) {
+          throw new Error('Session expired or unauthorized.');
+        }
+
+        const data = await res.json();
+
+        if (!data.language || !data.level) {
+          alert('Please complete your schedule setup.');
+          window.location.href = 'set-schedule.html';
+          return;
+        }
+
+        // --- Populate New UI Elements ---
+        document.getElementById('welcomeName').textContent = data.name;
+        document.getElementById('nav-streak').textContent = data.currentDay;
+        
+        document.getElementById('lang').textContent = data.language;
+        document.getElementById('level').textContent = data.level;
+        document.getElementById('wa').textContent = data.whatsapp;
+        document.getElementById('time').textContent = data.deliveryTime;
+
+        // --- Handle Pause/Resume Button State ---
+        isPaused = data.isPaused;
+        const pauseBtn = document.getElementById('pauseBtn');
+        if (isPaused) {
+            pauseBtn.textContent = 'Resume Streak';
+            pauseBtn.className = 'btn-action btn-resume';
+        } else {
+            pauseBtn.textContent = 'Pause Streak';
+            pauseBtn.className = 'btn-action btn-pause';
+        }
+
+        // --- Populate New Log Grid ---
+        const logList = document.getElementById('logList');
+        logList.innerHTML = ''; // Clear loading message
+
+        if (data.completedTopics && data.completedTopics.length > 0) {
+          data.completedTopics.forEach(t => {
+            const cardLink = document.createElement('a');
+            cardLink.className = 'log-card';
+            cardLink.href = `day.html?day=${t.order}`;
+            cardLink.innerHTML = `
+              <div class="day-number">${t.order}</div>
+              <div class="day-title">Day ${t.order}</div>
+              <span class="day-level">${data.level}</span>
+            `;
+            logList.appendChild(cardLink);
+          });
+        } else {
+          logList.innerHTML = '<p>Your journey begins now! Complete your first task to see it here.</p>';
+        }
+
+      } catch (error) {
+        alert(error.message);
+        localStorage.removeItem('token');
+        window.location.href = 'login.html';
+      }
+    }
+
+    // --- UNCHANGED EVENT HANDLER LOGIC ---
+    document.addEventListener('DOMContentLoaded', loadDashboard);
+
+    document.getElementById('editBtn').onclick = () => {
+      if (confirm('Editing your schedule will reset your streak to Day 1. Continue?')) {
+        window.location.href = 'set-schedule.html';
+      }
+    };
+
+    document.getElementById('pauseBtn').onclick = async () => {
+      try {
+        const res = await fetch('/api/user/pause', {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const data = await res.json();
+        if (res.ok) {
+          alert(data.message);
+          // Reload the dashboard to reflect the new state
+          loadDashboard();
+        } else {
+          throw new Error(data.message || 'Error toggling pause.');
+        }
+      } catch (error) {
+        alert(error.message);
+      }
+    };
+
+    document.getElementById('logoutBtn').onclick = () => {
+      localStorage.removeItem('token');
+      window.location.href = 'index.html';
+    };
+  </script>
+</body>
+</html>
