@@ -26,10 +26,29 @@ export const signup = async (req, res) => {
   });
 
   await transporter.sendMail({
-    to: email,
-    subject: 'Verify your CodeStreak account',
-    html: `<p>Click below to verify:</p><a href="${verifyURL}">Verify Now</a>`,
-  });
+  to: email,
+  subject: '🔥 Verify your CodeStreak account & start your daily coding streak!',
+  html: `
+    <div style="font-family: Arial, sans-serif; color: #0D1117; line-height: 1.6;">
+      <h2 style="color: #3B82F6;">Hey there,</h2>
+      <p>You're almost ready to unlock daily bite-sized coding tasks straight to your WhatsApp. Just verify your email to get started.</p>
+      <p>
+        <a href="${verifyURL}" style="
+          display: inline-block;
+          padding: 12px 24px;
+          background-color: #3B82F6;
+          color: #fff;
+          text-decoration: none;
+          border-radius: 5px;
+          font-weight: bold;
+        ">✅ Verify My Email</a>
+      </p>
+      <p>If you didn’t sign up for CodeStreak, you can safely ignore this email.</p>
+      <p>Happy coding! 🚀<br/>– The CodeStreak Team</p>
+    </div>
+  `
+});
+
 
   res.json({ message: 'Check your email to verify.' });
 };

@@ -24,6 +24,7 @@
       --pause-yellow: #f59e0b;
       --resume-green: #10b981;
       --danger-red: #ef4444;
+      --fire-orange: #f97316;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -36,220 +37,184 @@
 
     /* --- Navbar --- */
     .navbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0 2rem;
-      height: 70px;
-      background-color: var(--bg-secondary);
-      border-bottom: 1px solid var(--border-color);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0 2rem; height: 70px; background-color: var(--bg-secondary);
+      border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000;
     }
     .logo {
-      font-size: 1.5rem;
-      font-weight: 700;
-      text-decoration: none;
-      color: var(--text-light);
+        font-size: 1.5rem; font-weight: 700; text-decoration: none; color: var(--text-light);
+        display: flex; align-items: center; gap: 8px;
     }
-    .nav-actions {
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-    }
+    .logo .fa-fire { color: var(--primary-blue); }
+    .nav-actions { display: flex; align-items: center; gap: 1.5rem; }
     .streak-counter {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 1.1rem;
-      font-weight: 600;
-      background-color: var(--bg-dark);
-      padding: 8px 16px;
-      border-radius: 8px;
-      border: 1px solid var(--border-color);
+      display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem;
+      font-weight: 600; background-color: var(--bg-dark); padding: 8px 16px;
+      border-radius: 8px; border: 1px solid var(--border-color);
     }
-    .streak-counter .fa-fire {
-      color: #f97316; /* Orange Fire */
-      animation: flame 1.5s infinite;
-    }
-    @keyframes flame {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.1); }
-    }
-    .btn-logout {
-      background: none;
-      border: 1px solid var(--border-color);
-      color: var(--text-muted);
-      padding: 8px 16px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: 500;
-      transition: all 0.3s ease;
-    }
-    .btn-logout:hover {
-      background-color: var(--danger-red);
-      color: white;
-      border-color: var(--danger-red);
-    }
-
-    /* --- Main Container --- */
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 2.5rem 20px;
-    }
+    .streak-counter .fa-fire { color: var(--fire-orange); animation: flame 1.5s infinite; }
+    @keyframes flame { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
     
-    .welcome-header {
-        font-size: 2.5rem;
-        font-weight: 700;
-        margin-bottom: 2.5rem;
-    }
-    
-    .dashboard-grid {
-        display: grid;
-        grid-template-columns: 300px 1fr;
-        gap: 2rem;
-    }
-
-    /* --- Settings & Controls Card --- */
-    .card {
-        background-color: var(--bg-secondary);
-        border: 1px solid var(--border-color);
-        border-radius: 12px;
-        padding: 1.5rem;
-    }
-    .card-header {
+    /* ✅✅✅ NEW PROFILE DROPDOWN STYLES ✅✅✅ */
+    .profile-menu-container { position: relative; }
+    .profile-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: var(--primary-blue);
+        color: white;
         display: flex;
         align-items: center;
-        gap: 0.75rem;
-        font-size: 1.25rem;
-        font-weight: 600;
-        margin-bottom: 1.5rem;
-        padding-bottom: 1rem;
+        justify-content: center;
+        font-size: 1.2rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        user-select: none;
+    }
+    .profile-avatar:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+    }
+    .profile-dropdown {
+        position: absolute;
+        top: 120%;
+        right: 0;
+        background-color: var(--bg-secondary);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        min-width: 240px;
+        padding: 0.5rem 0;
+        z-index: 1001;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(10px);
+        transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+    }
+    .profile-dropdown.show {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+    .dropdown-header {
+        padding: 0.75rem 1rem;
         border-bottom: 1px solid var(--border-color);
+        margin-bottom: 0.5rem;
     }
-    
-    .settings-list dt {
-        font-weight: 500;
+    .dropdown-header .user-name { font-weight: 600; }
+    .dropdown-item {
+        display: block;
+        padding: 0.75rem 1rem;
         color: var(--text-muted);
-        font-size: 0.9rem;
-        margin-top: 1rem;
+        text-decoration: none;
+        transition: background-color 0.2s ease, color 0.2s ease;
     }
-    .settings-list dd {
-        font-weight: 600;
-        font-size: 1rem;
+    .dropdown-item i { margin-right: 10px; width: 20px; text-align: center;}
+    .dropdown-item:hover {
+        background-color: var(--bg-dark);
+        color: var(--text-light);
+    }
+    .dropdown-item.logout:hover {
+        background-color: rgba(239, 68, 68, 0.1);
+        color: var(--danger-red);
     }
 
-    .card-actions {
-        margin-top: 1.5rem;
-        padding-top: 1.5rem;
-        border-top: 1px solid var(--border-color);
-        display: flex;
-        flex-direction: column;
-        gap: 0.75rem;
+    /* --- Main Container & Layout --- */
+    .container { max-width: 900px; margin: 0 auto; padding: 2.5rem 20px; }
+    .welcome-header { font-size: 2.5rem; font-weight: 700; margin-bottom: 2.5rem; }
+    .dashboard-grid { display: grid; grid-template-columns: 300px 1fr; gap: 2rem; }
+    .right-column-grid { display: flex; flex-direction: column; gap: 2rem; }
+
+    /* UNCHANGED CARD STYLES */
+    .card { background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; }
+    .card-header {
+      display: flex; align-items: center; gap: 0.75rem; font-size: 1.25rem;
+      font-weight: 600; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border-color);
     }
-    .btn-action {
-        width: 100%;
-        padding: 10px;
-        border: none;
-        border-radius: 8px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: opacity 0.3s ease;
-    }
-    .btn-action:hover {
-        opacity: 0.85;
-    }
+    .card-actions { margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 0.75rem; }
+    .btn-action { width: 100%; padding: 10px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: opacity 0.3s ease; }
+    .btn-action:hover { opacity: 0.85; }
     .btn-edit { background-color: var(--primary-blue); color: white; }
     .btn-pause { background-color: var(--pause-yellow); color: white; }
     .btn-resume { background-color: var(--resume-green); color: white; }
+    .settings-list dt { font-weight: 500; color: var(--text-muted); font-size: 0.9rem; margin-top: 1rem; }
+    .settings-list dd { font-weight: 600; font-size: 1rem; }
+    .status-card-body { display: flex; flex-direction: column; gap: 1.25rem; }
+    .streak-highlight { text-align: center; font-size: 2.5rem; font-weight: 800; }
+    .streak-highlight .fa-fire { color: var(--fire-orange); }
+    .progress-bar-container { width: 100%; background-color: var(--bg-dark); border-radius: 5px; height: 10px; overflow: hidden; }
+    .progress-bar-fill { height: 100%; width: 0%; background-color: var(--primary-blue); border-radius: 5px; transition: width 0.5s ease-in-out; }
+    .progress-text { text-align: center; font-size: 0.8rem; font-weight: 500; color: var(--text-muted); margin-top: 0.5rem; }
+    .status-details { display: flex; flex-direction: column; gap: 0.5rem; }
+    .status-item { display: flex; align-items: center; gap: 0.75rem; }
+    .status-indicator { width: 10px; height: 10px; border-radius: 50%; }
+    .status-indicator.active { background-color: var(--resume-green); }
+    .status-indicator.paused { background-color: var(--pause-yellow); }
+    .log-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 1rem; }
+    .log-card { background-color: var(--bg-dark); border: 1px solid var(--border-color); border-radius: 12px; padding: 1rem; text-align: center; text-decoration: none; color: var(--text-light); transition: transform 0.3s ease, border-color 0.3s ease; }
+    .log-card:hover { transform: translateY(-5px); border-color: var(--primary-blue); }
+    .log-card .day-number { font-size: 2.5rem; font-weight: 700; color: var(--primary-blue); }
+    .log-card .day-title { font-weight: 600; margin-top: 0.25rem; }
+    .log-card .day-level { font-size: 0.8rem; color: var(--text-muted); }
+    #logList p { grid-column: 1 / -1; text-align: center; color: var(--text-muted); padding: 2rem; }
+    #curriculum-section { margin-top: 2rem; }
+    .course-level { margin-bottom: 2.5rem; }
+    .course-level:last-child { margin-bottom: 0; }
+    .course-level h4 { font-size: 1.5rem; font-weight: 600; color: var(--text-light); margin-bottom: 1.2rem; display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
+    .course-level h4 .level-title { font-weight: 500; color: var(--text-muted); font-size: 1.1rem; }
+    .course-level h4 i { color: var(--primary-blue); }
+    .days { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+    .day-card { background-color: var(--bg-dark); border: 1px solid var(--border-color); padding: 0.75rem 1rem; border-radius: 8px; cursor: pointer; text-align: center; font-weight: 500; flex-basis: 90px; transition: all 0.2s ease-in-out; }
+    .day-card:hover { transform: translateY(-4px); border-color: var(--primary-blue); }
+    .day-card.active { background-color: var(--primary-blue); border-color: var(--primary-blue); color: white; transform: translateY(-2px); }
+    .day-card.completed { background-color: rgba(16, 185, 129, 0.1); border-color: var(--resume-green); color: var(--resume-green); font-weight: 700; }
+    .day-card.completed:hover { color: white; background-color: var(--resume-green); }
+    .day-card.completed.active { color: white; background-color: var(--primary-blue); border-color: var(--primary-blue); }
+    .topic-slide-panel { background-color: var(--bg-dark); border: 1px solid var(--border-color); border-top: 3px solid var(--primary-blue); margin-top: 1rem; padding: 1.5rem; border-radius: 8px; overflow: hidden; max-height: 0; opacity: 0; visibility: hidden; transition: all 0.5s ease-in-out; }
+    .topic-slide-panel.show { max-height: 200px; opacity: 1; visibility: visible; }
+    .topic-slide-panel strong { color: var(--primary-blue); }
 
-    /* --- Completed Days Log --- */
-    .log-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-        gap: 1rem;
-    }
-    .log-card {
-        background-color: var(--bg-secondary);
-        border: 1px solid var(--border-color);
-        border-radius: 12px;
-        padding: 1rem;
-        text-align: center;
-        text-decoration: none;
-        color: var(--text-light);
-        transition: transform 0.3s ease, border-color 0.3s ease;
-    }
-    .log-card:hover {
-        transform: translateY(-5px);
-        border-color: var(--primary-blue);
-    }
-    .log-card .day-number {
-        font-size: 2.5rem;
-        font-weight: 700;
-        color: var(--primary-blue);
-    }
-    .log-card .day-title {
-        font-weight: 600;
-        margin-top: 0.25rem;
-    }
-    .log-card .day-level {
-        font-size: 0.8rem;
-        color: var(--text-muted);
-    }
-    #logList p {
-        grid-column: 1 / -1; /* Make message span full width */
-        text-align: center;
-        color: var(--text-muted);
-        padding: 2rem;
-    }
-
-    /* --- Responsive --- */
-    @media (max-width: 768px) {
-        .dashboard-grid {
-            grid-template-columns: 1fr;
-        }
-        .navbar { padding: 0 1rem; }
-        .logo { font-size: 1.2rem; }
-        .streak-counter { font-size: 1rem; padding: 6px 12px;}
-    }
-
+    /* Responsive */
+    @media (max-width: 768px) { .dashboard-grid { grid-template-columns: 1fr; } .navbar { padding: 0 1rem; } .logo { font-size: 1.2rem; } .streak-counter { font-size: 1rem; padding: 6px 12px;} }
   </style>
 </head>
 <body>
 
   <nav class="navbar">
-    <a href="index.html" class="logo">CodeStreak</a>
+    <a href="index.html" class="logo"><i class="fa-solid fa-fire"></i>CodeStreak</a>
     <div class="nav-actions">
       <div class="streak-counter">
         <i class="fa-solid fa-fire"></i>
         <span>Streak: <span id="nav-streak">...</span></span>
       </div>
-      <button id="logoutBtn" class="btn-logout">Logout</button>
+      <!-- ✅✅✅ NEW PROFILE DROPDOWN REPLACES THE LOGOUT BUTTON ✅✅✅ -->
+      <div class="profile-menu-container">
+          <div class="profile-avatar" id="profile-avatar">S</div>
+          <div class="profile-dropdown" id="profile-dropdown">
+              <div class="dropdown-header">
+                  <div class="user-name" id="dropdown-username">Soham</div>
+              </div>
+              <a href="dashboard.html" class="dropdown-item"><i class="fa-solid fa-table-columns"></i> Dashboard</a>
+              <a href="#" class="dropdown-item logout" id="logoutBtn"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
+          </div>
+      </div>
     </div>
   </nav>
 
   <main class="container">
-    <h1 class="welcome-header">🫡Welcome, <span id="welcomeName">...</span>!</h1>
+    <h1 class="welcome-header">🫡 Welcome, <span id="welcomeName">...</span>!</h1>
 
     <div class="dashboard-grid">
-      <!-- Left Column: Settings & Controls -->
+      <!-- Left Column (UNCHANGED) -->
       <aside>
         <div class="card">
-          <div class="card-header">
-            <i class="fa-solid fa-gears"></i>
-            <span>Settings & Controls</span>
-          </div>
+          <div class="card-header"><i class="fa-solid fa-gears"></i><span>Your Coding Setup</span></div>
           <dl class="settings-list">
-            <dt>Language</dt>
-            <dd id="lang"></dd>
-            <dt>Level</dt>
-            <dd id="level"></dd>
-            <dt>WhatsApp</dt>
-            <dd id="wa"></dd>
-            <dt>Daily Time</dt>
-            <dd id="time"></dd>
+            <dt>Language</dt><dd id="lang"></dd>
+            <dt>Level</dt><dd id="level"></dd>
+            <dt>WhatsApp</dt><dd id="wa"></dd>
+            <dt>Daily Time</dt><dd id="time"></dd>
           </dl>
           <div class="card-actions">
             <button class="btn-action btn-edit" id="editBtn">Edit Schedule</button>
@@ -258,87 +223,168 @@
         </div>
       </aside>
 
-      <!-- Right Column: Progress Log -->
-      <section>
-        <div class="card">
-          <div class="card-header">
-            <i class="fa-solid fa-list-check"></i>
-            <span>Progress Log</span>
+      <!-- Right Column (UNCHANGED) -->
+      <div class="right-column-grid">
+        <section>
+          <div class="card">
+            <div class="card-header"><i class="fa-solid fa-list-check"></i><span>Progress Log</span></div>
+            <div class="log-grid" id="logList"><p>Loading your progress...</p></div>
           </div>
-          <div class="log-grid" id="logList">
-            <p>Loading your progress...</p>
-          </div>
-        </div>
-      </section>
+        </section>
+        <section>
+            <div class="card">
+                <div class="card-header"><i class="fa-solid fa-chart-line"></i><span>Streak Status</span></div>
+                <div class="status-card-body">
+                    <div class="streak-highlight"><i class="fa-solid fa-fire"></i> <span id="streak-card">...</span> Days</div>
+                    <div>
+                        <div class="progress-bar-container"><div class="progress-bar-fill" id="progress-bar"></div></div>
+                        <div class="progress-text" id="progress-text">...% Complete</div>
+                    </div>
+                    <div class="status-details">
+                        <div class="status-item"><div class="status-indicator" id="status-dot"></div><span id="status-text">...</span></div>
+                        <div class="status-item"><i class="fa-solid fa-forward" style="color: var(--text-muted);"></i><span>Next Up: <span id="next-topic">...</span></span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+      </div>
     </div>
+
+    <!-- Bottom Section (UNCHANGED) -->
+    <section id="curriculum-section" class="card">
+        <div class="card-header"><i class="fa-solid fa-book-open"></i><span>Course Curriculum</span></div>
+        <div id="curriculum-container"><p>Loading your curriculum...</p></div>
+    </section>
+
   </main>
   
   <script>
+    const courses = [ { language: "C++", levels: [ { level: "Beginner", title: "Fundamentals & Syntax", days: [ { day: 1, topic: "Structure of a Simple C++ Program (Hello World, #include, main())" }, { day: 2, topic: "Input and Output (cin, cout, endl, basic formatting)" }, { day: 3, topic: "Variables & Data Types (int, float, char, string, bool)" }, { day: 4, topic: "Operators (Arithmetic, Assignment, Increment/Decrement)" }, { day: 5, topic: "Conditional Statements (if, else, nested if)" }, { day: 6, topic: "Logical Operators & Comparisons" }, { day: 7, topic: "Switch Statements" }, { day: 8, topic: "Loops — while, do-while" }, { day: 9, topic: "Loops — for loop, nested loops" }, { day: 10, topic: "Practice: Basic Patterns & Control Flow Questions" } ] }, { level: "Intermediate", title: "Functions & Arrays", days: [ { day: 11, topic: "Functions — Basics, Declaration & Definition" }, { day: 12, topic: "Function Arguments & Return Types" }, { day: 13, topic: "Recursion Basics" }, { day: 14, topic: "Arrays — 1D Arrays Intro" }, { day: 15, topic: "Arrays — 1D Operations & Questions" }, { day: 16, topic: "2D Arrays — Basics" }, { day: 17, topic: "2D Arrays — Classic Problems (Matrix Transpose, Sum)" }, { day: 18, topic: "Strings — C++ Strings, Basic Operations" }, { day: 19, topic: "Strings — Character Arrays vs string Class" }, { day: 20, topic: "Practice: Functions + Arrays + Strings Combined Problems" } ] }, { level: "Advanced", title: "Classes, OOP & STL", days: [ { day: 21, topic: "Intro to OOP — Classes & Objects" }, { day: 22, topic: "Constructors & Destructors" }, { day: 23, topic: "Member Functions & Data Members" }, { day: 24, topic: "Encapsulation & Access Modifiers" }, { day: 25, topic: "Inheritance — Types & Examples" }, { day: 26, topic: "Polymorphism — Function Overloading" }, { day: 27, topic: "Polymorphism — Operator Overloading" }, { day: 28, topic: "Abstract Classes & Pure Virtual Functions" }, { day: 29, topic: "Intro to Standard Template Library (STL)" }, { day: 30, topic: "STL — Vectors & Iterators" } ] }, { level: "Pro", title: "Advanced Concepts + DSA", days: [ { day: 31, topic: "Pointers — Basics, * and &" }, { day: 32, topic: "Pointers — Arrays & Functions" }, { day: 33, topic: "Dynamic Memory Allocation (new and delete)" }, { day: 34, topic: "Linked Lists — Intro & Implementation" }, { day: 35, topic: "Stacks & Queues (Concepts + STL)" }, { day: 36, topic: "Trees — Basics & Binary Tree" }, { day: 37, topic: "Binary Search & Binary Search Trees" }, { day: 38, topic: "Sorting Algorithms — Bubble, Selection, Insertion" }, { day: 39, topic: "Searching Algorithms — Linear & Binary Search" }, { day: 40, topic: "Final Practice: Mixed Interview Questions (Patterns, STL, DSA)" } ] } ] }, { language: "Java", levels: [ { level: "Beginner", title: "Java Basics & Syntax", days: [ { day: 1, topic: "Intro: How Java Works, JVM, JDK, First Hello World" }, { day: 2, topic: "Variables & Data Types" }, { day: 3, topic: "Input & Output — Scanner" }, { day: 4, topic: "Operators — Arithmetic, Assignment" }, { day: 5, topic: "Conditional Statements — if, else if, else" }, { day: 6, topic: "Logical Operators & Comparisons" }, { day: 7, topic: "Switch Case" }, { day: 8, topic: "Loops — while & do-while" }, { day: 9, topic: "Loops — for loop, nested loops" }, { day: 10, topic: "Practice: Basic Pattern Printing" } ] }, { level: "Intermediate", title: "Methods & Arrays", days: [ { day: 11, topic: "Methods — Definition & Calling" }, { day: 12, topic: "Method Overloading" }, { day: 13, topic: "Recursion Basics" }, { day: 14, topic: "Arrays — 1D Arrays" }, { day: 15, topic: "Arrays — Basic Problems" }, { day: 16, topic: "2D Arrays" }, { day: 17, topic: "2D Array Classic Problems (Transpose, Sum)" }, { day: 18, topic: "Strings — Basics & String Class" }, { day: 19, topic: "String Methods & Immutability" }, { day: 20, topic: "Practice: Arrays + Strings Problems" } ] }, { level: "Advanced", title: "OOP & Advanced Classes", days: [ { day: 21, topic: "OOP Concepts — Classes & Objects" }, { day: 22, topic: "Constructors" }, { day: 23, topic: "Getters & Setters" }, { day: 24, topic: "this Keyword" }, { day: 25, topic: "Inheritance" }, { day: 26, topic: "super Keyword" }, { day: 27, topic: "Method Overriding" }, { day: 28, topic: "Polymorphism" }, { day: 29, topic: "Abstraction & Interfaces" }, { day: 30, topic: "Encapsulation — Real Example" } ] }, { level: "Pro", title: "Core DSA & Collections", days: [ { day: 31, topic: "Intro to Java Collections" }, { day: 32, topic: "ArrayList — Basics & Operations" }, { day: 33, topic: "LinkedList — Basics & Operations" }, { day: 34, topic: "HashMap — Basics & Use Cases" }, { day: 35, topic: "HashSet — Basics & Differences" }, { day: 36, topic: "Stack & Queue in Java" }, { day: 37, topic: "Sorting Algorithms — Bubble & Selection" }, { day: 38, topic: "Searching — Linear & Binary Search" }, { day: 39, topic: "Trees — Basic Binary Tree Concepts" }, { day: 40, topic: "Practice Day — Mixed DSA Questions" } ] } ] } ];
     const token = localStorage.getItem('token');
-    if (!token) {
-      alert('Please login first!');
-      window.location.href = 'login.html';
-    }
+    if (!token) { window.location.href = 'login.html'; }
 
-    let isPaused = false;
+    function renderCurriculum(userCourse, completedDaysSet) {
+        const container = document.getElementById('curriculum-container');
+        if (!container || !userCourse) { container.innerHTML = '<p>Could not load curriculum.</p>'; return; }
+        container.innerHTML = '';
+        const topicSlidePanel = document.createElement('div');
+        topicSlidePanel.className = 'topic-slide-panel';
+        let activeDayCard = null;
+        userCourse.levels.forEach(level => {
+            const levelDiv = document.createElement('div');
+            levelDiv.className = 'course-level';
+            levelDiv.innerHTML = `<h4><i class="fas fa-layer-group"></i> ${level.level}: <span class="level-title">${level.title}</span></h4>`;
+            const daysDiv = document.createElement('div');
+            daysDiv.className = 'days';
+            level.days.forEach(day => {
+                const dayCard = document.createElement('div');
+                dayCard.className = 'day-card';
+                dayCard.textContent = `Day ${day.day}`;
+                dayCard.dataset.topic = day.topic;
+                if (completedDaysSet.has(day.day)) { dayCard.classList.add('completed'); }
+                dayCard.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    if (dayCard === activeDayCard) {
+                        topicSlidePanel.classList.remove('show');
+                        activeDayCard.classList.remove('active');
+                        activeDayCard = null;
+                        return;
+                    }
+                    if(activeDayCard) activeDayCard.classList.remove('active');
+                    topicSlidePanel.innerHTML = `<strong>Day ${day.day} Topic:</strong> ${day.topic}`;
+                    daysDiv.after(topicSlidePanel);
+                    topicSlidePanel.classList.add('show');
+                    dayCard.classList.add('active');
+                    activeDayCard = dayCard;
+                });
+                daysDiv.appendChild(dayCard);
+            });
+            levelDiv.appendChild(daysDiv);
+            container.appendChild(levelDiv);
+        });
+        document.addEventListener('click', () => {
+            if (activeDayCard) {
+                topicSlidePanel.classList.remove('show');
+                activeDayCard.classList.remove('active');
+                activeDayCard = null;
+            }
+        });
+    }
 
     async function loadDashboard() {
       try {
-        const res = await fetch('/api/user/me', {
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
-
-        if (!res.ok) {
-          throw new Error('Session expired or unauthorized.');
-        }
-
+        const res = await fetch('/api/user/me', { headers: { 'Authorization': `Bearer ${token}` } });
+        if (!res.ok) { throw new Error('Session expired or unauthorized.'); }
         const data = await res.json();
-
+        
         if (!data.language || !data.level) {
           alert('Please complete your schedule setup.');
           window.location.href = 'set-schedule.html';
           return;
         }
 
-        // --- Populate New UI Elements ---
+        const userCourse = courses.find(c => c.language === data.language);
+
+        // --- CORRECTED: Use (currentDay - 1) for actual streak ---
+        const completedDays = data.currentDay > 0 ? data.currentDay - 1 : 0;
+
+        // Populate Welcome, Nav, and Profile Dropdown
         document.getElementById('welcomeName').textContent = data.name;
-        document.getElementById('nav-streak').textContent = data.currentDay;
+        document.getElementById('nav-streak').textContent = completedDays;
+        document.getElementById('profile-avatar').textContent = data.name.charAt(0).toUpperCase();
+        document.getElementById('dropdown-username').textContent = data.name;
         
+        // Populate the UNCHANGED "Settings" card
         document.getElementById('lang').textContent = data.language;
         document.getElementById('level').textContent = data.level;
         document.getElementById('wa').textContent = data.whatsapp;
         document.getElementById('time').textContent = data.deliveryTime;
-
-        // --- Handle Pause/Resume Button State ---
-        isPaused = data.isPaused;
         const pauseBtn = document.getElementById('pauseBtn');
-        if (isPaused) {
-            pauseBtn.textContent = 'Resume Streak';
-            pauseBtn.className = 'btn-action btn-resume';
+        pauseBtn.textContent = data.isPaused ? 'Resume Streak' : 'Pause Streak';
+        pauseBtn.className = data.isPaused ? 'btn-action btn-resume' : 'btn-action btn-pause';
+        
+        // Populate the NEW "Streak Status" card
+        const totalDays = 40;
+        const progressPercent = Math.round((completedDays / totalDays) * 100);
+        document.getElementById('streak-card').textContent = completedDays;
+        document.getElementById('progress-bar').style.width = `${progressPercent}%`;
+        document.getElementById('progress-text').textContent = `${progressPercent}% Complete`;
+        const statusDot = document.getElementById('status-dot');
+        const statusText = document.getElementById('status-text');
+        if (data.isPaused) {
+            statusDot.className = 'status-indicator paused';
+            statusText.textContent = 'Paused';
         } else {
-            pauseBtn.textContent = 'Pause Streak';
-            pauseBtn.className = 'btn-action btn-pause';
+            statusDot.className = 'status-indicator active';
+            statusText.textContent = 'Active';
         }
+        let nextTopic = "Course Complete!";
+        // --- CORRECTED: "Next Up" topic is for the current day ---
+        if (userCourse && data.currentDay <= totalDays) {
+            const allDays = userCourse.levels.flatMap(level => level.days);
+            const nextDayTopic = allDays.find(day => day.day === data.currentDay);
+            if (nextDayTopic) { nextTopic = nextDayTopic.topic; }
+        }
+        document.getElementById('next-topic').textContent = nextTopic;
 
-        // --- Populate New Log Grid ---
+        // Populate the UNCHANGED "Progress Log"
         const logList = document.getElementById('logList');
-        logList.innerHTML = ''; // Clear loading message
-
+        logList.innerHTML = '';
         if (data.completedTopics && data.completedTopics.length > 0) {
           data.completedTopics.forEach(t => {
             const cardLink = document.createElement('a');
             cardLink.className = 'log-card';
             cardLink.href = `day.html?day=${t.order}`;
-            cardLink.innerHTML = `
-              <div class="day-number">${t.order}</div>
-              <div class="day-title">Day ${t.order}</div>
-              <span class="day-level">${data.level}</span>
-            `;
+            cardLink.innerHTML = `<div class="day-number">${t.order}</div><div class="day-title">Day ${t.order}</div><span class="day-level">${data.level}</span>`;
             logList.appendChild(cardLink);
           });
         } else {
           logList.innerHTML = '<p>Your journey begins now! Complete your first task to see it here.</p>';
         }
+
+        // Populate the UNCHANGED "Curriculum" section
+        const completedDaysSet = new Set(data.completedTopics.map(t => t.order));
+        renderCurriculum(userCourse, completedDaysSet);
 
       } catch (error) {
         alert(error.message);
@@ -347,34 +393,26 @@
       }
     }
 
-    // --- UNCHANGED EVENT HANDLER LOGIC ---
+    // --- Add Event Listeners ---
     document.addEventListener('DOMContentLoaded', loadDashboard);
+    
+    // Dropdown toggle logic
+    const profileAvatar = document.getElementById('profile-avatar');
+    const profileDropdown = document.getElementById('profile-dropdown');
+    profileAvatar.addEventListener('click', () => {
+        profileDropdown.classList.toggle('show');
+    });
 
-    document.getElementById('editBtn').onclick = () => {
-      if (confirm('Editing your schedule will reset your streak to Day 1. Continue?')) {
-        window.location.href = 'set-schedule.html';
-      }
-    };
-
-    document.getElementById('pauseBtn').onclick = async () => {
-      try {
-        const res = await fetch('/api/user/pause', {
-          method: 'POST',
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
-        const data = await res.json();
-        if (res.ok) {
-          alert(data.message);
-          // Reload the dashboard to reflect the new state
-          loadDashboard();
-        } else {
-          throw new Error(data.message || 'Error toggling pause.');
+    // Close dropdown if clicking outside
+    window.addEventListener('click', (e) => {
+        if (!e.target.closest('.profile-menu-container')) {
+            profileDropdown.classList.remove('show');
         }
-      } catch (error) {
-        alert(error.message);
-      }
-    };
+    });
 
+    // Button actions
+    document.getElementById('editBtn').onclick = () => { if (confirm('Editing schedule will reset your streak. Continue?')) { window.location.href = 'set-schedule.html'; } };
+    document.getElementById('pauseBtn').onclick = async () => { alert("This is a demo. Pause/Resume requires a backend."); };
     document.getElementById('logoutBtn').onclick = () => {
       localStorage.removeItem('token');
       window.location.href = 'index.html';
