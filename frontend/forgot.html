@@ -161,6 +161,31 @@
     .form-footer a:hover {
       color: var(--primary-blue);
     }
+    .action-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.action-buttons button {
+  flex: 1;
+  padding: 12px;
+  background-color: var(--bg-dark);
+  color: var(--text-light);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.action-buttons button:hover {
+  background-color: var(--primary-blue);
+  border-color: var(--primary-blue);
+  transform: translateY(-2px);
+}
+
   </style>
 </head>
 <body>
@@ -171,7 +196,10 @@
       <h2>Reset Password</h2>
       <p>Enter your email and we'll send you a link to get back into your account.</p>
     </div>
-    
+    <div class="action-buttons">
+  <button type="button" id="backBtn"><i class="fa-solid fa-arrow-left"></i> Back</button>
+  <button type="button" id="homeBtn"><i class="fa-solid fa-house"></i> Home</button>
+</div>
     <form id="forgotForm">
       <div id="message" class="message"></div>
       
@@ -192,7 +220,16 @@
     const forgotForm = document.getElementById('forgotForm');
     const forgotBtn = document.getElementById('forgotBtn');
     const messageEl = document.getElementById('message');
+    const backBtn = document.getElementById('backBtn');
+  const homeBtn = document.getElementById('homeBtn');
 
+  backBtn.addEventListener('click', () => {
+    window.history.back();
+  });
+
+  homeBtn.addEventListener('click', () => {
+    window.location.href = 'index.html'; // Or your actual home page path
+  });
     forgotForm.addEventListener('submit', async (e) => {
       e.preventDefault(); // Prevent default form submission
 

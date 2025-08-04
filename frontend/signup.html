@@ -155,6 +155,47 @@
     .form-footer a:hover {
       color: var(--primary-blue);
     }
+    .password-wrapper {
+  position: relative;
+}
+
+.password-wrapper input {
+  padding-right: 40px; /* make space for the icon */
+}
+
+.password-wrapper i {
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: var(--text-muted);
+}
+.action-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.action-buttons button {
+  flex: 1;
+  padding: 12px;
+  background-color: var(--bg-dark);
+  color: var(--text-light);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.action-buttons button:hover {
+  background-color: var(--primary-blue);
+  border-color: var(--primary-blue);
+  transform: translateY(-2px);
+}
+
   </style>
 </head>
 <body>
@@ -164,7 +205,10 @@
       <div class="logo"><i class="fa-solid fa-fire"></i></div>
       <h2>Create your account</h2>
     </div>
-    
+    <div class="action-buttons">
+  <button type="button" id="backBtn"><i class="fa-solid fa-arrow-left"></i> Back</button>
+  <button type="button" id="homeBtn"><i class="fa-solid fa-house"></i> Home</button>
+</div>
     <form id="signupForm">
       <div id="message" class="message"></div>
       
@@ -178,10 +222,14 @@
         <input type="email" id="email" placeholder="you@example.com" required />
       </div>
 
-      <div class="input-group">
-        <label for="password">Password</label>
-        <input type="password" id="password" placeholder="Enter a strong password" required />
-      </div>
+     <div class="input-group">
+  <label for="password">New Password</label>
+  <div class="password-wrapper">
+    <input type="password" id="password" placeholder="Enter your new password" required />
+    <i id="togglePassword" class="fa-solid fa-eye"></i>
+  </div>
+</div>
+
 
       <button type="submit" id="signupBtn">Sign Up</button>
     </form>
@@ -195,7 +243,27 @@
     const signupForm = document.getElementById('signupForm');
     const signupBtn = document.getElementById('signupBtn');
     const messageEl = document.getElementById('message');
-    
+    const togglePassword = document.getElementById('togglePassword');
+  const passwordInput = document.getElementById('password');
+
+  togglePassword.addEventListener('click', () => {
+    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+    passwordInput.setAttribute('type', type);
+
+    // Toggle the icon style
+    togglePassword.classList.toggle('fa-eye');
+    togglePassword.classList.toggle('fa-eye-slash');
+  });
+  const backBtn = document.getElementById('backBtn');
+  const homeBtn = document.getElementById('homeBtn');
+
+  backBtn.addEventListener('click', () => {
+    window.history.back();
+  });
+
+  homeBtn.addEventListener('click', () => {
+    window.location.href = 'index.html'; // Or your actual home page path
+  });
     // Use 'submit' event on the form for better accessibility and standards
     signupForm.addEventListener('submit', async (e) => {
       e.preventDefault(); // Prevent default form submission

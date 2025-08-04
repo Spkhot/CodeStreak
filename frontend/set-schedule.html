@@ -223,6 +223,31 @@
       .navbar { padding: 0 1rem; }
       .main-container { padding: 1.5rem 1rem; }
     }
+    .action-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.action-buttons button {
+  flex: 1;
+  padding: 12px;
+  background-color: var(--bg-dark);
+  color: var(--text-light);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.action-buttons button:hover {
+  background-color: var(--primary-blue);
+  border-color: var(--primary-blue);
+  transform: translateY(-2px);
+}
+
   </style>
 </head>
 <body>
@@ -241,12 +266,15 @@
         <h2>Set Your Schedule</h2>
         <p class="subtitle">This is the final step to start your streak!</p>
       </div>
-
+      <div class="action-buttons">
+  <button type="button" id="backBtn"><i class="fa-solid fa-arrow-left"></i> Back</button>
+  <button type="button" id="homeBtn"><i class="fa-solid fa-house"></i> Home</button>
+</div><br>
       <div class="activation-note">
         <div class="icon"><i class="fab fa-whatsapp"></i></div>
         <div>
           <h3>Activate Daily Delivery</h3>
-          <p>1. Save <code>+1 415 523 8886</code> to your contacts.<br>2. Send <code>join teeth-lunch</code> on WhatsApp.</p>
+          <p>1. Save <code>+1 415 523 8886(US)</code> to your contacts.<br>2. Send <code>join teeth-lunch</code> on WhatsApp.</p>
         </div>
       </div>
 
@@ -293,6 +321,16 @@
   </main>
 
   <script>
+    const backBtn = document.getElementById('backBtn');
+  const homeBtn = document.getElementById('homeBtn');
+
+  backBtn.addEventListener('click', () => {
+    window.history.back();
+  });
+
+  homeBtn.addEventListener('click', () => {
+    window.location.href = 'index.html'; // Or your actual home page path
+  });
     const scheduleForm = document.getElementById('scheduleForm');
     const saveBtn = document.getElementById('saveBtn');
     const messageEl = document.getElementById('message');
