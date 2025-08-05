@@ -41,7 +41,7 @@ cron.schedule('* * * * *', async () => {
     // calculated delivery time (also in UTC).
     console.log(`-> Checking ${user.name}: Their time (${hour}:${minute} in ${userTimeZone}) is ${deliveryTimeInUserTz.utc().format('HH:mm')} UTC. Current UTC is ${nowInUTC.format('HH:mm')}`);
     
-    if (nowInUTC.isSame(deliveryTimeInUserTz, 'minute')) {
+    if (nowInUTC.isSameOrAfter(deliveryTimeInUserTz) && nowInUTC.diff(deliveryTimeInUserTz, 'minutes') < 1) {
       console.log(`🚀 It's a match! Sending message to ${user.name} at ${user.whatsapp}`);
 
       try {
