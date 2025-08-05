@@ -153,6 +153,7 @@
       padding: 1rem;
       text-align: left;
       border-bottom: 1px solid var(--border-color);
+      white-space: nowrap; /* Prevents text from wrapping in cells */
     }
     th {
       background-color: var(--bg-dark);
@@ -177,12 +178,29 @@
     .btn-icon.edit:hover { color: var(--edit-yellow); }
     .btn-icon.delete:hover { color: var(--delete-red); }
 
-    /* --- Responsive --- */
+    /* --- ✅✅✅ RESPONSIVE STYLES ✅✅✅ --- */
+    /* For tablets and smaller laptops */
+    @media (max-width: 1200px) {
+        .admin-container {
+            grid-template-columns: 350px 1fr; /* Give form slightly less space */
+        }
+    }
+
+    /* For tablets */
     @media (max-width: 992px) {
         .admin-container {
-            grid-template-columns: 1fr;
+            grid-template-columns: 1fr; /* Switch to a single column */
         }
+        body { padding: 1.5rem; }
+        .admin-header h1 { font-size: 2rem; }
+    }
+    
+    /* For mobile phones */
+    @media (max-width: 576px) {
         body { padding: 1rem; }
+        .card { padding: 1.5rem; }
+        .admin-header h1 { font-size: 1.8rem; }
+        th, td { padding: 0.75rem; }
     }
 
   </style>
@@ -259,7 +277,7 @@
     const messageEl = document.getElementById('message');
     let editingId = null;
     let allTopics = {};
-    // --- UI HELPER FUNCTIONS ---
+
     function showMessage(text, type) {
       messageEl.textContent = text;
       messageEl.className = `message ${type}`;
@@ -280,7 +298,6 @@
     
     cancelBtn.addEventListener('click', resetFormState);
 
-    // --- CORE LOGIC (UNCHANGED) WRAPPED IN NEW UI ---
     async function loadTopics() {
       try {
         const res = await fetch('/api/admin/topics', {
@@ -291,25 +308,23 @@
         const tbody = document.getElementById('topicsTable');
         tbody.innerHTML = '';
         data.forEach(t => {
-  allTopics[t._id] = t; // store the whole object
-
-  const tr = document.createElement('tr');
-  tr.innerHTML = `
-    <td>${t.language}</td>
-    <td>${t.level}</td>
-    <td>${t.order}</td>
-    <td class="actions">
-      <button class="btn-icon edit" onclick="editTopic('${t._id}')" title="Edit">
-        <i class="fa-solid fa-pen-to-square"></i>
-      </button>
-      <button class="btn-icon delete" onclick="deleteTopic('${t._id}')" title="Delete">
-        <i class="fa-solid fa-trash-can"></i>
-      </button>
-    </td>
-  `;
-  tbody.appendChild(tr);
-});
-
+          allTopics[t._id] = t;
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${t.language}</td>
+            <td>${t.level}</td>
+            <td>${t.order}</td>
+            <td class="actions">
+              <button class="btn-icon edit" onclick="editTopic('${t._id}')" title="Edit">
+                <i class="fa-solid fa-pen-to-square"></i>
+              </button>
+              <button class="btn-icon delete" onclick="deleteTopic('${t._id}')" title="Delete">
+                <i class="fa-solid fa-trash-can"></i>
+              </button>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
       } catch (error) {
         showMessage(error.message, 'error');
       }
@@ -317,33 +332,34 @@
 
     async function deleteTopic(id) {
       if (!confirm('Are you sure you want to delete this topic? This action cannot be undone.')) return;
-      const res = await fetch(`/api/admin/topics/${id}`, {
-        method: 'DELETE',
-        headers: { 'Authorization': `Bearer ${token}` }
-      });
-      const data = await res.json();
-      showMessage(data.message, res.ok ? 'success' : 'error');
-      if (res.ok) loadTopics();
+      try {
+        const res = await fetch(`/api/admin/topics/${id}`, {
+          method: 'DELETE',
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const data = await res.json();
+        showMessage(data.message, res.ok ? 'success' : 'error');
+        if (res.ok) loadTopics();
+      } catch (error) {
+        showMessage('An error occurred while deleting.', 'error');
+      }
     }
 
     function editTopic(id) {
-  const t = allTopics[id];
-  editingId = id;
-
-  document.getElementById('language').value = t.language;
-  document.getElementById('level').value = t.level;
-  document.getElementById('order').value = t.order;
-  document.getElementById('explanation').value = t.explanation;
-  document.getElementById('leetcode').value = t.leetcode || '';
-  document.getElementById('youtube').value = t.youtube || '';
-
-  formTitle.textContent = `Editing Topic (Day ${t.order})`;
-  submitBtn.textContent = 'Update Topic';
-  submitBtn.className = 'btn btn-update';
-  cancelBtn.style.display = 'inline-block';
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
+      const t = allTopics[id];
+      editingId = id;
+      document.getElementById('language').value = t.language;
+      document.getElementById('level').value = t.level;
+      document.getElementById('order').value = t.order;
+      document.getElementById('explanation').value = t.explanation;
+      document.getElementById('leetcode').value = t.leetcode || '';
+      document.getElementById('youtube').value = t.youtube || '';
+      formTitle.textContent = `Editing Topic (Day ${t.order})`;
+      submitBtn.textContent = 'Update Topic';
+      submitBtn.className = 'btn btn-update';
+      cancelBtn.style.display = 'inline-block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 
     topicForm.onsubmit = async (e) => {
       e.preventDefault();
@@ -355,26 +371,20 @@
         leetcode: document.getElementById('leetcode').value,
         youtube: document.getElementById('youtube').value
       };
-
       try {
-        let res, data;
         let url = '/api/admin/topics';
         let method = 'POST';
-
         if (editingId) {
           url = `/api/admin/topics/${editingId}`;
           method = 'PUT';
         }
-
-        res = await fetch(url, {
+        const res = await fetch(url, {
           method: method,
           headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
           body: JSON.stringify(payload)
         });
-        
-        data = await res.json();
+        const data = await res.json();
         showMessage(data.message, res.ok ? 'success' : 'error');
-
         if (res.ok) {
           resetFormState();
           loadTopics();
@@ -384,7 +394,6 @@
       }
     };
 
-    // Initial Load
     document.addEventListener('DOMContentLoaded', loadTopics);
   </script>
 </body>
