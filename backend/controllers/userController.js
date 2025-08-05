@@ -3,7 +3,8 @@ import Topic from '../models/Topic.js';
 
 // 🎯 User sets their schedule AFTER email verification
 export const setSchedule = async (req, res) => {
-  const { language, level, deliveryTime, whatsapp } = req.body;
+  // ✅✅✅ 1. GET the timeZone from the request body ✅✅✅
+  const { language, level, deliveryTime, whatsapp, timeZone } = req.body;
   const user = await User.findById(req.user._id);
 
   if (!user) return res.status(404).json({ message: 'User not found' });
@@ -12,6 +13,10 @@ export const setSchedule = async (req, res) => {
   user.level = level;
   user.deliveryTime = deliveryTime;
   user.whatsapp = whatsapp;
+  
+  // ✅✅✅ 2. SAVE the timeZone to the user's document ✅✅✅
+  user.timeZone = timeZone;
+
   user.currentDay = 1; // Reset streak
   await user.save();
 
@@ -53,7 +58,8 @@ export const deleteUser = async (req, res) => {
     // Success!
     res.status(200).json({ message: 'Account deleted successfully.' });
 
-  } catch (error) {
+  } catch (error)
+   {
     console.error('Error deleting user account:', error);
     res.status(500).json({ message: 'Server error while deleting account.' });
   }

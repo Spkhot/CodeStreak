@@ -13,6 +13,12 @@ const userSchema = new mongoose.Schema({
   level: String,
   deliveryTime: String,
   whatsapp: String,
+  
+  // ✅✅✅ NEW FIELD ADDED TO STORE THE USER'S TIME ZONE ✅✅✅
+  timeZone: {
+    type: String, // Will store values like "Asia/Kolkata", "America/New_York", etc.
+  },
+
   currentDay: { type: Number, default: 1 },
   isPaused: { type: Boolean, default: false },
   completedTopics: [

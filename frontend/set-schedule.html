@@ -294,7 +294,7 @@
       setTimeout(() => { window.location.href = 'login.html'; }, 2500);
     }
 
-    scheduleForm.addEventListener('submit', async (e) => {
+        scheduleForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       messageEl.textContent = '';
       messageEl.className = 'message';
@@ -304,6 +304,10 @@
       const level = document.getElementById('level').value;
       const deliveryTime = document.getElementById('time').value;
       const whatsapp = document.getElementById('whatsapp').value.trim();
+
+      // ✅✅✅ 1. GET THE USER'S TIME ZONE FROM THE BROWSER ✅✅✅
+      const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
       if (!language || !level || !deliveryTime || !whatsapp) {
         messageEl.textContent = 'Please fill all fields.';
         messageEl.classList.add('error');
@@ -315,7 +319,8 @@
         const res = await fetch('/api/user/set-schedule', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-          body: JSON.stringify({ language, level, deliveryTime, whatsapp })
+          // ✅✅✅ 2. SEND THE timeZone IN THE REQUEST BODY ✅✅✅
+          body: JSON.stringify({ language, level, deliveryTime, whatsapp, timeZone })
         });
         const data = await res.json();
         if (res.ok) {
