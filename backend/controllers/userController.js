@@ -32,16 +32,22 @@ export const getMe = async (req, res) => {
   res.json(user);
 };
 
-// 🎯 Pause/resume daily delivery
+// In controllers/userController.js
 export const togglePause = async (req, res) => {
   const user = await User.findById(req.user._id);
-
-  if (!user) return res.status(404).json({ message: 'User not found' });
-
+  const wasPaused = user.isPaused;
   user.isPaused = !user.isPaused;
-  await user.save();
 
-  res.json({ message: `Schedule ${user.isPaused ? 'paused' : 'resumed'}.` });
+  // If resuming, reset streak to 0 but keep course progress
+  if (wasPaused && !user.isPaused) {
+    user.streakCount = 0; 
+  }
+  
+  await user.save();
+  // ... send back the full user object in the response
+  const userObject = user.toObject();
+  delete userObject.password;
+  res.json({ message: `Course ${user.isPaused ? 'paused' : 'resumed'}.`, user: userObject });
 };
 
 export const deleteUser = async (req, res) => {
@@ -63,4 +69,24 @@ export const deleteUser = async (req, res) => {
     console.error('Error deleting user account:', error);
     res.status(500).json({ message: 'Server error while deleting account.' });
   }
+};
+
+// In controllers/userController.js
+
+// ... (after your existing functions)
+
+export const updateTime = async (req, res) => {
+  const { deliveryTime } = req.body;
+  if (!deliveryTime) return res.status(400).json({ message: 'Delivery time is required.' });
+
+  const user = await User.findByIdAndUpdate(req.user._id, { deliveryTime }, { new: true });
+  res.json({ message: 'Delivery time updated successfully!', user });
+};
+
+export const updateNumber = async (req, res) => {
+  const { whatsapp } = req.body;
+  if (!whatsapp) return res.status(400).json({ message: 'WhatsApp number is required.' });
+
+  const user = await User.findByIdAndUpdate(req.user._id, { whatsapp }, { new: true });
+  res.json({ message: 'WhatsApp number updated successfully!', user });
 };

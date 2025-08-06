@@ -20,6 +20,10 @@ const userSchema = new mongoose.Schema({
   },
 
   currentDay: { type: Number, default: 1 },
+  streakCount: {
+    type: Number,
+    default: 0 // Start all users with a streak of 0
+  },
   isPaused: { type: Boolean, default: false },
   completedTopics: [
     {
