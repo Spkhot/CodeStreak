@@ -213,7 +213,18 @@
     text-shadow: 0 0 16px rgba(230, 237, 243, 0.3); /* Brighter glow at the peak */
   }
 }
-    @media (max-width: 768px) { section { padding: 80px 0; } .hamburger { display: block; font-size: 1.5rem; color: var(--text-light); z-index: 1001; } .nav-menu { position: fixed; top: 0; left: -100%; width: 100%; height: 100vh; background-color: var(--bg-dark); flex-direction: column; justify-content: center; align-items: center; gap: 2rem; transition: left 0.3s ease-in-out; } .nav-menu.active { left: 0; } .nav-links { flex-direction: column; text-align: center; font-size: 1.5rem; } #actions { flex-direction: column; } .hero-text h1 { font-size: 2.8rem; } .hero-text .tagline { font-size: 1.5rem; } .section-header h2, .about-text h2 { font-size: 2.2rem; } .how-it-works-timeline::after { left: 20px; } .timeline-item { width: 100%; padding-left: 60px; padding-right: 15px; } .timeline-item:nth-child(even) { left: 0%; } .timeline-dot { left: 12px; } }
+    @media (max-width: 768px) { section { padding: 80px 0; } .hamburger { display: block; font-size: 1.5rem; color: var(--text-light); z-index: 1001; } .nav-menu { position: fixed; top: 0; left: -100%; width: 100%; height: 100vh; background-color: var(--bg-dark); flex-direction: column; justify-content: center; align-items: center; gap: 2rem; transition: left 0.3s ease-in-out; } .nav-menu.active { left: 0; } .nav-links { flex-direction: column; text-align: center; font-size: 1.5rem; } .hero-actions {
+    flex-direction: column; /* Stack buttons vertically */
+    align-items: center;    /* Center the stacked buttons */
+}
+.hero-actions .btn {
+    width: 100%;            /* Make buttons take up available width */
+    max-width: 300px;       /* But not TOO wide */
+}.hero-text h1 { 
+    font-size: 2.2rem;     /* Make heading smaller */
+    line-height: 1.3;      /* Adjust line spacing */
+    white-space: normal;   /* Allow text to wrap */
+} .hero-text .tagline { font-size: 1.5rem; } .section-header h2, .about-text h2 { font-size: 2.2rem; } .how-it-works-timeline::after { left: 20px; } .timeline-item { width: 100%; padding-left: 60px; padding-right: 15px; } .timeline-item:nth-child(even) { left: 0%; } .timeline-dot { left: 12px; } }
   </style>
   <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 </head>
