@@ -5,20 +5,16 @@
   <title>Dashboard | The Habit Loop</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Google Fonts: Poppins -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="icon" href="logo.png">
-  <!-- Font Awesome for Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-47YP5C93M8"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-47YP5C93M8');
 </script>
   <style>
@@ -36,113 +32,35 @@
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    body {
-      font-family: 'Poppins', sans-serif;
-      background-color: var(--bg-dark);
-      color: var(--text-light);
-    }
-
-    /* --- Navbar --- */
-    .navbar {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 0 2rem; height: 70px; background-color: var(--bg-secondary);
-      border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000;
-    }
-    .logo {
-        font-size: 1.5rem; font-weight: 700; text-decoration: none; color: var(--text-light);
-        display: flex; align-items: center; gap: 8px;
-    }
+    body { font-family: 'Poppins', sans-serif; background-color: var(--bg-dark); color: var(--text-light); }
+    .navbar { display: flex; justify-content: space-between; align-items: center; padding: 0 2rem; height: 70px; background-color: var(--bg-secondary); border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; }
+    .logo { font-size: 1.5rem; font-weight: 700; text-decoration: none; color: var(--text-light); display: flex; align-items: center; gap: 8px; }
     .logo .fa-fire { color: var(--primary-blue); }
     .nav-actions { display: flex; align-items: center; gap: 1.5rem; }
-    .streak-counter {
-      display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem;
-      font-weight: 600; background-color: var(--bg-dark); padding: 8px 16px;
-      border-radius: 8px; border: 1px solid var(--border-color);
-    }
+    .streak-counter { display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; font-weight: 600; background-color: var(--bg-dark); padding: 8px 16px; border-radius: 8px; border: 1px solid var(--border-color); }
     .streak-counter .fa-fire { color: var(--fire-orange); animation: flame 1.5s infinite; }
     @keyframes flame { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
-    
-    /* ✅✅✅ NEW PROFILE DROPDOWN STYLES ✅✅✅ */
     .profile-menu-container { position: relative; }
-    .profile-avatar {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        background-color: var(--primary-blue);
-        color: white;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.2rem;
-        font-weight: 700;
-        cursor: pointer;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-        user-select: none;
-    }
-    .profile-avatar:hover {
-        transform: scale(1.05);
-        box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
-    }
-    .profile-dropdown {
-        position: absolute;
-        top: 120%;
-        right: 0;
-        background-color: var(--bg-secondary);
-        border: 1px solid var(--border-color);
-        border-radius: 8px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        min-width: 240px;
-        padding: 0.5rem 0;
-        z-index: 1001;
-        opacity: 0;
-        visibility: hidden;
-        transform: translateY(10px);
-        transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
-    }
-    .profile-dropdown.show {
-        opacity: 1;
-        visibility: visible;
-        transform: translateY(0);
-    }
-    .dropdown-header {
-        padding: 0.75rem 1rem;
-        border-bottom: 1px solid var(--border-color);
-        margin-bottom: 0.5rem;
-    }
+    .profile-avatar { width: 40px; height: 40px; border-radius: 50%; background-color: var(--primary-blue); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: 700; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease; user-select: none; }
+    .profile-avatar:hover { transform: scale(1.05); box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); }
+    .profile-dropdown { position: absolute; top: 120%; right: 0; background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); min-width: 240px; padding: 0.5rem 0; z-index: 1001; opacity: 0; visibility: hidden; transform: translateY(10px); transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s; }
+    .profile-dropdown.show { opacity: 1; visibility: visible; transform: translateY(0); }
+    .dropdown-header { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border-color); margin-bottom: 0.5rem; }
     .dropdown-header .user-name { font-weight: 600; }
-    .dropdown-item {
-        display: block;
-        padding: 0.75rem 1rem;
-        color: var(--text-muted);
-        text-decoration: none;
-        transition: background-color 0.2s ease, color 0.2s ease;
-    }
-    .dropdown-item i { margin-right: 10px; width: 20px; text-align: center;}
-    .dropdown-item:hover {
-        background-color: var(--bg-dark);
-        color: var(--text-light);
-    }
-    .dropdown-item.logout:hover {
-        background-color: rgba(239, 68, 68, 0.1);
-        color: var(--danger-red);
-    }
-
-    /* --- Main Container & Layout --- */
+    .dropdown-item { display: block; padding: 0.75rem 1rem; color: var(--text-muted); text-decoration: none; transition: background-color 0.2s ease, color 0.2s ease; }
+    .dropdown-item i { margin-right: 10px; width: 20px; text-align: center; }
+    .dropdown-item:hover { background-color: var(--bg-dark); color: var(--text-light); }
+    .dropdown-item.logout:hover { background-color: rgba(239, 68, 68, 0.1); color: var(--danger-red); }
     .container { max-width: 900px; margin: 0 auto; padding: 2.5rem 20px; }
     .welcome-header { font-size: 2.5rem; font-weight: 700; margin-bottom: 2.5rem; }
     .dashboard-grid { display: grid; grid-template-columns: 300px 1fr; gap: 2rem; }
     .right-column-grid { display: flex; flex-direction: column; gap: 2rem; }
-
-    /* UNCHANGED CARD STYLES */
     .card { background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; }
-    .card-header {
-      display: flex; align-items: center; gap: 0.75rem; font-size: 1.25rem;
-      font-weight: 600; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border-color);
-    }
+    .card-header { display: flex; align-items: center; gap: 0.75rem; font-size: 1.25rem; font-weight: 600; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border-color); }
     .card-actions { margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 0.75rem; }
     .btn-action { width: 100%; padding: 10px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: opacity 0.3s ease; }
     .btn-action:hover { opacity: 0.85; }
+    .btn-action:disabled { cursor: not-allowed; opacity: 0.5; }
     .btn-edit { background-color: var(--primary-blue); color: white; }
     .btn-pause { background-color: var(--pause-yellow); color: white; }
     .btn-resume { background-color: var(--resume-green); color: white; }
@@ -182,8 +100,20 @@
     .topic-slide-panel { background-color: var(--bg-dark); border: 1px solid var(--border-color); border-top: 3px solid var(--primary-blue); margin-top: 1rem; padding: 1.5rem; border-radius: 8px; overflow: hidden; max-height: 0; opacity: 0; visibility: hidden; transition: all 0.5s ease-in-out; }
     .topic-slide-panel.show { max-height: 200px; opacity: 1; visibility: visible; }
     .topic-slide-panel strong { color: var(--primary-blue); }
-
-    /* Responsive */
+    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); backdrop-filter: blur(5px); display: flex; align-items: center; justify-content: center; z-index: 2000; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s; }
+    .modal-overlay.show { opacity: 1; visibility: visible; }
+    .modal-content { background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 2rem; width: 100%; max-width: 400px; transform: scale(0.95); transition: transform 0.3s ease; }
+    .modal-overlay.show .modal-content { transform: scale(1); }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+    .modal-header h2 { font-size: 1.5rem; margin: 0; }
+    .close-btn { background: none; border: none; font-size: 1.5rem; color: var(--text-muted); cursor: pointer; transition: color 0.2s; }
+    .close-btn:hover { color: var(--text-light); }
+    .modal-body .input-group { margin-bottom: 1rem; }
+    .modal-body .input-group label { font-size: 0.9rem; }
+    .modal-body input { font-size: 1rem; }
+    .modal-footer { margin-top: 1.5rem; }
+    .btn-save { width: 100%; padding: 12px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; background-color: var(--primary-blue); color: white; transition: background-color 0.2s; }
+    .btn-save:hover { background-color: var(--primary-blue-hover); }
     @media (max-width: 768px) { .dashboard-grid { grid-template-columns: 1fr; } .navbar { padding: 0 1rem; } .logo { font-size: 1.2rem; } .streak-counter { font-size: 1rem; padding: 6px 12px;} }
   </style>
 </head>
@@ -196,32 +126,24 @@
         <i class="fa-solid fa-fire"></i>
         <span>Streak: <span id="nav-streak">...</span></span>
       </div>
-      <!-- ✅✅✅ NEW PROFILE DROPDOWN REPLACES THE LOGOUT BUTTON ✅✅✅ -->
       <div class="profile-menu-container">
           <div class="profile-avatar" id="profile-avatar">S</div>
           <div class="profile-dropdown" id="profile-dropdown">
-    <div class="dropdown-header">
-        <div class="user-name" id="dropdown-username">Soham</div>
-    </div>
-    <!-- ADD "HOME" LINK -->
-    <a href="index.html" class="dropdown-item"><i class="fa-solid fa-house"></i> Home</a> 
-    
-    <a href="dashboard.html" class="dropdown-item"><i class="fa-solid fa-table-columns"></i> Dashboard</a>
-    
-    <!-- ADD "DELETE ACCOUNT" LINK (note the new ID and class) -->
-    <a href="#" class="dropdown-item logout" id="deleteAccountBtn"><i class="fa-solid fa-user-slash"></i> Delete Account</a>
-
-    <a href="#" class="dropdown-item logout" id="logoutBtn"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
-</div>
+              <div class="dropdown-header"><div class="user-name" id="dropdown-username">...</div></div>
+              <a href="index.html" class="dropdown-item"><i class="fa-solid fa-house"></i> Home</a>
+              <a href="dashboard.html" class="dropdown-item"><i class="fa-solid fa-table-columns"></i> Dashboard</a>
+              <a href="#" class="dropdown-item" id="editTimeBtn"><i class="fa-solid fa-clock"></i> Edit Time</a>
+              <a href="#" class="dropdown-item" id="editNumberBtn"><i class="fa-brands fa-whatsapp"></i> Edit Number</a>
+              <a href="#" class="dropdown-item logout" id="deleteAccountBtn"><i class="fa-solid fa-user-slash"></i> Delete Account</a>
+              <a href="#" class="dropdown-item logout" id="logoutBtn"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
+          </div>
       </div>
     </div>
   </nav>
 
   <main class="container">
     <h1 class="welcome-header">🫡 Welcome, <span id="welcomeName">...</span>!</h1>
-
     <div class="dashboard-grid">
-      <!-- Left Column (UNCHANGED) -->
       <aside>
         <div class="card">
           <div class="card-header"><i class="fa-solid fa-gears"></i><span>Your Coding Setup</span></div>
@@ -232,13 +154,11 @@
             <dt>Daily Time</dt><dd id="time"></dd>
           </dl>
           <div class="card-actions">
-            <button class="btn-action btn-edit" id="editBtn">Edit Schedule</button>
-            <button class="btn-action" id="pauseBtn">Pause</button>
+            <button class="btn-action btn-edit" id="editBtn">Edit Schedule (Reset)</button>
+            <button class="btn-action" id="pauseBtn">Pause Course</button>
           </div>
         </div>
       </aside>
-
-      <!-- Right Column (UNCHANGED) -->
       <div class="right-column-grid">
         <section>
           <div class="card">
@@ -264,19 +184,41 @@
         </section>
       </div>
     </div>
-
-    <!-- Bottom Section (UNCHANGED) -->
     <section id="curriculum-section" class="card">
         <div class="card-header"><i class="fa-solid fa-book-open"></i><span>Course Curriculum</span></div>
         <div id="curriculum-container"><p>Loading your curriculum...</p></div>
     </section>
-
   </main>
   
+  <div class="modal-overlay" id="timeModal">
+      <div class="modal-content">
+          <div class="modal-header"><h2>Edit Delivery Time</h2><button class="close-btn" data-close-modal="timeModal">&times;</button></div>
+          <div class="modal-body">
+              <form id="timeForm">
+                  <div class="input-group"><label for="newTime">New Time (24h format)</label><input type="time" id="newTime" required></div>
+                  <div class="modal-footer"><button type="submit" class="btn-save">Save New Time</button></div>
+              </form>
+          </div>
+      </div>
+  </div>
+  <div class="modal-overlay" id="numberModal">
+      <div class="modal-content">
+          <div class="modal-header"><h2>Edit WhatsApp Number</h2><button class="close-btn" data-close-modal="numberModal">&times;</button></div>
+          <div class="modal-body">
+              <form id="numberForm">
+                  <div class="input-group"><label for="newNumber">New WhatsApp Number</label><input type="tel" id="newNumber" placeholder="+1234567890" required></div>
+                  <div class="modal-footer"><button type="submit" class="btn-save">Save New Number</button></div>
+              </form>
+          </div>
+      </div>
+  </div>
+
   <script>
     const courses = [ { language: "C++", levels: [ { level: "Beginner", title: "Fundamentals & Syntax", days: [ { day: 1, topic: "Structure of a Simple C++ Program (Hello World, #include, main())" }, { day: 2, topic: "Input and Output (cin, cout, endl, basic formatting)" }, { day: 3, topic: "Variables & Data Types (int, float, char, string, bool)" }, { day: 4, topic: "Operators (Arithmetic, Assignment, Increment/Decrement)" }, { day: 5, topic: "Conditional Statements (if, else, nested if)" }, { day: 6, topic: "Logical Operators & Comparisons" }, { day: 7, topic: "Switch Statements" }, { day: 8, topic: "Loops — while, do-while" }, { day: 9, topic: "Loops — for loop, nested loops" }, { day: 10, topic: "Practice: Basic Patterns & Control Flow Questions" } ] }, { level: "Intermediate", title: "Functions & Arrays", days: [ { day: 11, topic: "Functions — Basics, Declaration & Definition" }, { day: 12, topic: "Function Arguments & Return Types" }, { day: 13, topic: "Recursion Basics" }, { day: 14, topic: "Arrays — 1D Arrays Intro" }, { day: 15, topic: "Arrays — 1D Operations & Questions" }, { day: 16, topic: "2D Arrays — Basics" }, { day: 17, topic: "2D Arrays — Classic Problems (Matrix Transpose, Sum)" }, { day: 18, topic: "Strings — C++ Strings, Basic Operations" }, { day: 19, topic: "Strings — Character Arrays vs string Class" }, { day: 20, topic: "Practice: Functions + Arrays + Strings Combined Problems" } ] }, { level: "Advanced", title: "Classes, OOP & STL", days: [ { day: 21, topic: "Intro to OOP — Classes & Objects" }, { day: 22, topic: "Constructors & Destructors" }, { day: 23, topic: "Member Functions & Data Members" }, { day: 24, topic: "Encapsulation & Access Modifiers" }, { day: 25, topic: "Inheritance — Types & Examples" }, { day: 26, topic: "Polymorphism — Function Overloading" }, { day: 27, topic: "Polymorphism — Operator Overloading" }, { day: 28, topic: "Abstract Classes & Pure Virtual Functions" }, { day: 29, topic: "Intro to Standard Template Library (STL)" }, { day: 30, topic: "STL — Vectors & Iterators" } ] }, { level: "Pro", title: "Advanced Concepts + DSA", days: [ { day: 31, topic: "Pointers — Basics, * and &" }, { day: 32, topic: "Pointers — Arrays & Functions" }, { day: 33, topic: "Dynamic Memory Allocation (new and delete)" }, { day: 34, topic: "Linked Lists — Intro & Implementation" }, { day: 35, topic: "Stacks & Queues (Concepts + STL)" }, { day: 36, topic: "Trees — Basics & Binary Tree" }, { day: 37, topic: "Binary Search & Binary Search Trees" }, { day: 38, topic: "Sorting Algorithms — Bubble, Selection, Insertion" }, { day: 39, topic: "Searching Algorithms — Linear & Binary Search" }, { day: 40, topic: "Final Practice: Mixed Interview Questions (Patterns, STL, DSA)" } ] } ] }, { language: "Java", levels: [ { level: "Beginner", title: "Java Basics & Syntax", days: [ { day: 1, topic: "Intro: How Java Works, JVM, JDK, First Hello World" }, { day: 2, topic: "Variables & Data Types" }, { day: 3, topic: "Input & Output — Scanner" }, { day: 4, topic: "Operators — Arithmetic, Assignment" }, { day: 5, topic: "Conditional Statements — if, else if, else" }, { day: 6, topic: "Logical Operators & Comparisons" }, { day: 7, topic: "Switch Case" }, { day: 8, topic: "Loops — while & do-while" }, { day: 9, topic: "Loops — for loop, nested loops" }, { day: 10, topic: "Practice: Basic Pattern Printing" } ] }, { level: "Intermediate", title: "Methods & Arrays", days: [ { day: 11, topic: "Methods — Definition & Calling" }, { day: 12, topic: "Method Overloading" }, { day: 13, topic: "Recursion Basics" }, { day: 14, topic: "Arrays — 1D Arrays" }, { day: 15, topic: "Arrays — Basic Problems" }, { day: 16, topic: "2D Arrays" }, { day: 17, topic: "2D Array Classic Problems (Transpose, Sum)" }, { day: 18, topic: "Strings — Basics & String Class" }, { day: 19, topic: "String Methods & Immutability" }, { day: 20, topic: "Practice: Arrays + Strings Problems" } ] }, { level: "Advanced", title: "OOP & Advanced Classes", days: [ { day: 21, topic: "OOP Concepts — Classes & Objects" }, { day: 22, topic: "Constructors" }, { day: 23, topic: "Getters & Setters" }, { day: 24, topic: "this Keyword" }, { day: 25, topic: "Inheritance" }, { day: 26, topic: "super Keyword" }, { day: 27, topic: "Method Overriding" }, { day: 28, topic: "Polymorphism" }, { day: 29, topic: "Abstraction & Interfaces" }, { day: 30, topic: "Encapsulation — Real Example" } ] }, { level: "Pro", title: "Core DSA & Collections", days: [ { day: 31, topic: "Intro to Java Collections" }, { day: 32, topic: "ArrayList — Basics & Operations" }, { day: 33, topic: "LinkedList — Basics & Operations" }, { day: 34, topic: "HashMap — Basics & Use Cases" }, { day: 35, topic: "HashSet — Basics & Differences" }, { day: 36, topic: "Stack & Queue in Java" }, { day: 37, topic: "Sorting Algorithms — Bubble & Selection" }, { day: 38, topic: "Searching — Linear & Binary Search" }, { day: 39, topic: "Trees — Basic Binary Tree Concepts" }, { day: 40, topic: "Practice Day — Mixed DSA Questions" } ] } ] } ];
     const token = localStorage.getItem('token');
     if (!token) { window.location.href = 'login.html'; }
+
+    let currentUserState = {};
 
     function renderCurriculum(userCourse, completedDaysSet) {
         const container = document.getElementById('curriculum-container');
@@ -326,44 +268,31 @@
         });
     }
 
-    async function loadDashboard() {
-      try {
-        const res = await fetch('/api/user/me', { headers: { 'Authorization': `Bearer ${token}` } });
-        if (!res.ok) { throw new Error('Session expired or unauthorized.'); }
-        const data = await res.json();
-        
-        if (!data.language || !data.level) {
-          alert('Please complete your schedule setup.');
-          window.location.href = 'set-schedule.html';
-          return;
-        }
-
+    function updateDashboardUI(data) {
         const userCourse = courses.find(c => c.language === data.language);
+        const streak = data.streakCount || 0;
+        const completedDays = data.completedTopics.length;
 
-        // --- CORRECTED: Use (currentDay - 1) for actual streak ---
-        const completedDays = data.currentDay > 0 ? data.currentDay - 1 : 0;
-
-        // Populate Welcome, Nav, and Profile Dropdown
         document.getElementById('welcomeName').textContent = data.name;
-        document.getElementById('nav-streak').textContent = completedDays;
+        document.getElementById('nav-streak').textContent = streak;
         document.getElementById('profile-avatar').textContent = data.name.charAt(0).toUpperCase();
         document.getElementById('dropdown-username').textContent = data.name;
         
-        // Populate the UNCHANGED "Settings" card
         document.getElementById('lang').textContent = data.language;
         document.getElementById('level').textContent = data.level;
         document.getElementById('wa').textContent = data.whatsapp;
         document.getElementById('time').textContent = data.deliveryTime;
+        
         const pauseBtn = document.getElementById('pauseBtn');
-        pauseBtn.textContent = data.isPaused ? 'Resume Streak' : 'Pause Streak';
+        pauseBtn.textContent = data.isPaused ? 'Resume Course' : 'Pause Course';
         pauseBtn.className = data.isPaused ? 'btn-action btn-resume' : 'btn-action btn-pause';
         
-        // Populate the NEW "Streak Status" card
         const totalDays = 40;
         const progressPercent = Math.round((completedDays / totalDays) * 100);
-        document.getElementById('streak-card').textContent = completedDays;
+        document.getElementById('streak-card').textContent = streak;
         document.getElementById('progress-bar').style.width = `${progressPercent}%`;
-        document.getElementById('progress-text').textContent = `${progressPercent}% Complete`;
+        document.getElementById('progress-text').textContent = `${completedDays} of ${totalDays} days complete`;
+        
         const statusDot = document.getElementById('status-dot');
         const statusText = document.getElementById('status-text');
         if (data.isPaused) {
@@ -373,8 +302,8 @@
             statusDot.className = 'status-indicator active';
             statusText.textContent = 'Active';
         }
+
         let nextTopic = "Course Complete!";
-        // --- CORRECTED: "Next Up" topic is for the current day ---
         if (userCourse && data.currentDay <= totalDays) {
             const allDays = userCourse.levels.flatMap(level => level.days);
             const nextDayTopic = allDays.find(day => day.day === data.currentDay);
@@ -382,7 +311,6 @@
         }
         document.getElementById('next-topic').textContent = nextTopic;
 
-        // Populate the UNCHANGED "Progress Log"
         const logList = document.getElementById('logList');
         logList.innerHTML = '';
         if (data.completedTopics && data.completedTopics.length > 0) {
@@ -394,13 +322,25 @@
             logList.appendChild(cardLink);
           });
         } else {
-          logList.innerHTML = '<p>Your journey begins now! Complete your first task to see it here.</p>';
+          logList.innerHTML = '<p>Your journey begins! Complete your first task to see it here.</p>';
         }
 
-        // Populate the UNCHANGED "Curriculum" section
         const completedDaysSet = new Set(data.completedTopics.map(t => t.order));
         renderCurriculum(userCourse, completedDaysSet);
+    }
 
+    async function loadDashboard() {
+      try {
+        const res = await fetch('/api/user/me', { headers: { 'Authorization': `Bearer ${token}` } });
+        if (!res.ok) { throw new Error('Session expired or unauthorized.'); }
+        
+        currentUserState = await res.json();
+        if (!currentUserState.language || !currentUserState.level) {
+          alert('Please complete your schedule setup.');
+          window.location.href = 'set-schedule.html';
+          return;
+        }
+        updateDashboardUI(currentUserState);
       } catch (error) {
         alert(error.message);
         localStorage.removeItem('token');
@@ -408,63 +348,121 @@
       }
     }
 
-    // --- Add Event Listeners ---
     document.addEventListener('DOMContentLoaded', loadDashboard);
     
-    // Dropdown toggle logic
+    // Dropdown and other buttons
     const profileAvatar = document.getElementById('profile-avatar');
     const profileDropdown = document.getElementById('profile-dropdown');
-    profileAvatar.addEventListener('click', () => {
-        profileDropdown.classList.toggle('show');
+    profileAvatar.addEventListener('click', (e) => { e.stopPropagation(); profileDropdown.classList.toggle('show'); });
+    window.addEventListener('click', (e) => { if (!e.target.closest('.profile-menu-container')) { profileDropdown.classList.remove('show'); } });
+    document.getElementById('editBtn').onclick = () => { if (confirm('Editing your full schedule will reset your course progress to Day 1. Are you sure?')) { window.location.href = 'set-schedule.html'; } };
+    document.getElementById('logoutBtn').onclick = () => { localStorage.removeItem('token'); window.location.href = 'index.html'; };
+    
+    // ✅✅✅ ALL BUTTON LOGIC CONSOLIDATED HERE ✅✅✅
+    
+    document.getElementById('pauseBtn').onclick = async () => {
+        const pauseBtn = document.getElementById('pauseBtn');
+        pauseBtn.disabled = true;
+        
+        // If user is resuming, we tell the backend to reset the streak
+        const isResuming = currentUserState.isPaused;
+        const bodyPayload = isResuming ? { resetStreak: true } : {};
+
+        try {
+            const res = await fetch('/api/user/pause', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                body: JSON.stringify(bodyPayload)
+            });
+            if (!res.ok) { throw new Error((await res.json()).message || 'Failed to update status.'); }
+            
+            const data = await res.json();
+            alert(data.message);
+            currentUserState = data.user; // Update state from server response
+            updateDashboardUI(currentUserState); // Re-render everything
+        } catch (error) {
+            alert('Error: ' + error.message);
+        } finally {
+            pauseBtn.disabled = false;
+        }
+    };
+
+    const timeModal = document.getElementById('timeModal');
+    const numberModal = document.getElementById('numberModal');
+    const editTimeBtn = document.getElementById('editTimeBtn');
+    const editNumberBtn = document.getElementById('editNumberBtn');
+    const closeButtons = document.querySelectorAll('.close-btn');
+
+    const openModal = (modal) => modal.classList.add('show');
+    const closeModal = (modal) => modal.classList.remove('show');
+
+    editTimeBtn.addEventListener('click', (e) => { e.preventDefault(); openModal(timeModal); });
+    editNumberBtn.addEventListener('click', (e) => { e.preventDefault(); openModal(numberModal); });
+    closeButtons.forEach(btn => {
+        const modalId = btn.dataset.closeModal;
+        btn.addEventListener('click', () => closeModal(document.getElementById(modalId)));
     });
 
-    // Close dropdown if clicking outside
-    window.addEventListener('click', (e) => {
-        if (!e.target.closest('.profile-menu-container')) {
-            profileDropdown.classList.remove('show');
+    document.getElementById('timeForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const newTime = document.getElementById('newTime').value;
+        try {
+            const res = await fetch('/api/user/update-time', {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                body: JSON.stringify({ deliveryTime: newTime })
+            });
+            if (!res.ok) { throw new Error((await res.json()).message || 'Failed to update time.'); }
+            
+            const data = await res.json();
+            alert(data.message);
+            currentUserState = data.user;
+            updateDashboardUI(currentUserState);
+            closeModal(timeModal);
+        } catch (error) {
+            alert('Error: ' + error.message);
         }
     });
 
-    // Button actions
-    document.getElementById('editBtn').onclick = () => { if (confirm('Editing schedule will reset your streak. Continue?')) { window.location.href = 'set-schedule.html'; } };
-    document.getElementById('pauseBtn').onclick = async () => { alert("This is a demo. Pause/Resume requires a backend."); };
-    document.getElementById('logoutBtn').onclick = () => {
-      localStorage.removeItem('token');
-      window.location.href = 'index.html';
-    };
-      document.getElementById('pauseBtn').onclick = async () => { alert("This is a demo. Pause/Resume requires a backend."); };
-    document.getElementById('logoutBtn').onclick = () => {
-      localStorage.removeItem('token');
-      window.location.href = 'index.html';
-    };
+    document.getElementById('numberForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const newNumber = document.getElementById('newNumber').value;
+        try {
+            const res = await fetch('/api/user/update-number', {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                body: JSON.stringify({ whatsapp: newNumber })
+            });
+            if (!res.ok) { throw new Error((await res.json()).message || 'Failed to update number.'); }
 
-    // ✅✅✅ ADD THIS NEW EVENT LISTENER ✅✅✅
+            const data = await res.json();
+            alert(data.message);
+            currentUserState = data.user;
+            updateDashboardUI(currentUserState);
+            closeModal(numberModal);
+        } catch (error) {
+            alert('Error: ' + error.message);
+        }
+    });
+
     document.getElementById('deleteAccountBtn').onclick = async () => {
-        // First confirmation
-        if (!confirm("Are you absolutely sure you want to delete your account? This action cannot be undone.")) {
-            return;
-        }
-        // Second, more serious confirmation
-        if (!confirm("This will permanently delete all your data, including your streak and progress. This is your last chance to cancel.")) {
-            return;
-        }
-
+        if (!confirm("Are you sure? This will delete all your data permanently.")) return;
+        if (!confirm("Last chance. This action cannot be undone. Delete?")) return;
         try {
             const res = await fetch('/api/user/delete', {
                 method: 'DELETE',
                 headers: { 'Authorization': `Bearer ${token}` }
             });
-
             if (res.ok) {
-                alert('Your account has been successfully deleted.');
-                localStorage.removeItem('token'); // Log the user out
-                window.location.href = 'index.html'; // Redirect to homepage
+                alert('Account deleted.');
+                localStorage.removeItem('token');
+                window.location.href = 'index.html';
             } else {
                 const data = await res.json();
                 throw new Error(data.message || 'Failed to delete account.');
             }
         } catch (error) {
-            alert('Error deleting account: ' + error.message);
+            alert('Error: ' + error.message);
         }
     };
   </script>
