@@ -7,20 +7,22 @@
   
   <link rel="icon" href="logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
   <style>
+    /* --- MODERN THEME & VARIABLES --- */
     :root {
-      --bg-dark: #0D1117;
-      --bg-secondary: #161B22;
-      --primary-blue: #3B82F6;
-      --primary-blue-hover: #60A5FA;
-      --primary-blue-glow: rgba(59, 130, 246, 0.4);
-      --text-light: #E6EDF3;
-      --text-muted: #8D96A0;
-      --border-color: #30363D;
+      --bg-dark: #020409;
+      --bg-secondary: #0D1117;
+      --primary-purple: #7C3AED;
+      --primary-purple-hover: #9F67FF;
+      --primary-purple-glow: rgba(124, 58, 237, 0.4);
+      --text-light: #F9FAFB;
+      --text-secondary: #E5E7EB;
+      --text-muted: #9CA3AF;
+      --border-color: #374151;
       --nav-height: 70px;
     }
 
@@ -28,11 +30,11 @@
     html { scroll-behavior: smooth; }
 
     body {
-      font-family: 'Poppins', sans-serif;
+      font-family: 'Inter', sans-serif;
       background-color: var(--bg-dark);
-      background-image: radial-gradient(ellipse at top, #161b22, #0d1117);
       color: var(--text-light);
       line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
     }
 
     .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
@@ -41,118 +43,111 @@
     .animate-on-scroll { opacity: 0; transform: translateY(40px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
     .animate-on-scroll.visible { opacity: 1; transform: translateY(0); }
     
-    /* --- ✅✅✅ UPDATED NAVBAR STYLES FOR RESPONSIVENESS ✅✅✅ --- */
-    .navbar {
-      display: flex; justify-content: space-between; align-items: center; height: var(--nav-height);
-      padding: 0 2rem; position: sticky; top: 0; z-index: 1000;
-      background-color: rgba(13, 17, 23, 0.8); backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--border-color);
-    }
-    .logo {
-      font-size: 1.5rem; font-weight: 700; color: var(--text-light); text-decoration: none;
-      display: flex; align-items: center; gap: 8px; z-index: 1001; /* Ensure logo is on top */
-    }
-    .logo .fa-fire { color: var(--primary-blue); }
-
+    /* --- 1. NAVBAR --- */
+    .navbar { display: flex; justify-content: space-between; align-items: center; height: var(--nav-height); padding: 0 2rem; position: sticky; top: 0; z-index: 1000; background-color: rgba(2, 4, 9, 0.7); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(55, 65, 81, 0.5); }
+    .logo { font-size: 1.5rem; font-weight: 700; color: var(--text-light); text-decoration: none; display: flex; align-items: center; gap: 8px; z-index: 1001; }
+    .logo .fa-fire { color: var(--primary-purple); }
     .nav-menu { display: flex; align-items: center; gap: 2.5rem; }
     .nav-links { display: flex; list-style: none; gap: 2.5rem; }
     .nav-links a { color: var(--text-light); text-decoration: none; font-weight: 500; }
-    
     .hamburger { display: none; font-size: 1.5rem; cursor: pointer; z-index: 1001; }
-    .btn {
-      padding: 10px 22px; border: 1px solid transparent; border-radius: 8px; font-weight: 600;
-      cursor: pointer; text-decoration: none; display: inline-block; transition: all 0.3s ease;
-    }
-    .btn-primary { background-color: var(--primary-blue); color: var(--text-light); box-shadow: 0 4px 15px var(--primary-blue-glow); }
-    .btn-primary:hover { background-color: var(--primary-blue-hover); transform: translateY(-3px); box-shadow: 0 6px 20px var(--primary-blue-glow); }
+    .btn { padding: 12px 24px; border: 1px solid transparent; border-radius: 8px; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: all 0.3s ease; white-space: nowrap; }
+    .btn-primary { background-color: var(--primary-purple); color: white; box-shadow: 0 4px 20px var(--primary-purple-glow); }
+    .btn-primary:hover { background-color: var(--primary-purple-hover); transform: translateY(-3px); box-shadow: 0 6px 25px var(--primary-purple-glow); }
+    .btn-lg { padding: 16px 32px; font-size: 1.1rem; }
 
-    /* --- UNCHANGED STYLES BELOW --- */
-    .hero { text-align: center; padding: 140px 0; min-height: 60vh; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-    .hero h1 { font-size: 4rem; font-weight: 800; line-height: 1.2; margin-bottom: 1rem; max-width: 800px; background: linear-gradient(90deg, var(--text-light), var(--text-muted)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: slideInDown 0.8s ease-out; }
-    .hero p { font-size: 1.2rem; color: var(--text-muted); max-width: 650px; margin: 0 auto; animation: slideInDown 0.8s ease-out 0.2s backwards; }
-    @keyframes slideInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
-    .section-header { text-align: center; margin-bottom: 5rem; }
-    .section-header h2 { font-size: 2.8rem; margin-bottom: 1rem; position: relative; display: inline-block; }
-    .section-header h2::after { content: ''; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); width: 60px; height: 4px; background-color: var(--primary-blue); border-radius: 2px; }
-    .section-header p { color: var(--text-muted); max-width: 600px; margin: 1.5rem auto 0 auto; }
+    /* --- 2. HERO SECTION --- */
+    #hero-about { text-align: center; padding: 140px 0; min-height: 60vh; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; }
+    #hero-about::before { content: ''; position: absolute; top: 50%; left: 50%; width: 800px; height: 500px; background: radial-gradient(circle, var(--primary-purple-glow) 0%, rgba(13, 17, 23, 0) 65%); transform: translate(-50%, -50%); z-index: 0; animation: slow-pulse 8s infinite ease-in-out; }
+    #hero-about .container { position: relative; z-index: 1; }
+    #hero-about h1 { font-size: 4rem; font-weight: 800; line-height: 1.2; margin-bottom: 1rem; max-width: 800px; margin-left: auto; margin-right: auto; color: var(--text-light); animation: fadeInDown 0.8s ease-out; }
+    #hero-about h1 .highlight { color: var(--primary-purple); }
+    #hero-about p { font-size: 1.2rem; color: var(--text-muted); max-width: 650px; margin: 0 auto; animation: fadeInDown 0.8s ease-out 0.2s backwards; }
+    
+    /* --- 3. MISSION SECTION --- */
     #mission { background-color: var(--bg-secondary); }
-    .mission-content { max-width: 800px; margin: 0 auto; text-align: center; font-size: 1.15rem; line-height: 1.8; }
-    .mission-content .highlight { color: var(--primary-blue); font-weight: 600; }
-    .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 4rem; }
-    .feature-card { background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 2rem; text-align: center; transition: transform 0.3s ease, box-shadow 0.3s ease; }
-    .feature-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.3); }
-    .feature-card .icon { font-size: 2.5rem; color: var(--primary-blue); margin-bottom: 1.5rem; }
+    .mission-content-wrapper { max-width: 800px; margin: 0 auto; background-color: var(--bg-dark); border: 1px solid var(--border-color); border-radius: 16px; padding: 3rem; }
+    .mission-content-wrapper .tagline { color: var(--primary-purple); font-weight: 600; text-align: center; margin-bottom: 2rem; }
+    .mission-content-wrapper blockquote { margin: 0; padding: 0 0 0 1.5rem; border-left: 3px solid var(--primary-purple); font-size: 1.2rem; line-height: 1.8; color: var(--text-secondary); }
+    .mission-content-wrapper .highlight { color: var(--primary-purple-hover); font-weight: 600; }
+
+    /* --- 4. FEATURES (HOW WE'RE DIFFERENT) --- */
+    #features { position: relative; }
+    .features-wrapper { position: relative; z-index: 1; }
+    .features-wrapper::before, .features-wrapper::after { content: ''; position: absolute; z-index: -1; filter: blur(100px); }
+    .features-wrapper::before { width: 400px; height: 400px; background-color: rgba(124, 58, 237, 0.2); border-radius: 50%; top: -100px; left: -100px; }
+    .features-wrapper::after { width: 300px; height: 300px; background-color: rgba(59, 130, 246, 0.15); border-radius: 50%; bottom: -100px; right: -100px; }
+    .section-header { text-align: center; margin-bottom: 5rem; }
+    .section-header h2 { font-size: 2.8rem; margin-bottom: 1rem; }
+    .section-header p { color: var(--text-muted); max-width: 600px; margin: 1.5rem auto 0 auto; }
+    .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+    .feature-card { background: rgba(22, 27, 34, 0.5); backdrop-filter: blur(10px); border: 1px solid var(--border-color); border-radius: 12px; padding: 2.5rem 2rem; text-align: center; transition: all 0.3s ease; }
+    .feature-card:hover { transform: translateY(-10px); background: rgba(22, 27, 34, 0.8); border-color: var(--primary-purple); }
+    .feature-card .icon { font-size: 2rem; color: var(--primary-purple); margin-bottom: 1.5rem; display: inline-flex; align-items: center; justify-content: center; width: 60px; height: 60px; border-radius: 50%; background-color: rgba(124, 58, 237, 0.1); }
     .feature-card h3 { font-size: 1.3rem; margin-bottom: 0.75rem; }
     .feature-card p { color: var(--text-muted); font-size: 0.95rem; }
-    #founder { background-color: var(--bg-secondary); }
-    .founder-content { display: grid; grid-template-columns: 1fr 1.5fr; align-items: center; gap: 4rem; background-color: var(--bg-dark); padding: 4rem; border-radius: 16px; }
-    .founder-image { width: 100%; max-width: 300px; margin: 0 auto; border-radius: 50%; border: 5px solid var(--border-color); box-shadow: 0 0 30px rgba(0,0,0,0.4); }
-    .founder-image img { width: 100%; height: auto; border-radius: 50%; display: block; }
-    .founder-bio h2 { font-size: 2.5rem; margin-bottom: 0.5rem; }
-    .founder-bio .title { color: var(--primary-blue); font-weight: 600; font-size: 1.1rem; margin-bottom: 1.5rem; }
-    .founder-bio p { margin-bottom: 1.5rem; color: var(--text-muted); }
-    .founder-socials a { color: var(--text-muted); font-size: 1.5rem; margin-right: 1.5rem; display: inline-block; transition: color 0.3s ease, transform 0.3s ease; }
-    .founder-socials a:hover { color: var(--primary-blue); transform: translateY(-3px); }
+    
+    /* --- 5. FOUNDER SECTION (NEW STATIC DESIGN) --- */
+    #founder { background: linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-secondary) 100%); }
+    .founder-content { display: grid; grid-template-columns: 1fr 1.8fr; align-items: center; gap: 5rem; }
+    .founder-image-card { position: relative; width: 100%; max-width: 280px; margin: 0 auto; padding: 1.5rem; }
+    .founder-image-card::before { content: ''; position: absolute; inset: 0; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 16px; transform: rotate(-5deg); z-index: 0; transition: transform 0.3s ease-out; }
+    .founder-image-card:hover::before { transform: rotate(-8deg); }
+    .founder-image { position: relative; z-index: 1; border-radius: 12px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+    .founder-image img { width: 100%; height: auto; display: block; }
+    .founder-bio blockquote { position: relative; padding-left: 3rem; margin-bottom: 1.5rem; font-size: 1.1rem; font-style: italic; color: var(--text-muted); }
+    .founder-bio blockquote::before { content: '\f10d'; font-family: "Font Awesome 6 Free"; font-weight: 900; position: absolute; left: 0; top: 0; font-size: 2rem; color: var(--primary-purple); opacity: 0.5; }
+    .founder-bio .name { font-size: 2.2rem; margin-bottom: 0.25rem; font-weight: 700; }
+    .founder-bio .title { color: var(--primary-purple); font-weight: 600; font-size: 1.1rem; margin-bottom: 1.5rem; }
+    .founder-socials a { color: var(--text-muted); font-size: 1.5rem; margin-right: 1.5rem; display: inline-block; transition: all 0.3s ease; }
+    .founder-socials a:hover { color: var(--primary-purple); transform: scale(1.2) translateY(-2px); }
+
+    /* --- 6. FINAL CTA --- */
     #cta { text-align: center; }
+    #cta .container { padding: 5rem 2rem; border-radius: 20px; background-image: radial-gradient(circle at 50% 100%, rgba(124, 58, 237, 0.2), transparent 50%), url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="80" height="80"%3E%3Cpath fill="%23161b22" fill-opacity="0.4" d="M0 0h80v80H0zM20 20h40v40H20z"/%3E%3C/svg%3E'); border: 1px solid var(--border-color); }
     #cta h2 { font-size: 2.5rem; margin-bottom: 1rem; }
     #cta p { max-width: 600px; margin: 0 auto 2.5rem auto; color: var(--text-muted); }
+
+    /* --- 7. FOOTER --- */
     footer { padding: 50px 0; text-align: center; border-top: 1px solid var(--border-color); }
     .copyright { color: var(--text-muted); font-size: 0.9rem; }
-
-    /* --- Responsive --- */
+    
+    /* --- ANIMATIONS & RESPONSIVE --- */
+    @keyframes slow-pulse { 0% { transform: translate(-50%, -50%) scale(0.95); opacity: 0.8; } 50% { transform: translate(-50%, -50%) scale(1.05); opacity: 1; } 100% { transform: translate(-50%, -50%) scale(0.95); opacity: 0.8; } }
+    @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+    
     @media (max-width: 992px) {
         .features-grid { grid-template-columns: 1fr; }
-        .founder-content { grid-template-columns: 1fr; text-align: center; }
-        .founder-socials { text-align: center; }
+        .founder-content { grid-template-columns: 1fr; text-align: center; gap: 3rem; }
+        .founder-socials { justify-content: center; }
     }
-    
-    /* --- ✅✅✅ UPDATED RESPONSIVE STYLES FOR NAVBAR ✅✅✅ --- */
     @media (max-width: 768px) {
         .navbar { padding: 0 1.5rem; }
         .hamburger { display: block; }
-        .nav-menu {
-            position: fixed;
-            left: -100%; /* Start off-screen */
-            top: 0;
-            gap: 0;
-            flex-direction: column;
-            justify-content: center;
-            background-color: var(--bg-dark);
-            width: 100%;
-            height: 100vh;
-            transition: left 0.3s ease-in-out;
-        }
-        .nav-menu.active { left: 0; } /* Slide in */
-        .nav-links {
-            flex-direction: column;
-            text-align: center;
-            gap: 2.5rem;
-            margin-bottom: 2.5rem;
-        }
+        .nav-menu { position: fixed; left: -100%; top: 0; gap: 0; flex-direction: column; justify-content: center; background-color: var(--bg-dark); width: 100%; height: 100vh; transition: left 0.3s ease-in-out; }
+        .nav-menu.active { left: 0; }
+        .nav-links { flex-direction: column; text-align: center; gap: 2.5rem; margin-bottom: 2.5rem; }
         .nav-links a { font-size: 1.5rem; }
-
-        .hero h1 { font-size: 2.8rem; }
-        .section-header h2, .founder-bio h2, #cta h2 { font-size: 2.2rem; }
+        #hero-about h1 { font-size: 2.8rem; }
+        .section-header h2, .founder-bio .name, #cta h2 { font-size: 2.2rem; }
     }
   </style>
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-47YP5C93M8"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-47YP5C93M8');
-</script>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-47YP5C93M8"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-47YP5C93M8');
+  </script>
 </head>
 <body>
 
   <header class="navbar">
     <a href="index.html" class="logo"><i class="fa-solid fa-fire"></i>The Habit Loop</a>
-    <!-- ✅✅✅ UPDATED NAVBAR HTML ✅✅✅ -->
     <nav class="nav-menu" id="nav-menu">
         <ul class="nav-links">
             <li><a href="index.html" class="nav-link">Home</a></li>
-            <!-- Add other links here in the future if needed -->
         </ul>
         <a href="dashboard.html" class="btn btn-primary">Go to Dashboard</a>
     </nav>
@@ -162,19 +157,21 @@
   </header>
 
   <main>
-    <section class="hero">
+    <section id="hero-about">
         <div class="container">
-            <h1>The Story Behind Your Streak</h1>
+            <h1>The Story Behind Your <span class="highlight">Streak</span></h1>
             <p>We believe becoming a great developer isn't about talent—it's about discipline. We built The Habit Loop to make that daily discipline simple, motivating, and accessible to everyone.</p>
         </div>
     </section>
 
     <section id="mission">
         <div class="container animate-on-scroll">
-            <div class="section-header"><h2>Our Mission</h2></div>
-            <div class="mission-content">
-                <p>The journey to becoming a skilled programmer is filled with challenges. The biggest one? <span class="highlight">Staying consistent.</span> We've all been there: starting a new course with excitement, only to lose momentum after a few weeks. The problem isn't a lack of resources; it's the friction of daily practice.</p>
-                <p>The Habit Loop was born from this struggle. We designed a system that removes the barriers to daily coding. By delivering one achievable task to your phone every day, we help you build a powerful, lasting habit. We're not just a learning platform; <span class="highlight">we are your daily commitment to getting 1% better.</span></p>
+            <div class="mission-content-wrapper">
+                <p class="tagline">OUR MISSION</p>
+                <blockquote>
+                    <p>The journey to becoming a skilled programmer is filled with challenges. The biggest one? <span class="highlight">Staying consistent.</span> We've all been there: starting a new course with excitement, only to lose momentum after a few weeks.</p>
+                    <p>The Habit Loop was born from this struggle. We're not just a learning platform; <span class="highlight">we are your daily commitment to getting 1% better.</span></p>
+                </blockquote>
             </div>
         </div>
     </section>
@@ -185,10 +182,12 @@
                 <h2>How We're Different</h2>
                 <p>Our approach is designed around one core principle: make daily coding effortless.</p>
             </div>
-            <div class="features-grid">
-                <div class="feature-card animate-on-scroll"><div class="icon"><i class="fa-brands fa-whatsapp"></i></div><h3>Delivered via WhatsApp</h3><p>No new apps to download or websites to log into. We meet you where you already are, making it incredibly easy to see and complete your daily task.</p></div>
-                <div class="feature-card animate-on-scroll" style="transition-delay: 0.1s;"><div class="icon"><i class="fa-solid fa-puzzle-piece"></i></div><h3>Micro-Learning Focus</h3><p>Each task is small, focused, and designed to be completed in minutes. This prevents burnout and builds confidence through small, consistent wins.</p></div>
-                <div class="feature-card animate-on-scroll" style="transition-delay: 0.2s;"><div class="icon"><i class="fa-solid fa-arrow-trend-up"></i></div><h3>Habit-Formation System</h3><p>Our entire platform, from the daily streak counter to the progress log, is built to provide positive reinforcement and make coding a natural part of your daily routine.</p></div>
+            <div class="features-wrapper">
+                <div class="features-grid">
+                    <div class="feature-card animate-on-scroll" style="transition-delay: 0.1s;"><div class="icon"><i class="fa-brands fa-whatsapp"></i></div><h3>Delivered via WhatsApp</h3><p>No new apps or websites to log into. We meet you where you already are, making it incredibly easy to see and complete your daily task.</p></div>
+                    <div class="feature-card animate-on-scroll" style="transition-delay: 0.2s;"><div class="icon"><i class="fa-solid fa-puzzle-piece"></i></div><h3>Micro-Learning Focus</h3><p>Each task is small and focused, designed to be completed in minutes. This prevents burnout and builds confidence through consistent wins.</p></div>
+                    <div class="feature-card animate-on-scroll" style="transition-delay: 0.3s;"><div class="icon"><i class="fa-solid fa-arrow-trend-up"></i></div><h3>Habit-Formation System</h3><p>Our platform, from the daily streak counter to the progress log, is built to provide positive reinforcement and make coding a natural part of your routine.</p></div>
+                </div>
             </div>
         </div>
     </section>
@@ -196,11 +195,13 @@
     <section id="founder">
         <div class="container animate-on-scroll">
             <div class="founder-content">
-                <div class="founder-image"><img src="soham.png" alt="Founder of The Habit Loop"></div>
-                <div class="founder-bio">
-                    <h2>Soham Khot</h2>
+                <div class="founder-image-card">
+                    <div class="founder-image"><img src="soham.png" alt="Founder of The Habit Loop"></div>
+                </div>
+                <div class="founder-bio animate-on-scroll" style="transition-delay: 0.2s;">
+                    <p class="name">Soham Khot</p>
                     <p class="title">Founder & CEO of The Habit Loop</p>
-                    <p>“As a self-taught developer, I knew countless tutorials existed, but my biggest enemy was myself. I would code for 8 hours one day and then do nothing for a week. The inconsistency was killing my progress. I created The Habit Loop as the tool I wish I had: a simple, daily nudge to keep the fire going, one day at a time.”</p>
+                    <blockquote>“As a self-taught developer, my biggest enemy was myself. I would code for 8 hours one day and then do nothing for a week. I created The Habit Loop as the tool I wish I had: a simple, daily nudge to keep the fire going, one day at a time.”</blockquote>
                     <div class="founder-socials">
                         <a href="https://www.linkedin.com/in/sohamkhot75/" aria-label="LinkedIn" target="_blank"><i class="fab fa-linkedin-in"></i></a>
                         <a href="https://github.com/Spkhot" aria-label="GitHub" target="_blank"><i class="fab fa-github"></i></a>
@@ -214,7 +215,7 @@
         <div class="container animate-on-scroll">
             <h2>Ready to Build Your Habit?</h2>
             <p>Stop waiting for motivation and start building discipline. Your journey to coding consistency begins with a single step.</p>
-            <a href="signup.html" class="btn btn-primary">Start Your Streak for Free</a>
+            <a href="signup.html" class="btn btn-primary btn-lg">Start Your Streak for Free</a>
         </div>
     </section>
   </main>
@@ -226,6 +227,7 @@
   </footer>
 
   <script>
+    // --- NO CHANGES TO THIS SCRIPT ---
     document.addEventListener('DOMContentLoaded', () => {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -238,7 +240,6 @@
         const elementsToAnimate = document.querySelectorAll('.animate-on-scroll');
         elementsToAnimate.forEach(el => observer.observe(el));
         
-        // --- ✅✅✅ NEW JAVASCRIPT FOR RESPONSIVE NAVBAR ✅✅✅ ---
         const hamburger = document.getElementById('hamburger');
         const navMenu = document.getElementById('nav-menu');
         const navLinks = navMenu.querySelectorAll('.nav-link');
@@ -250,7 +251,6 @@
             icon.classList.toggle('fa-times');
         });
 
-        // Function to close the menu
         const closeMenu = () => {
             navMenu.classList.remove('active');
             const icon = hamburger.querySelector('i');
@@ -258,7 +258,6 @@
             icon.classList.remove('fa-times');
         };
 
-        // Close menu if a link is clicked
         navLinks.forEach(link => {
             link.addEventListener('click', closeMenu);
         });
