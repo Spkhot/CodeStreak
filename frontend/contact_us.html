@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Contact Us | The Habit Loop</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <link rel="icon" href="logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <style>
+    :root {
+      --bg-dark: #0D1117;
+      --bg-secondary: #161B22;
+      --primary-blue: #3B82F6;
+      --text-light: #E6EDF3;
+      --text-muted: #8D96A0;
+      --border-color: #30363D;
+      --nav-height: 70px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--bg-dark);
+      background-image: radial-gradient(ellipse at top, #161b22, #0d1117);
+      color: var(--text-light);
+      line-height: 1.8;
+    }
+
+    .navbar {
+      display: flex; justify-content: space-between; align-items: center; height: var(--nav-height);
+      padding: 0 2rem; position: sticky; top: 0; z-index: 1000;
+      background-color: rgba(13, 17, 23, 0.8); backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border-color);
+    }
+    .logo {
+      font-size: 1.5rem; font-weight: 700; color: var(--text-light); text-decoration: none;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .logo .fa-fire { color: var(--primary-blue); }
+    .btn {
+      padding: 10px 22px; border: 1px solid transparent; border-radius: 8px; font-weight: 600;
+      cursor: pointer; text-decoration: none; display: inline-block; transition: all 0.3s ease;
+    }
+    .btn-primary { background-color: var(--primary-blue); color: var(--text-light); }
+    .btn-primary:hover { background-color: #60A5FA; transform: translateY(-2px); }
+
+    .main-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 4rem 20px;
+    }
+
+    .page-header {
+        text-align: center;
+        margin-bottom: 3rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid var(--border-color);
+    }
+    .page-header h1 {
+        font-size: 2.8rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+    }
+    .page-header p {
+        color: var(--text-muted);
+        font-size: 1.1rem;
+    }
+
+    .contact-info-card {
+        background-color: var(--bg-secondary);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 2.5rem;
+    }
+
+    .contact-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 1.5rem;
+    }
+    .contact-item:not(:last-child) {
+        margin-bottom: 2rem;
+    }
+    .contact-icon {
+        font-size: 1.5rem;
+        color: var(--primary-blue);
+        width: 40px;
+        height: 40px;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .contact-details h2 {
+        font-size: 1.2rem;
+        margin-bottom: 0.25rem;
+        font-weight: 600;
+    }
+    .contact-details p, .contact-details a {
+        color: var(--text-muted);
+        font-size: 1rem;
+        text-decoration: none;
+    }
+    .contact-details a:hover {
+        color: var(--primary-blue);
+        text-decoration: underline;
+    }
+
+    .razorpay-disclaimer {
+        margin-top: 3rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--border-color);
+        font-size: 0.85rem;
+        color: #666;
+        font-style: italic;
+    }
+    footer { padding: 50px 0; text-align: center; border-top: 1px solid var(--border-color); }
+    .copyright { color: var(--text-muted); font-size: 0.9rem; }
+    
+    @media (max-width: 768px) {
+        .page-header h1 { font-size: 2.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="navbar">
+    <a href="index.html" class="logo"><i class="fa-solid fa-fire"></i>The Habit Loop</a>
+    <a href="dashboard.html" class="btn btn-primary">Go to Dashboard</a>
+  </header>
+
+  <main class="main-container">
+    <div class="page-header">
+        <h1>Contact Us</h1>
+        <p>We're here to help. Reach out to us with any questions.</p>
+    </div>
+
+    <div class="contact-info-card">
+        <div class="contact-item">
+            <div class="contact-icon"><i class="fa-solid fa-envelope"></i></div>
+            <div class="contact-details">
+                <h2>Email Support</h2>
+                <a href="mailto:sohamkhot75@gmail.com">sohamkhot75@gmail.com</a>
+                <p>For all support questions, technical issues, and inquiries.</p>
+            </div>
+        </div>
+
+        <div class="contact-item">
+            <div class="contact-icon"><i class="fa-solid fa-phone"></i></div>
+            <div class="contact-details">
+                <h2>Telephone</h2>
+                <a href="tel:+919901341404">+91 9901341404</a>
+                <p>Available during standard business hours.</p>
+            </div>
+        </div>
+        
+        <div class="contact-item">
+            <div class="contact-icon"><i class="fa-solid fa-building"></i></div>
+            <div class="contact-details">
+                <h2>Registered Address</h2>
+                <p>
+                    Soham Prakash Khot<br>
+                    A/P Kurli, Nippani. Taluka-Nippani.<br>
+                    District- Belgaum, Karnataka, 591241, India
+                </p>
+            </div>
+        </div>
+
+        <div class="razorpay-disclaimer">
+            <p><strong>Disclaimer:</strong> The above content is created at The Habit Loop's sole discretion. Razorpay shall not be liable for any content provided here and shall not be responsible for any claims and liability that may arise due to the merchant’s non-adherence to it.</p>
+        </div>
+    </div>
+  </main>
+  
+  <footer class="container">
+    <p class="copyright">© 2024 The Habit Loop. All Rights Reserved.</p>
+  </footer>
+
+</body>
+</html>

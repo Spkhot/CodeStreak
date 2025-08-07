@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Complete Purchase | The Habit Loop</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <link rel="icon" href="logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+  <style>
+    :root {
+      --bg-dark: #0D1117;
+      --bg-secondary: #161B22;
+      --primary-blue: #3B82F6;
+      --primary-blue-hover: #60A5FA;
+      --text-light: #E6EDF3;
+      --text-muted: #8D96A0;
+      --border-color: #30363D;
+      --success-color: #28a745;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--bg-dark);
+      background-image: radial-gradient(ellipse at top, #161b22, #0d1117);
+      color: var(--text-light);
+      line-height: 1.7;
+    }
+
+    .navbar {
+      display: flex; justify-content: space-between; align-items: center; padding: 0 2rem;
+      height: 70px; background-color: var(--bg-secondary); border-bottom: 1px solid var(--border-color);
+    }
+    .logo {
+      font-size: 1.5rem; font-weight: 700; text-decoration: none; color: var(--text-light);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .logo .fa-fire { color: var(--primary-blue); }
+
+    .main-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: calc(100vh - 70px);
+      padding: 3rem 20px;
+    }
+
+    .checkout-wrapper {
+      background-color: var(--bg-secondary);
+      padding: 2.5rem;
+      border-radius: 16px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35);
+      width: 100%;
+      max-width: 500px;
+      animation: fadeIn 0.6s ease-out;
+    }
+    @keyframes fadeIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
+
+    .checkout-header { text-align: center; margin-bottom: 2rem; }
+    .checkout-header .icon { font-size: 2.5rem; color: var(--primary-blue); margin-bottom: 1rem; }
+    .checkout-header h1 { font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .checkout-header p { color: var(--text-muted); }
+    
+    .order-summary {
+        background-color: var(--bg-dark);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+    }
+    .order-summary h2 {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--border-color);
+    }
+    .summary-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+    .summary-item .label { color: var(--text-muted); }
+    .summary-item .value { font-weight: 600; }
+    .summary-total {
+        margin-top: 1.5rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--border-color);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 1.25rem;
+        font-weight: 700;
+    }
+
+    .features-list {
+        margin-bottom: 2rem;
+        list-style: none;
+        padding: 0;
+    }
+    .features-list li {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 0.75rem;
+        color: var(--text-muted);
+    }
+    .features-list li i {
+        color: var(--success-color);
+    }
+
+    #payBtn {
+        width: 100%;
+        padding: 14px;
+        background-color: var(--success-color);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.2rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.2s;
+    }
+    #payBtn:hover:not(:disabled) {
+        background-color: #22c55e;
+        transform: translateY(-2px);
+    }
+    #payBtn:disabled {
+        background-color: #166534;
+        cursor: not-allowed;
+        opacity: 0.7;
+    }
+    #payBtn .fa-spinner { margin-right: 10px; }
+
+    .secure-payment-info {
+        text-align: center;
+        margin-top: 1.5rem;
+        color: var(--text-muted);
+        font-size: 0.9rem;
+    }
+    .secure-payment-info i { color: var(--success-color); }
+    .razorpay-logo { width: 100px; margin-top: 0.5rem; }
+
+    #message { text-align: center; font-weight: 500; min-height: 24px; color: var(--danger-red); }
+    
+    @media (max-width: 576px) {
+        .checkout-wrapper { padding: 2rem 1.5rem; }
+        .checkout-header h1 { font-size: 1.8rem; }
+    }
+        /* --- ✅✅✅ NEW, ATTRACTIVE FOOTER STYLES ✅✅✅ --- */
+    .footer-content {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    .footer-links {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap; /* Allows links to wrap on small screens */
+        gap: 0.75rem 1.5rem; /* Vertical and horizontal gap */
+        margin-bottom: 1.5rem;
+    }
+
+    .footer-links a {
+        color: var(--text-muted);
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s ease;
+    }
+
+    .footer-links a:hover {
+        color: var(--primary-blue);
+        text-decoration: underline;
+    }
+
+    /* This hides the separator on mobile when links wrap */
+    .footer-links .separator {
+        color: var(--border-color);
+    }
+    
+    @media (max-width: 576px) {
+        .footer-links .separator {
+            display: none; /* Hide separators on small screens */
+        }
+        .footer-links {
+            flex-direction: column; /* Stack links vertically */
+            gap: 1rem;
+        }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="navbar">
+    <a href="index.html" class="logo"><i class="fa-solid fa-fire"></i>The Habit Loop</a>
+  </header>
+
+  <main class="main-container">
+    <div class="checkout-wrapper">
+      <div class="checkout-header">
+        <div class="icon"><i class="fa-solid fa-shield-halved"></i></div>
+        <h1>Complete Your Purchase</h1>
+        <p>You're one step away from unlocking your premium course.</p>
+      </div>
+
+      <div class="order-summary">
+        <h2>Order Summary</h2>
+        <div class="summary-item">
+          <span class="label">Course Name:</span>
+          <span class="value" id="courseName">Loading...</span>
+        </div>
+        <div class="summary-item">
+            <span class="label">Access:</span>
+            <span class="value">Lifetime</span>
+        </div>
+        <div class="summary-total">
+          <span>Total:</span>
+          <span id="coursePrice">...</span>
+        </div>
+      </div>
+
+      <ul class="features-list">
+        <li><i class="fa-solid fa-circle-check"></i> <span>Access to all Advanced & Pro topics</span></li>
+        <li><i class="fa-solid fa-circle-check"></i> <span>Full Project-Based Learning Modules</span></li>
+        <li><i class="fa-solid fa-circle-check"></i> <span>Priority Support from our Team</span></li>
+      </ul>
+
+      <div id="message"></div>
+      <button id="payBtn">Pay Now</button>
+
+      <div class="secure-payment-info">
+        <p><i class="fa-solid fa-lock"></i> 100% Secure Payment</p>
+        <img src="https://razorpay.com/assets/razorpay-logo-white.svg" alt="Razorpay" class="razorpay-logo">
+      </div>
+    </div>
+    <footer>
+  <div class="footer-content">
+    <div class="social-icons">
+        <a href="https://www.linkedin.com/in/sohamkhot75/" aria-label="LinkedIn" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+        <a href="https://github.com/Spkhot" aria-label="GitHub" target="_blank"><i class="fab fa-github"></i></a>
+    </div>
+    <div class="footer-links">
+        <a href="terms.html">Terms & Conditions</a>
+        <span class="separator">|</span>
+        <a href="privacy.html">Privacy Policy</a>
+        <span class="separator">|</span>
+        <a href="refund.html">Refund Policy</a>
+        <span class="separator">|</span>
+        <a href="contact.html">Contact Us</a>
+    </div>
+    <p class="copyright">© 2024 The Habit Loop. All Rights Reserved.</p>
+  </div>
+</footer>
+  </main>
+
+  <script>
+    const token = localStorage.getItem('token');
+    if (!token) {
+        alert('You must be logged in to make a purchase.');
+        window.location.href = 'login.html';
+    }
+
+    const payBtn = document.getElementById('payBtn');
+    const messageEl = document.getElementById('message');
+
+    // --- Dynamically get course info from the URL ---
+    const params = new URLSearchParams(window.location.search);
+    const level = params.get('level');
+    const language = params.get('language');
+
+    const prices = {
+        'Advanced': 99,
+        'Pro': 299
+    };
+    const price = prices[level];
+    
+    // Check if the URL params are valid
+    if (!level || !language || !price) {
+        messageEl.textContent = 'Invalid course details. Please go back and select a course.';
+        payBtn.disabled = true;
+    } else {
+        document.getElementById('courseName').textContent = `${level} ${language}`;
+        document.getElementById('coursePrice').textContent = `₹${price}`;
+    }
+
+    payBtn.addEventListener('click', async () => {
+        payBtn.disabled = true;
+        payBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processing...';
+        messageEl.textContent = '';
+        
+        try {
+            // 1. Create Order
+            const orderRes = await fetch('/api/user/create-order', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                body: JSON.stringify({ level })
+            });
+            const orderData = await orderRes.json();
+            if (!orderRes.ok) throw new Error(orderData.message || 'Could not create order.');
+
+            // 2. Fetch User Info for Prefill
+            const userRes = await fetch('/api/user/me', { headers: { 'Authorization': `Bearer ${token}` } });
+            const userData = await userRes.json();
+            
+            // 3. Open Razorpay Checkout
+            const options = {
+                key: orderData.keyId,
+                amount: orderData.amount,
+                currency: "INR",
+                name: "The Habit Loop",
+                description: `Payment for ${level} ${language} Course`,
+                order_id: orderData.orderId,
+                // ... inside payBtn.addEventListener('click', ...)
+            handler: async function (response) {
+                payBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Verifying...';
+                try {
+                    const scheduleParams = new URLSearchParams(window.location.search);
+                    const verificationRes = await fetch('/api/user/verify-payment-and-set-schedule', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                        body: JSON.stringify({
+                            ...response,
+                            language: scheduleParams.get('language'),
+                            level: scheduleParams.get('level'),
+                            deliveryTime: scheduleParams.get('deliveryTime'),
+                            whatsapp: scheduleParams.get('whatsapp'),
+                            timeZone: scheduleParams.get('timeZone'),
+                        })
+                    });
+                    
+                    if (!verificationRes.ok) {
+                        const verificationData = await verificationRes.json();
+                        throw new Error(verificationData.message || 'Payment verification failed.');
+                    }
+
+                    // ✅✅✅ THE ONLY CHANGE: REDIRECT TO THE NEW SUCCESS PAGE ✅✅✅
+                    window.location.href = 'success.html';
+
+                } catch (verifyError) {
+                    messageEl.textContent = `Verification Failed: ${verifyError.message}`;
+                    // Re-enable the button on failure
+                    payBtn.disabled = false;
+                    payBtn.innerHTML = 'Pay Now';
+                }
+            },
+// ...
+                prefill: {
+                    name: userData.name || '',
+                    email: userData.email || '',
+                    contact: userData.whatsapp || ''
+                },
+                theme: { color: "#3B82F6" }
+            };
+
+            const rzp = new Razorpay(options);
+            
+            rzp.on('payment.failed', function (response){
+                messageEl.textContent = `Payment Failed: ${response.error.description}`;
+            });
+
+            rzp.open();
+            
+        } catch (error) {
+            messageEl.textContent = `Error: ${error.message}`;
+        } finally {
+            payBtn.disabled = false;
+            payBtn.innerHTML = 'Pay Now';
+        }
+    });
+  </script>
+</body>
+</html>

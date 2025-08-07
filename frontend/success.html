@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Payment Successful | The Habit Loop</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <link rel="icon" href="logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  
+  <!-- Lottie Player for the success animation -->
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+  <style>
+    :root {
+      --bg-dark: #0D1117;
+      --bg-secondary: #161B22;
+      --primary-blue: #3B82F6;
+      --text-light: #E6EDF3;
+      --text-muted: #8D96A0;
+      --success-color: #28a745;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--bg-dark);
+      background-image: radial-gradient(ellipse at top, #161b22, #0d1117);
+      color: var(--text-light);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .success-container {
+      background-color: var(--bg-secondary);
+      padding: 3rem 2.5rem;
+      border-radius: 16px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35);
+      width: 100%;
+      max-width: 500px;
+      animation: fadeInScaleUp 0.6s ease-out;
+    }
+    @keyframes fadeInScaleUp {
+        from { opacity: 0; transform: scale(0.95); }
+        to { opacity: 1; transform: scale(1); }
+    }
+
+    .success-container h1 {
+        font-size: 2.2rem;
+        font-weight: 700;
+        margin-top: 1.5rem;
+        color: var(--success-color);
+    }
+    .success-container p {
+        font-size: 1.1rem;
+        color: var(--text-muted);
+        margin: 1rem 0 2rem 0;
+        line-height: 1.7;
+    }
+
+    .redirect-message {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+    }
+    .redirect-message span {
+        font-weight: 700;
+        color: var(--text-light);
+    }
+
+    .btn-dashboard {
+      display: inline-block;
+      margin-top: 1.5rem;
+      padding: 12px 24px;
+      background-color: var(--primary-blue);
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+    .btn-dashboard:hover {
+      background-color: #60A5FA;
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="success-container">
+    <lottie-player
+      src="Successfully.json"
+      background="transparent"
+      speed="1"
+      style="width: 150px; height: 150px; margin: 0 auto;"
+      autoplay>
+    </lottie-player>
+    <h1>Payment Successful!</h1>
+    <p>Your schedule is set and your premium course is unlocked. You're all set to start your daily coding habit!</p>
+    
+    <div class="redirect-message">
+        Redirecting you to your dashboard in <span id="countdown">10</span> seconds...
+    </div>
+
+    <a href="dashboard.html" class="btn-dashboard">Go to Dashboard Now</a>
+  </div>
+
+  <script>
+    const countdownElement = document.getElementById('countdown');
+    let seconds = 10;
+
+    const countdownInterval = setInterval(() => {
+        seconds--;
+        countdownElement.textContent = seconds;
+
+        if (seconds <= 0) {
+            clearInterval(countdownInterval);
+            window.location.href = 'dashboard.html';
+        }
+    }, 1000);
+  </script>
+
+</body>
+</html>

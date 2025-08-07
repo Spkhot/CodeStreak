@@ -197,6 +197,48 @@
         .how-it-works-grid { grid-template-columns: 1fr; }
         .step-card::after { display: none; }
     }
+        /* --- ✅✅✅ NEW, ATTRACTIVE FOOTER STYLES ✅✅✅ --- */
+    .footer-content {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    .footer-links {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap; /* Allows links to wrap on small screens */
+        gap: 0.75rem 1.5rem; /* Vertical and horizontal gap */
+        margin-bottom: 1.5rem;
+    }
+
+    .footer-links a {
+        color: var(--text-muted);
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s ease;
+    }
+
+    .footer-links a:hover {
+        color: var(--primary-blue);
+        text-decoration: underline;
+    }
+
+    /* This hides the separator on mobile when links wrap */
+    .footer-links .separator {
+        color: var(--border-color);
+    }
+    
+    @media (max-width: 576px) {
+        .footer-links .separator {
+            display: none; /* Hide separators on small screens */
+        }
+        .footer-links {
+            flex-direction: column; /* Stack links vertically */
+            gap: 1rem;
+        }
+    }
   </style>
 
   <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
@@ -322,14 +364,23 @@
   </main>
   
   <footer>
-    <div class="container">
-      <div class="social-icons">
-        <a href="https://www.linkedin.com/in/sohamkhot75/" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-        <a href="https://github.com/Spkhot" aria-label="GitHub"><i class="fab fa-github"></i></a>
-      </div>
-      <p class="copyright">© 2024 The Habit Loop. All Rights Reserved.</p>
+  <div class="footer-content">
+    <div class="social-icons">
+        <a href="https://www.linkedin.com/in/sohamkhot75/" aria-label="LinkedIn" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+        <a href="https://github.com/Spkhot" aria-label="GitHub" target="_blank"><i class="fab fa-github"></i></a>
     </div>
-  </footer>
+    <div class="footer-links">
+        <a href="terms.html">Terms & Conditions</a>
+        <span class="separator">|</span>
+        <a href="privacy.html">Privacy Policy</a>
+        <span class="separator">|</span>
+        <a href="refund.html">Refund Policy</a>
+        <span class="separator">|</span>
+        <a href="contact.html">Contact Us</a>
+    </div>
+    <p class="copyright">© 2024 The Habit Loop. All Rights Reserved.</p>
+  </div>
+</footer>
 
   <!-- ========================================================== -->
   <!-- ============== NO CHANGES TO ANY JAVASCRIPT ============== -->
