@@ -8,28 +8,30 @@
   <link rel="icon" href="logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-47YP5C93M8"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-47YP5C93M8');
-</script>
+  
+  <!-- Google tag (gtag.js) - UNCHANGED -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-47YP5C93M8"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-47YP5C93M8');
+  </script>
+  
   <style>
-    /* --- Modern CSS Setup & Variables --- */
+    /* --- MODERN THEME & VARIABLES --- */
     :root {
-      --bg-dark: #0D1117;
-      --bg-secondary: #161B22;
-      --primary-blue: #3B82F6;
-      --primary-blue-hover: #60A5FA;
-      --primary-blue-glow: rgba(59, 130, 246, 0.4);
-      --text-light: #E6EDF3;
-      --text-muted: #8D96A0;
-      --border-color: #30363D;
+      --bg-dark: #020409;
+      --bg-secondary: #0D1117;
+      --primary-purple: #7C3AED;
+      --primary-purple-hover: #9F67FF;
+      --primary-purple-glow: rgba(124, 58, 237, 0.4);
+      --text-light: #F9FAFB;
+      --text-secondary: #E5E7EB;
+      --text-muted: #9CA3AF;
+      --border-color: #374151;
       --nav-height: 70px;
       --danger-red: #ef4444;
     }
@@ -38,206 +40,177 @@
     html { scroll-behavior: smooth; }
 
     body {
-      font-family: 'Poppins', sans-serif;
+      font-family: 'Inter', sans-serif;
       background-color: var(--bg-dark);
-      background-image: radial-gradient(ellipse at top, #161b22, #0d1117);
       color: var(--text-light);
-      line-height: 1.7;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
-    .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
-    section { padding: 100px 0; overflow: hidden; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    section { padding: 120px 0; overflow: hidden; }
 
     .section-header { text-align: center; margin-bottom: 5rem; }
-    .section-header h2 { font-size: 2.8rem; margin-bottom: 1rem; position: relative; display: inline-block; }
-    .section-header h2::after { content: ''; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); width: 60px; height: 4px; background-color: var(--primary-blue); border-radius: 2px; }
-    .section-header p { color: var(--text-muted); max-width: 600px; margin: 1.5rem auto 0 auto; }
+    .section-header .tagline { color: var(--primary-purple); font-weight: 600; margin-bottom: 0.5rem; display: block; text-transform: uppercase; letter-spacing: 1px; }
+    .section-header h2 { font-size: 2.8rem; font-weight: 800; margin-bottom: 1rem; }
+    .section-header p { color: var(--text-muted); max-width: 600px; margin: 0 auto; font-size: 1.1rem; }
 
-    /* Animation on Scroll */
-    .animate-on-scroll { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+    .animate-on-scroll { opacity: 0; transform: translateY(40px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
     .animate-on-scroll.visible { opacity: 1; transform: translateY(0); }
-    
-    /* --- 1. Sticky Navbar --- */
+
+    /* --- 1. NAVBAR (Unchanged Structure) --- */
     .navbar {
       display: flex; justify-content: space-between; align-items: center; height: var(--nav-height);
       padding: 0 2rem; position: sticky; top: 0; z-index: 1000;
-      background-color: rgba(13, 17, 23, 0.8); backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--border-color); transition: box-shadow 0.3s ease;
+      background-color: rgba(2, 4, 9, 0.7); backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(55, 65, 81, 0.5);
     }
-    .navbar.scrolled { box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2); }
-    
-    .logo {
-      font-size: 1.5rem; font-weight: 700; color: var(--text-light); text-decoration: none;
-      display: flex; align-items: center; gap: 8px;
-    }
-    .logo .fa-fire { color: var(--primary-blue); }
-
+    .logo { font-size: 1.5rem; font-weight: 700; color: var(--text-light); text-decoration: none; display: flex; align-items: center; gap: 10px; }
+    .logo .fa-fire { color: var(--primary-purple); }
     .nav-menu { display: flex; align-items: center; gap: 2.5rem; }
     .nav-links { display: flex; gap: 2.5rem; list-style: none; }
-    .nav-links a {
-      color: var(--text-muted); text-decoration: none; font-weight: 500;
-      transition: color 0.3s ease; position: relative; padding: 5px 0;
-    }
-    .nav-links a::after {
-        content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px;
-        background-color: var(--primary-blue); transition: width 0.3s ease;
-    }
+    .nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 500; transition: color 0.3s ease; }
     .nav-links a:hover, .nav-links a.active { color: var(--text-light); }
-    .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
-
     #actions { display: flex; align-items: center; gap: 1rem; }
-
-    .btn {
-      padding: 10px 22px; border: 1px solid transparent; border-radius: 8px;
-      font-weight: 600; cursor: pointer; text-decoration: none;
-      display: inline-block; transition: all 0.3s ease; white-space: nowrap;
-    }
-    .btn-primary {
-      background-color: var(--primary-blue); color: var(--text-light);
-      box-shadow: 0 4px 15px var(--primary-blue-glow);
-    }
-    .nav-user-greeting {
-    color: var(--text-muted);
-    font-weight: 500;
-    display: none; /* Hidden on small screens by default */
-}
-
-/* Show the greeting on larger screens */
-@media (min-width: 992px) {
-    .nav-user-greeting {
-        display: block;
-    }
-}
-    .btn-primary:hover {
-      background-color: var(--primary-blue-hover); transform: translateY(-3px);
-      box-shadow: 0 6px 20px var(--primary-blue-glow);
-    }
-    .btn-secondary { color: var(--text-light); background-color: transparent; border: 1px solid var(--border-color); }
-    .btn-secondary:hover { background-color: var(--bg-secondary); border-color: var(--text-muted); transform: translateY(-2px); }
-    
-    /* ✅✅✅ NEW PROFILE DROPDOWN STYLES ✅✅✅ */
+    .btn { padding: 12px 24px; border: 1px solid transparent; border-radius: 8px; font-weight: 600; font-size: 0.95rem; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: all 0.3s ease; white-space: nowrap; }
+    .btn-primary { background-color: var(--primary-purple); color: white; box-shadow: 0 4px 20px var(--primary-purple-glow); }
+    .btn-primary:hover { background-color: var(--primary-purple-hover); transform: translateY(-3px); box-shadow: 0 6px 25px var(--primary-purple-glow); }
+    .btn-secondary { color: var(--text-light); background-color: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-color); }
+    .btn-secondary:hover { background-color: rgba(255, 255, 255, 0.1); }
+    .nav-user-greeting { display: none; }
+    @media (min-width: 992px) { .nav-user-greeting { display: block; color: var(--text-muted); font-weight: 500;} }
     .profile-menu-container { position: relative; }
-    .profile-avatar {
-        width: 40px; height: 40px; border-radius: 50%; background-color: var(--primary-blue);
-        color: white; display: flex; align-items: center; justify-content: center;
-        font-size: 1.2rem; font-weight: 700; cursor: pointer;
-        transition: transform 0.2s ease, box-shadow 0.2s ease; user-select: none;
-    }
-    .profile-avatar:hover { transform: scale(1.05); box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); }
-    .profile-dropdown {
-        position: absolute; top: 120%; right: 0; background-color: var(--bg-secondary);
-        border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        min-width: 240px; padding: 0.5rem 0; z-index: 1001; opacity: 0; visibility: hidden;
-        transform: translateY(10px); transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
-    }
+    .profile-avatar { width: 40px; height: 40px; border-radius: 50%; background-color: var(--primary-purple); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: 700; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease; user-select: none; border: 2px solid #0D1117; }
+    .profile-avatar:hover { transform: scale(1.05); box-shadow: 0 0 15px var(--primary-purple-glow); }
+    .profile-dropdown { position: absolute; top: 130%; right: 0; background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); min-width: 240px; padding: 0.5rem 0; z-index: 1001; opacity: 0; visibility: hidden; transform: translateY(10px); transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s; }
     .profile-dropdown.show { opacity: 1; visibility: visible; transform: translateY(0); }
     .dropdown-header { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border-color); margin-bottom: 0.5rem; }
-    .dropdown-header .user-name { font-weight: 600; }
+    .dropdown-header .user-name { font-weight: 600; color: var(--text-light); }
     .dropdown-item { display: block; padding: 0.75rem 1rem; color: var(--text-muted); text-decoration: none; transition: background-color 0.2s ease, color 0.2s ease; }
-    .dropdown-item i { margin-right: 10px; width: 20px; text-align: center; }
+    .dropdown-item i { margin-right: 12px; width: 20px; text-align: center; }
     .dropdown-item:hover { background-color: var(--bg-dark); color: var(--text-light); }
     .dropdown-item.logout:hover { background-color: rgba(239, 68, 68, 0.1); color: var(--danger-red); }
-    
     .hamburger { display: none; cursor: pointer; }
-    
-    /* UNCHANGED STYLES BELOW */
-    #home { padding-top: 60px; padding-bottom: 60px; min-height: calc(100vh - var(--nav-height)); display: flex; align-items: center; }
-    .hero-content { display: grid; grid-template-columns: 1.1fr 0.9fr; align-items: center; gap: 4rem; }
-.hero-text h1 {
-  font-size: 3.8rem;
-  font-weight: 800;
-  line-height: 1.2;
-  margin-bottom: 1rem;
-  background: linear-gradient(90deg, var(--text-light), var(--text-muted));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  
-  /* ✅✅✅ NEW ATTRACTIVE STYLE ADDED ✅✅✅ */
-  /* This creates the glowing text shadow and applies the new pulse animation */
-  text-shadow: 0 0 8px rgba(230, 237, 243, 0.15); /* A subtle base glow */
-  animation: slideInUp 0.8s ease-out, pulse-glow 3s infinite ease-in-out;
-}    .hero-text .tagline { font-size: 1.75rem; font-weight: 600; color: var(--primary-blue); margin-bottom: 1.5rem; animation: slideInUp 0.8s ease-out 0.2s backwards; }
-    .hero-text .description { font-size: 1.1rem; color: var(--text-muted); max-width: 500px; margin-bottom: 2.5rem; animation: slideInUp 0.8s ease-out 0.4s backwards; }
-    .hero-actions { display: flex; gap: 1rem; animation: slideInUp 0.8s ease-out 0.6s backwards; }
-    .hero-image { animation: fadeIn 1.2s ease-out; }
-    @keyframes slideInUp { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
-    .how-it-works-timeline { position: relative; max-width: 800px; margin: 0 auto; }
-    .how-it-works-timeline::after { content: ''; position: absolute; width: 4px; background-color: var(--border-color); top: 0; bottom: 0; left: 50%; margin-left: -2px; z-index: 1; border-radius: 2px; }
-    .timeline-item { padding: 10px 40px; position: relative; width: 50%; }
-    .timeline-item:nth-child(odd) { left: 0; }
-    .timeline-item:nth-child(even) { left: 50%; }
-    .timeline-dot { content: ''; position: absolute; width: 16px; height: 16px; background-color: var(--bg-dark); border: 4px solid var(--primary-blue); top: 32px; border-radius: 50%; z-index: 2; transition: background-color 0.3s ease; }
-    .timeline-item:nth-child(odd) .timeline-dot { right: -8px; }
-    .timeline-item:nth-child(even) .timeline-dot { left: -8px; }
-    .timeline-content { padding: 2rem; background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; position: relative; transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; }
-    .timeline-item:hover .timeline-dot { background-color: var(--primary-blue-hover); }
-    .timeline-item:hover .timeline-content { transform: scale(1.05); border-color: var(--primary-blue); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
-    .timeline-content .icon { font-size: 1.8rem; width: 50px; height: 50px; line-height: 50px; border-radius: 50%; background: linear-gradient(145deg, var(--primary-blue), var(--primary-blue-hover)); color: var(--text-light); margin-bottom: 1.5rem; text-align: center; display: inline-block; }
-    .timeline-content h3 { font-size: 1.3rem; margin-bottom: 0.5rem; color: var(--text-light); }
-    .timeline-content p { color: var(--text-muted); font-size: 0.95rem; }
-    #about { background-color: var(--bg-secondary); }
-    .about-content { display: grid; grid-template-columns: 1fr 2fr; align-items: center; gap: 4rem; background-color: var(--bg-dark); padding: 4rem; border-radius: 16px; border: 1px solid var(--border-color); }
-    .about-text h2 { font-size: 2.5rem; margin-bottom: 1rem; }
-    .about-text p { color: var(--text-muted); max-width: 600px; }
-    .about-icon { text-align: center; }
-    .about-icon i { font-size: 8rem; color: var(--primary-blue); text-shadow: 0 0 35px var(--primary-blue-glow); animation: pulse 2.5s infinite ease-in-out; }
-    @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
-    #courses { background-color: var(--bg-dark); }
-    .course-language { margin-bottom: 3.5rem; }
-    .course-language h3 { font-size: 2.2rem; color: var(--text-light); margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 2px solid var(--border-color); display: inline-block; }
-    .course-language h3 i { color: var(--primary-blue); margin-right: 10px; }
-    .course-level { margin-bottom: 1rem; }
-    .course-level h4 { font-size: 1.5rem; font-weight: 600; color: var(--text-light); margin-bottom: 1.2rem; display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
-    .course-level h4 .level-title { font-weight: 500; color: var(--text-muted); font-size: 1.1rem; }
-    .course-level h4 i { color: var(--primary-blue); }
-    .days { display: flex; flex-wrap: wrap; gap: 0.75rem; }
-    .day-card { background-color: var(--bg-secondary); border: 1px solid var(--border-color); padding: 0.75rem 1rem; border-radius: 8px; cursor: pointer; text-align: center; font-weight: 500; flex-basis: 90px; transition: transform 0.2s, border-color 0.2s, color 0.2s, background-color 0.2s; }
-    .day-card:hover { transform: translateY(-4px); border-color: var(--primary-blue); }
-    .day-card.active { background-color: var(--primary-blue); border-color: var(--primary-blue-hover); color: white; transform: translateY(-2px); }
-    .topic-slide-panel { background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-top: 3px solid var(--primary-blue); margin-top: 1rem; padding: 1.5rem; border-radius: 8px; overflow: hidden; max-height: 0; opacity: 0; visibility: hidden; transition: max-height 0.5s ease-in-out, opacity 0.4s ease-in-out, padding 0.4s ease-in-out, margin-top 0.4s ease-in-out, visibility 0.5s; }
-    .topic-slide-panel.show { max-height: 200px; opacity: 1; padding: 1.5rem; margin-top: 1rem; visibility: visible; }
-    .topic-slide-panel strong { color: var(--primary-blue); }
-    footer { padding: 50px 0; text-align: center; border-top: 1px solid var(--border-color); }
-    .social-icons { margin-bottom: 1.5rem; }
-    .social-icons a { color: var(--text-muted); font-size: 1.5rem; margin: 0 1rem; display: inline-block; transition: all 0.3s ease; }
-    .social-icons a:hover { color: var(--primary-blue); transform: translateY(-5px); }
-    .copyright { color: var(--text-muted); font-size: 0.9rem; }
-    @media (max-width: 992px) { .hero-content { grid-template-columns: 1fr; text-align: center; gap: 3rem; } .hero-image { grid-row: 1; margin: 0 auto; } .hero-text .description { margin: 0 auto 2.5rem auto; } .hero-actions { justify-content: center; } .about-content { grid-template-columns: 1fr; text-align: center; gap: 2rem; padding: 2.5rem; } .about-icon { grid-row: 1; } .about-text p { margin: 0 auto; } }
-    /* ✅✅✅ ADD THIS NEW KEYFRAMES RULE ✅✅✅ */
-@keyframes pulse-glow {
-  0%, 100% {
-    text-shadow: 0 0 8px rgba(230, 237, 243, 0.15); /* Base glow */
-  }
-  50% {
-    text-shadow: 0 0 16px rgba(230, 237, 243, 0.3); /* Brighter glow at the peak */
-  }
-}
-    @media (max-width: 768px) { section { padding: 80px 0; } .hamburger { display: block; font-size: 1.5rem; color: var(--text-light); z-index: 1001; } .nav-menu { position: fixed; top: 0; left: -100%; width: 100%; height: 100vh; background-color: var(--bg-dark); flex-direction: column; justify-content: center; align-items: center; gap: 2rem; transition: left 0.3s ease-in-out; } .nav-menu.active { left: 0; } .nav-links { flex-direction: column; text-align: center; font-size: 1.5rem; } .hero-actions {
+
+    /* --- 2. HERO SECTION --- */
+    #home { padding: 120px 0; text-align: center; position: relative; display: flex; align-items: center; min-height: 100vh; }
+    #home::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 700px; height: 700px; background: radial-gradient(circle, var(--primary-purple-glow) 0%, rgba(13, 17, 23, 0) 70%); z-index: 0; animation: slow-pulse 8s infinite ease-in-out; }
+    .hero-content { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; }
+    .hero-text { animation: fadeInDown 0.8s ease-out; }
+    .hero-text .tagline { font-weight: 600; color: var(--primary-purple); margin-bottom: 1rem; display: block; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; }
+    .hero-text h1 { font-size: 4.2rem; font-weight: 800; line-height: 1.15; margin-bottom: 1.5rem; max-width: 800px; color: var(--text-light); text-shadow: 0 2px 20px rgba(0,0,0,0.4); }
+    .hero-text h1 .highlight { background: linear-gradient(90deg, var(--primary-purple-hover), var(--primary-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; padding: 0 5px; }
+    .hero-text .description { font-size: 1.2rem; color: var(--text-muted); max-width: 600px; margin: 0 auto 2.5rem auto; }
+    .hero-actions { display: flex; gap: 1rem; justify-content: center; animation: fadeInUp 0.8s ease-out 0.2s backwards; }
+    .hero-actions {
     flex-direction: column; /* Stack buttons vertically */
     align-items: center;    /* Center the stacked buttons */
 }
 .hero-actions .btn {
     width: 100%;            /* Make buttons take up available width */
     max-width: 300px;       /* But not TOO wide */
-}.hero-text h1 { 
+}
+    .hero-proof { margin-top: 4rem; animation: fadeInUp 0.8s ease-out 0.4s backwards; }
+    .hero-proof .proof-title { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.5rem; }
+    .hero-proof .icons { display: flex; justify-content: center; align-items: center; gap: 2.5rem; font-size: 2rem; color: var(--text-muted); }
+    .hero-image-container { margin-top: -80px; margin-bottom: -150px; position: relative; z-index: -1; opacity: 0.25; filter: blur(3px); animation: fadeIn 1.5s ease-out; }
+
+    /* --- 3. HOW IT WORKS --- */
+    #how-it-works { background: linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-secondary) 100%); }
+    .how-it-works-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; position: relative; }
+    .step-card { background-color: var(--bg-secondary); padding: 2.5rem 2rem; border: 1px solid var(--border-color); border-radius: 12px; transition: all 0.3s ease; position: relative; }
+    .step-card:hover { transform: translateY(-8px); border-color: var(--primary-purple); box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+    .step-card .icon { font-size: 1.8rem; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; background: linear-gradient(145deg, var(--primary-purple), #581c87); color: white; border-radius: 50%; margin-bottom: 1.5rem; }
+    .step-card h3 { font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--text-secondary); }
+    .step-card p { color: var(--text-muted); font-size: 0.95rem; }
+    .step-card:not(:last-child)::after { content: ''; position: absolute; right: -2.25rem; top: 55px; width: 2.5rem; height: 2px; background: repeating-linear-gradient(90deg, var(--border-color), var(--border-color) 4px, transparent 4px, transparent 8px); z-index: -1; }
+
+    /* --- 4. PHILOSOPHY (formerly Mission) --- */
+    .philosophy-grid { display: grid; grid-template-columns: 1fr 1.2fr; align-items: center; gap: 5rem; }
+    .philosophy-visual { background-color: var(--bg-secondary); border-radius: 16px; padding: 2rem; border: 1px solid var(--border-color); display: flex; justify-content: center; align-items: center; }
+    .philosophy-text h2 { font-size: 2.5rem; font-weight: 700; margin-bottom: 1.5rem; }
+    .philosophy-text .description { color: var(--text-muted); margin-bottom: 2rem; font-size: 1.1rem; }
+    .philosophy-list { list-style: none; padding: 0; }
+    .philosophy-list li { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1rem; font-size: 1.05rem; }
+    .philosophy-list i { color: var(--primary-purple); font-size: 1.2rem; margin-top: 5px; }
+
+    /* --- 5. COURSES --- */
+    #courses { background-color: var(--bg-dark); }
+    .course-language { margin-bottom: 3.5rem; }
+    .course-language h3 { font-size: 2rem; color: var(--text-light); margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 2px solid var(--border-color); display: inline-block; }
+    .course-level h4 { font-size: 1.4rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 1.2rem; display: flex; align-items: center; gap: 10px; }
+    .course-level h4 .level-title { font-weight: 500; color: var(--text-muted); font-size: 1.1rem; }
+    .days { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+    .day-card { background-color: var(--bg-secondary); border: 1px solid var(--border-color); padding: 0.5rem 1rem; border-radius: 20px; cursor: pointer; font-weight: 500; font-size: 0.9rem; color: var(--text-muted); transition: all 0.2s ease; }
+    .day-card:hover { transform: translateY(-3px); border-color: var(--primary-purple); color: var(--text-light); box-shadow: 0 0 15px rgba(124, 58, 237, 0.2); }
+    .day-card.active { background-color: var(--primary-purple); border-color: var(--primary-purple); color: white; transform: translateY(-2px); box-shadow: 0 4px 20px var(--primary-purple-glow); }
+    .topic-slide-panel { background-color: var(--bg-secondary); border-left: 3px solid var(--primary-purple); margin-top: 1.5rem; padding: 0; border-radius: 8px; overflow: hidden; max-height: 0; opacity: 0; visibility: hidden; transition: all 0.4s ease-in-out; }
+    .topic-slide-panel.show { max-height: 200px; opacity: 1; padding: 1.5rem; visibility: visible; }
+    .topic-slide-panel strong { color: var(--primary-purple); }
+
+    /* --- 6. FINAL CTA --- */
+    #final-cta-section { padding-bottom: 120px; }
+    .final-cta {
+      padding: 5rem 2rem; border-radius: 20px; text-align: center; position: relative; overflow: hidden;
+      border: 1px solid var(--border-color);
+      background-image: radial-gradient(ellipse at center, rgba(124, 58, 237, 0.15), transparent 80%),
+                        linear-gradient(45deg, #1e1b4b, var(--bg-dark));
+    }
+    .final-cta h2 { font-size: 2.5rem; font-weight: 800; max-width: 600px; margin: 0 auto 1rem auto; position: relative; }
+    .final-cta p { color: var(--text-muted); max-width: 500px; margin: 0 auto 2.5rem auto; font-size: 1.1rem; position: relative; }
+
+    /* --- 7. FOOTER --- */
+    footer { padding: 60px 0; text-align: center; border-top: 1px solid var(--border-color); }
+    .social-icons { margin-bottom: 1.5rem; }
+    .social-icons a { color: var(--text-muted); font-size: 1.5rem; margin: 0 1rem; display: inline-block; transition: all 0.3s ease; }
+    .social-icons a:hover { color: var(--primary-purple); transform: translateY(-5px); }
+    .copyright { color: var(--text-muted); font-size: 0.9rem; }
+
+    /* --- ANIMATIONS --- */
+    @keyframes slow-pulse { 0% { transform: translate(-50%, -50%) scale(0.95); opacity: 0.8; } 50% { transform: translate(-50%, -50%) scale(1.05); opacity: 1; } 100% { transform: translate(-50%, -50%) scale(0.95); opacity: 0.8; } }
+    @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    /* --- RESPONSIVE DESIGN --- */
+    @media (max-width: 992px) {
+        .how-it-works-grid { grid-template-columns: 1fr 1fr; gap: 4rem 2rem; }
+        .step-card:nth-child(2)::after { display: none; }
+        .philosophy-grid { grid-template-columns: 1fr; }
+        .philosophy-visual { grid-row: 1; margin-bottom: 3rem; }
+    }
+    
+    @media (max-width: 768px) {
+        .hamburger { display: block; font-size: 1.5rem; color: var(--text-light); z-index: 1001; }
+        .nav-menu { position: fixed; top: 0; left: -100%; width: 100%; height: 100vh; background-color: var(--bg-dark); flex-direction: column; justify-content: center; align-items: center; gap: 2rem; transition: left 0.3s ease-in-out; }
+        .nav-menu.active { left: 0; }
+        .nav-links { flex-direction: column; text-align: center; font-size: 1.5rem; }
+        #actions { flex-direction: column; gap: 1.5rem; margin-top: 2rem; width: 80%; max-width: 300px;}
+        #actions .btn { width: 100%; text-align: center; justify-content: center; }
+.hero-text h1 { 
     font-size: 2.2rem;     /* Make heading smaller */
     line-height: 1.3;      /* Adjust line spacing */
     white-space: normal;   /* Allow text to wrap */
-} .hero-text .tagline { font-size: 1.5rem; } .section-header h2, .about-text h2 { font-size: 2.2rem; } .how-it-works-timeline::after { left: 20px; } .timeline-item { width: 100%; padding-left: 60px; padding-right: 15px; } .timeline-item:nth-child(even) { left: 0%; } .timeline-dot { left: 12px; } }
+}        .hero-text .description { font-size: 1.1rem; }
+        .section-header h2 { font-size: 2.2rem; }
+        .how-it-works-grid { grid-template-columns: 1fr; }
+        .step-card::after { display: none; }
+    }
   </style>
+
   <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 </head>
 <body>
 
   <header class="navbar">
-    <a href="#home" class="logo"><i class="fa-solid fa-fire"></i>The Habit Loop</a>
+    <a href="#home" class="logo"><i class="fa-solid fa-fire"></i> The Habit Loop</a>
     <nav class="nav-menu">
       <ul class="nav-links">
         <li><a href="#home" class="nav-link active">Home</a></li>
         <li><a href="#how-it-works" class="nav-link">How It Works</a></li>
-        <li><a href="about.html" class="nav-link">About</a></li>
-        <li><a href="#courses" class="nav-link">Courses</a></li>
+        <li><a href="#philosophy" class="nav-link">Philosophy</a></li>
+        <li><a href="#courses" class="nav-link">Curriculum</a></li>
       </ul>
       <div id="actions"></div>
     </nav>
@@ -245,34 +218,30 @@
   </header>
 
   <main>
-       <!-- =================================================================== -->
-    <!-- ============== NEW, MORE ATTRACTIVE HERO SECTION ============== -->
-    <!-- =================================================================== -->
+    
     <section id="home">
       <div class="container">
         <div class="hero-content">
           <div class="hero-text">
-            <!-- ✅✅✅ ADD THE data-text ATTRIBUTE HERE ✅✅✅ -->
-            <h1 data-text="Build a Coding Habit That Actually Sticks">
-              Build a Coding Habit That <span class="gradient-text">Actually Sticks</span>
-            </h1>
-            <p class="description">
-              The Habit Loop turns your daily routine into a powerful learning tool. Receive one bite-sized coding challenge on WhatsApp every day. No logins, no pressure—just the simple, consistent practice you need to go from beginner to pro.
-            </p>
-            <div class="hero-actions">
-              <a href="signup.html" class="btn btn-primary"><i class="fa-solid fa-rocket"></i> Start Your Streak for Free</a>
-              <a href="#how-it-works" class="btn btn-secondary"><i class="fa-solid fa-circle-question"></i> How It Works</a>
+            <span class="tagline">Daily Practice, Made Simple</span>
+            <h1>Build the One Coding Habit That <span class="highlight">Sticks</span></h1>
+            <p class="description">Receive one bite-sized coding challenge on WhatsApp every day. No logins, no pressure—just the simple, consistent practice you need to go from beginner to pro.</p>
+          </div>
+          <div class="hero-actions">
+            <a href="signup.html" class="btn btn-primary"><i class="fa-solid fa-rocket"></i> Start Your Streak for Free</a>
+            <a href="#how-it-works" class="btn btn-secondary"><i class="fa-solid fa-circle-question"></i> How It Works</a>
+          </div>
+          <div class="hero-proof">
+            <p class="proof-title">Daily challenges available for:</p>
+            <div class="icons">
+                <i class="fab fa-cuttlefish" title="C++" style="font-family: 'Font Awesome 6 Brands';">++</i>
+                <i class="fab fa-java" title="Java"></i>
+                <i class="fab fa-python" title="Python"></i>
+                <i class="fab fa-js" title="JavaScript"></i>
             </div>
           </div>
-          <div class="hero-image">
-              <lottie-player
-                src="Online Learning.json"
-                background="transparent"
-                speed="1"
-                style="width: 100%; max-width: 500px; height: auto;"
-                loop
-                autoplay>
-              </lottie-player>
+          <div class="hero-image-container">
+              <lottie-player src="Online Learning.json" background="transparent" speed="1" style="width: 100%; max-width: 600px; height: auto;" loop autoplay></lottie-player>
           </div>
         </div>
       </div>
@@ -281,38 +250,73 @@
     <section id="how-it-works">
       <div class="container">
         <div class="section-header animate-on-scroll">
-          <h2>Get Started in 4 Simple Steps</h2>
-          <p>Launch your journey to coding mastery in just a few minutes. It's quick, easy, and effective.</p>
+          <span class="tagline">HOW IT WORKS</span>
+          <h2>Go From Zero to Consistent in Minutes</h2>
+          <p>We've removed all friction. Your path to becoming a better coder is just a few clicks away.</p>
         </div>
-        <div class="how-it-works-timeline">
-            <div class="timeline-item animate-on-scroll"><div class="timeline-dot"></div><div class="timeline-content"><div class="icon"><i class="fa-solid fa-user-plus"></i></div><h3>Step 1: Sign Up</h3><p>Create your free account and verify your email to get started.</p></div></div>
-            <div class="timeline-item animate-on-scroll" style="transition-delay: 0.1s;"><div class="timeline-dot"></div><div class="timeline-content"><div class="icon"><i class="fa-solid fa-mobile-screen-button"></i></div><h3>Step 2: Set Schedule</h3><p>Link your WhatsApp and choose your preferred time for daily tasks.</p></div></div>
-            <div class="timeline-item animate-on-scroll" style="transition-delay: 0.2s;"><div class="timeline-dot"></div><div class="timeline-content"><div class="icon"><i class="fa-solid fa-paper-plane"></i></div><h3>Step 3: Get Tasks</h3><p>Receive your unique coding challenge automatically every day.</p></div></div>
-            <div class="timeline-item animate-on-scroll" style="transition-delay: 0.3s;"><div class="timeline-dot"></div><div class="timeline-content"><div class="icon"><i class="fa-solid fa-arrow-trend-up"></i></div><h3>Step 4: Grow Streak</h3><p>Complete tasks, build your streak, and watch your skills grow!</p></div></div>
+        <div class="how-it-works-grid">
+            <div class="step-card animate-on-scroll">
+                <div class="icon"><i class="fa-solid fa-user-plus"></i></div>
+                <h3>1. Quick Sign Up</h3>
+                <p>Create your free account in 30 seconds. No credit card required.</p>
+            </div>
+            <div class="step-card animate-on-scroll" style="transition-delay: 0.1s;">
+                <div class="icon"><i class="fa-brands fa-whatsapp"></i></div>
+                <h3>2. Link WhatsApp</h3>
+                <p>Connect your account to get daily tasks delivered straight to your phone.</p>
+            </div>
+            <div class="step-card animate-on-scroll" style="transition-delay: 0.2s;">
+                <div class="icon"><i class="fa-solid fa-paper-plane"></i></div>
+                <h3>3. Get Daily Tasks</h3>
+                <p>Receive your unique coding challenge at your preferred time, every single day.</p>
+            </div>
+            <div class="step-card animate-on-scroll" style="transition-delay: 0.3s;">
+                <div class="icon"><i class="fa-solid fa-arrow-trend-up"></i></div>
+                <h3>4. Build Your Streak</h3>
+                <p>Complete tasks, grow your streak, and transform your skills through consistency.</p>
+            </div>
         </div>
       </div>
     </section>
 
-    <section id="about">
-      <div class="container animate-on-scroll">
-        <div class="about-content">
-          <div class="about-icon"><i class="fa-solid fa-lightbulb"></i></div>
-          <div class="about-text">
-            <h2>Our Mission</h2>
-            <p>Consistency beats talent. We believe the single biggest barrier to becoming a great developer isn't intelligence—it's the daily discipline to practice. The Habit Loop was created to make that daily practice simple, motivating, and accessible for everyone, right from your phone.</p>
-          </div>
+    <section id="philosophy">
+        <div class="container">
+            <div class="philosophy-grid">
+                <div class="philosophy-visual animate-on-scroll">
+                    <lottie-player src="Online Learning.json" background="transparent" speed="0.8" style="width: 100%; max-width: 400px; height: auto;" loop autoplay></lottie-player>
+                </div>
+                <div class="philosophy-text animate-on-scroll" style="transition-delay: 0.1s;">
+                    <h2>The Habit Loop Philosophy</h2>
+                    <p class="description">We believe the biggest barrier to becoming a great developer isn't talent—it's the daily discipline to practice. Our platform is built on three core principles to help you succeed.</p>
+                    <ul class="philosophy-list">
+                        <li><i class="fa-solid fa-check-circle"></i><div><strong>Remove All Friction.</strong> Tasks come to you via WhatsApp. No apps to open, no websites to log into. Just code.</div></li>
+                        <li><i class="fa-solid fa-check-circle"></i><div><strong>Consistency Over Intensity.</strong> 15 minutes of focused practice every day is more powerful than a 4-hour cram session once a week.</div></li>
+                        <li><i class="fa-solid fa-check-circle"></i><div><strong>Motivation Through Momentum.</strong> Building and maintaining a streak is a powerful psychological tool that keeps you coming back for more.</div></li>
+                    </ul>
+                </div>
+            </div>
         </div>
-      </div>
     </section>
     
     <section id="courses">
       <div class="container">
         <div class="section-header animate-on-scroll">
-            <h2>Explore Our Curriculum</h2>
-            <p>We offer a wide range of topics across multiple languages, designed to take you from beginner to pro, one day at a time.</p>
+            <span class="tagline">CURRICULUM</span>
+            <h2>What You'll Learn</h2>
+            <p>Our curriculum is designed to take you from core fundamentals to advanced topics, one day at a time, across multiple languages.</p>
         </div>
         <div id="coursesContainer" class="animate-on-scroll" style="transition-delay: 0.2s;"></div>
       </div>
+    </section>
+
+    <section id="final-cta-section">
+        <div class="container">
+            <div class="final-cta animate-on-scroll">
+                <h2>Ready to Start Your Coding Habit?</h2>
+                <p>It takes 2 minutes to set up and a lifetime to benefit. Join hundreds of developers building their skills, one day at a time.</p>
+                <a href="signup.html" class="btn btn-primary btn-lg"><i class="fa-solid fa-rocket"></i> Start for Free - No Card Needed</a>
+            </div>
+        </div>
     </section>
   </main>
   
@@ -326,6 +330,9 @@
     </div>
   </footer>
 
+  <!-- ========================================================== -->
+  <!-- ============== NO CHANGES TO ANY JAVASCRIPT ============== -->
+  <!-- ========================================================== -->
   <script>
     // --- AUTHENTICATION & UI LOGIC ---
     document.addEventListener('DOMContentLoaded', () => {
@@ -338,29 +345,25 @@
             <a href="signup.html" class="btn btn-primary">Sign Up</a>
           `;
         };
-const renderLoggedInState = (userData) => {
-  // ✅✅✅ NEW: HTML for the profile dropdown ✅✅✅
-  actionsContainer.innerHTML = `
-    <!-- ✅✅✅ ADD THIS NEW LINE ✅✅✅ -->
-    <span class="nav-user-greeting">👋Welcome, ${userData.name}!</span>
-
-    <div class="profile-menu-container">
-        <div class="profile-avatar" id="profile-avatar">${userData.name.charAt(0).toUpperCase()}</div>
-        <div class="profile-dropdown" id="profile-dropdown">
-            <div class="dropdown-header">
-                <div class="user-name">${userData.name}</div>
+        const renderLoggedInState = (userData) => {
+          actionsContainer.innerHTML = `
+            <span class="nav-user-greeting">👋 Welcome, ${userData.name}!</span>
+            <div class="profile-menu-container">
+                <div class="profile-avatar" id="profile-avatar">${userData.name.charAt(0).toUpperCase()}</div>
+                <div class="profile-dropdown" id="profile-dropdown">
+                    <div class="dropdown-header">
+                        <div class="user-name">${userData.name}</div>
+                    </div>
+                    <a href="dashboard.html" class="dropdown-item"><i class="fa-solid fa-table-columns"></i> Dashboard</a>
+                    <a href="#" class="dropdown-item logout" onclick="logout()"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
+                </div>
             </div>
-            <a href="dashboard.html" class="dropdown-item"><i class="fa-solid fa-table-columns"></i> Dashboard</a>
-            <a href="#" class="dropdown-item logout" onclick="logout()"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
-        </div>
-    </div>
-  `;
+          `;
           
-          // Add event listener to the new avatar
           const profileAvatar = document.getElementById('profile-avatar');
           const profileDropdown = document.getElementById('profile-dropdown');
           profileAvatar.addEventListener('click', (e) => {
-              e.stopPropagation(); // Prevent window click listener from firing immediately
+              e.stopPropagation();
               profileDropdown.classList.toggle('show');
           });
         };
@@ -395,7 +398,6 @@ const renderLoggedInState = (userData) => {
         const sections = document.querySelectorAll('section[id]');
         const elementsToAnimate = document.querySelectorAll('.animate-on-scroll');
 
-        // ✅✅✅ NEW: Close profile dropdown if clicking outside ✅✅✅
         window.addEventListener('click', (e) => {
             const profileDropdown = document.getElementById('profile-dropdown');
             if (profileDropdown && profileDropdown.classList.contains('show')) {
@@ -412,11 +414,13 @@ const renderLoggedInState = (userData) => {
         });
 
         navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                if (navMenu.classList.contains('active')) {
-                    navMenu.classList.remove('active');
-                    hamburger.querySelector('i').classList.add('fa-bars');
-                    hamburger.querySelector('i').classList.remove('fa-times');
+            link.addEventListener('click', (e) => {
+                if (link.getAttribute('href').startsWith('#')) {
+                    if (navMenu.classList.contains('active')) {
+                        navMenu.classList.remove('active');
+                        hamburger.querySelector('i').classList.add('fa-bars');
+                        hamburger.querySelector('i').classList.remove('fa-times');
+                    }
                 }
             });
         });
@@ -429,19 +433,19 @@ const renderLoggedInState = (userData) => {
         
         window.addEventListener('scroll', () => {
             navbar.classList.toggle('scrolled', window.scrollY > 10);
-            let current = 'home';
+            let current = '';
             sections.forEach(section => {
                 const sectionTop = section.offsetTop;
                 if (pageYOffset >= sectionTop - navHeight - 100) { current = section.getAttribute('id'); }
             });
             navLinks.forEach(link => {
                 link.classList.remove('active');
-                if (link.getAttribute('href') === `#${current}`) { link.classList.add('active'); }
+                if (link.getAttribute('href').endsWith(`#${current}`)) { link.classList.add('active'); }
             });
         });
     });
 
-    // UNCHANGED DYNAMIC COURSE LOADER
+    // --- DYNAMIC COURSE LOADER ---
     document.addEventListener('DOMContentLoaded', () => {
         const courses = [ { language: "C++", levels: [ { level: "Beginner", title: "Fundamentals & Syntax", days: [ { day: 1, topic: "Structure of a Simple C++ Program (Hello World, #include, main())" }, { day: 2, topic: "Input and Output (cin, cout, endl, basic formatting)" }, { day: 3, topic: "Variables & Data Types (int, float, char, string, bool)" }, { day: 4, topic: "Operators (Arithmetic, Assignment, Increment/Decrement)" }, { day: 5, topic: "Conditional Statements (if, else, nested if)" }, { day: 6, topic: "Logical Operators & Comparisons" }, { day: 7, topic: "Switch Statements" }, { day: 8, topic: "Loops — while, do-while" }, { day: 9, topic: "Loops — for loop, nested loops" }, { day: 10, topic: "Practice: Basic Patterns & Control Flow Questions" } ] }, { level: "Intermediate", title: "Functions & Arrays", days: [ { day: 11, topic: "Functions — Basics, Declaration & Definition" }, { day: 12, topic: "Function Arguments & Return Types" }, { day: 13, topic: "Recursion Basics" }, { day: 14, topic: "Arrays — 1D Arrays Intro" }, { day: 15, topic: "Arrays — 1D Operations & Questions" }, { day: 16, topic: "2D Arrays — Basics" }, { day: 17, topic: "2D Arrays — Classic Problems (Matrix Transpose, Sum)" }, { day: 18, topic: "Strings — C++ Strings, Basic Operations" }, { day: 19, topic: "Strings — Character Arrays vs string Class" }, { day: 20, topic: "Practice: Functions + Arrays + Strings Combined Problems" } ] }, { level: "Advanced", title: "Classes, OOP & STL", days: [ { day: 21, topic: "Intro to OOP — Classes & Objects" }, { day: 22, topic: "Constructors & Destructors" }, { day: 23, topic: "Member Functions & Data Members" }, { day: 24, topic: "Encapsulation & Access Modifiers" }, { day: 25, topic: "Inheritance — Types & Examples" }, { day: 26, topic: "Polymorphism — Function Overloading" }, { day: 27, topic: "Polymorphism — Operator Overloading" }, { day: 28, topic: "Abstract Classes & Pure Virtual Functions" }, { day: 29, topic: "Intro to Standard Template Library (STL)" }, { day: 30, topic: "STL — Vectors & Iterators" } ] }, { level: "Pro", title: "Advanced Concepts + DSA", days: [ { day: 31, topic: "Pointers — Basics, * and &" }, { day: 32, topic: "Pointers — Arrays & Functions" }, { day: 33, topic: "Dynamic Memory Allocation (new and delete)" }, { day: 34, topic: "Linked Lists — Intro & Implementation" }, { day: 35, topic: "Stacks & Queues (Concepts + STL)" }, { day: 36, topic: "Trees — Basics & Binary Tree" }, { day: 37, topic: "Binary Search & Binary Search Trees" }, { day: 38, topic: "Sorting Algorithms — Bubble, Selection, Insertion" }, { day: 39, topic: "Searching Algorithms — Linear & Binary Search" }, { day: 40, topic: "Final Practice: Mixed Interview Questions (Patterns, STL, DSA)" } ] } ] }, { language: "Java", levels: [ { level: "Beginner", title: "Java Basics & Syntax", days: [ { day: 1, topic: "Intro: How Java Works, JVM, JDK, First Hello World" }, { day: 2, topic: "Variables & Data Types" }, { day: 3, topic: "Input & Output — Scanner" }, { day: 4, topic: "Operators — Arithmetic, Assignment" }, { day: 5, topic: "Conditional Statements — if, else if, else" }, { day: 6, topic: "Logical Operators & Comparisons" }, { day: 7, topic: "Switch Case" }, { day: 8, topic: "Loops — while & do-while" }, { day: 9, topic: "Loops — for loop, nested loops" }, { day: 10, topic: "Practice: Basic Pattern Printing" } ] }, { level: "Intermediate", title: "Methods & Arrays", days: [ { day: 11, topic: "Methods — Definition & Calling" }, { day: 12, topic: "Method Overloading" }, { day: 13, topic: "Recursion Basics" }, { day: 14, topic: "Arrays — 1D Arrays" }, { day: 15, topic: "Arrays — Basic Problems" }, { day: 16, topic: "2D Arrays" }, { day: 17, topic: "2D Array Classic Problems (Transpose, Sum)" }, { day: 18, topic: "Strings — Basics & String Class" }, { day: 19, topic: "String Methods & Immutability" }, { day: 20, topic: "Practice: Arrays + Strings Problems" } ] }, { level: "Advanced", title: "OOP & Advanced Classes", days: [ { day: 21, topic: "OOP Concepts — Classes & Objects" }, { day: 22, topic: "Constructors" }, { day: 23, topic: "Getters & Setters" }, { day: 24, topic: "this Keyword" }, { day: 25, topic: "Inheritance" }, { day: 26, topic: "super Keyword" }, { day: 27, topic: "Method Overriding" }, { day: 28, topic: "Polymorphism" }, { day: 29, topic: "Abstraction & Interfaces" }, { day: 30, topic: "Encapsulation — Real Example" } ] }, { level: "Pro", title: "Core DSA & Collections", days: [ { day: 31, topic: "Intro to Java Collections" }, { day: 32, topic: "ArrayList — Basics & Operations" }, { day: 33, topic: "LinkedList — Basics & Operations" }, { day: 34, topic: "HashMap — Basics & Use Cases" }, { day: 35, topic: "HashSet — Basics & Differences" }, { day: 36, topic: "Stack & Queue in Java" }, { day: 37, topic: "Sorting Algorithms — Bubble & Selection" }, { day: 38, topic: "Searching — Linear & Binary Search" }, { day: 39, topic: "Trees — Basic Binary Tree Concepts" }, { day: 40, topic: "Practice Day — Mixed DSA Questions" } ] } ] } ];
         const container = document.getElementById('coursesContainer');

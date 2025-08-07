@@ -4,13 +4,17 @@ import Topic from './models/Topic.js';
 import twilio from './config/twilio.js';
 import moment from 'moment-timezone';
 
-// ✅✅✅ 1. CREATE A "LOCK" TO PREVENT DOUBLE RUNS ✅✅✅
-// This set will store the IDs of users currently being processed.
+// This set stores the IDs of users currently being processed to prevent race conditions.
 const processingUsers = new Set();
 
+// Schedule the job to run once every minute.
 cron.schedule('* * * * *', async () => {
-  console.log('⏰ Cron running: Checking for scheduled messages...');
+  console.log('====================================================');
+  console.log(`⏰ Cron Job Running at: ${moment().format()}`);
 
+  const nowInUTC = moment.utc();
+
+  // Find all users who are active and have a schedule.
   const users = await User.find({
     isPaused: false,
     deliveryTime: { $ne: null, $exists: true },
@@ -18,29 +22,46 @@ cron.schedule('* * * * *', async () => {
   });
 
   if (users.length === 0) {
-    console.log("-> No users scheduled for this minute. Waiting...");
+    console.log("-> No active users with a schedule found. Waiting...");
+    console.log('====================================================\n');
     return;
   }
   
-  const nowInUTC = moment.utc();
+  console.log(`--- Checking ${users.length} user(s) ---`);
 
   for (const user of users) {
-    // ✅✅✅ 2. CHECK THE LOCK ✅✅✅
-    // If we are already processing this user, skip them for this run.
+    // 1. LOCK CHECK: If we are already processing this user, skip them for this run.
     if (processingUsers.has(user._id.toString())) {
       console.log(`-> ⏩ User ${user.name} is already being processed. Skipping.`);
       continue;
     }
 
-    const userTimeZone = user.timeZone;
-    const [hour, minute] = user.deliveryTime.split(':');
-    const deliveryTimeInUserTz = moment().tz(userTimeZone).hour(hour).minute(minute);
+    // 2. DATE CHECK: The ultimate safeguard against double sending on the same day.
+    const todayInUserTz = moment().tz(user.timeZone).format('YYYY-MM-DD');
+    if (user.lastSentDate === todayInUserTz) {
+      console.log(`-> ⏩ Message for ${user.name} was already sent today (${todayInUserTz}). Skipping.`);
+      continue;
+    }
 
-    if (nowInUTC.isSameOrAfter(deliveryTimeInUserTz) && nowInUTC.diff(deliveryTimeInUserTz, 'minutes') < 1) {
+    // 3. TIME CHECK: Convert user's local time to UTC for comparison.
+    const userTimeZone = user.timeZone;
+
+// ✅✅✅ THE FIX: COMPARE THE CURRENT MINUTE IN THE USER'S TIMEZONE ✅✅✅
+// Get the current time and immediately convert it to the user's local timezone.
+const nowInUserTz = moment().tz(userTimeZone);
+
+// Format both the user's saved time and the current time into a simple "HH:mm" string.
+const userScheduledTime = user.deliveryTime; // e.g., "15:00"
+const currentTimeInUserTz = nowInUserTz.format('HH:mm'); // e.g., "15:00"
+
+console.log(`-> Checking ${user.name}: Their time is ${userScheduledTime}. Current time in their zone is ${currentTimeInUserTz}.`);
+
+// Now the check is a simple and perfect string comparison.
+if (userScheduledTime === currentTimeInUserTz) {
+    // ... your logic to send the message
       
       try {
-        // ✅✅✅ 3. APPLY THE LOCK ✅✅✅
-        // Add the user's ID to the set to "lock" them.
+        // 4. APPLY LOCK: Prevent another cron run from picking up this user.
         processingUsers.add(user._id.toString());
         console.log(`🚀 It's a match for ${user.name}! [LOCKED]`);
 
@@ -51,13 +72,13 @@ cron.schedule('* * * * *', async () => {
         });
 
         if (!topic) {
-          console.log(`❌ No topic found for ${user.name} for day ${user.currentDay}.`);
-          continue; // continue will go to the finally block to release the lock
+          console.log(`❌ No topic found for ${user.name} for course day ${user.currentDay}.`);
+          continue; // Skips to the 'finally' block to release the lock.
         }
 
-        // --- Your existing logic remains the same ---
-        // 1. Update DB
-        console.log(`💾 Updating progress for ${user.name} to Day ${user.currentDay + 1}...`);
+        // 5. UPDATE DATABASE FIRST (so progress is saved even if Twilio fails)
+        console.log(`💾 Updating progress for ${user.name} from Day ${user.currentDay} to ${user.currentDay + 1}...`);
+        
         user.completedTopics.push({
           order: topic.order,
           explanation: topic.explanation,
@@ -66,33 +87,55 @@ cron.schedule('* * * * *', async () => {
         });
         user.currentDay += 1;
         user.streakCount += 1;
+        user.lastSentDate = todayInUserTz; // Mark that a message was sent today.
+
         await user.save();
         console.log(`✅ Database updated for ${user.name}.`);
 
-        // 2. Send Twilio Message
-        console.log(`📲 Attempting to send WhatsApp message to ${user.name}...`);
-        // ... (your twilio sending code)
-        const maxLength = 1400;
-        const explanationChunks = [];
-        for (let i = 0; i < topic.explanation.length; i += maxLength) {
-          explanationChunks.push(topic.explanation.substring(i, i + maxLength));
+        // 6. SEND WHATSAPP MESSAGE (in a separate try/catch)
+        try {
+          console.log(`📲 Attempting to send WhatsApp message to ${user.name}...`);
+          const maxLength = 1500; // WhatsApp message limit is around 1600 characters
+          const explanationChunks = [];
+          for (let i = 0; i < topic.explanation.length; i += maxLength) {
+            explanationChunks.push(topic.explanation.substring(i, i + maxLength));
+          }
+
+          // Send the main content in chunks
+          for (const chunk of explanationChunks) {
+            await twilio.messages.create({
+              body: `*📅 Day ${topic.order}: ${topic.title || 'New Topic'}*\n\n${chunk}`,
+              from: 'whatsapp:+14155238886',
+              to: `whatsapp:${user.whatsapp}`
+            });
+          }
+
+          // Send the links as a separate message
+          const links = `*🔗 Today's Resources:*\n\n*Question:* ${topic.leetcode || 'N/A'}\n*YouTube:* ${topic.youtube || 'N/A'}`;
+          await twilio.messages.create({
+            body: links,
+            from: 'whatsapp:+14155238886',
+            to: `whatsapp:${user.whatsapp}`
+          });
+          
+          console.log(`✔️ Message sent successfully to ${user.name}.`);
+
+        } catch (twilioError) {
+          // If Twilio fails, we just log it. The user's progress is already saved.
+          console.error(`⚠️ Twilio Error for ${user.name} (Progress was already saved):`, twilioError);
         }
-        for (const chunk of explanationChunks) {
-          await twilio.messages.create({ body: `📅 Day ${topic.order}\n\n${chunk}`, from: 'whatsapp:+14155238886', to: `whatsapp:${user.whatsapp}` });
-        }
-        const links = `🔗 Resources:\nQuestion: ${topic.leetcode}\nYouTube: ${topic.youtube}`;
-        await twilio.messages.create({ body: links, from: 'whatsapp:+14155238886', to: `whatsapp:${user.whatsapp}` });
-        console.log(`✔️ Message sent successfully to ${user.name}.`);
 
       } catch (err) {
-        console.error(`❌❌ An error occurred for ${user.name}:`, err);
+        console.error(`❌❌ A critical error occurred for ${user.name}:`, err);
       } finally {
-        // ✅✅✅ 4. RELEASE THE LOCK ✅✅✅
-        // No matter what happens (success or error), we MUST remove the user's ID
-        // from the set so they can be processed again tomorrow.
+        // 7. RELEASE LOCK: ALWAYS remove the user from the processing set.
         processingUsers.delete(user._id.toString());
         console.log(`[UNLOCKED] Processing finished for ${user.name}.`);
       }
     }
   }
+  console.log('--- Cron check finished ---');
+  console.log('====================================================\n');
 });
+
+console.log('✅ Cron job scheduled. It will run every minute.');

@@ -18,7 +18,9 @@ const userSchema = new mongoose.Schema({
   timeZone: {
     type: String, // Will store values like "Asia/Kolkata", "America/New_York", etc.
   },
-
+   lastSentDate: {
+    type: String // We will store the date as a simple string like "2023-11-22"
+  },
   currentDay: { type: Number, default: 1 },
   streakCount: {
     type: Number,
