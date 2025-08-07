@@ -26,6 +26,16 @@ const userSchema = new mongoose.Schema({
     type: Number,
     default: 0 // Start all users with a streak of 0
   },
+  isSubscribed: {
+    type: Boolean,
+    default: false // All users start as not subscribed
+  },
+  subscriptionLevel: {
+    type: String, // Will store "Advanced" or "Pro"
+    default: null
+  },
+  razorpayOrderId: String,
+  razorpayPaymentId: String,
   isPaused: { type: Boolean, default: false },
   completedTopics: [
     {

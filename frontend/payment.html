@@ -26,17 +26,27 @@
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
+    html, body {
+        height: 100%;
+    }
+
     body {
       font-family: 'Poppins', sans-serif;
       background-color: var(--bg-dark);
-      background-image: radial-gradient(ellipse at top, #161b22, #0d1117);
+      background-image: 
+        radial-gradient(ellipse 50% 80% at 20% 40%, rgba(59, 130, 246, 0.15), transparent),
+        radial-gradient(ellipse 50% 80% at 80% 50%, rgba(13, 17, 23, 0.15), transparent);
       color: var(--text-light);
       line-height: 1.7;
+      display: flex;
+      flex-direction: column;
     }
 
     .navbar {
       display: flex; justify-content: space-between; align-items: center; padding: 0 2rem;
-      height: 70px; background-color: var(--bg-secondary); border-bottom: 1px solid var(--border-color);
+      height: 70px; background-color: rgba(13, 17, 23, 0.8); backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000;
+      flex-shrink: 0; /* Prevent navbar from shrinking */
     }
     .logo {
       font-size: 1.5rem; font-weight: 700; text-decoration: none; color: var(--text-light);
@@ -45,157 +55,90 @@
     .logo .fa-fire { color: var(--primary-blue); }
 
     .main-container {
-      display: flex;
-      justify-content: center;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       align-items: center;
-      min-height: calc(100vh - 70px);
-      padding: 3rem 20px;
-    }
-
-    .checkout-wrapper {
-      background-color: var(--bg-secondary);
-      padding: 2.5rem;
-      border-radius: 16px;
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35);
+      max-width: 1100px;
       width: 100%;
-      max-width: 500px;
-      animation: fadeIn 0.6s ease-out;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+      gap: 4rem;
+      flex-grow: 1; /* Allow main content to grow */
     }
-    @keyframes fadeIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
-
-    .checkout-header { text-align: center; margin-bottom: 2rem; }
-    .checkout-header .icon { font-size: 2.5rem; color: var(--primary-blue); margin-bottom: 1rem; }
-    .checkout-header h1 { font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; }
-    .checkout-header p { color: var(--text-muted); }
     
-    .order-summary {
-        background-color: var(--bg-dark);
-        border: 1px solid var(--border-color);
-        border-radius: 12px;
-        padding: 1.5rem;
-        margin-bottom: 2rem;
-    }
-    .order-summary h2 {
-        font-size: 1.2rem;
-        font-weight: 600;
-        margin-bottom: 1.5rem;
-        padding-bottom: 1rem;
-        border-bottom: 1px solid var(--border-color);
-    }
-    .summary-item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 1rem;
-    }
-    .summary-item .label { color: var(--text-muted); }
-    .summary-item .value { font-weight: 600; }
-    .summary-total {
-        margin-top: 1.5rem;
-        padding-top: 1.5rem;
-        border-top: 1px solid var(--border-color);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-size: 1.25rem;
-        font-weight: 700;
-    }
+    .value-props { animation: slideInLeft 0.8s ease-out; }
+    @keyframes slideInLeft { from { opacity: 0; transform: translateX(-30px); } to { opacity: 1; transform: translateX(0); } }
 
-    .features-list {
-        margin-bottom: 2rem;
-        list-style: none;
-        padding: 0;
+    .value-props h1 { font-size: 2.8rem; font-weight: 800; margin-bottom: 1rem; }
+    .value-props .highlight { background: linear-gradient(90deg, var(--primary-blue-hover), var(--primary-blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .value-props p { color: var(--text-muted); font-size: 1.1rem; margin-bottom: 2rem; max-width: 450px; }
+    
+    .features-list { list-style: none; padding: 0; }
+    .features-list li { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.25rem; }
+    .features-list .icon { background-color: rgba(59, 130, 246, 0.1); border: 1px solid var(--border-color); color: var(--primary-blue); width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .features-list h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.25rem; }
+    .features-list .desc { color: var(--text-muted); font-size: 0.9rem; }
+
+    .checkout-card {
+      background-color: rgba(22, 27, 34, 0.7); backdrop-filter: blur(20px);
+      border: 1px solid var(--border-color); padding: 2.5rem; border-radius: 16px;
+      animation: slideInRight 0.8s ease-out;
     }
-    .features-list li {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        margin-bottom: 0.75rem;
-        color: var(--text-muted);
-    }
-    .features-list li i {
-        color: var(--success-color);
-    }
+    @keyframes slideInRight { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
+    
+    .checkout-header { text-align: center; margin-bottom: 2rem; }
+    .checkout-header h2 { font-size: 1.5rem; font-weight: 600; }
+
+    .summary-item { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; }
+    .summary-item:not(:last-child) { border-bottom: 1px solid var(--border-color); }
+    .summary-item .label { color: var(--text-muted); }
+    .summary-item .value { font-weight: 600; font-size: 1.1rem; }
+    .summary-total { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: baseline; font-weight: 700; }
+    .summary-total .label { font-size: 1.2rem; }
+    .summary-total .value { font-size: 2rem; color: var(--primary-blue); }
 
     #payBtn {
-        width: 100%;
-        padding: 14px;
-        background-color: var(--success-color);
-        color: white;
-        border: none;
-        border-radius: 8px;
-        font-size: 1.2rem;
-        font-weight: 700;
-        cursor: pointer;
-        transition: background-color 0.3s, transform 0.2s;
+        width: 100%; padding: 14px; margin-top: 2rem; border: none; border-radius: 8px; font-size: 1.2rem; font-weight: 700; cursor: pointer; color: white;
+        background: linear-gradient(90deg, var(--success-color), #22c55e); box-shadow: 0 5px 20px rgba(40, 167, 69, 0.2);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
-    #payBtn:hover:not(:disabled) {
-        background-color: #22c55e;
-        transform: translateY(-2px);
-    }
-    #payBtn:disabled {
-        background-color: #166534;
-        cursor: not-allowed;
-        opacity: 0.7;
-    }
+    #payBtn:hover:not(:disabled) { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(40, 167, 69, 0.3); }
+    #payBtn:disabled { background: #166534; cursor: not-allowed; opacity: 0.7; }
     #payBtn .fa-spinner { margin-right: 10px; }
 
-    .secure-payment-info {
-        text-align: center;
-        margin-top: 1.5rem;
-        color: var(--text-muted);
-        font-size: 0.9rem;
-    }
+    .secure-payment-info { text-align: center; margin-top: 1.5rem; color: var(--text-muted); font-size: 0.9rem; }
     .secure-payment-info i { color: var(--success-color); }
-    .razorpay-logo { width: 100px; margin-top: 0.5rem; }
+    .razorpay-logo { width: 100px; margin-top: 0.5rem; filter: brightness(3); }
 
-    #message { text-align: center; font-weight: 500; min-height: 24px; color: var(--danger-red); }
+    #message { text-align: center; font-weight: 500; min-height: 24px; color: var(--danger-red); margin-top: 1rem; }
     
-    @media (max-width: 576px) {
-        .checkout-wrapper { padding: 2rem 1.5rem; }
-        .checkout-header h1 { font-size: 1.8rem; }
+    /* --- ✅✅✅ FOOTER STYLES ✅✅✅ --- */
+    footer {
+        padding: 2rem 0;
+        text-align: center;
+        border-top: 1px solid var(--border-color);
+        background-color: var(--bg-secondary);
+        flex-shrink: 0; /* Prevent footer from shrinking */
     }
-        /* --- ✅✅✅ NEW, ATTRACTIVE FOOTER STYLES ✅✅✅ --- */
-    .footer-content {
-        max-width: 1100px;
-        margin: 0 auto;
-        padding: 0 20px;
-    }
-
     .footer-links {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-wrap: wrap; /* Allows links to wrap on small screens */
-        gap: 0.75rem 1.5rem; /* Vertical and horizontal gap */
-        margin-bottom: 1.5rem;
+        display: flex; justify-content: center; align-items: center;
+        flex-wrap: wrap; gap: 0.75rem 1.5rem;
     }
-
-    .footer-links a {
-        color: var(--text-muted);
-        text-decoration: none;
-        font-weight: 500;
-        transition: color 0.3s ease;
-    }
-
-    .footer-links a:hover {
-        color: var(--primary-blue);
-        text-decoration: underline;
-    }
-
-    /* This hides the separator on mobile when links wrap */
-    .footer-links .separator {
-        color: var(--border-color);
-    }
+    .footer-links a { color: var(--text-muted); text-decoration: none; font-weight: 500; transition: color 0.3s ease; }
+    .footer-links a:hover { color: var(--primary-blue); text-decoration: underline; }
+    .footer-links .separator { color: var(--border-color); }
     
+    @media (max-width: 992px) {
+        body { height: auto; }
+        .main-container { grid-template-columns: 1fr; gap: 3rem; padding: 2rem 1.5rem; }
+        .value-props { text-align: center; }
+        .value-props p { margin-left: auto; margin-right: auto; }
+        .features-list { max-width: 450px; margin: 0 auto; text-align: left;}
+    }
+
     @media (max-width: 576px) {
-        .footer-links .separator {
-            display: none; /* Hide separators on small screens */
-        }
-        .footer-links {
-            flex-direction: column; /* Stack links vertically */
-            gap: 1rem;
-        }
+        .footer-links .separator { display: none; }
+        .footer-links { flex-direction: column; gap: 1rem; }
     }
   </style>
 </head>
@@ -206,62 +149,77 @@
   </header>
 
   <main class="main-container">
-    <div class="checkout-wrapper">
+    <div class="value-props">
+        <h1>Unlock Your <span class="highlight">Full Potential</span></h1>
+        <p>You're investing in more than just a course—you're investing in a system designed to build a real, lasting coding habit.</p>
+        <ul class="features-list">
+            <li>
+                <div class="icon"><i class="fa-solid fa-layer-group"></i></div>
+                <div>
+                    <h3>Advanced & Pro Topics</h3>
+                    <p class="desc">Access our complete curriculum, including advanced data structures, algorithms, and project-based modules.</p>
+                </div>
+            </li>
+            <li>
+                <div class="icon"><i class="fa-solid fa-star"></i></div>
+                <div>
+                    <h3>Priority Support</h3>
+                    <p class="desc">Get faster responses from our team for any questions or technical issues you encounter.</p>
+                </div>
+            </li>
+            <li>
+                <div class="icon"><i class="fa-solid fa-infinity"></i></div>
+                <div>
+                    <h3>Lifetime Access</h3>
+                    <p class="desc">Pay once and get lifetime access to the course content and all future updates. No recurring fees.</p>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="checkout-card">
       <div class="checkout-header">
-        <div class="icon"><i class="fa-solid fa-shield-halved"></i></div>
-        <h1>Complete Your Purchase</h1>
-        <p>You're one step away from unlocking your premium course.</p>
+        <h2>Complete Your Purchase</h2>
       </div>
 
       <div class="order-summary">
-        <h2>Order Summary</h2>
         <div class="summary-item">
-          <span class="label">Course Name:</span>
+          <span class="label">Course</span>
           <span class="value" id="courseName">Loading...</span>
         </div>
         <div class="summary-item">
-            <span class="label">Access:</span>
+            <span class="label">Access</span>
             <span class="value">Lifetime</span>
         </div>
         <div class="summary-total">
-          <span>Total:</span>
-          <span id="coursePrice">...</span>
+          <span class="label">You Pay</span>
+          <span class="value" id="coursePrice">...</span>
         </div>
       </div>
 
-      <ul class="features-list">
-        <li><i class="fa-solid fa-circle-check"></i> <span>Access to all Advanced & Pro topics</span></li>
-        <li><i class="fa-solid fa-circle-check"></i> <span>Full Project-Based Learning Modules</span></li>
-        <li><i class="fa-solid fa-circle-check"></i> <span>Priority Support from our Team</span></li>
-      </ul>
-
       <div id="message"></div>
-      <button id="payBtn">Pay Now</button>
+      <button id="payBtn"><i class="fa-solid fa-lock"></i> Pay Securely Now</button>
 
       <div class="secure-payment-info">
-        <p><i class="fa-solid fa-lock"></i> 100% Secure Payment</p>
         <img src="https://razorpay.com/assets/razorpay-logo-white.svg" alt="Razorpay" class="razorpay-logo">
       </div>
     </div>
-    <footer>
-  <div class="footer-content">
-    <div class="social-icons">
-        <a href="https://www.linkedin.com/in/sohamkhot75/" aria-label="LinkedIn" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-        <a href="https://github.com/Spkhot" aria-label="GitHub" target="_blank"><i class="fab fa-github"></i></a>
-    </div>
-    <div class="footer-links">
+  </main>
+
+  <!-- ✅✅✅ FOOTER ADDED HERE ✅✅✅ -->
+  <footer>
+    <div class="container">
+      <div class="footer-links">
         <a href="terms.html">Terms & Conditions</a>
         <span class="separator">|</span>
         <a href="privacy.html">Privacy Policy</a>
         <span class="separator">|</span>
         <a href="refund.html">Refund Policy</a>
         <span class="separator">|</span>
-        <a href="contact.html">Contact Us</a>
+        <a href="contact_us.html">Contact Us</a>
+      </div>
     </div>
-    <p class="copyright">© 2024 The Habit Loop. All Rights Reserved.</p>
-  </div>
-</footer>
-  </main>
+  </footer>
 
   <script>
     const token = localStorage.getItem('token');
@@ -273,18 +231,14 @@
     const payBtn = document.getElementById('payBtn');
     const messageEl = document.getElementById('message');
 
-    // --- Dynamically get course info from the URL ---
+    // Dynamically get course info from the URL
     const params = new URLSearchParams(window.location.search);
     const level = params.get('level');
     const language = params.get('language');
 
-    const prices = {
-        'Advanced': 99,
-        'Pro': 299
-    };
+    const prices = { 'Advanced': 99, 'Pro': 299 };
     const price = prices[level];
     
-    // Check if the URL params are valid
     if (!level || !language || !price) {
         messageEl.textContent = 'Invalid course details. Please go back and select a course.';
         payBtn.disabled = true;
@@ -310,6 +264,12 @@
 
             // 2. Fetch User Info for Prefill
             const userRes = await fetch('/api/user/me', { headers: { 'Authorization': `Bearer ${token}` } });
+            if (!userRes.ok) {
+              alert('Your session has expired. Please log in again.');
+              localStorage.removeItem('token');
+              window.location.href = 'login.html';
+              return;
+            }
             const userData = await userRes.json();
             
             // 3. Open Razorpay Checkout
@@ -320,40 +280,35 @@
                 name: "The Habit Loop",
                 description: `Payment for ${level} ${language} Course`,
                 order_id: orderData.orderId,
-                // ... inside payBtn.addEventListener('click', ...)
-            handler: async function (response) {
-                payBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Verifying...';
-                try {
-                    const scheduleParams = new URLSearchParams(window.location.search);
-                    const verificationRes = await fetch('/api/user/verify-payment-and-set-schedule', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-                        body: JSON.stringify({
-                            ...response,
-                            language: scheduleParams.get('language'),
-                            level: scheduleParams.get('level'),
-                            deliveryTime: scheduleParams.get('deliveryTime'),
-                            whatsapp: scheduleParams.get('whatsapp'),
-                            timeZone: scheduleParams.get('timeZone'),
-                        })
-                    });
-                    
-                    if (!verificationRes.ok) {
-                        const verificationData = await verificationRes.json();
-                        throw new Error(verificationData.message || 'Payment verification failed.');
+                handler: async function (response) {
+                    payBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Verifying...';
+                    try {
+                        const scheduleParams = new URLSearchParams(window.location.search);
+                        const verificationRes = await fetch('/api/user/verify-payment-and-set-schedule', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                            body: JSON.stringify({
+                                ...response,
+                                language: scheduleParams.get('language'),
+                                level: scheduleParams.get('level'),
+                                deliveryTime: scheduleParams.get('deliveryTime'),
+                                whatsapp: scheduleParams.get('whatsapp'),
+                                timeZone: scheduleParams.get('timeZone'),
+                            })
+                        });
+                        
+                        if (!verificationRes.ok) {
+                            const verificationData = await verificationRes.json();
+                            throw new Error(verificationData.message || 'Payment verification failed.');
+                        }
+                        
+                        window.location.href = 'success.html';
+                    } catch (verifyError) {
+                        messageEl.textContent = `Verification Failed: ${verifyError.message}`;
+                        payBtn.disabled = false;
+                        payBtn.innerHTML = '<i class="fa-solid fa-lock"></i> Pay Securely Now';
                     }
-
-                    // ✅✅✅ THE ONLY CHANGE: REDIRECT TO THE NEW SUCCESS PAGE ✅✅✅
-                    window.location.href = 'success.html';
-
-                } catch (verifyError) {
-                    messageEl.textContent = `Verification Failed: ${verifyError.message}`;
-                    // Re-enable the button on failure
-                    payBtn.disabled = false;
-                    payBtn.innerHTML = 'Pay Now';
-                }
-            },
-// ...
+                },
                 prefill: {
                     name: userData.name || '',
                     email: userData.email || '',
@@ -373,8 +328,11 @@
         } catch (error) {
             messageEl.textContent = `Error: ${error.message}`;
         } finally {
-            payBtn.disabled = false;
-            payBtn.innerHTML = 'Pay Now';
+            // Re-enable button only if rzp.open() is not called or fails before opening
+            if (!window.rzp) {
+              payBtn.disabled = false;
+              payBtn.innerHTML = '<i class="fa-solid fa-lock"></i> Pay Securely Now';
+            }
         }
     });
   </script>

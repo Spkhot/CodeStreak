@@ -239,6 +239,97 @@
             gap: 1rem;
         }
     }
+        /* --- ✅✅✅ NEW PRICING SECTION STYLES ✅✅✅ --- */
+    #pricing {
+      background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-dark) 100%);
+    }
+
+    .language-toggle {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 3rem;
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 6px;
+      width: fit-content;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .toggle-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 10px 24px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .toggle-btn.active {
+      background-color: var(--primary-purple);
+      color: white;
+      box-shadow: 0 4px 15px var(--primary-purple-glow);
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      align-items: center;
+    }
+    .pricing-card {
+      background: rgba(13, 17, 23, 0.5); /* Glass effect */
+      backdrop-filter: blur(15px);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 2.5rem 2rem;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+    }
+    .pricing-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    }
+    .pricing-card.highlighted {
+      transform: scale(1.05);
+      border-color: var(--primary-purple);
+      box-shadow: 0 0 40px var(--primary-purple-glow);
+    }
+    .pricing-card .badge {
+      position: absolute;
+      top: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(90deg, var(--primary-purple-hover), var(--primary-purple));
+      color: white;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+    .plan-name { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .plan-price { font-size: 3.5rem; font-weight: 800; margin: 1rem 0 0.5rem 0; }
+    .plan-price .currency { font-size: 1.8rem; font-weight: 600; color: var(--text-muted); vertical-align: super; margin-right: 5px;}
+    .plan-billing { color: var(--text-muted); margin-bottom: 2rem; }
+    .plan-features { list-style: none; padding: 0; text-align: left; margin-bottom: 2.5rem; }
+    .plan-features li { display: flex; align-items: center; gap: 12px; margin-bottom: 1rem; }
+    .plan-features li i { color: var(--primary-purple); }
+    .select-plan-btn { width: 100%; justify-content: center; }
+
+    /* Responsive Pricing Section */
+    @media (max-width: 992px) {
+      .pricing-grid {
+        grid-template-columns: 1fr;
+        max-width: 450px;
+        margin: 0 auto;
+      }
+      .pricing-card.highlighted {
+        transform: scale(1); /* Reset scale on mobile to prevent overflow */
+      }
+    }
   </style>
 
   <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
@@ -351,7 +442,78 @@
         <div id="coursesContainer" class="animate-on-scroll" style="transition-delay: 0.2s;"></div>
       </div>
     </section>
+        <!-- ========================================================== -->
+    <!-- ============== NEW, ATTRACTIVE PRICING SECTION ============== -->
+    <!-- ========================================================== -->
+    <section id="pricing">
+      <div class="container">
+        <div class="section-header animate-on-scroll">
+          <span class="tagline">Pricing Plans</span>
+          <h2>Find the Plan That's Right for You</h2>
+          <p>Whether you're starting out or aiming for mastery, we have a plan that fits your goals. All paid plans are a one-time payment for lifetime access.</p>
+        </div>
 
+        <!-- Language Toggle Switch -->
+        <div class="language-toggle animate-on-scroll" style="transition-delay: 0.1s;">
+          <button class="toggle-btn active" data-lang="C++">C++</button>
+          <button class="toggle-btn" data-lang="Java">Java</button>
+        </div>
+
+        <div class="pricing-grid animate-on-scroll" style="transition-delay: 0.2s;">
+          <!-- Plan 1: Advanced -->
+          <div class="pricing-card">
+            <div class="plan-name">Advanced</div>
+            <div class="plan-price">
+              <span class="currency">₹</span>99
+            </div>
+            <div class="plan-billing">One-time payment</div>
+            <ul class="plan-features">
+              <li><i class="fa-solid fa-check"></i> All Beginner & Intermediate content</li>
+              <li><i class="fa-solid fa-check"></i> 10 Days of Advanced Topics</li>
+              <li><i class="fa-solid fa-check"></i> Data Structures & OOP</li>
+              <li><i class="fa-solid fa-check"></i> Standard Template Library (STL)</li>
+              <li><i class="fa-solid fa-check"></i> Lifetime Access & Future Updates</li>
+            </ul>
+            <a href="https://thehabitloop.onrender.com/payment.html" class="btn btn-secondary select-plan-btn" data-level="Advanced">Get Started</a>
+          </div>
+
+          <!-- Plan 2: Pro (Highlighted) -->
+          <div class="pricing-card highlighted">
+            <div class="badge">Best Value</div>
+            <div class="plan-name">Pro</div>
+            <div class="plan-price">
+              <span class="currency">₹</span>299
+            </div>
+            <div class="plan-billing">One-time payment</div>
+            <ul class="plan-features">
+              <li><i class="fa-solid fa-check"></i> Everything in Advanced</li>
+              <li><i class="fa-solid fa-check"></i> 10 Days of Pro-Level Topics</li>
+              <li><i class="fa-solid fa-check"></i> Core DSA Concepts</li>
+              <li><i class="fa-solid fa-check"></i> Pointers & Memory Management</li>
+              <li><i class="fa-solid fa-check"></i> Mixed Interview Questions</li>
+            </ul>
+            <a href="https://thehabitloop.onrender.com/payment.html" class="btn btn-primary select-plan-btn" data-level="Pro">Get Started</a>
+          </div>
+          
+          <!-- Plan 3: Both Languages (Highlighted) -->
+          <div class="pricing-card">
+            <div class="plan-name">Full Access Bundle</div>
+            <div class="plan-price">
+              <span class="currency">₹</span>199
+            </div>
+            <div class="plan-billing">One-time payment</div>
+            <ul class="plan-features">
+              <li><i class="fa-solid fa-check"></i> <strong>Pro Access for C++</strong></li>
+              <li><i class="fa-solid fa-check"></i> <strong>Pro Access for Java</strong></li>
+              <li><i class="fa-solid fa-check"></i> 40 Days of C++ Content</li>
+              <li><i class="fa-solid fa-check"></i> 40 Days of Java Content</li>
+              <li><i class="fa-solid fa-check"></i> The ultimate learning package</li>
+            </ul>
+            <a href="https://thehabitloop.onrender.com/payment.html" class="btn btn-secondary select-plan-btn" data-level="Full Access Bundle">Get Started</a>
+          </div>
+        </div>
+      </div>
+    </section>
     <section id="final-cta-section">
         <div class="container">
             <div class="final-cta animate-on-scroll">
@@ -376,7 +538,7 @@
         <span class="separator">|</span>
         <a href="refund.html">Refund Policy</a>
         <span class="separator">|</span>
-        <a href="contact.html">Contact Us</a>
+        <a href="contact_us.html">Contact Us</a>
     </div>
     <p class="copyright">© 2024 The Habit Loop. All Rights Reserved.</p>
   </div>

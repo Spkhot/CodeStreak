@@ -44,7 +44,7 @@
     .btn-nav { background: none; border: 1px solid var(--border-color); color: var(--text-muted); padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: 500; text-decoration: none; transition: all 0.3s ease; }
     .btn-nav:hover { background-color: var(--bg-dark); color: var(--text-light); }
     .btn-nav .fa-solid { margin-right: 6px; }
-    .main-container { display: flex; justify-content: center; align-items: center; padding: 3rem 20px; }
+    .main-container { display: flex; justify-content: center; align-items: center; padding: 3rem 20px; min-height: calc(100vh - 70px);}
     .form-wrapper { background-color: var(--bg-secondary); padding: 2.5rem; border-radius: 16px; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35); width: 100%; max-width: 500px; animation: slideInUp 0.6s ease-out; }
     @keyframes slideInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
     .form-header { text-align: center; margin-bottom: 2rem; }
@@ -61,7 +61,7 @@
     .step-content h4 { font-size: 1rem; margin-bottom: 0.5rem; }
     .step-content p { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.75rem; }
     .copyable-item { display: flex; align-items: center; background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; }
-    .copyable-item .text { padding: 8px 12px; font-family: 'Courier New', Courier, monospace; user-select: all; }
+    .copyable-item .text { padding: 8px 12px; font-family: 'Courier New', Courier, monospace; user-select: all; word-break: break-all; }
     .copyable-item .copy-btn { background: none; border: none; border-left: 1px solid var(--border-color); color: var(--text-muted); padding: 8px 12px; cursor: pointer; transition: color 0.2s ease, background-color 0.2s; }
     .copyable-item .copy-btn:hover { color: var(--text-light); background-color: var(--bg-dark); }
     .input-group { margin-bottom: 1.25rem; }
@@ -125,9 +125,9 @@
               <div class="step-number">2</div>
               <div class="step-content">
                   <h4>Send Code on WhatsApp</h4>
-                  <p>Send the following message to "The Habit Loop" contact.</p>
+                  <p>Send your unique code to "The Habit Loop" contact.</p>
                   <div class="copyable-item">
-                      <span class="text" id="copy-code">join your-unique-code</span>
+                      <span class="text" id="copy-code">...loading code...</span>
                       <button class="copy-btn" data-copy-target="copy-code" title="Copy Code"><i class="fa-regular fa-copy"></i></button>
                   </div>
               </div>
@@ -189,19 +189,38 @@
         });
     });
 
-    const token = localStorage.getItem('token');
-    if (!token) {
-      document.getElementById('message').textContent = 'Authorization failed. Please login first!';
-      document.getElementById('formFields').disabled = true;
-      setTimeout(() => { window.location.href = 'login.html'; }, 2500);
-    }
-
-    // --- ✅✅✅ NEW PAYMENT LOGIC STARTS HERE ✅✅✅ ---
     const scheduleForm = document.getElementById('scheduleForm');
     const levelSelect = document.getElementById('level');
     const saveBtn = document.getElementById('saveBtn');
     const priceInfo = document.getElementById('price-info');
     const messageEl = document.getElementById('message');
+    const formFields = document.getElementById('formFields');
+
+    // ✅✅✅ THE FIX IS HERE: HANDLE TOKEN CORRECTLY ✅✅✅
+    const params = new URLSearchParams(window.location.search);
+    const urlToken = params.get('token');
+    if (urlToken) {
+        localStorage.setItem('token', urlToken);
+    }
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+        messageEl.textContent = 'Authorization failed. Please login first!';
+        messageEl.classList.add('error');
+        formFields.disabled = true;
+        saveBtn.disabled = true;
+        setTimeout(() => { window.location.href = 'login.html'; }, 2500);
+    } else {
+        // Fetch user data to get the unique WhatsApp code
+        fetch('/api/user/me', { headers: { 'Authorization': `Bearer ${token}` }})
+            .then(res => res.json())
+            .then(data => {
+                if (data.joinCode) {
+                    document.getElementById('copy-code').textContent = `join ${data.joinCode}`;
+                }
+            })
+            .catch(err => console.error("Could not fetch user join code"));
+    }
 
     // Default time
     const timeInput = document.getElementById('time');
@@ -213,7 +232,6 @@
     function updateButtonState() {
         const level = levelSelect.value;
         const price = prices[level];
-
         if (price) {
             priceInfo.textContent = `One-time payment of ₹${price} for lifetime access.`;
             priceInfo.style.display = 'block';
@@ -225,7 +243,7 @@
     }
 
     levelSelect.addEventListener('change', updateButtonState);
-    updateButtonState(); // Initial check on page load
+    updateButtonState();
 
     scheduleForm.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -244,20 +262,12 @@
         
         const isPaidTier = level === 'Advanced' || level === 'Pro';
 
-        // If it's a paid tier, redirect to the payment page
         if (isPaidTier) {
-            const params = new URLSearchParams({
-                language,
-                level,
-                deliveryTime,
-                whatsapp,
-                timeZone
-            });
+            const params = new URLSearchParams({ language, level, deliveryTime, whatsapp, timeZone });
             window.location.href = `payment.html?${params.toString()}`;
             return;
         }
 
-        // If it's a free tier, save the schedule directly
         saveBtn.disabled = true;
         saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
         messageEl.textContent = '';
