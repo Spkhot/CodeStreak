@@ -127,7 +127,7 @@
                   <h4>Send Code on WhatsApp</h4>
                   <p>Send your unique code to "The Habit Loop" contact.</p>
                   <div class="copyable-item">
-                      <span class="text" id="copy-code">...loading code...</span>
+                      <span class="text" id="copy-code">join teeth-lunch</span>
                       <button class="copy-btn" data-copy-target="copy-code" title="Copy Code"><i class="fa-regular fa-copy"></i></button>
                   </div>
               </div>
@@ -168,7 +168,53 @@
     </div>
   </main>
 
-  <script>
+    <script>
+    // --- PAGE PROTECTION & INITIALIZATION ---
+
+    // First, handle token from URL (for new users after email verification)
+    const params = new URLSearchParams(window.location.search);
+    const urlToken = params.get('token');
+    if (urlToken) {
+        localStorage.setItem('token', urlToken);
+        // Clean the URL for security and aesthetics
+        window.history.replaceState({}, document.title, window.location.pathname);
+    }
+
+    const token = localStorage.getItem('token');
+    const formFields = document.getElementById('formFields');
+    const messageEl = document.getElementById('message');
+
+    // If there is NO token, the user is not logged in. Redirect them immediately.
+    if (!token) {
+        // Hide the form to prevent it from flashing before redirecting
+        document.querySelector('.form-wrapper').style.display = 'none'; 
+        window.location.href = 'login.html';
+    } else {
+        // If the user IS logged in, we proceed.
+        
+        // Fetch user data to get their unique WhatsApp join code
+        fetch('/api/user/me', { headers: { 'Authorization': `Bearer ${token}` }})
+            .then(res => {
+                // If the token is invalid or expired, the server will reject. Log them out.
+                if (!res.ok) {
+                    localStorage.removeItem('token');
+                    window.location.href = 'login.html';
+                    return Promise.reject('Invalid token');
+                }
+                return res.json();
+            })
+            .then(data => {
+                if (data.joinCode) {
+                    document.getElementById('copy-code').textContent = `join ${data.joinCode}`;
+                }
+            })
+            .catch(err => {
+                console.error("Auth check or fetch join code failed:", err);
+            });
+    }
+
+    // --- PAGE FUNCTIONALITY (BUTTONS, FORM LOGIC, ETC.) ---
+
     const backBtn = document.getElementById('backBtn');
     const homeBtn = document.getElementById('homeBtn');
     backBtn.addEventListener('click', () => { window.history.back(); });
@@ -193,34 +239,6 @@
     const levelSelect = document.getElementById('level');
     const saveBtn = document.getElementById('saveBtn');
     const priceInfo = document.getElementById('price-info');
-    const messageEl = document.getElementById('message');
-    const formFields = document.getElementById('formFields');
-
-    // ✅✅✅ THE FIX IS HERE: HANDLE TOKEN CORRECTLY ✅✅✅
-    const params = new URLSearchParams(window.location.search);
-    const urlToken = params.get('token');
-    if (urlToken) {
-        localStorage.setItem('token', urlToken);
-    }
-    const token = localStorage.getItem('token');
-
-    if (!token) {
-        messageEl.textContent = 'Authorization failed. Please login first!';
-        messageEl.classList.add('error');
-        formFields.disabled = true;
-        saveBtn.disabled = true;
-        setTimeout(() => { window.location.href = 'login.html'; }, 2500);
-    } else {
-        // Fetch user data to get the unique WhatsApp code
-        fetch('/api/user/me', { headers: { 'Authorization': `Bearer ${token}` }})
-            .then(res => res.json())
-            .then(data => {
-                if (data.joinCode) {
-                    document.getElementById('copy-code').textContent = `join ${data.joinCode}`;
-                }
-            })
-            .catch(err => console.error("Could not fetch user join code"));
-    }
 
     // Default time
     const timeInput = document.getElementById('time');
@@ -296,5 +314,3 @@
         }
     });
   </script>
-</body>
-</html>
