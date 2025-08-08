@@ -46,7 +46,7 @@
       display: flex; justify-content: space-between; align-items: center; padding: 0 2rem;
       height: 70px; background-color: rgba(13, 17, 23, 0.8); backdrop-filter: blur(10px);
       border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000;
-      flex-shrink: 0; /* Prevent navbar from shrinking */
+      flex-shrink: 0;
     }
     .logo {
       font-size: 1.5rem; font-weight: 700; text-decoration: none; color: var(--text-light);
@@ -63,7 +63,7 @@
       margin: 0 auto;
       padding: 3rem 2rem;
       gap: 4rem;
-      flex-grow: 1; /* Allow main content to grow */
+      flex-grow: 1;
     }
     
     .value-props { animation: slideInLeft 0.8s ease-out; }
@@ -112,13 +112,12 @@
 
     #message { text-align: center; font-weight: 500; min-height: 24px; color: var(--danger-red); margin-top: 1rem; }
     
-    /* --- ✅✅✅ FOOTER STYLES ✅✅✅ --- */
     footer {
         padding: 2rem 0;
         text-align: center;
         border-top: 1px solid var(--border-color);
         background-color: var(--bg-secondary);
-        flex-shrink: 0; /* Prevent footer from shrinking */
+        flex-shrink: 0;
     }
     .footer-links {
         display: flex; justify-content: center; align-items: center;
@@ -155,67 +154,38 @@
         <ul class="features-list">
             <li>
                 <div class="icon"><i class="fa-solid fa-layer-group"></i></div>
-                <div>
-                    <h3>Advanced & Pro Topics</h3>
-                    <p class="desc">Access our complete curriculum, including advanced data structures, algorithms, and project-based modules.</p>
-                </div>
+                <div><h3>Advanced & Pro Topics</h3><p class="desc">Access our complete curriculum, including advanced data structures, algorithms, and project-based modules.</p></div>
             </li>
             <li>
                 <div class="icon"><i class="fa-solid fa-star"></i></div>
-                <div>
-                    <h3>Priority Support</h3>
-                    <p class="desc">Get faster responses from our team for any questions or technical issues you encounter.</p>
-                </div>
+                <div><h3>Priority Support</h3><p class="desc">Get faster responses from our team for any questions or technical issues you encounter.</p></div>
             </li>
             <li>
                 <div class="icon"><i class="fa-solid fa-infinity"></i></div>
-                <div>
-                    <h3>Lifetime Access</h3>
-                    <p class="desc">Pay once and get lifetime access to the course content and all future updates. No recurring fees.</p>
-                </div>
+                <div><h3>Lifetime Access</h3><p class="desc">Pay once and get lifetime access to the course content and all future updates. No recurring fees.</p></div>
             </li>
         </ul>
     </div>
 
     <div class="checkout-card">
-      <div class="checkout-header">
-        <h2>Complete Your Purchase</h2>
-      </div>
-
+      <div class="checkout-header"><h2>Complete Your Purchase</h2></div>
       <div class="order-summary">
-        <div class="summary-item">
-          <span class="label">Course</span>
-          <span class="value" id="courseName">Loading...</span>
-        </div>
-        <div class="summary-item">
-            <span class="label">Access</span>
-            <span class="value">Lifetime</span>
-        </div>
-        <div class="summary-total">
-          <span class="label">You Pay</span>
-          <span class="value" id="coursePrice">...</span>
-        </div>
+        <div class="summary-item"><span class="label">Course</span><span class="value" id="courseName">Loading...</span></div>
+        <div class="summary-item"><span class="label">Access</span><span class="value">Lifetime</span></div>
+        <div class="summary-total"><span class="label">You Pay</span><span class="value" id="coursePrice">...</span></div>
       </div>
-
       <div id="message"></div>
       <button id="payBtn"><i class="fa-solid fa-lock"></i> Pay Securely Now</button>
-
-      <div class="secure-payment-info">
-        <img src="https://razorpay.com/assets/razorpay-logo-white.svg" alt="Razorpay" class="razorpay-logo">
-      </div>
+      <div class="secure-payment-info"><img src="https://razorpay.com/assets/razorpay-logo-white.svg" alt="Razorpay" class="razorpay-logo"></div>
     </div>
   </main>
 
-  <!-- ✅✅✅ FOOTER ADDED HERE ✅✅✅ -->
   <footer>
     <div class="container">
       <div class="footer-links">
-        <a href="terms.html">Terms & Conditions</a>
-        <span class="separator">|</span>
-        <a href="privacy.html">Privacy Policy</a>
-        <span class="separator">|</span>
-        <a href="refund.html">Refund Policy</a>
-        <span class="separator">|</span>
+        <a href="terms.html">Terms & Conditions</a><span class="separator">|</span>
+        <a href="privacy.html">Privacy Policy</a><span class="separator">|</span>
+        <a href="refund.html">Refund Policy</a><span class="separator">|</span>
         <a href="contact_us.html">Contact Us</a>
       </div>
     </div>
@@ -231,7 +201,6 @@
     const payBtn = document.getElementById('payBtn');
     const messageEl = document.getElementById('message');
 
-    // Dynamically get course info from the URL
     const params = new URLSearchParams(window.location.search);
     const level = params.get('level');
     const language = params.get('language');
@@ -253,7 +222,6 @@
         messageEl.textContent = '';
         
         try {
-            // 1. Create Order
             const orderRes = await fetch('/api/user/create-order', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
@@ -262,7 +230,6 @@
             const orderData = await orderRes.json();
             if (!orderRes.ok) throw new Error(orderData.message || 'Could not create order.');
 
-            // 2. Fetch User Info for Prefill
             const userRes = await fetch('/api/user/me', { headers: { 'Authorization': `Bearer ${token}` } });
             if (!userRes.ok) {
               alert('Your session has expired. Please log in again.');
@@ -272,7 +239,6 @@
             }
             const userData = await userRes.json();
             
-            // 3. Open Razorpay Checkout
             const options = {
                 key: orderData.keyId,
                 amount: orderData.amount,
@@ -284,7 +250,8 @@
                     payBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Verifying...';
                     try {
                         const scheduleParams = new URLSearchParams(window.location.search);
-                        const verificationRes = await fetch('/api/user/verify-payment-and-set-schedule', {
+                        // ✅✅✅ THE FIX: Corrected the fetch URL ✅✅✅
+                        const verificationRes = await fetch('/api/user/verify-payment', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
                             body: JSON.stringify({
@@ -318,17 +285,14 @@
             };
 
             const rzp = new Razorpay(options);
-            
-            rzp.on('payment.failed', function (response){
+            rzp.on('payment.failed', (response) => {
                 messageEl.textContent = `Payment Failed: ${response.error.description}`;
             });
-
             rzp.open();
             
         } catch (error) {
             messageEl.textContent = `Error: ${error.message}`;
         } finally {
-            // Re-enable button only if rzp.open() is not called or fails before opening
             if (!window.rzp) {
               payBtn.disabled = false;
               payBtn.innerHTML = '<i class="fa-solid fa-lock"></i> Pay Securely Now';
