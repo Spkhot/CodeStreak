@@ -1,9 +1,60 @@
+// import mongoose from 'mongoose';
+
+// const userSchema = new mongoose.Schema({
+//   name: String,
+//   email: { type: String, unique: true },
+//   password: String,
+//   googleId: String,
+  
+//   // Account Status
+//   isVerified: { type: Boolean, default: false },
+//   verifyToken: String,
+//   resetToken: String,
+//   resetTokenExpires: Date,
+  
+//   // User's Active Schedule
+//   language: String, // The language they are currently receiving
+//   level: String,    // The level they are currently receiving
+//   deliveryTime: String,
+//   whatsapp: String,
+//   timeZone: String,
+  
+//   // User's Progress
+//   currentDay: { type: Number, default: 1 },
+//   streakCount: { type: Number, default: 0 },
+//   lastSentDate: String, // Format: "YYYY-MM-DD" in user's timezone
+//   isPaused: { type: Boolean, default: false },
+
+//   // ✅✅✅ IMPROVED SUBSCRIPTION STRUCTURE ✅✅✅
+//   // This array can hold multiple subscriptions, making the "Bundle" easy to manage.
+//   subscriptions: [{
+//     language: String, // e.g., "C++", "Java", or "Bundle" for the special offer
+//     level: String,    // e.g., "Pro", "Advanced"
+//     razorpayOrderId: String,
+//     razorpayPaymentId: String,
+//     purchaseDate: { type: Date, default: Date.now }
+//   }],
+
+//   // User's Saved Progress & Notes
+//   completedTopics: [
+//     {
+//       order: Number,
+//       explanation: String,
+//       leetcode: String,
+//       youtube: String,
+//       notes: { type: String, default: '' }
+//     },
+//   ],
+// });
+
+// export default mongoose.model('User', userSchema);
 import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema({
   name: String,
   email: { type: String, unique: true },
   password: String,
+  joinCode: { type: String, unique: true },
   googleId: String,
   isVerified: { type: Boolean, default: false },
   verifyToken: String,

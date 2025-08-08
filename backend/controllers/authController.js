@@ -7,6 +7,16 @@ import { OAuth2Client } from 'google-auth-library';
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
+// ✅✅✅ 1. ADD THIS HELPER FUNCTION AT THE TOP ✅✅✅
+// This function creates a random, human-readable code.
+const generateJoinCode = () => {
+    const adjectives = ["happy", "blue", "fast", "bright", "sharp", "quick", "silent", "cool", "wise", "calm"];
+    const nouns = ["river", "moon", "sun", "car", "tree", "sky", "lake", "star", "leaf", "bird"];
+    const adj = adjectives[Math.floor(Math.random() * adjectives.length)];
+    const noun = nouns[Math.floor(Math.random() * nouns.length)];
+    return `${adj}-${noun}`;
+};
+
 export const signup = async (req, res) => {
   const { name, email, password } = req.body;
 
@@ -17,41 +27,48 @@ export const signup = async (req, res) => {
   const verifyToken = crypto.randomBytes(32).toString('hex');
   const verifyURL = `${req.protocol}://${req.get('host')}/api/auth/verify?token=${verifyToken}`;
 
+  // ✅✅✅ 2. GENERATE A UNIQUE JOIN CODE ✅✅✅
+  // We loop to ensure the code is truly unique, although collisions are rare.
+  let joinCode;
+  let isCodeUnique = false;
+  while (!isCodeUnique) {
+      joinCode = generateJoinCode();
+      const existingUserWithCode = await User.findOne({ joinCode });
+      if (!existingUserWithCode) {
+          isCodeUnique = true;
+      }
+  }
+
+  // ✅✅✅ 3. ADD THE joinCode WHEN CREATING THE USER ✅✅✅
   await User.create({
     name,
     email,
     password: hashed,
     verifyToken,
+    joinCode, // <-- The new code is added here
     isVerified: false,
   });
 
   await transporter.sendMail({
-  to: email,
-  subject: '🔥 Verify your CodeStreak account & start your daily coding streak!',
-  html: `
-    <div style="font-family: Arial, sans-serif; color: #0D1117; line-height: 1.6;">
-      <h2 style="color: #3B82F6;">Hey there,</h2>
-      <p>You're almost ready to unlock daily bite-sized coding tasks straight to your WhatsApp. Just verify your email to get started.</p>
-      <p>
-        <a href="${verifyURL}" style="
-          display: inline-block;
-          padding: 12px 24px;
-          background-color: #3B82F6;
-          color: #fff;
-          text-decoration: none;
-          border-radius: 5px;
-          font-weight: bold;
-        ">✅ Verify My Email</a>
-      </p>
-      <p>If you didn’t sign up for CodeStreak, you can safely ignore this email.</p>
-      <p>Happy coding! 🚀<br/>– The CodeStreak Team</p>
-    </div>
-  `
-});
-
+    to: email,
+    subject: '🔥 Verify your The Habit Loop account!',
+    html: `
+      <div style="font-family: Arial, sans-serif; color: #0D1117; line-height: 1.6;">
+        <h2 style="color: #3B82F6;">Hey there,</h2>
+        <p>You're almost ready to start your daily coding habit. Just verify your email to get started.</p>
+        <p>
+          <a href="${verifyURL}" style="display: inline-block; padding: 12px 24px; background-color: #3B82F6; color: #fff; text-decoration: none; border-radius: 5px; font-weight: bold;">✅ Verify My Email</a>
+        </p>
+        <p>If you didn’t sign up, you can safely ignore this email.</p>
+        <p>Happy coding! 🚀<br/>– The Habit Loop Team</p>
+      </div>
+    `
+  });
 
   res.json({ message: 'Check your email to verify.' });
 };
+
+// --- NO CHANGES TO THE FUNCTIONS BELOW THIS LINE ---
 
 export const verify = async (req, res) => {
   const { token } = req.query;
@@ -64,33 +81,21 @@ export const verify = async (req, res) => {
   await user.save();
 
   const jwtToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
-  // ✅ Redirect with JWT in URL:
   res.redirect(`/set-schedule.html?token=${jwtToken}`);
 };
 
-
 export const login = async (req, res) => {
   const { email, password } = req.body;
-
-  // ✅ Check if admin login
-  if (
-    email === process.env.ADMIN_EMAIL &&
-    password === process.env.ADMIN_PASS
-  ) {
+  if (email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASS) {
     return res.json({ isAdmin: true });
   }
-
-  // 🔐 Normal user login
   const user = await User.findOne({ email });
   if (!user) return res.status(404).json({ message: 'No user found' });
   if (!user.isVerified) return res.status(400).json({ message: 'Email not verified' });
-
   const valid = await bcrypt.compare(password, user.password);
   if (!valid) return res.status(400).json({ message: 'Wrong password' });
-
   const jwtToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
-
-  res.json({ token: jwtToken, isAdmin: false }); // 👈 add isAdmin: false
+  res.json({ token: jwtToken, isAdmin: false });
 };
 
 export const googleAuth = async (req, res) => {

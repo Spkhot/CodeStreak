@@ -15,7 +15,6 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-47YP5C93M8');
 </script>
   <style>
@@ -30,15 +29,8 @@
       --success-color: #28a745;
       --error-color: #dc3545;
     }
-
     * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    body {
-      font-family: 'Poppins', sans-serif;
-      background-color: var(--bg-dark);
-      color: var(--text-light);
-    }
-    
+    body { font-family: 'Poppins', sans-serif; background-color: var(--bg-dark); color: var(--text-light); }
     .navbar { display: flex; justify-content: space-between; align-items: center; padding: 0 2rem; height: 70px; background-color: var(--bg-secondary); border-bottom: 1px solid var(--border-color); }
     .logo { font-size: 1.5rem; font-weight: 700; text-decoration: none; color: var(--text-light); }
     .btn-nav { background: none; border: 1px solid var(--border-color); color: var(--text-muted); padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: 500; text-decoration: none; transition: all 0.3s ease; }
@@ -116,7 +108,7 @@
                   <h4>Save Contact</h4>
                   <p>Save this number to your contacts, named "<b>The Habit Loop</b>".</p>
                   <div class="copyable-item">
-                      <span class="text" id="copy-number">+1 415 523 8886</span>
+                      <span class="text" id="copy-number">+18585440431</span>
                       <button class="copy-btn" data-copy-target="copy-number" title="Copy Number"><i class="fa-regular fa-copy"></i></button>
                   </div>
               </div>
@@ -127,7 +119,7 @@
                   <h4>Send Code on WhatsApp</h4>
                   <p>Send your unique code to "The Habit Loop" contact.</p>
                   <div class="copyable-item">
-                      <span class="text" id="copy-code">join teeth-lunch</span>
+                      <span class="text" id="copy-code">...loading code...</span>
                       <button class="copy-btn" data-copy-target="copy-code" title="Copy Code"><i class="fa-regular fa-copy"></i></button>
                   </div>
               </div>
@@ -168,15 +160,12 @@
     </div>
   </main>
 
-    <script>
+  <script>
     // --- PAGE PROTECTION & INITIALIZATION ---
-
-    // First, handle token from URL (for new users after email verification)
     const params = new URLSearchParams(window.location.search);
     const urlToken = params.get('token');
     if (urlToken) {
         localStorage.setItem('token', urlToken);
-        // Clean the URL for security and aesthetics
         window.history.replaceState({}, document.title, window.location.pathname);
     }
 
@@ -184,18 +173,12 @@
     const formFields = document.getElementById('formFields');
     const messageEl = document.getElementById('message');
 
-    // If there is NO token, the user is not logged in. Redirect them immediately.
     if (!token) {
-        // Hide the form to prevent it from flashing before redirecting
         document.querySelector('.form-wrapper').style.display = 'none'; 
         window.location.href = 'login.html';
     } else {
-        // If the user IS logged in, we proceed.
-        
-        // Fetch user data to get their unique WhatsApp join code
         fetch('/api/user/me', { headers: { 'Authorization': `Bearer ${token}` }})
             .then(res => {
-                // If the token is invalid or expired, the server will reject. Log them out.
                 if (!res.ok) {
                     localStorage.removeItem('token');
                     window.location.href = 'login.html';
@@ -206,6 +189,8 @@
             .then(data => {
                 if (data.joinCode) {
                     document.getElementById('copy-code').textContent = `join ${data.joinCode}`;
+                } else {
+                    document.getElementById('copy-code').textContent = 'Error: Code not found';
                 }
             })
             .catch(err => {
@@ -214,7 +199,6 @@
     }
 
     // --- PAGE FUNCTIONALITY (BUTTONS, FORM LOGIC, ETC.) ---
-
     const backBtn = document.getElementById('backBtn');
     const homeBtn = document.getElementById('homeBtn');
     backBtn.addEventListener('click', () => { window.history.back(); });
@@ -240,7 +224,6 @@
     const saveBtn = document.getElementById('saveBtn');
     const priceInfo = document.getElementById('price-info');
 
-    // Default time
     const timeInput = document.getElementById('time');
     const now = new Date();
     timeInput.value = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
@@ -314,3 +297,5 @@
         }
     });
   </script>
+</body>
+</html>
