@@ -11,7 +11,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   
-  <!-- Google tag (gtag.js) - UNCHANGED -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-47YP5C93M8"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -21,57 +20,32 @@
   </script>
   
   <style>
-    /* --- MODERN THEME & VARIABLES --- */
     :root {
-      --bg-dark: #020409;
-      --bg-secondary: #0D1117;
-      --primary-purple: #7C3AED;
-      --primary-purple-hover: #9F67FF;
-      --primary-purple-glow: rgba(124, 58, 237, 0.4);
-      --text-light: #F9FAFB;
-      --text-secondary: #E5E7EB;
-      --text-muted: #9CA3AF;
-      --border-color: #374151;
-      --nav-height: 70px;
-      --danger-red: #ef4444;
+      --bg-dark: #020409; --bg-secondary: #0D1117; --primary-purple: #7C3AED;
+      --primary-purple-hover: #9F67FF; --primary-purple-glow: rgba(124, 58, 237, 0.4);
+      --text-light: #F9FAFB; --text-secondary: #E5E7EB; --text-muted: #9CA3AF;
+      --border-color: #374151; --nav-height: 70px; --danger-red: #ef4444;
     }
-
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
-
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: var(--bg-dark);
-      color: var(--text-light);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-
+    body { font-family: 'Inter', sans-serif; background-color: var(--bg-dark); color: var(--text-light); line-height: 1.6; }
     .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
     section { padding: 120px 0; overflow: hidden; }
-
     .section-header { text-align: center; margin-bottom: 5rem; }
     .section-header .tagline { color: var(--primary-purple); font-weight: 600; margin-bottom: 0.5rem; display: block; text-transform: uppercase; letter-spacing: 1px; }
     .section-header h2 { font-size: 2.8rem; font-weight: 800; margin-bottom: 1rem; }
     .section-header p { color: var(--text-muted); max-width: 600px; margin: 0 auto; font-size: 1.1rem; }
-
     .animate-on-scroll { opacity: 0; transform: translateY(40px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
     .animate-on-scroll.visible { opacity: 1; transform: translateY(0); }
-
-    /* --- 1. NAVBAR (Unchanged Structure) --- */
-    .navbar {
-      display: flex; justify-content: space-between; align-items: center; height: var(--nav-height);
-      padding: 0 2rem; position: sticky; top: 0; z-index: 1000;
-      background-color: rgba(2, 4, 9, 0.7); backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(55, 65, 81, 0.5);
-    }
-    .logo { font-size: 1.5rem; font-weight: 700; color: var(--text-light); text-decoration: none; display: flex; align-items: center; gap: 10px; }
+    .navbar { display: flex; justify-content: space-between; align-items: center; height: var(--nav-height); padding: 0 2rem; position: sticky; top: 0; z-index: 1000; background-color: rgba(2, 4, 9, 0.7); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(55, 65, 81, 0.5); }
+    .logo { font-size: 1.5rem; font-weight: 700; color: var(--text-light); text-decoration: none; display: flex; align-items: center; gap: 10px; z-index: 1001; }
     .logo .fa-fire { color: var(--primary-purple); }
     .nav-menu { display: flex; align-items: center; gap: 2.5rem; }
     .nav-links { display: flex; gap: 2.5rem; list-style: none; }
-    .nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 500; transition: color 0.3s ease; }
+    .nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 500; transition: color 0.3s ease; position: relative; padding: 5px 0; }
+    .nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background-color: var(--primary-purple); transition: width 0.3s ease; }
     .nav-links a:hover, .nav-links a.active { color: var(--text-light); }
+    .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
     #actions { display: flex; align-items: center; gap: 1rem; }
     .btn { padding: 12px 24px; border: 1px solid transparent; border-radius: 8px; font-weight: 600; font-size: 0.95rem; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: all 0.3s ease; white-space: nowrap; }
     .btn-primary { background-color: var(--primary-purple); color: white; box-shadow: 0 4px 20px var(--primary-purple-glow); }
@@ -91,9 +65,7 @@
     .dropdown-item i { margin-right: 12px; width: 20px; text-align: center; }
     .dropdown-item:hover { background-color: var(--bg-dark); color: var(--text-light); }
     .dropdown-item.logout:hover { background-color: rgba(239, 68, 68, 0.1); color: var(--danger-red); }
-    .hamburger { display: none; cursor: pointer; }
-
-    /* --- 2. HERO SECTION --- */
+    .hamburger { display: none; cursor: pointer; z-index: 1001; }
     #home { padding: 120px 0; text-align: center; position: relative; display: flex; align-items: center; min-height: 100vh; }
     #home::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 700px; height: 700px; background: radial-gradient(circle, var(--primary-purple-glow) 0%, rgba(13, 17, 23, 0) 70%); z-index: 0; animation: slow-pulse 8s infinite ease-in-out; }
     .hero-content { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; }
@@ -103,20 +75,6 @@
     .hero-text h1 .highlight { background: linear-gradient(90deg, var(--primary-purple-hover), var(--primary-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; padding: 0 5px; }
     .hero-text .description { font-size: 1.2rem; color: var(--text-muted); max-width: 600px; margin: 0 auto 2.5rem auto; }
     .hero-actions { display: flex; gap: 1rem; justify-content: center; animation: fadeInUp 0.8s ease-out 0.2s backwards; }
-    .hero-actions {
-    flex-direction: column; /* Stack buttons vertically */
-    align-items: center;    /* Center the stacked buttons */
-}
-.hero-actions .btn {
-    width: 100%;            /* Make buttons take up available width */
-    max-width: 300px;       /* But not TOO wide */
-}
-    .hero-proof { margin-top: 4rem; animation: fadeInUp 0.8s ease-out 0.4s backwards; }
-    .hero-proof .proof-title { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.5rem; }
-    .hero-proof .icons { display: flex; justify-content: center; align-items: center; gap: 2.5rem; font-size: 2rem; color: var(--text-muted); }
-    .hero-image-container { margin-top: -80px; margin-bottom: -150px; position: relative; z-index: -1; opacity: 0.25; filter: blur(3px); animation: fadeIn 1.5s ease-out; }
-
-    /* --- 3. HOW IT WORKS --- */
     #how-it-works { background: linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-secondary) 100%); }
     .how-it-works-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; position: relative; }
     .step-card { background-color: var(--bg-secondary); padding: 2.5rem 2rem; border: 1px solid var(--border-color); border-radius: 12px; transition: all 0.3s ease; position: relative; }
@@ -125,8 +83,7 @@
     .step-card h3 { font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--text-secondary); }
     .step-card p { color: var(--text-muted); font-size: 0.95rem; }
     .step-card:not(:last-child)::after { content: ''; position: absolute; right: -2.25rem; top: 55px; width: 2.5rem; height: 2px; background: repeating-linear-gradient(90deg, var(--border-color), var(--border-color) 4px, transparent 4px, transparent 8px); z-index: -1; }
-
-    /* --- 4. PHILOSOPHY (formerly Mission) --- */
+    #philosophy .container { max-width: 1000px; }
     .philosophy-grid { display: grid; grid-template-columns: 1fr 1.2fr; align-items: center; gap: 5rem; }
     .philosophy-visual { background-color: var(--bg-secondary); border-radius: 16px; padding: 2rem; border: 1px solid var(--border-color); display: flex; justify-content: center; align-items: center; }
     .philosophy-text h2 { font-size: 2.5rem; font-weight: 700; margin-bottom: 1.5rem; }
@@ -134,8 +91,6 @@
     .philosophy-list { list-style: none; padding: 0; }
     .philosophy-list li { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1rem; font-size: 1.05rem; }
     .philosophy-list i { color: var(--primary-purple); font-size: 1.2rem; margin-top: 5px; }
-
-    /* --- 5. COURSES --- */
     #courses { background-color: var(--bg-dark); }
     .course-language { margin-bottom: 3.5rem; }
     .course-language h3 { font-size: 2rem; color: var(--text-light); margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 2px solid var(--border-color); display: inline-block; }
@@ -148,181 +103,61 @@
     .topic-slide-panel { background-color: var(--bg-secondary); border-left: 3px solid var(--primary-purple); margin-top: 1.5rem; padding: 0; border-radius: 8px; overflow: hidden; max-height: 0; opacity: 0; visibility: hidden; transition: all 0.4s ease-in-out; }
     .topic-slide-panel.show { max-height: 200px; opacity: 1; padding: 1.5rem; visibility: visible; }
     .topic-slide-panel strong { color: var(--primary-purple); }
-
-    /* --- 6. FINAL CTA --- */
+    #pricing { background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-dark) 100%); }
+    .language-toggle { display: flex; justify-content: center; margin-bottom: 3rem; background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 10px; padding: 6px; width: fit-content; margin-left: auto; margin-right: auto; }
+    .toggle-btn { background: none; border: none; color: var(--text-muted); font-size: 1rem; font-weight: 600; padding: 10px 24px; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; }
+    .toggle-btn.active { background-color: var(--primary-purple); color: white; box-shadow: 0 4px 15px var(--primary-purple-glow); }
+    .pricing-grid {
+      display: grid;
+      /* ✅✅✅ CHANGED TO 4 COLUMNS ✅✅✅ */
+      grid-template-columns: repeat(4, 1fr); 
+      gap: 1.5rem; /* Slightly reduced gap for more cards */
+      align-items: center;
+    }    .pricing-card { background: rgba(13, 17, 23, 0.5); backdrop-filter: blur(15px); border: 1px solid var(--border-color); border-radius: 16px; padding: 2.5rem 2rem; text-align: center; transition: transform 0.3s ease, box-shadow 0.3s ease; position: relative; display: flex; flex-direction: column; height: 100%;}
+    .pricing-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+    .pricing-card.highlighted { transform: scale(1.05); border-color: var(--primary-purple); box-shadow: 0 0 40px var(--primary-purple-glow); }
+    .pricing-card .badge { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); background: linear-gradient(90deg, var(--primary-purple-hover), var(--primary-purple)); color: white; padding: 6px 16px; border-radius: 20px; font-size: 0.9rem; font-weight: 700; }
+    .plan-name { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .plan-price { font-size: 3.5rem; font-weight: 800; margin: 1rem 0 0.5rem 0; }
+    .plan-price .currency { font-size: 1.8rem; font-weight: 600; color: var(--text-muted); vertical-align: super; margin-right: 5px;}
+    .plan-billing { color: var(--text-muted); margin-bottom: 2rem; }
+    .plan-features { list-style: none; padding: 0; text-align: left; margin-bottom: 2.5rem; flex-grow: 1; }
+    .plan-features li { display: flex; align-items: center; gap: 12px; margin-bottom: 1rem; }
+    .plan-features li i { color: var(--primary-purple); }
+    .select-plan-btn { width: 100%; justify-content: center; }
     #final-cta-section { padding-bottom: 120px; }
-    .final-cta {
-      padding: 5rem 2rem; border-radius: 20px; text-align: center; position: relative; overflow: hidden;
-      border: 1px solid var(--border-color);
-      background-image: radial-gradient(ellipse at center, rgba(124, 58, 237, 0.15), transparent 80%),
-                        linear-gradient(45deg, #1e1b4b, var(--bg-dark));
-    }
+    .final-cta { padding: 5rem 2rem; border-radius: 20px; text-align: center; position: relative; overflow: hidden; border: 1px solid var(--border-color); background-image: radial-gradient(ellipse at center, rgba(124, 58, 237, 0.15), transparent 80%), linear-gradient(45deg, #1e1b4b, var(--bg-dark)); }
     .final-cta h2 { font-size: 2.5rem; font-weight: 800; max-width: 600px; margin: 0 auto 1rem auto; position: relative; }
     .final-cta p { color: var(--text-muted); max-width: 500px; margin: 0 auto 2.5rem auto; font-size: 1.1rem; position: relative; }
-
-    /* --- 7. FOOTER --- */
     footer { padding: 60px 0; text-align: center; border-top: 1px solid var(--border-color); }
     .social-icons { margin-bottom: 1.5rem; }
     .social-icons a { color: var(--text-muted); font-size: 1.5rem; margin: 0 1rem; display: inline-block; transition: all 0.3s ease; }
     .social-icons a:hover { color: var(--primary-purple); transform: translateY(-5px); }
+    .footer-links { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 0.75rem 1.5rem; margin-bottom: 1.5rem; }
+    .footer-links a { color: var(--text-muted); text-decoration: none; font-weight: 500; transition: color 0.3s ease; }
+    .footer-links a:hover { color: var(--primary-purple); text-decoration: underline; }
+    .footer-links .separator { color: var(--border-color); }
     .copyright { color: var(--text-muted); font-size: 0.9rem; }
-
-    /* --- ANIMATIONS --- */
     @keyframes slow-pulse { 0% { transform: translate(-50%, -50%) scale(0.95); opacity: 0.8; } 50% { transform: translate(-50%, -50%) scale(1.05); opacity: 1; } 100% { transform: translate(-50%, -50%) scale(0.95); opacity: 0.8; } }
     @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-    /* --- RESPONSIVE DESIGN --- */
     @media (max-width: 992px) {
         .how-it-works-grid { grid-template-columns: 1fr 1fr; gap: 4rem 2rem; }
         .step-card:nth-child(2)::after { display: none; }
         .philosophy-grid { grid-template-columns: 1fr; }
         .philosophy-visual { grid-row: 1; margin-bottom: 3rem; }
+        .pricing-grid { grid-template-columns: 1fr; max-width: 450px; margin: 0 auto; }
+        .pricing-card.highlighted { transform: scale(1); }
     }
-    
-    @media (max-width: 768px) {
-        .hamburger { display: block; font-size: 1.5rem; color: var(--text-light); z-index: 1001; }
-        .nav-menu { position: fixed; top: 0; left: -100%; width: 100%; height: 100vh; background-color: var(--bg-dark); flex-direction: column; justify-content: center; align-items: center; gap: 2rem; transition: left 0.3s ease-in-out; }
-        .nav-menu.active { left: 0; }
-        .nav-links { flex-direction: column; text-align: center; font-size: 1.5rem; }
-        #actions { flex-direction: column; gap: 1.5rem; margin-top: 2rem; width: 80%; max-width: 300px;}
-        #actions .btn { width: 100%; text-align: center; justify-content: center; }
-.hero-text h1 { 
-    font-size: 2.2rem;     /* Make heading smaller */
-    line-height: 1.3;      /* Adjust line spacing */
-    white-space: normal;   /* Allow text to wrap */
-}        .hero-text .description { font-size: 1.1rem; }
-        .section-header h2 { font-size: 2.2rem; }
-        .how-it-works-grid { grid-template-columns: 1fr; }
-        .step-card::after { display: none; }
-    }
-        /* --- ✅✅✅ NEW, ATTRACTIVE FOOTER STYLES ✅✅✅ --- */
-    .footer-content {
-        max-width: 1100px;
-        margin: 0 auto;
-        padding: 0 20px;
-    }
-
-    .footer-links {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-wrap: wrap; /* Allows links to wrap on small screens */
-        gap: 0.75rem 1.5rem; /* Vertical and horizontal gap */
-        margin-bottom: 1.5rem;
-    }
-
-    .footer-links a {
-        color: var(--text-muted);
-        text-decoration: none;
-        font-weight: 500;
-        transition: color 0.3s ease;
-    }
-
-    .footer-links a:hover {
-        color: var(--primary-blue);
-        text-decoration: underline;
-    }
-
-    /* This hides the separator on mobile when links wrap */
-    .footer-links .separator {
-        color: var(--border-color);
-    }
-    
-    @media (max-width: 576px) {
-        .footer-links .separator {
-            display: none; /* Hide separators on small screens */
-        }
-        .footer-links {
-            flex-direction: column; /* Stack links vertically */
-            gap: 1rem;
+    @media (max-width: 1200px) { /* A new breakpoint for slightly smaller screens */
+        .pricing-grid {
+            grid-template-columns: repeat(2, 1fr); /* Go to 2 columns on tablets */
         }
     }
-        /* --- ✅✅✅ NEW PRICING SECTION STYLES ✅✅✅ --- */
-    #pricing {
-      background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-dark) 100%);
-    }
-
-    .language-toggle {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 3rem;
-      background-color: var(--bg-secondary);
-      border: 1px solid var(--border-color);
-      border-radius: 10px;
-      padding: 6px;
-      width: fit-content;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .toggle-btn {
-      background: none;
-      border: none;
-      color: var(--text-muted);
-      font-size: 1rem;
-      font-weight: 600;
-      padding: 10px 24px;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-    .toggle-btn.active {
-      background-color: var(--primary-purple);
-      color: white;
-      box-shadow: 0 4px 15px var(--primary-purple-glow);
-    }
-
-    .pricing-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
-      align-items: center;
-    }
-    .pricing-card {
-      background: rgba(13, 17, 23, 0.5); /* Glass effect */
-      backdrop-filter: blur(15px);
-      border: 1px solid var(--border-color);
-      border-radius: 16px;
-      padding: 2.5rem 2rem;
-      text-align: center;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      position: relative;
-    }
-    .pricing-card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-    }
-    .pricing-card.highlighted {
-      transform: scale(1.05);
-      border-color: var(--primary-purple);
-      box-shadow: 0 0 40px var(--primary-purple-glow);
-    }
-    .pricing-card .badge {
-      position: absolute;
-      top: -15px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: linear-gradient(90deg, var(--primary-purple-hover), var(--primary-purple));
-      color: white;
-      padding: 6px 16px;
-      border-radius: 20px;
-      font-size: 0.9rem;
-      font-weight: 700;
-    }
-    .plan-name { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; }
-    .plan-price { font-size: 3.5rem; font-weight: 800; margin: 1rem 0 0.5rem 0; }
-    .plan-price .currency { font-size: 1.8rem; font-weight: 600; color: var(--text-muted); vertical-align: super; margin-right: 5px;}
-    .plan-billing { color: var(--text-muted); margin-bottom: 2rem; }
-    .plan-features { list-style: none; padding: 0; text-align: left; margin-bottom: 2.5rem; }
-    .plan-features li { display: flex; align-items: center; gap: 12px; margin-bottom: 1rem; }
-    .plan-features li i { color: var(--primary-purple); }
-    .select-plan-btn { width: 100%; justify-content: center; }
-
-    /* Responsive Pricing Section */
-    @media (max-width: 992px) {
+     @media (max-width: 768px) { /* Updated from 992px to 768px for the switch to 1 column */
       .pricing-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr; /* Switch to 1 column on mobile */
         max-width: 450px;
         margin: 0 auto;
       }
@@ -330,25 +165,43 @@
         transform: scale(1); /* Reset scale on mobile to prevent overflow */
       }
     }
+    @media (max-width: 768px) {
+        .navbar { padding: 0 1.5rem; }
+        .hamburger { display: block; font-size: 1.5rem; color: var(--text-light); z-index: 1001;}
+        .nav-menu { position: fixed; top: 0; left: -100%; width: 100%; height: 100vh; background-color: var(--bg-dark); flex-direction: column; justify-content: center; align-items: center; gap: 2rem; transition: left 0.3s ease-in-out; }
+        .nav-menu.active { left: 0; }
+        .nav-links { flex-direction: column; text-align: center; font-size: 1.5rem; gap: 2rem; }
+        #actions { flex-direction: column; gap: 1.5rem; margin-top: 2rem; width: 80%; max-width: 300px;}
+        #actions .btn { width: 100%; text-align: center; justify-content: center; }
+        section { padding: 80px 0; }
+        .hero-text h1 { font-size: 2.8rem; }
+        .section-header h2, .philosophy-text h2, .final-cta h2 { font-size: 2.2rem; }
+        .how-it-works-grid { grid-template-columns: 1fr; }
+        .step-card::after { display: none; }
+    }
+    @media (max-width: 576px) {
+        .footer-links .separator { display: none; }
+        .footer-links { flex-direction: column; gap: 1rem; }
+    }
   </style>
-
   <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 </head>
 <body>
 
   <header class="navbar">
     <a href="#home" class="logo"><i class="fa-solid fa-fire"></i> The Habit Loop</a>
-    <nav class="nav-menu">
+    <nav class="nav-menu" id="nav-menu">
       <ul class="nav-links">
         <li><a href="#home" class="nav-link active">Home</a></li>
         <li><a href="#how-it-works" class="nav-link">How It Works</a></li>
         <li><a href="#philosophy" class="nav-link">Philosophy</a></li>
         <li><a href="#courses" class="nav-link">Curriculum</a></li>
+        <li><a href="#pricing" class="nav-link">Pricing</a></li>
         <li><a href="about.html" class="nav-link">About Us</a></li>
       </ul>
       <div id="actions"></div>
     </nav>
-    <div class="hamburger"><i class="fa-solid fa-bars"></i></div>
+    <div class="hamburger" id="hamburger"><i class="fa-solid fa-bars"></i></div>
   </header>
 
   <main>
@@ -364,18 +217,6 @@
           <div class="hero-actions">
             <a href="signup.html" class="btn btn-primary"><i class="fa-solid fa-rocket"></i> Start Your Streak for Free</a>
             <a href="#how-it-works" class="btn btn-secondary"><i class="fa-solid fa-circle-question"></i> How It Works</a>
-          </div>
-          <div class="hero-proof">
-            <p class="proof-title">Daily challenges available for:</p>
-            <div class="icons">
-                <i class="fab fa-cuttlefish" title="C++" style="font-family: 'Font Awesome 6 Brands';">++</i>
-                <i class="fab fa-java" title="Java"></i>
-                <i class="fab fa-python" title="Python"></i>
-                <i class="fab fa-js" title="JavaScript"></i>
-            </div>
-          </div>
-          <div class="hero-image-container">
-              <lottie-player src="Online Learning.json" background="transparent" speed="1" style="width: 100%; max-width: 600px; height: auto;" loop autoplay></lottie-player>
           </div>
         </div>
       </div>
@@ -442,8 +283,9 @@
         <div id="coursesContainer" class="animate-on-scroll" style="transition-delay: 0.2s;"></div>
       </div>
     </section>
+        
         <!-- ========================================================== -->
-    <!-- ============== NEW, ATTRACTIVE PRICING SECTION ============== -->
+    <!-- ============== NEW, 4-CARD PRICING SECTION ============== -->
     <!-- ========================================================== -->
     <section id="pricing">
       <div class="container">
@@ -459,44 +301,44 @@
           <button class="toggle-btn" data-lang="Java">Java</button>
         </div>
 
-        <div class="pricing-grid animate-on-scroll" style="transition-delay: 0.2s;">
-          <!-- Plan 1: Advanced -->
-          <div class="pricing-card">
+        <div class="pricing-grid">
+          <!-- Plan 1: Free -->
+          <div class="pricing-card animate-on-scroll" style="transition-delay: 0.2s;">
+            <div class="plan-name">Starter</div>
+            <div class="plan-price">
+              <span class="currency"></span>Free
+            </div>
+            <div class="plan-billing">Free Forever</div>
+            <ul class="plan-features">
+              <li><i class="fa-solid fa-check"></i> 20 Days of Course Content</li>
+              <li><i class="fa-solid fa-check"></i> Beginner & Intermediate Topics</li>
+              <li><i class="fa-solid fa-check"></i> Core Fundamentals & Syntax</li>
+              <li><i class="fa-solid fa-check"></i> Functions & Arrays</li>
+              <li><i class="fa-solid fa-check"></i> Daily WhatsApp Delivery</li>
+            </ul>
+            <a href="signup.html" class="btn btn-secondary select-plan-btn" data-level="Intermediate">Get Started</a>
+          </div>
+
+          <!-- Plan 2: Advanced -->
+          <div class="pricing-card animate-on-scroll" style="transition-delay: 0.3s;">
             <div class="plan-name">Advanced</div>
             <div class="plan-price">
               <span class="currency">₹</span>99
             </div>
             <div class="plan-billing">One-time payment</div>
             <ul class="plan-features">
-              <li><i class="fa-solid fa-check"></i> All Beginner & Intermediate content</li>
-              <li><i class="fa-solid fa-check"></i> 10 Days of Advanced Topics</li>
-              <li><i class="fa-solid fa-check"></i> Data Structures & OOP</li>
+              <li><i class="fa-solid fa-check"></i> Everything in Starter</li>
+              <li><i class="fa-solid fa-check"></i> +10 Days of Advanced Topics</li>
+              <li><i class="fa-solid fa-check"></i> Object-Oriented Programming</li>
               <li><i class="fa-solid fa-check"></i> Standard Template Library (STL)</li>
-              <li><i class="fa-solid fa-check"></i> Lifetime Access & Future Updates</li>
+              <li><i class="fa-solid fa-check"></i> Lifetime Access & Updates</li>
             </ul>
-            <a href="https://thehabitloop.onrender.com/set-schedule.html" class="btn btn-secondary select-plan-btn" data-level="Advanced">Get Started</a>
-          </div>
-
-          <!-- Plan 2: Pro (Highlighted) -->
-          <div class="pricing-card highlighted">
-            <div class="badge">Best Value</div>
-            <div class="plan-name">Pro</div>
-            <div class="plan-price">
-              <span class="currency">₹</span>299
-            </div>
-            <div class="plan-billing">One-time payment</div>
-            <ul class="plan-features">
-              <li><i class="fa-solid fa-check"></i> Everything in Advanced</li>
-              <li><i class="fa-solid fa-check"></i> 10 Days of Pro-Level Topics</li>
-              <li><i class="fa-solid fa-check"></i> Core DSA Concepts</li>
-              <li><i class="fa-solid fa-check"></i> Pointers & Memory Management</li>
-              <li><i class="fa-solid fa-check"></i> Mixed Interview Questions</li>
-            </ul>
-            <a href="https://thehabitloop.onrender.com/set-schedule.html" class="btn btn-primary select-plan-btn" data-level="Pro">Get Started</a>
+            <a href="#" class="btn btn-secondary select-plan-btn" data-level="Advanced">Buy Now</a>
           </div>
           
-          <!-- Plan 3: Both Languages (Highlighted) -->
-          <div class="pricing-card">
+          <!-- Plan 3: Full Access Bundle (HIGHLIGHTED) -->
+          <div class="pricing-card highlighted animate-on-scroll" style="transition-delay: 0.4s;">
+            <div class="badge">Best Value</div>
             <div class="plan-name">Full Access Bundle</div>
             <div class="plan-price">
               <span class="currency">₹</span>199
@@ -505,11 +347,28 @@
             <ul class="plan-features">
               <li><i class="fa-solid fa-check"></i> <strong>Pro Access for C++</strong></li>
               <li><i class="fa-solid fa-check"></i> <strong>Pro Access for Java</strong></li>
-              <li><i class="fa-solid fa-check"></i> 40 Days of C++ Content</li>
-              <li><i class="fa-solid fa-check"></i> 40 Days of Java Content</li>
-              <li><i class="fa-solid fa-check"></i> The ultimate learning package</li>
+              <li><i class="fa-solid fa-check"></i> 80+ Days of Total Content</li>
+              <li><i class="fa-solid fa-check"></i> All DSA & Pro-Level Topics</li>
+              <li><i class="fa-solid fa-check"></i> The Ultimate Learning Package</li>
             </ul>
-            <a href="https://thehabitloop.onrender.com/set-schedule.html" class="btn btn-secondary select-plan-btn" data-level="Full Access Bundle">Get Started</a>
+            <a href="payment.html?level=Bundle&price=199" class="btn btn-primary">Buy Full Bundle</a>
+          </div>
+
+          <!-- Plan 4: Pro -->
+          <div class="pricing-card animate-on-scroll" style="transition-delay: 0.5s;">
+            <div class="plan-name">Pro</div>
+            <div class="plan-price">
+              <span class="currency">₹</span>299
+            </div>
+            <div class="plan-billing">One-time payment</div>
+            <ul class="plan-features">
+              <li><i class="fa-solid fa-check"></i> Everything in Advanced</li>
+              <li><i class="fa-solid fa-check"></i> +10 Days of Pro-Level Topics</li>
+              <li><i class="fa-solid fa-check"></i> Core DSA Concepts</li>
+              <li><i class="fa-solid fa-check"></i> Pointers & Memory Management</li>
+              <li><i class="fa-solid fa-check"></i> Mixed Interview Questions</li>
+            </ul>
+            <a href="#" class="btn btn-secondary select-plan-btn" data-level="Pro">Buy Now</a>
           </div>
         </div>
       </div>
@@ -544,123 +403,78 @@
   </div>
 </footer>
 
-  <!-- ========================================================== -->
-  <!-- ============== NO CHANGES TO ANY JAVASCRIPT ============== -->
-  <!-- ========================================================== -->
   <script>
-    // --- AUTHENTICATION & UI LOGIC ---
     document.addEventListener('DOMContentLoaded', () => {
+        // --- AUTH & NAVBAR LOGIC ---
         const token = localStorage.getItem('token');
         const actionsContainer = document.getElementById('actions');
         
-        const renderLoggedOutState = () => {
-          actionsContainer.innerHTML = `
-            <a href="login.html" class="btn btn-secondary">Login</a>
-            <a href="signup.html" class="btn btn-primary">Sign Up</a>
-          `;
-        };
+        const renderLoggedOutState = () => { actionsContainer.innerHTML = `<a href="login.html" class="btn btn-secondary">Login</a><a href="signup.html" class="btn btn-primary">Sign Up</a>`; };
         const renderLoggedInState = (userData) => {
-          actionsContainer.innerHTML = `
-            <span class="nav-user-greeting">👋 Welcome, ${userData.name}!</span>
-            <div class="profile-menu-container">
-                <div class="profile-avatar" id="profile-avatar">${userData.name.charAt(0).toUpperCase()}</div>
-                <div class="profile-dropdown" id="profile-dropdown">
-                    <div class="dropdown-header">
-                        <div class="user-name">${userData.name}</div>
-                    </div>
-                    <a href="dashboard.html" class="dropdown-item"><i class="fa-solid fa-table-columns"></i> Dashboard</a>
-                    <a href="#" class="dropdown-item logout" onclick="logout()"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
-                </div>
-            </div>
-          `;
-          
+          actionsContainer.innerHTML = `<span class="nav-user-greeting">👋 Welcome, ${userData.name}!</span><div class="profile-menu-container"><div class="profile-avatar" id="profile-avatar">${userData.name.charAt(0).toUpperCase()}</div><div class="profile-dropdown" id="profile-dropdown"><div class="dropdown-header"><div class="user-name">${userData.name}</div></div><a href="dashboard.html" class="dropdown-item"><i class="fa-solid fa-table-columns"></i> Dashboard</a><a href="#" class="dropdown-item logout" onclick="logout()"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></div></div>`;
           const profileAvatar = document.getElementById('profile-avatar');
           const profileDropdown = document.getElementById('profile-dropdown');
-          profileAvatar.addEventListener('click', (e) => {
-              e.stopPropagation();
-              profileDropdown.classList.toggle('show');
-          });
+          profileAvatar.addEventListener('click', (e) => { e.stopPropagation(); profileDropdown.classList.toggle('show'); });
         };
 
         if (token) {
           fetch('/api/user/me', { headers: { 'Authorization': `Bearer ${token}` } })
           .then(res => res.ok ? res.json() : Promise.reject(res))
-          .then(data => {
-            if (data && data.name) {
-              renderLoggedInState(data);
-            } else {
-              renderLoggedOutState();
-            }
-          }).catch(() => renderLoggedOutState());
-        } else {
-          renderLoggedOutState();
-        }
-    });
+          .then(data => { if (data && data.name) { renderLoggedInState(data); } else { renderLoggedOutState(); } })
+          .catch(() => renderLoggedOutState());
+        } else { renderLoggedOutState(); }
 
-    function logout() {
-      localStorage.removeItem('token');
-      location.reload();
-    }
-    
-    // --- UI ENHANCEMENTS ---
-    document.addEventListener('DOMContentLoaded', () => {
-        const hamburger = document.querySelector('.hamburger');
-        const navMenu = document.querySelector('.nav-menu');
-        const navLinks = document.querySelectorAll('.nav-menu a');
-        const navbar = document.querySelector('.navbar');
-        const navHeight = navbar.offsetHeight;
-        const sections = document.querySelectorAll('section[id]');
-        const elementsToAnimate = document.querySelectorAll('.animate-on-scroll');
+        window.logout = () => { localStorage.removeItem('token'); location.reload(); };
+        
+        // --- UI ENHANCEMENTS & RESPONSIVE NAVBAR ---
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('nav-menu');
+        if (hamburger && navMenu) {
+            const navLinksInMenu = navMenu.querySelectorAll('a');
+            const closeMenu = () => {
+                navMenu.classList.remove('active');
+                hamburger.querySelector('i').classList.add('fa-bars');
+                hamburger.querySelector('i').classList.remove('fa-times');
+            };
+            hamburger.addEventListener('click', () => {
+                navMenu.classList.toggle('active');
+                hamburger.querySelector('i').classList.toggle('fa-bars');
+                hamburger.querySelector('i').classList.toggle('fa-times');
+            });
+            navLinksInMenu.forEach(link => link.addEventListener('click', closeMenu));
+        }
 
         window.addEventListener('click', (e) => {
             const profileDropdown = document.getElementById('profile-dropdown');
-            if (profileDropdown && profileDropdown.classList.contains('show')) {
-                if (!e.target.closest('.profile-menu-container')) {
-                    profileDropdown.classList.remove('show');
-                }
+            if (profileDropdown && profileDropdown.classList.contains('show') && !e.target.closest('.profile-menu-container')) {
+                profileDropdown.classList.remove('show');
             }
         });
 
-        hamburger.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-            hamburger.querySelector('i').classList.toggle('fa-bars');
-            hamburger.querySelector('i').classList.toggle('fa-times');
-        });
-
-        navLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                if (link.getAttribute('href').startsWith('#')) {
-                    if (navMenu.classList.contains('active')) {
-                        navMenu.classList.remove('active');
-                        hamburger.querySelector('i').classList.add('fa-bars');
-                        hamburger.querySelector('i').classList.remove('fa-times');
-                    }
-                }
-            });
-        });
-
-        const observer = new IntersectionObserver(entries => {
-            entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); } });
-        }, { threshold: 0.1 });
-
-        elementsToAnimate.forEach(el => observer.observe(el));
-        
+        const navbar = document.querySelector('.navbar');
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-links a');
+        const navHeight = navbar.offsetHeight;
         window.addEventListener('scroll', () => {
             navbar.classList.toggle('scrolled', window.scrollY > 10);
             let current = '';
             sections.forEach(section => {
                 const sectionTop = section.offsetTop;
-                if (pageYOffset >= sectionTop - navHeight - 100) { current = section.getAttribute('id'); }
+                if (window.pageYOffset >= sectionTop - navHeight - 100) { current = section.getAttribute('id'); }
             });
             navLinks.forEach(link => {
                 link.classList.remove('active');
                 if (link.getAttribute('href').endsWith(`#${current}`)) { link.classList.add('active'); }
             });
         });
-    });
 
-    // --- DYNAMIC COURSE LOADER ---
-    document.addEventListener('DOMContentLoaded', () => {
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); } });
+        }, { threshold: 0.1 });
+        const elementsToAnimate = document.querySelectorAll('.animate-on-scroll');
+        elementsToAnimate.forEach(el => observer.observe(el));
+
+        // --- DYNAMIC COURSE LOADER ---
         const courses = [ { language: "C++", levels: [ { level: "Beginner", title: "Fundamentals & Syntax", days: [ { day: 1, topic: "Structure of a Simple C++ Program (Hello World, #include, main())" }, { day: 2, topic: "Input and Output (cin, cout, endl, basic formatting)" }, { day: 3, topic: "Variables & Data Types (int, float, char, string, bool)" }, { day: 4, topic: "Operators (Arithmetic, Assignment, Increment/Decrement)" }, { day: 5, topic: "Conditional Statements (if, else, nested if)" }, { day: 6, topic: "Logical Operators & Comparisons" }, { day: 7, topic: "Switch Statements" }, { day: 8, topic: "Loops — while, do-while" }, { day: 9, topic: "Loops — for loop, nested loops" }, { day: 10, topic: "Practice: Basic Patterns & Control Flow Questions" } ] }, { level: "Intermediate", title: "Functions & Arrays", days: [ { day: 11, topic: "Functions — Basics, Declaration & Definition" }, { day: 12, topic: "Function Arguments & Return Types" }, { day: 13, topic: "Recursion Basics" }, { day: 14, topic: "Arrays — 1D Arrays Intro" }, { day: 15, topic: "Arrays — 1D Operations & Questions" }, { day: 16, topic: "2D Arrays — Basics" }, { day: 17, topic: "2D Arrays — Classic Problems (Matrix Transpose, Sum)" }, { day: 18, topic: "Strings — C++ Strings, Basic Operations" }, { day: 19, topic: "Strings — Character Arrays vs string Class" }, { day: 20, topic: "Practice: Functions + Arrays + Strings Combined Problems" } ] }, { level: "Advanced", title: "Classes, OOP & STL", days: [ { day: 21, topic: "Intro to OOP — Classes & Objects" }, { day: 22, topic: "Constructors & Destructors" }, { day: 23, topic: "Member Functions & Data Members" }, { day: 24, topic: "Encapsulation & Access Modifiers" }, { day: 25, topic: "Inheritance — Types & Examples" }, { day: 26, topic: "Polymorphism — Function Overloading" }, { day: 27, topic: "Polymorphism — Operator Overloading" }, { day: 28, topic: "Abstract Classes & Pure Virtual Functions" }, { day: 29, topic: "Intro to Standard Template Library (STL)" }, { day: 30, topic: "STL — Vectors & Iterators" } ] }, { level: "Pro", title: "Advanced Concepts + DSA", days: [ { day: 31, topic: "Pointers — Basics, * and &" }, { day: 32, topic: "Pointers — Arrays & Functions" }, { day: 33, topic: "Dynamic Memory Allocation (new and delete)" }, { day: 34, topic: "Linked Lists — Intro & Implementation" }, { day: 35, topic: "Stacks & Queues (Concepts + STL)" }, { day: 36, topic: "Trees — Basics & Binary Tree" }, { day: 37, topic: "Binary Search & Binary Search Trees" }, { day: 38, topic: "Sorting Algorithms — Bubble, Selection, Insertion" }, { day: 39, topic: "Searching Algorithms — Linear & Binary Search" }, { day: 40, topic: "Final Practice: Mixed Interview Questions (Patterns, STL, DSA)" } ] } ] }, { language: "Java", levels: [ { level: "Beginner", title: "Java Basics & Syntax", days: [ { day: 1, topic: "Intro: How Java Works, JVM, JDK, First Hello World" }, { day: 2, topic: "Variables & Data Types" }, { day: 3, topic: "Input & Output — Scanner" }, { day: 4, topic: "Operators — Arithmetic, Assignment" }, { day: 5, topic: "Conditional Statements — if, else if, else" }, { day: 6, topic: "Logical Operators & Comparisons" }, { day: 7, topic: "Switch Case" }, { day: 8, topic: "Loops — while & do-while" }, { day: 9, topic: "Loops — for loop, nested loops" }, { day: 10, topic: "Practice: Basic Pattern Printing" } ] }, { level: "Intermediate", title: "Methods & Arrays", days: [ { day: 11, topic: "Methods — Definition & Calling" }, { day: 12, topic: "Method Overloading" }, { day: 13, topic: "Recursion Basics" }, { day: 14, topic: "Arrays — 1D Arrays" }, { day: 15, topic: "Arrays — Basic Problems" }, { day: 16, topic: "2D Arrays" }, { day: 17, topic: "2D Array Classic Problems (Transpose, Sum)" }, { day: 18, topic: "Strings — Basics & String Class" }, { day: 19, topic: "String Methods & Immutability" }, { day: 20, topic: "Practice: Arrays + Strings Problems" } ] }, { level: "Advanced", title: "OOP & Advanced Classes", days: [ { day: 21, topic: "OOP Concepts — Classes & Objects" }, { day: 22, topic: "Constructors" }, { day: 23, topic: "Getters & Setters" }, { day: 24, topic: "this Keyword" }, { day: 25, topic: "Inheritance" }, { day: 26, topic: "super Keyword" }, { day: 27, topic: "Method Overriding" }, { day: 28, topic: "Polymorphism" }, { day: 29, topic: "Abstraction & Interfaces" }, { day: 30, topic: "Encapsulation — Real Example" } ] }, { level: "Pro", title: "Core DSA & Collections", days: [ { day: 31, topic: "Intro to Java Collections" }, { day: 32, topic: "ArrayList — Basics & Operations" }, { day: 33, topic: "LinkedList — Basics & Operations" }, { day: 34, topic: "HashMap — Basics & Use Cases" }, { day: 35, topic: "HashSet — Basics & Differences" }, { day: 36, topic: "Stack & Queue in Java" }, { day: 37, topic: "Sorting Algorithms — Bubble & Selection" }, { day: 38, topic: "Searching — Linear & Binary Search" }, { day: 39, topic: "Trees — Basic Binary Tree Concepts" }, { day: 40, topic: "Practice Day — Mixed DSA Questions" } ] } ] } ];
         const container = document.getElementById('coursesContainer');
         if (!container) return;
@@ -710,6 +524,31 @@
                 activeDayCard.classList.remove('active');
                 activeDayCard = null;
             }
+        });
+
+        // --- PRICING SECTION LOGIC ---
+        const toggleButtons = document.querySelectorAll('.toggle-btn');
+        const selectPlanButtons = document.querySelectorAll('.select-plan-btn');
+        
+        toggleButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                toggleButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+            });
+        });
+
+        selectPlanButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                const selectedLevel = button.dataset.level;
+                const selectedLang = document.querySelector('.toggle-btn.active').dataset.lang;
+                
+                const params = new URLSearchParams({
+                    level: selectedLevel,
+                    language: selectedLang,
+                });
+                window.location.href = `signup.html?${params.toString()}`;
+            });
         });
     });
   </script>
