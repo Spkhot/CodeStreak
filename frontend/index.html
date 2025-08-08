@@ -20,43 +20,62 @@
   </script>
   
   <style>
+    /* --- ✅✅✅ NEW, MODERN BLUE THEME ✅✅✅ --- */
     :root {
-      --bg-dark: #020409; --bg-secondary: #0D1117; --primary-purple: #7C3AED;
-      --primary-purple-hover: #9F67FF; --primary-purple-glow: rgba(124, 58, 237, 0.4);
-      --text-light: #F9FAFB; --text-secondary: #E5E7EB; --text-muted: #9CA3AF;
-      --border-color: #374151; --nav-height: 70px; --danger-red: #ef4444;
+      --bg-dark: #0D1117;
+      --bg-secondary: #161B22;
+      --primary-blue: #3B82F6;
+      --primary-blue-hover: #60A5FA;
+      --primary-blue-glow: rgba(59, 130, 246, 0.4);
+      --text-light: #F9FAFB;
+      --text-secondary: #E5E7EB;
+      --text-muted: #9CA3AF;
+      --border-color: #30363D;
+      --nav-height: 70px;
+      --danger-red: #ef4444;
     }
+
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
-    body { font-family: 'Inter', sans-serif; background-color: var(--bg-dark); color: var(--text-light); line-height: 1.6; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+      line-height: 1.6;
+    }
+
     .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
     section { padding: 120px 0; overflow: hidden; }
+
     .section-header { text-align: center; margin-bottom: 5rem; }
-    .section-header .tagline { color: var(--primary-purple); font-weight: 600; margin-bottom: 0.5rem; display: block; text-transform: uppercase; letter-spacing: 1px; }
+    .section-header .tagline { color: var(--primary-blue); font-weight: 600; margin-bottom: 0.5rem; display: block; text-transform: uppercase; letter-spacing: 1px; }
     .section-header h2 { font-size: 2.8rem; font-weight: 800; margin-bottom: 1rem; }
     .section-header p { color: var(--text-muted); max-width: 600px; margin: 0 auto; font-size: 1.1rem; }
+
     .animate-on-scroll { opacity: 0; transform: translateY(40px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
     .animate-on-scroll.visible { opacity: 1; transform: translateY(0); }
-    .navbar { display: flex; justify-content: space-between; align-items: center; height: var(--nav-height); padding: 0 2rem; position: sticky; top: 0; z-index: 1000; background-color: rgba(2, 4, 9, 0.7); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(55, 65, 81, 0.5); }
+
+    .navbar { display: flex; justify-content: space-between; align-items: center; height: var(--nav-height); padding: 0 2rem; position: sticky; top: 0; z-index: 1000; background-color: rgba(13, 17, 23, 0.7); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border-color); }
     .logo { font-size: 1.5rem; font-weight: 700; color: var(--text-light); text-decoration: none; display: flex; align-items: center; gap: 10px; z-index: 1001; }
-    .logo .fa-fire { color: var(--primary-purple); }
+    .logo .fa-fire { color: var(--primary-blue); }
     .nav-menu { display: flex; align-items: center; gap: 2.5rem; }
     .nav-links { display: flex; gap: 2.5rem; list-style: none; }
     .nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 500; transition: color 0.3s ease; position: relative; padding: 5px 0; }
-    .nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background-color: var(--primary-purple); transition: width 0.3s ease; }
+    .nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background-color: var(--primary-blue); transition: width 0.3s ease; }
     .nav-links a:hover, .nav-links a.active { color: var(--text-light); }
     .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
     #actions { display: flex; align-items: center; gap: 1rem; }
     .btn { padding: 12px 24px; border: 1px solid transparent; border-radius: 8px; font-weight: 600; font-size: 0.95rem; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: all 0.3s ease; white-space: nowrap; }
-    .btn-primary { background-color: var(--primary-purple); color: white; box-shadow: 0 4px 20px var(--primary-purple-glow); }
-    .btn-primary:hover { background-color: var(--primary-purple-hover); transform: translateY(-3px); box-shadow: 0 6px 25px var(--primary-purple-glow); }
-    .btn-secondary { color: var(--text-light); background-color: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-color); }
-    .btn-secondary:hover { background-color: rgba(255, 255, 255, 0.1); }
+    .btn-primary { background-color: var(--primary-blue); color: white; box-shadow: 0 4px 20px var(--primary-blue-glow); }
+    .btn-primary:hover { background-color: var(--primary-blue-hover); transform: translateY(-3px); box-shadow: 0 6px 25px var(--primary-blue-glow); }
+    .btn-secondary { color: var(--text-light); background-color: transparent; border: 1px solid var(--border-color); }
+    .btn-secondary:hover { background-color: var(--bg-secondary); }
     .nav-user-greeting { display: none; }
     @media (min-width: 992px) { .nav-user-greeting { display: block; color: var(--text-muted); font-weight: 500;} }
     .profile-menu-container { position: relative; }
-    .profile-avatar { width: 40px; height: 40px; border-radius: 50%; background-color: var(--primary-purple); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: 700; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease; user-select: none; border: 2px solid #0D1117; }
-    .profile-avatar:hover { transform: scale(1.05); box-shadow: 0 0 15px var(--primary-purple-glow); }
+    .profile-avatar { width: 40px; height: 40px; border-radius: 50%; background-color: var(--primary-blue); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: 700; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease; user-select: none; border: 2px solid #0D1117; }
+    .profile-avatar:hover { transform: scale(1.05); box-shadow: 0 0 15px var(--primary-blue-glow); }
     .profile-dropdown { position: absolute; top: 130%; right: 0; background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); min-width: 240px; padding: 0.5rem 0; z-index: 1001; opacity: 0; visibility: hidden; transform: translateY(10px); transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s; }
     .profile-dropdown.show { opacity: 1; visibility: visible; transform: translateY(0); }
     .dropdown-header { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border-color); margin-bottom: 0.5rem; }
@@ -66,23 +85,43 @@
     .dropdown-item:hover { background-color: var(--bg-dark); color: var(--text-light); }
     .dropdown-item.logout:hover { background-color: rgba(239, 68, 68, 0.1); color: var(--danger-red); }
     .hamburger { display: none; cursor: pointer; z-index: 1001; }
-    #home { padding: 120px 0; text-align: center; position: relative; display: flex; align-items: center; min-height: 100vh; }
-    #home::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 700px; height: 700px; background: radial-gradient(circle, var(--primary-purple-glow) 0%, rgba(13, 17, 23, 0) 70%); z-index: 0; animation: slow-pulse 8s infinite ease-in-out; }
+    
+#home {
+  padding: 250px 0;
+  text-align: center;
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 100vh;
+
+  /* ✅✅✅ NEW BACKGROUND IMAGE STYLES ✅✅✅ */
+  background-image:
+    /* Layer 1: A semi-transparent dark overlay to ensure text is readable */
+    linear-gradient(rgba(2, 4, 9, 0.8), rgba(2, 4, 9, 0.8)),
+    /* Layer 2: Your actual background image */
+    url('hero2.jpg'); /* 👈 CHANGE THIS TO YOUR IMAGE PATH */
+  
+  background-size: cover;       /* Ensures the image covers the entire section */
+  background-position: center;  /* Centers the image */
+  background-repeat: no-repeat; /* Prevents the image from repeating */
+}    #home::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 700px; height: 700px; background: radial-gradient(circle, var(--primary-blue-glow) 0%, rgba(13, 17, 23, 0) 70%); z-index: 0; animation: slow-pulse 8s infinite ease-in-out; }
     .hero-content { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; }
     .hero-text { animation: fadeInDown 0.8s ease-out; }
-    .hero-text .tagline { font-weight: 600; color: var(--primary-purple); margin-bottom: 1rem; display: block; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; }
+    .hero-text .tagline { font-weight: 600; color: var(--primary-blue); margin-bottom: 1rem; display: block; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; }
     .hero-text h1 { font-size: 4.2rem; font-weight: 800; line-height: 1.15; margin-bottom: 1.5rem; max-width: 800px; color: var(--text-light); text-shadow: 0 2px 20px rgba(0,0,0,0.4); }
-    .hero-text h1 .highlight { background: linear-gradient(90deg, var(--primary-purple-hover), var(--primary-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; padding: 0 5px; }
+    .hero-text h1 .highlight { background: linear-gradient(90deg, var(--primary-blue-hover), var(--primary-blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; padding: 0 5px; }
     .hero-text .description { font-size: 1.2rem; color: var(--text-muted); max-width: 600px; margin: 0 auto 2.5rem auto; }
     .hero-actions { display: flex; gap: 1rem; justify-content: center; animation: fadeInUp 0.8s ease-out 0.2s backwards; }
+    
     #how-it-works { background: linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-secondary) 100%); }
     .how-it-works-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; position: relative; }
     .step-card { background-color: var(--bg-secondary); padding: 2.5rem 2rem; border: 1px solid var(--border-color); border-radius: 12px; transition: all 0.3s ease; position: relative; }
-    .step-card:hover { transform: translateY(-8px); border-color: var(--primary-purple); box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
-    .step-card .icon { font-size: 1.8rem; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; background: linear-gradient(145deg, var(--primary-purple), #581c87); color: white; border-radius: 50%; margin-bottom: 1.5rem; }
+    .step-card:hover { transform: translateY(-8px); border-color: var(--primary-blue); box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+    .step-card .icon { font-size: 1.8rem; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; background: linear-gradient(145deg, var(--primary-blue), #2563eb); color: white; border-radius: 50%; margin-bottom: 1.5rem; }
     .step-card h3 { font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--text-secondary); }
     .step-card p { color: var(--text-muted); font-size: 0.95rem; }
     .step-card:not(:last-child)::after { content: ''; position: absolute; right: -2.25rem; top: 55px; width: 2.5rem; height: 2px; background: repeating-linear-gradient(90deg, var(--border-color), var(--border-color) 4px, transparent 4px, transparent 8px); z-index: -1; }
+    
     #philosophy .container { max-width: 1000px; }
     .philosophy-grid { display: grid; grid-template-columns: 1fr 1.2fr; align-items: center; gap: 5rem; }
     .philosophy-visual { background-color: var(--bg-secondary); border-radius: 16px; padding: 2rem; border: 1px solid var(--border-color); display: flex; justify-content: center; align-items: center; }
@@ -90,7 +129,8 @@
     .philosophy-text .description { color: var(--text-muted); margin-bottom: 2rem; font-size: 1.1rem; }
     .philosophy-list { list-style: none; padding: 0; }
     .philosophy-list li { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1rem; font-size: 1.05rem; }
-    .philosophy-list i { color: var(--primary-purple); font-size: 1.2rem; margin-top: 5px; }
+    .philosophy-list i { color: var(--primary-blue); font-size: 1.2rem; margin-top: 5px; }
+    
     #courses { background-color: var(--bg-dark); }
     .course-language { margin-bottom: 3.5rem; }
     .course-language h3 { font-size: 2rem; color: var(--text-light); margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 2px solid var(--border-color); display: inline-block; }
@@ -98,72 +138,56 @@
     .course-level h4 .level-title { font-weight: 500; color: var(--text-muted); font-size: 1.1rem; }
     .days { display: flex; flex-wrap: wrap; gap: 0.75rem; }
     .day-card { background-color: var(--bg-secondary); border: 1px solid var(--border-color); padding: 0.5rem 1rem; border-radius: 20px; cursor: pointer; font-weight: 500; font-size: 0.9rem; color: var(--text-muted); transition: all 0.2s ease; }
-    .day-card:hover { transform: translateY(-3px); border-color: var(--primary-purple); color: var(--text-light); box-shadow: 0 0 15px rgba(124, 58, 237, 0.2); }
-    .day-card.active { background-color: var(--primary-purple); border-color: var(--primary-purple); color: white; transform: translateY(-2px); box-shadow: 0 4px 20px var(--primary-purple-glow); }
-    .topic-slide-panel { background-color: var(--bg-secondary); border-left: 3px solid var(--primary-purple); margin-top: 1.5rem; padding: 0; border-radius: 8px; overflow: hidden; max-height: 0; opacity: 0; visibility: hidden; transition: all 0.4s ease-in-out; }
+    .day-card:hover { transform: translateY(-3px); border-color: var(--primary-blue); color: var(--text-light); box-shadow: 0 0 15px rgba(59, 130, 246, 0.2); }
+    .day-card.active { background-color: var(--primary-blue); border-color: var(--primary-blue); color: white; transform: translateY(-2px); box-shadow: 0 4px 20px var(--primary-blue-glow); }
+    .topic-slide-panel { background-color: var(--bg-secondary); border-left: 3px solid var(--primary-blue); margin-top: 1.5rem; padding: 0; border-radius: 8px; overflow: hidden; max-height: 0; opacity: 0; visibility: hidden; transition: all 0.4s ease-in-out; }
     .topic-slide-panel.show { max-height: 200px; opacity: 1; padding: 1.5rem; visibility: visible; }
-    .topic-slide-panel strong { color: var(--primary-purple); }
+    .topic-slide-panel strong { color: var(--primary-blue); }
+    
     #pricing { background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-dark) 100%); }
     .language-toggle { display: flex; justify-content: center; margin-bottom: 3rem; background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 10px; padding: 6px; width: fit-content; margin-left: auto; margin-right: auto; }
     .toggle-btn { background: none; border: none; color: var(--text-muted); font-size: 1rem; font-weight: 600; padding: 10px 24px; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; }
-    .toggle-btn.active { background-color: var(--primary-purple); color: white; box-shadow: 0 4px 15px var(--primary-purple-glow); }
-    .pricing-grid {
-      display: grid;
-      /* ✅✅✅ CHANGED TO 4 COLUMNS ✅✅✅ */
-      grid-template-columns: repeat(4, 1fr); 
-      gap: 1.5rem; /* Slightly reduced gap for more cards */
-      align-items: center;
-    }    .pricing-card { background: rgba(13, 17, 23, 0.5); backdrop-filter: blur(15px); border: 1px solid var(--border-color); border-radius: 16px; padding: 2.5rem 2rem; text-align: center; transition: transform 0.3s ease, box-shadow 0.3s ease; position: relative; display: flex; flex-direction: column; height: 100%;}
+    .toggle-btn.active { background-color: var(--primary-blue); color: white; box-shadow: 0 4px 15px var(--primary-blue-glow); }
+    .pricing-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; align-items: stretch; }
+    .pricing-card { background: rgba(22, 27, 34, 0.7); backdrop-filter: blur(15px); border: 1px solid var(--border-color); border-radius: 16px; padding: 2.5rem 2rem; text-align: center; transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; position: relative; display: flex; flex-direction: column; }
     .pricing-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
-    .pricing-card.highlighted { transform: scale(1.05); border-color: var(--primary-purple); box-shadow: 0 0 40px var(--primary-purple-glow); }
-    .pricing-card .badge { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); background: linear-gradient(90deg, var(--primary-purple-hover), var(--primary-purple)); color: white; padding: 6px 16px; border-radius: 20px; font-size: 0.9rem; font-weight: 700; }
+    .pricing-card.highlighted { transform: scale(1.05); border-color: var(--primary-blue); box-shadow: 0 0 40px var(--primary-blue-glow); }
+    .pricing-card .badge { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); background: linear-gradient(90deg, var(--primary-blue-hover), var(--primary-blue)); color: white; padding: 6px 16px; border-radius: 20px; font-size: 0.9rem; font-weight: 700; }
     .plan-name { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; }
     .plan-price { font-size: 3.5rem; font-weight: 800; margin: 1rem 0 0.5rem 0; }
     .plan-price .currency { font-size: 1.8rem; font-weight: 600; color: var(--text-muted); vertical-align: super; margin-right: 5px;}
     .plan-billing { color: var(--text-muted); margin-bottom: 2rem; }
     .plan-features { list-style: none; padding: 0; text-align: left; margin-bottom: 2.5rem; flex-grow: 1; }
     .plan-features li { display: flex; align-items: center; gap: 12px; margin-bottom: 1rem; }
-    .plan-features li i { color: var(--primary-purple); }
+    .plan-features li i { color: var(--primary-blue); }
     .select-plan-btn { width: 100%; justify-content: center; }
+    
     #final-cta-section { padding-bottom: 120px; }
-    .final-cta { padding: 5rem 2rem; border-radius: 20px; text-align: center; position: relative; overflow: hidden; border: 1px solid var(--border-color); background-image: radial-gradient(ellipse at center, rgba(124, 58, 237, 0.15), transparent 80%), linear-gradient(45deg, #1e1b4b, var(--bg-dark)); }
+    .final-cta { padding: 5rem 2rem; border-radius: 20px; text-align: center; position: relative; overflow: hidden; border: 1px solid var(--border-color); background-image: radial-gradient(ellipse at center, rgba(59, 130, 246, 0.15), transparent 80%), linear-gradient(45deg, var(--bg-secondary), var(--bg-dark)); }
     .final-cta h2 { font-size: 2.5rem; font-weight: 800; max-width: 600px; margin: 0 auto 1rem auto; position: relative; }
     .final-cta p { color: var(--text-muted); max-width: 500px; margin: 0 auto 2.5rem auto; font-size: 1.1rem; position: relative; }
+    
     footer { padding: 60px 0; text-align: center; border-top: 1px solid var(--border-color); }
     .social-icons { margin-bottom: 1.5rem; }
     .social-icons a { color: var(--text-muted); font-size: 1.5rem; margin: 0 1rem; display: inline-block; transition: all 0.3s ease; }
-    .social-icons a:hover { color: var(--primary-purple); transform: translateY(-5px); }
+    .social-icons a:hover { color: var(--primary-blue); transform: translateY(-5px); }
     .footer-links { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 0.75rem 1.5rem; margin-bottom: 1.5rem; }
     .footer-links a { color: var(--text-muted); text-decoration: none; font-weight: 500; transition: color 0.3s ease; }
-    .footer-links a:hover { color: var(--primary-purple); text-decoration: underline; }
+    .footer-links a:hover { color: var(--primary-blue); text-decoration: underline; }
     .footer-links .separator { color: var(--border-color); }
     .copyright { color: var(--text-muted); font-size: 0.9rem; }
+    
     @keyframes slow-pulse { 0% { transform: translate(-50%, -50%) scale(0.95); opacity: 0.8; } 50% { transform: translate(-50%, -50%) scale(1.05); opacity: 1; } 100% { transform: translate(-50%, -50%) scale(0.95); opacity: 0.8; } }
     @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    
+    @media (max-width: 1200px) { .pricing-grid { grid-template-columns: repeat(2, 1fr); } }
     @media (max-width: 992px) {
         .how-it-works-grid { grid-template-columns: 1fr 1fr; gap: 4rem 2rem; }
         .step-card:nth-child(2)::after { display: none; }
         .philosophy-grid { grid-template-columns: 1fr; }
         .philosophy-visual { grid-row: 1; margin-bottom: 3rem; }
-        .pricing-grid { grid-template-columns: 1fr; max-width: 450px; margin: 0 auto; }
-        .pricing-card.highlighted { transform: scale(1); }
-    }
-    @media (max-width: 1200px) { /* A new breakpoint for slightly smaller screens */
-        .pricing-grid {
-            grid-template-columns: repeat(2, 1fr); /* Go to 2 columns on tablets */
-        }
-    }
-     @media (max-width: 768px) { /* Updated from 992px to 768px for the switch to 1 column */
-      .pricing-grid {
-        grid-template-columns: 1fr; /* Switch to 1 column on mobile */
-        max-width: 450px;
-        margin: 0 auto;
-      }
-      .pricing-card.highlighted {
-        transform: scale(1); /* Reset scale on mobile to prevent overflow */
-      }
     }
     @media (max-width: 768px) {
         .navbar { padding: 0 1.5rem; }
@@ -175,9 +199,13 @@
         #actions .btn { width: 100%; text-align: center; justify-content: center; }
         section { padding: 80px 0; }
         .hero-text h1 { font-size: 2.8rem; }
+        .hero-actions { flex-direction: column; align-items: center; gap: 0.75rem;}
+        .hero-actions .btn { width: 100%; max-width: 280px; }
         .section-header h2, .philosophy-text h2, .final-cta h2 { font-size: 2.2rem; }
         .how-it-works-grid { grid-template-columns: 1fr; }
         .step-card::after { display: none; }
+        .pricing-grid { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; }
+        .pricing-card.highlighted { transform: scale(1); }
     }
     @media (max-width: 576px) {
         .footer-links .separator { display: none; }
@@ -205,7 +233,6 @@
   </header>
 
   <main>
-    
     <section id="home">
       <div class="container">
         <div class="hero-content">
@@ -230,26 +257,10 @@
           <p>We've removed all friction. Your path to becoming a better coder is just a few clicks away.</p>
         </div>
         <div class="how-it-works-grid">
-            <div class="step-card animate-on-scroll">
-                <div class="icon"><i class="fa-solid fa-user-plus"></i></div>
-                <h3>1. Quick Sign Up</h3>
-                <p>Create your free account in 30 seconds. No credit card required.</p>
-            </div>
-            <div class="step-card animate-on-scroll" style="transition-delay: 0.1s;">
-                <div class="icon"><i class="fa-brands fa-whatsapp"></i></div>
-                <h3>2. Link WhatsApp</h3>
-                <p>Connect your account to get daily tasks delivered straight to your phone.</p>
-            </div>
-            <div class="step-card animate-on-scroll" style="transition-delay: 0.2s;">
-                <div class="icon"><i class="fa-solid fa-paper-plane"></i></div>
-                <h3>3. Get Daily Tasks</h3>
-                <p>Receive your unique coding challenge at your preferred time, every single day.</p>
-            </div>
-            <div class="step-card animate-on-scroll" style="transition-delay: 0.3s;">
-                <div class="icon"><i class="fa-solid fa-arrow-trend-up"></i></div>
-                <h3>4. Build Your Streak</h3>
-                <p>Complete tasks, grow your streak, and transform your skills through consistency.</p>
-            </div>
+            <div class="step-card animate-on-scroll"><div class="icon"><i class="fa-solid fa-user-plus"></i></div><h3>1. Quick Sign Up</h3><p>Create your free account in 30 seconds. No credit card required.</p></div>
+            <div class="step-card animate-on-scroll" style="transition-delay: 0.1s;"><div class="icon"><i class="fa-brands fa-whatsapp"></i></div><h3>2. Link WhatsApp</h3><p>Connect your account to get daily tasks delivered straight to your phone.</p></div>
+            <div class="step-card animate-on-scroll" style="transition-delay: 0.2s;"><div class="icon"><i class="fa-solid fa-paper-plane"></i></div><h3>3. Get Daily Tasks</h3><p>Receive your unique coding challenge at your preferred time, every single day.</p></div>
+            <div class="step-card animate-on-scroll" style="transition-delay: 0.3s;"><div class="icon"><i class="fa-solid fa-arrow-trend-up"></i></div><h3>4. Build Your Streak</h3><p>Complete tasks, grow your streak, and transform your skills through consistency.</p></div>
         </div>
       </div>
     </section>
@@ -284,9 +295,6 @@
       </div>
     </section>
         
-        <!-- ========================================================== -->
-    <!-- ============== NEW, 4-CARD PRICING SECTION ============== -->
-    <!-- ========================================================== -->
     <section id="pricing">
       <div class="container">
         <div class="section-header animate-on-scroll">
@@ -294,20 +302,14 @@
           <h2>Find the Plan That's Right for You</h2>
           <p>Whether you're starting out or aiming for mastery, we have a plan that fits your goals. All paid plans are a one-time payment for lifetime access.</p>
         </div>
-
-        <!-- Language Toggle Switch -->
         <div class="language-toggle animate-on-scroll" style="transition-delay: 0.1s;">
           <button class="toggle-btn active" data-lang="C++">C++</button>
           <button class="toggle-btn" data-lang="Java">Java</button>
         </div>
-
         <div class="pricing-grid">
-          <!-- Plan 1: Free -->
           <div class="pricing-card animate-on-scroll" style="transition-delay: 0.2s;">
             <div class="plan-name">Starter</div>
-            <div class="plan-price">
-              <span class="currency"></span>Free
-            </div>
+            <div class="plan-price"><span class="currency"></span>Free</div>
             <div class="plan-billing">Free Forever</div>
             <ul class="plan-features">
               <li><i class="fa-solid fa-check"></i> 20 Days of Course Content</li>
@@ -318,13 +320,9 @@
             </ul>
             <a href="signup.html" class="btn btn-secondary select-plan-btn" data-level="Intermediate">Get Started</a>
           </div>
-
-          <!-- Plan 2: Advanced -->
           <div class="pricing-card animate-on-scroll" style="transition-delay: 0.3s;">
             <div class="plan-name">Advanced</div>
-            <div class="plan-price">
-              <span class="currency">₹</span>99
-            </div>
+            <div class="plan-price"><span class="currency">₹</span>99</div>
             <div class="plan-billing">One-time payment</div>
             <ul class="plan-features">
               <li><i class="fa-solid fa-check"></i> Everything in Starter</li>
@@ -335,14 +333,10 @@
             </ul>
             <a href="#" class="btn btn-secondary select-plan-btn" data-level="Advanced">Buy Now</a>
           </div>
-          
-          <!-- Plan 3: Full Access Bundle (HIGHLIGHTED) -->
           <div class="pricing-card highlighted animate-on-scroll" style="transition-delay: 0.4s;">
             <div class="badge">Best Value</div>
             <div class="plan-name">Full Access Bundle</div>
-            <div class="plan-price">
-              <span class="currency">₹</span>199
-            </div>
+            <div class="plan-price"><span class="currency">₹</span>199</div>
             <div class="plan-billing">One-time payment</div>
             <ul class="plan-features">
               <li><i class="fa-solid fa-check"></i> <strong>Pro Access for C++</strong></li>
@@ -353,13 +347,9 @@
             </ul>
             <a href="payment.html?level=Bundle&price=199" class="btn btn-primary">Buy Full Bundle</a>
           </div>
-
-          <!-- Plan 4: Pro -->
           <div class="pricing-card animate-on-scroll" style="transition-delay: 0.5s;">
             <div class="plan-name">Pro</div>
-            <div class="plan-price">
-              <span class="currency">₹</span>299
-            </div>
+            <div class="plan-price"><span class="currency">₹</span>299</div>
             <div class="plan-billing">One-time payment</div>
             <ul class="plan-features">
               <li><i class="fa-solid fa-check"></i> Everything in Advanced</li>
