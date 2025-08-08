@@ -95,6 +95,13 @@
         color: var(--text-light);
     }
     
+    /* ✅✅✅ STYLES FOR THE BUTTON CONTAINER ✅✅✅ */
+    .actions-container {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+    }
+    
     .action-button {
       display: inline-block;
       background: none;
@@ -110,6 +117,15 @@
     .action-button:hover {
       background-color: var(--bg-dark);
       color: var(--text-light);
+    }
+
+    .action-button.primary {
+        background-color: var(--primary-blue);
+        border-color: var(--primary-blue);
+        color: white;
+    }
+    .action-button.primary:hover {
+        background-color: #60A5FA;
     }
   </style>
 </head>
@@ -128,7 +144,11 @@
       <strong>Didn't receive an email?</strong> Be sure to check your spam or junk folder.
     </div>
     
-    <a href="https://mail.google.com/mail/u/1/#inbox" class="action-button">Click Email</a>
+    <!-- ✅✅✅ NEW BUTTONS IN A CONTAINER ✅✅✅ -->
+    <div class="actions-container">
+        <a href="https://mail.google.com/" target="_blank" class="action-button primary">Open Gmail</a>
+        <a href="login.html" class="action-button">Go to Login</a>
+    </div>
   </main>
 
 </body>
