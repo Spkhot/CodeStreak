@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>About Us | The Habit Loop</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale-1.0" />
   
   <link rel="icon" href="logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,17 +12,17 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
   <style>
-    /* --- MODERN THEME & VARIABLES --- */
+    /* --- ✅✅✅ NEW BLUE THEME & VARIABLES ✅✅✅ --- */
     :root {
-      --bg-dark: #020409;
-      --bg-secondary: #0D1117;
-      --primary-purple: #7C3AED;
-      --primary-purple-hover: #9F67FF;
-      --primary-purple-glow: rgba(124, 58, 237, 0.4);
+      --bg-dark: #0D1117;
+      --bg-secondary: #161B22;
+      --primary-blue: #3B82F6;
+      --primary-blue-hover: #60A5FA;
+      --primary-blue-glow: rgba(59, 130, 246, 0.4);
       --text-light: #F9FAFB;
       --text-secondary: #E5E7EB;
       --text-muted: #9CA3AF;
-      --border-color: #374151;
+      --border-color: #30363D;
       --nav-height: 70px;
     }
 
@@ -43,76 +43,69 @@
     .animate-on-scroll { opacity: 0; transform: translateY(40px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
     .animate-on-scroll.visible { opacity: 1; transform: translateY(0); }
     
-    /* --- 1. NAVBAR --- */
-    .navbar { display: flex; justify-content: space-between; align-items: center; height: var(--nav-height); padding: 0 2rem; position: sticky; top: 0; z-index: 1000; background-color: rgba(2, 4, 9, 0.7); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(55, 65, 81, 0.5); }
+    .navbar { display: flex; justify-content: space-between; align-items: center; height: var(--nav-height); padding: 0 2rem; position: sticky; top: 0; z-index: 1000; background-color: rgba(13, 17, 23, 0.7); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border-color); }
     .logo { font-size: 1.5rem; font-weight: 700; color: var(--text-light); text-decoration: none; display: flex; align-items: center; gap: 8px; z-index: 1001; }
-    .logo .fa-fire { color: var(--primary-purple); }
+    .logo .fa-fire { color: var(--primary-blue); }
     .nav-menu { display: flex; align-items: center; gap: 2.5rem; }
     .nav-links { display: flex; list-style: none; gap: 2.5rem; }
     .nav-links a { color: var(--text-light); text-decoration: none; font-weight: 500; }
     .hamburger { display: none; font-size: 1.5rem; cursor: pointer; z-index: 1001; }
     .btn { padding: 12px 24px; border: 1px solid transparent; border-radius: 8px; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: all 0.3s ease; white-space: nowrap; }
-    .btn-primary { background-color: var(--primary-purple); color: white; box-shadow: 0 4px 20px var(--primary-purple-glow); }
-    .btn-primary:hover { background-color: var(--primary-purple-hover); transform: translateY(-3px); box-shadow: 0 6px 25px var(--primary-purple-glow); }
+    .btn-primary { background-color: var(--primary-blue); color: white; box-shadow: 0 4px 20px var(--primary-blue-glow); }
+    .btn-primary:hover { background-color: var(--primary-blue-hover); transform: translateY(-3px); box-shadow: 0 6px 25px var(--primary-blue-glow); }
     .btn-lg { padding: 16px 32px; font-size: 1.1rem; }
 
-    /* --- 2. HERO SECTION --- */
-    #hero-about { text-align: center; padding: 140px 0; min-height: 60vh; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; }
-    #hero-about::before { content: ''; position: absolute; top: 50%; left: 50%; width: 800px; height: 500px; background: radial-gradient(circle, var(--primary-purple-glow) 0%, rgba(13, 17, 23, 0) 65%); transform: translate(-50%, -50%); z-index: 0; animation: slow-pulse 8s infinite ease-in-out; }
+    /* --- ✅ NEW HERO SECTION STYLES --- */
+    #hero-about { text-align: center; padding: 140px 0; display: flex; justify-content: center; align-items: center; position: relative; background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-dark) 100%); }
+    #hero-about::before { content: ''; position: absolute; top: 50%; left: 50%; width: 800px; height: 500px; background: radial-gradient(circle, var(--primary-blue-glow) 0%, rgba(13, 17, 23, 0) 65%); transform: translate(-50%, -50%); z-index: 0; animation: slow-pulse 8s infinite ease-in-out; }
     #hero-about .container { position: relative; z-index: 1; }
     #hero-about h1 { font-size: 4rem; font-weight: 800; line-height: 1.2; margin-bottom: 1rem; max-width: 800px; margin-left: auto; margin-right: auto; color: var(--text-light); animation: fadeInDown 0.8s ease-out; }
-    #hero-about h1 .highlight { color: var(--primary-purple); }
+    #hero-about h1 .highlight { color: var(--primary-blue); }
     #hero-about p { font-size: 1.2rem; color: var(--text-muted); max-width: 650px; margin: 0 auto; animation: fadeInDown 0.8s ease-out 0.2s backwards; }
     
-    /* --- 3. MISSION SECTION --- */
-    #mission { background-color: var(--bg-secondary); }
-    .mission-content-wrapper { max-width: 800px; margin: 0 auto; background-color: var(--bg-dark); border: 1px solid var(--border-color); border-radius: 16px; padding: 3rem; }
-    .mission-content-wrapper .tagline { color: var(--primary-purple); font-weight: 600; text-align: center; margin-bottom: 2rem; }
-    .mission-content-wrapper blockquote { margin: 0; padding: 0 0 0 1.5rem; border-left: 3px solid var(--primary-purple); font-size: 1.2rem; line-height: 1.8; color: var(--text-secondary); }
-    .mission-content-wrapper .highlight { color: var(--primary-purple-hover); font-weight: 600; }
+    /* --- ✅ NEW MISSION SECTION STYLES --- */
+    #mission { background-color: var(--bg-dark); }
+    .mission-content-wrapper { max-width: 800px; margin: 0 auto; background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 16px; padding: 3rem; }
+    .mission-content-wrapper .tagline { color: var(--primary-blue); font-weight: 600; text-align: center; margin-bottom: 2rem; text-transform: uppercase; letter-spacing: 1px; }
+    .mission-content-wrapper blockquote { margin: 0; padding: 0 0 0 1.5rem; border-left: 3px solid var(--primary-blue); font-size: 1.2rem; line-height: 1.8; color: var(--text-secondary); }
+    .mission-content-wrapper .highlight { color: var(--primary-blue-hover); font-weight: 600; }
 
-    /* --- 4. FEATURES (HOW WE'RE DIFFERENT) --- */
-    #features { position: relative; }
-    .features-wrapper { position: relative; z-index: 1; }
-    .features-wrapper::before, .features-wrapper::after { content: ''; position: absolute; z-index: -1; filter: blur(100px); }
-    .features-wrapper::before { width: 400px; height: 400px; background-color: rgba(124, 58, 237, 0.2); border-radius: 50%; top: -100px; left: -100px; }
-    .features-wrapper::after { width: 300px; height: 300px; background-color: rgba(59, 130, 246, 0.15); border-radius: 50%; bottom: -100px; right: -100px; }
+    /* --- ✅ NEW FEATURES SECTION STYLES --- */
+    #features { position: relative; background-color: var(--bg-secondary); }
     .section-header { text-align: center; margin-bottom: 5rem; }
     .section-header h2 { font-size: 2.8rem; margin-bottom: 1rem; }
     .section-header p { color: var(--text-muted); max-width: 600px; margin: 1.5rem auto 0 auto; }
     .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
-    .feature-card { background: rgba(22, 27, 34, 0.5); backdrop-filter: blur(10px); border: 1px solid var(--border-color); border-radius: 12px; padding: 2.5rem 2rem; text-align: center; transition: all 0.3s ease; }
-    .feature-card:hover { transform: translateY(-10px); background: rgba(22, 27, 34, 0.8); border-color: var(--primary-purple); }
-    .feature-card .icon { font-size: 2rem; color: var(--primary-purple); margin-bottom: 1.5rem; display: inline-flex; align-items: center; justify-content: center; width: 60px; height: 60px; border-radius: 50%; background-color: rgba(124, 58, 237, 0.1); }
+    .feature-card { background: rgba(13, 17, 23, 0.7); backdrop-filter: blur(10px); border: 1px solid var(--border-color); border-radius: 12px; padding: 2.5rem 2rem; text-align: center; transition: all 0.3s ease; }
+    .feature-card:hover { transform: translateY(-10px); border-color: var(--primary-blue); box-shadow: 0 0 30px var(--primary-blue-glow);}
+    .feature-card .icon { font-size: 2rem; color: var(--primary-blue); margin-bottom: 1.5rem; display: inline-flex; align-items: center; justify-content: center; width: 60px; height: 60px; border-radius: 50%; background-color: rgba(59, 130, 246, 0.1); }
     .feature-card h3 { font-size: 1.3rem; margin-bottom: 0.75rem; }
     .feature-card p { color: var(--text-muted); font-size: 0.95rem; }
     
-    /* --- 5. FOUNDER SECTION (NEW STATIC DESIGN) --- */
+    /* --- ✅ NEW FOUNDER SECTION STYLES --- */
     #founder { background: linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-secondary) 100%); }
     .founder-content { display: grid; grid-template-columns: 1fr 1.8fr; align-items: center; gap: 5rem; }
-    .founder-image-card { position: relative; width: 100%; max-width: 280px; margin: 0 auto; padding: 1.5rem; }
-    .founder-image-card::before { content: ''; position: absolute; inset: 0; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 16px; transform: rotate(-5deg); z-index: 0; transition: transform 0.3s ease-out; }
-    .founder-image-card:hover::before { transform: rotate(-8deg); }
-    .founder-image { position: relative; z-index: 1; border-radius: 12px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+    .founder-image-card { position: relative; width: 100%; max-width: 280px; margin: 0 auto; }
+    .founder-image-card::before { content: ''; position: absolute; inset: -15px; background: linear-gradient(145deg, var(--primary-blue), var(--bg-dark)); border-radius: 50%; z-index: 0; transition: transform 0.4s ease; filter: blur(20px); opacity: 0.7; }
+    .founder-image-card:hover::before { transform: scale(1.05); }
+    .founder-image { position: relative; z-index: 1; border-radius: 50%; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.4); border: 3px solid var(--border-color); }
     .founder-image img { width: 100%; height: auto; display: block; }
     .founder-bio blockquote { position: relative; padding-left: 3rem; margin-bottom: 1.5rem; font-size: 1.1rem; font-style: italic; color: var(--text-muted); }
-    .founder-bio blockquote::before { content: '\f10d'; font-family: "Font Awesome 6 Free"; font-weight: 900; position: absolute; left: 0; top: 0; font-size: 2rem; color: var(--primary-purple); opacity: 0.5; }
+    .founder-bio blockquote::before { content: '\f10d'; font-family: "Font Awesome 6 Free"; font-weight: 900; position: absolute; left: 0; top: 0; font-size: 2rem; color: var(--primary-blue); opacity: 0.5; }
     .founder-bio .name { font-size: 2.2rem; margin-bottom: 0.25rem; font-weight: 700; }
-    .founder-bio .title { color: var(--primary-purple); font-weight: 600; font-size: 1.1rem; margin-bottom: 1.5rem; }
+    .founder-bio .title { color: var(--primary-blue); font-weight: 600; font-size: 1.1rem; margin-bottom: 1.5rem; }
     .founder-socials a { color: var(--text-muted); font-size: 1.5rem; margin-right: 1.5rem; display: inline-block; transition: all 0.3s ease; }
-    .founder-socials a:hover { color: var(--primary-purple); transform: scale(1.2) translateY(-2px); }
+    .founder-socials a:hover { color: var(--primary-blue); transform: scale(1.2) translateY(-2px); }
 
-    /* --- 6. FINAL CTA --- */
+    /* --- ✅ NEW CTA SECTION STYLES --- */
     #cta { text-align: center; }
-    #cta .container { padding: 5rem 2rem; border-radius: 20px; background-image: radial-gradient(circle at 50% 100%, rgba(124, 58, 237, 0.2), transparent 50%), url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="80" height="80"%3E%3Cpath fill="%23161b22" fill-opacity="0.4" d="M0 0h80v80H0zM20 20h40v40H20z"/%3E%3C/svg%3E'); border: 1px solid var(--border-color); }
+    #cta .container { padding: 5rem 2rem; border-radius: 20px; background-image: radial-gradient(circle at 50% 100%, rgba(59, 130, 246, 0.2), transparent 50%), linear-gradient(180deg, var(--bg-secondary), var(--bg-dark)); border: 1px solid var(--border-color); }
     #cta h2 { font-size: 2.5rem; margin-bottom: 1rem; }
     #cta p { max-width: 600px; margin: 0 auto 2.5rem auto; color: var(--text-muted); }
 
-    /* --- 7. FOOTER --- */
     footer { padding: 50px 0; text-align: center; border-top: 1px solid var(--border-color); }
     .copyright { color: var(--text-muted); font-size: 0.9rem; }
     
-    /* --- ANIMATIONS & RESPONSIVE --- */
     @keyframes slow-pulse { 0% { transform: translate(-50%, -50%) scale(0.95); opacity: 0.8; } 50% { transform: translate(-50%, -50%) scale(1.05); opacity: 1; } 100% { transform: translate(-50%, -50%) scale(0.95); opacity: 0.8; } }
     @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
     
@@ -132,14 +125,6 @@
         .section-header h2, .founder-bio .name, #cta h2 { font-size: 2.2rem; }
     }
   </style>
-
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-47YP5C93M8"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-47YP5C93M8');
-  </script>
 </head>
 <body>
 
@@ -182,20 +167,21 @@
                 <h2>How We're Different</h2>
                 <p>Our approach is designed around one core principle: make daily coding effortless.</p>
             </div>
-            <div class="features-wrapper">
-                <div class="features-grid">
-                    <div class="feature-card animate-on-scroll" style="transition-delay: 0.1s;"><div class="icon"><i class="fa-brands fa-whatsapp"></i></div><h3>Delivered via WhatsApp</h3><p>No new apps or websites to log into. We meet you where you already are, making it incredibly easy to see and complete your daily task.</p></div>
-                    <div class="feature-card animate-on-scroll" style="transition-delay: 0.2s;"><div class="icon"><i class="fa-solid fa-puzzle-piece"></i></div><h3>Micro-Learning Focus</h3><p>Each task is small and focused, designed to be completed in minutes. This prevents burnout and builds confidence through consistent wins.</p></div>
-                    <div class="feature-card animate-on-scroll" style="transition-delay: 0.3s;"><div class="icon"><i class="fa-solid fa-arrow-trend-up"></i></div><h3>Habit-Formation System</h3><p>Our platform, from the daily streak counter to the progress log, is built to provide positive reinforcement and make coding a natural part of your routine.</p></div>
-                </div>
+            <div class="features-grid">
+                <div class="feature-card animate-on-scroll" style="transition-delay: 0.1s;"><div class="icon"><i class="fa-brands fa-whatsapp"></i></div><h3>Delivered via WhatsApp</h3><p>No new apps or websites to log into. We meet you where you already are, making it incredibly easy to see and complete your daily task.</p></div>
+                <div class="feature-card animate-on-scroll" style="transition-delay: 0.2s;"><div class="icon"><i class="fa-solid fa-puzzle-piece"></i></div><h3>Micro-Learning Focus</h3><p>Each task is small and focused, designed to be completed in minutes. This prevents burnout and builds confidence through consistent wins.</p></div>
+                <div class="feature-card animate-on-scroll" style="transition-delay: 0.3s;"><div class="icon"><i class="fa-solid fa-arrow-trend-up"></i></div><h3>Habit-Formation System</h3><p>Our platform, from the daily streak counter to the progress log, is built to provide positive reinforcement and make coding a natural part of your routine.</p></div>
             </div>
         </div>
     </section>
 
     <section id="founder">
-        <div class="container animate-on-scroll">
+        <div class="container">
+            <div class="section-header animate-on-scroll">
+                <h2>Meet the Founder</h2>
+            </div>
             <div class="founder-content">
-                <div class="founder-image-card">
+                <div class="founder-image-card animate-on-scroll">
                     <div class="founder-image"><img src="soham.png" alt="Founder of The Habit Loop"></div>
                 </div>
                 <div class="founder-bio animate-on-scroll" style="transition-delay: 0.2s;">
@@ -227,7 +213,6 @@
   </footer>
 
   <script>
-    // --- NO CHANGES TO THIS SCRIPT ---
     document.addEventListener('DOMContentLoaded', () => {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
