@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -315,4 +315,393 @@
     });
   </script>
   </body>
-  </html>
+  </html> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Set Schedule | The Habit Loop</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="logo.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-47YP5C93M8"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-47YP5C93M8');
+</script>
+  <style>
+    :root {
+      --bg-dark: #0D1117;
+      --bg-secondary: #161B22;
+      --primary-blue: #3B82F6;
+      --primary-blue-hover: #60A5FA;
+      --text-light: #E6EDF3;
+      --text-muted: #8D96A0;
+      --border-color: #30363D;
+      --success-color: #28a745;
+      --error-color: #dc3545;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+    }
+    
+    /* --- ✅✅✅ UPDATED NAVBAR STYLES FOR RESPONSIVENESS ✅✅✅ --- */
+    .navbar { 
+        display: flex; 
+        justify-content: space-between; 
+        align-items: center; 
+        padding: 0 2rem; 
+        height: 70px; 
+        background-color: var(--bg-secondary); 
+        border-bottom: 1px solid var(--border-color);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
+    .logo { 
+        font-size: 1.5rem; 
+        font-weight: 700; 
+        text-decoration: none; 
+        color: var(--text-light);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        z-index: 1001; /* Keep logo on top of mobile menu */
+    }
+    .logo .fa-fire {
+        color: var(--primary-blue);
+    }
+    .nav-actions { 
+        display: flex; 
+        align-items: center; 
+        gap: 1rem;
+    }
+    .btn-nav { 
+        background: none; 
+        border: 1px solid var(--border-color); 
+        color: var(--text-muted); 
+        padding: 8px 16px; 
+        border-radius: 8px; 
+        cursor: pointer; 
+        font-weight: 500; 
+        text-decoration: none; 
+        transition: all 0.3s ease;
+        white-space: nowrap;
+    }
+    .btn-nav:hover { background-color: var(--bg-dark); color: var(--text-light); }
+    .btn-nav .fa-solid { margin-right: 6px; }
+
+    .hamburger {
+        display: none; /* Hidden by default */
+        font-size: 1.5rem;
+        color: var(--text-light);
+        cursor: pointer;
+        z-index: 1001;
+    }
+
+    /* UNCHANGED STYLES BELOW */
+    .main-container { display: flex; justify-content: center; align-items: center; padding: 3rem 20px; min-height: calc(100vh - 70px);}
+    .form-wrapper { background-color: var(--bg-secondary); padding: 2.5rem; border-radius: 16px; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35); width: 100%; max-width: 500px; animation: slideInUp 0.6s ease-out; }
+    @keyframes slideInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    .form-header { text-align: center; margin-bottom: 2rem; }
+    .form-header .icon { color: var(--primary-blue); font-size: 2.2rem; margin-bottom: 0.75rem; }
+    .form-header h2 { font-size: 1.75rem; font-weight: 600; margin-bottom: 0.25rem; }
+    .form-header .subtitle { color: var(--text-muted); font-size: 1rem; }
+    .activation-guide { background-color: var(--bg-dark); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+    .activation-guide-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border-color); }
+    .activation-guide-header .icon { font-size: 1.5rem; color: #25D366; }
+    .activation-guide-header h3 { font-size: 1.1rem; font-weight: 600; margin: 0; }
+    .activation-step { display: flex; gap: 1rem; align-items: flex-start; }
+    .activation-step:not(:last-child) { margin-bottom: 1.5rem; }
+    .step-number { background-color: var(--bg-secondary); border: 1px solid var(--border-color); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; flex-shrink: 0; }
+    .step-content h4 { font-size: 1rem; margin-bottom: 0.5rem; }
+    .step-content p { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.75rem; }
+    .copyable-item { display: flex; align-items: center; background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; }
+    .copyable-item .text { padding: 8px 12px; font-family: 'Courier New', Courier, monospace; user-select: all; word-break: break-all; }
+    .copyable-item .copy-btn { background: none; border: none; border-left: 1px solid var(--border-color); color: var(--text-muted); padding: 8px 12px; cursor: pointer; transition: color 0.2s ease, background-color 0.2s; }
+    .copyable-item .copy-btn:hover { color: var(--text-light); background-color: var(--bg-dark); }
+    .input-group { margin-bottom: 1.25rem; }
+    .input-group label { display: block; font-weight: 500; margin-bottom: 0.5rem; color: var(--text-muted); }
+    .input-group input, .input-group select { width: 100%; padding: 12px 15px; background-color: var(--bg-dark); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-light); font-family: 'Poppins', sans-serif; font-size: 1rem; transition: border-color 0.3s, box-shadow 0.3s; -webkit-appearance: none; -moz-appearance: none; appearance: none; }
+    fieldset { border: none; padding: 0; margin: 0; }
+    .input-group select { background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%238D96A0' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e"); background-position: right 0.75rem center; background-repeat: no-repeat; background-size: 1.5em 1.5em; }
+    .input-group input:focus, .input-group select:focus { outline: none; border-color: var(--primary-blue); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3); }
+    #saveBtn { width: 100%; padding: 14px; background-color: var(--primary-blue); color: var(--text-light); border: none; border-radius: 8px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: background-color 0.3s, transform 0.2s; }
+    #saveBtn:hover:not(:disabled) { background-color: var(--primary-blue-hover); transform: translateY(-2px); }
+    #saveBtn:disabled { background-color: #2c5ba7; cursor: not-allowed; opacity: 0.7; }
+    #saveBtn .fa-spinner { margin-right: 8px; }
+    #message { text-align: center; margin-bottom: 1rem; font-weight: 500; min-height: 24px; }
+    .message.success { color: var(--success-color); }
+    .message.error { color: var(--error-color); }
+    .action-buttons { display: flex; justify-content: space-between; gap: 1rem; margin-bottom: 2rem; }
+    .action-buttons button { flex: 1; padding: 12px; background-color: var(--bg-dark); color: var(--text-light); border: 1px solid var(--border-color); border-radius: 8px; font-size: 1rem; cursor: pointer; transition: background-color 0.3s, transform 0.2s, border-color 0.2s; }
+    .action-buttons button:hover { background-color: var(--primary-blue); border-color: var(--primary-blue); transform: translateY(-2px); }
+    
+    /* ✅✅✅ RESPONSIVE STYLES ✅✅✅ */
+    @media (max-width: 768px) {
+        .navbar { padding: 0 1.5rem; }
+        .hamburger { display: block; }
+        .nav-actions {
+            position: fixed;
+            left: -100%;
+            top: 0;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center; /* Center the button */
+            background-color: var(--bg-dark);
+            width: 100%;
+            height: 100vh;
+            transition: left 0.3s ease-in-out;
+        }
+        .nav-actions.active { left: 0; }
+        .main-container { padding: 1.5rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="navbar">
+    <a href="index.html" class="logo"><i class="fa-solid fa-fire"></i> The Habit Loop</a>
+    <nav class="nav-actions" id="nav-actions">
+      <a href="dashboard.html" class="btn-nav"><i class="fa-solid fa-table-columns"></i> Go to Dashboard</a>
+    </nav>
+    <div class="hamburger" id="hamburger">
+      <i class="fa-solid fa-bars"></i>
+    </div>
+  </header>
+
+  <!-- UNCHANGED MAIN CONTENT -->
+  <main class="main-container">
+    <div class="form-wrapper">
+      <div class="form-header">
+        <div class="icon"><i class="fa-solid fa-calendar-check"></i></div>
+        <h2>Set Your Schedule</h2>
+        <p class="subtitle">Complete these final steps to start your streak!</p>
+      </div>
+      <div class="action-buttons">
+          <button type="button" id="backBtn"><i class="fa-solid fa-arrow-left"></i> Back</button>
+          <button type="button" id="homeBtn"><i class="fa-solid fa-house"></i> Home</button>
+      </div>
+      <div class="activation-guide">
+          <div class="activation-guide-header">
+              <div class="icon"><i class="fab fa-whatsapp"></i></div>
+              <h3>Activate Daily Delivery</h3>
+          </div>
+          <div class="activation-step">
+              <div class="step-number">1</div>
+              <div class="step-content">
+                  <h4>Save Contact</h4>
+                  <p>Save this number to your contacts, named "<b>The Habit Loop</b>".</p>
+                  <div class="copyable-item">
+                      <span class="text" id="copy-number">+1 415 523 8886</span>
+                      <button class="copy-btn" data-copy-target="copy-number" title="Copy Number"><i class="fa-regular fa-copy"></i></button>
+                  </div>
+              </div>
+          </div>
+          <div class="activation-step">
+              <div class="step-number">2</div>
+              <div class="step-content">
+                  <h4>Send Code on WhatsApp</h4>
+                  <p>Send your unique code to "The Habit Loop" contact.</p>
+                  <div class="copyable-item">
+                      <span class="text" id="copy-code">...loading code...</span>
+                      <button class="copy-btn" data-copy-target="copy-code" title="Copy Code"><i class="fa-regular fa-copy"></i></button>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <form id="scheduleForm">
+        <div id="message" class="message"></div>
+        <fieldset id="formFields">
+          <div class="input-group">
+            <label for="language">Language:</label>
+            <select id="language" required><option value="C++">C++</option><option value="Java">Java</option></select>
+          </div>
+          <div class="input-group">
+            <label for="level">Level:</label>
+            <select id="level" required><option value="Beginner">Beginner</option><option value="Intermediate">Intermediate</option><option value="Advanced">Advanced</option><option value="Pro">Pro</option></select>
+          </div>
+          <div class="input-group">
+            <label for="time">Delivery Time (24h format):</label>
+            <input type="time" id="time" required />
+          </div>
+          <div class="input-group">
+            <label for="whatsapp">WhatsApp Number:</label>
+            <input type="tel" id="whatsapp" placeholder="+91xxxxxxxxxx" required />
+          </div>
+          <p id="price-info" style="text-align: center; font-weight: 600; margin-bottom: 1rem; display: none;"></p>
+          <button type="submit" id="saveBtn">Save & Start Streak</button>
+        </fieldset>
+      </form>
+    </div>
+  </main>
+
+  <script>
+    // --- ✅✅✅ NEW JAVASCRIPT FOR RESPONSIVE NAVBAR ✅✅✅ ---
+    const hamburger = document.getElementById('hamburger');
+    const navActions = document.getElementById('nav-actions');
+    const dashboardButton = navActions.querySelector('a'); // Get the button inside
+
+    hamburger.addEventListener('click', () => {
+        navActions.classList.toggle('active');
+        const icon = hamburger.querySelector('i');
+        icon.classList.toggle('fa-bars');
+        icon.classList.toggle('fa-times');
+    });
+
+    // Close the menu when the button inside it is clicked
+    dashboardButton.addEventListener('click', () => {
+        if (navActions.classList.contains('active')) {
+            navActions.classList.remove('active');
+            const icon = hamburger.querySelector('i');
+            icon.classList.add('fa-bars');
+            icon.classList.remove('fa-times');
+        }
+    });
+
+    // --- EXISTING SCRIPT (UNCHANGED) ---
+    const backBtn = document.getElementById('backBtn');
+    const homeBtn = document.getElementById('homeBtn');
+    backBtn.addEventListener('click', () => { window.history.back(); });
+    homeBtn.addEventListener('click', () => { window.location.href = 'index.html'; });
+    
+    document.querySelectorAll('.copy-btn').forEach(button => {
+        button.addEventListener('click', () => {
+            const textToCopy = document.getElementById(button.dataset.copyTarget).textContent.trim();
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const originalIcon = button.innerHTML;
+                button.innerHTML = '<i class="fa-solid fa-check"></i>';
+                button.style.color = 'var(--success-color)';
+                setTimeout(() => {
+                    button.innerHTML = originalIcon;
+                    button.style.color = 'var(--text-muted)';
+                }, 1500);
+            });
+        });
+    });
+
+    const scheduleForm = document.getElementById('scheduleForm');
+    const levelSelect = document.getElementById('level');
+    const saveBtn = document.getElementById('saveBtn');
+    const priceInfo = document.getElementById('price-info');
+    const messageEl = document.getElementById('message');
+    const formFields = document.getElementById('formFields');
+
+    const params = new URLSearchParams(window.location.search);
+    const urlToken = params.get('token');
+    if (urlToken) {
+        localStorage.setItem('token', urlToken);
+        window.history.replaceState({}, document.title, window.location.pathname);
+    }
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+        document.querySelector('.form-wrapper').style.display = 'none'; 
+        window.location.href = 'login.html';
+    } else {
+        fetch('/api/user/me', { headers: { 'Authorization': `Bearer ${token}` }})
+            .then(res => {
+                if (!res.ok) {
+                    localStorage.removeItem('token');
+                    window.location.href = 'login.html';
+                    return Promise.reject('Invalid token');
+                }
+                return res.json();
+            })
+            .then(data => {
+                if (data.joinCode) {
+                    document.getElementById('copy-code').textContent = `join ${data.joinCode}`;
+                }
+            })
+            .catch(err => {
+                console.error("Auth check or fetch join code failed:", err);
+            });
+    }
+
+    const timeInput = document.getElementById('time');
+    const now = new Date();
+    timeInput.value = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+    
+    const prices = { 'Advanced': 99, 'Pro': 299 };
+
+    function updateButtonState() {
+        const level = levelSelect.value;
+        const price = prices[level];
+        if (price) {
+            priceInfo.textContent = `One-time payment of ₹${price} for lifetime access.`;
+            priceInfo.style.display = 'block';
+            saveBtn.textContent = 'Continue to Payment';
+        } else {
+            priceInfo.style.display = 'none';
+            saveBtn.textContent = 'Save & Start Streak';
+        }
+    }
+
+    levelSelect.addEventListener('change', updateButtonState);
+    updateButtonState();
+
+    scheduleForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const language = document.getElementById('language').value;
+        const level = document.getElementById('level').value;
+        const deliveryTime = document.getElementById('time').value;
+        const whatsapp = document.getElementById('whatsapp').value.trim();
+        const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+        if (!language || !level || !deliveryTime || !whatsapp) {
+            messageEl.textContent = 'Please fill all fields.';
+            messageEl.classList.add('error');
+            return;
+        }
+        
+        const isPaidTier = level === 'Advanced' || level === 'Pro';
+
+        if (isPaidTier) {
+            const params = new URLSearchParams({ language, level, deliveryTime, whatsapp, timeZone });
+            window.location.href = `payment.html?${params.toString()}`;
+            return;
+        }
+
+        saveBtn.disabled = true;
+        saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+        messageEl.textContent = '';
+        messageEl.className = 'message';
+
+        try {
+            const res = await fetch('/api/user/set-schedule', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                body: JSON.stringify({ language, level, deliveryTime, whatsapp, timeZone })
+            });
+            const data = await res.json();
+            if (res.ok) {
+                messageEl.textContent = '✅ Schedule saved! Redirecting to dashboard...';
+                messageEl.classList.add('success');
+                setTimeout(() => { window.location.href = 'dashboard.html'; }, 2000);
+            } else {
+                throw new Error(data.message || 'Failed to set schedule.');
+            }
+        } catch (error) {
+            messageEl.textContent = error.message;
+            messageEl.classList.add('error');
+        } finally {
+            saveBtn.disabled = false;
+            updateButtonState();
+        }
+    });
+  </script>
+</body>
+</html>
