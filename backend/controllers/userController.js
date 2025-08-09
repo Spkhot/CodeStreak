@@ -1,184 +1,154 @@
 import User from '../models/User.js';
-import Topic from '../models/Topic.js';
+import Topic from '../models/Topic.js'; // Keep this if you need it for other functions
 import razorpay from '../config/razorpay.js';
-import crypto from 'crypto'; // ✅ IMPORT CRYPTO
+import crypto from 'crypto';
 
+// --- CORE USER ACTIONS ---
 
-// 🎯 User sets their schedule AFTER email verification
-export const setSchedule = async (req, res) => {
-  // ✅✅✅ 1. GET the timeZone from the request body ✅✅✅
-  const { language, level, deliveryTime, whatsapp, timeZone } = req.body;
-  const user = await User.findById(req.user._id);
-
-  if (!user) return res.status(404).json({ message: 'User not found' });
-
-  user.language = language;
-  user.level = level;
-  user.deliveryTime = deliveryTime;
-  user.whatsapp = whatsapp;
-  
-  // ✅✅✅ 2. SAVE the timeZone to the user's document ✅✅✅
-  user.timeZone = timeZone;
-
-  user.currentDay = 1; // Reset streak
-  await user.save();
-
-  res.json({ message: 'Schedule set successfully!' });
-};
-
-// 🎯 Get user dashboard data
+// Get data for the logged-in user's dashboard
 export const getMe = async (req, res) => {
-  const user = await User.findById(req.user._id).select('-password -verifyToken -resetToken -resetTokenExpires');
-
-  if (!user) return res.status(404).json({ message: 'User not found' });
-
-  res.json(user);
-};
-
-// In controllers/userController.js
-export const togglePause = async (req, res) => {
-  const user = await User.findById(req.user._id);
-  const wasPaused = user.isPaused;
-  user.isPaused = !user.isPaused;
-
-  // If resuming, reset streak to 0 but keep course progress
-  if (wasPaused && !user.isPaused) {
-    user.streakCount = 0; 
-  }
-  
-  await user.save();
-  // ... send back the full user object in the response
-  const userObject = user.toObject();
-  delete userObject.password;
-  res.json({ message: `Course ${user.isPaused ? 'paused' : 'resumed'}.`, user: userObject });
-};
-
-export const deleteUser = async (req, res) => {
   try {
-    // The user's ID is available from the 'protect' middleware (req.user)
-    const userId = req.user._id;
-
-    const deletedUser = await User.findByIdAndDelete(userId);
-
-    if (!deletedUser) {
-      return res.status(404).json({ message: 'User not found.' });
-    }
-
-    // Success!
-    res.status(200).json({ message: 'Account deleted successfully.' });
-
-  } catch (error)
-   {
-    console.error('Error deleting user account:', error);
-    res.status(500).json({ message: 'Server error while deleting account.' });
+    const user = await User.findById(req.user._id).select('-password -verifyToken -resetToken -resetTokenExpires');
+    if (!user) return res.status(404).json({ message: 'User not found' });
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error fetching user data.' });
   }
 };
 
-// In controllers/userController.js
+// Set the schedule for FREE tiers ("Beginner", "Intermediate")
+export const setSchedule = async (req, res) => {
+  try {
+    const { language, level, deliveryTime, whatsapp, timeZone } = req.body;
+    const user = await User.findById(req.user._id);
 
-// ... (after your existing functions)
+    if (!user) return res.status(404).json({ message: 'User not found' });
 
-export const updateTime = async (req, res) => {
-  const { deliveryTime } = req.body;
-  if (!deliveryTime) return res.status(400).json({ message: 'Delivery time is required.' });
-
-  const user = await User.findByIdAndUpdate(req.user._id, { deliveryTime }, { new: true });
-  res.json({ message: 'Delivery time updated successfully!', user });
+    user.language = language;
+    user.level = level;
+    user.deliveryTime = deliveryTime;
+    user.whatsapp = whatsapp.replace(/[^0-9+]/g, '');
+    user.timeZone = timeZone;
+    
+    // Reset progress when setting a new schedule
+    user.currentDay = 1;
+    user.streakCount = 0;
+    user.completedTopics = [];
+    user.lastSentDate = null;
+    
+    await user.save();
+    res.json({ message: 'Schedule set successfully!' });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error setting schedule.' });
+  }
 };
 
-export const updateNumber = async (req, res) => {
-  const { whatsapp } = req.body;
-  if (!whatsapp) return res.status(400).json({ message: 'WhatsApp number is required.' });
+// Pause or resume the user's course
+export const togglePause = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+    if (!user) return res.status(404).json({ message: 'User not found' });
+    
+    const wasPaused = user.isPaused;
+    user.isPaused = !user.isPaused;
 
-  const user = await User.findByIdAndUpdate(req.user._id, { whatsapp }, { new: true });
-  res.json({ message: 'WhatsApp number updated successfully!', user });
+    // When resuming from a pause, reset the streak but not the course progress
+    if (wasPaused && !user.isPaused) {
+      user.streakCount = 0;
+    }
+    
+    await user.save();
+    
+    const userObject = user.toObject();
+    delete userObject.password;
+    res.json({ message: `Course ${user.isPaused ? 'paused' : 'resumed'}.`, user: userObject });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error pausing course.' });
+  }
 };
 
-// Add these two new functions at the end of controllers/userController.js
+// --- PAYMENT FLOW ---
 
-// FUNCTION 1: Creates a payment order when a user wants to buy.
-// In controllers/userController.js
-
-// Make sure you have `import crypto from 'crypto';` at the top of the file!
-
+// Create a Razorpay order for paid tiers
 export const createOrder = async (req, res) => {
   try {
     const { level } = req.body;
     
-    let amount;
-    if (level === 'Advanced') {
-      amount = 99 * 100;
-    } else if (level === 'Pro') {
-      amount = 299 * 100;
-    } else {
+    const prices = { 'Advanced': 99, 'Pro': 299, 'Bundle': 199 };
+    const price = prices[level];
+
+    if (!price) {
       return res.status(400).json({ message: 'Invalid subscription level for payment.' });
     }
 
-    // ✅✅✅ THE FIX IS HERE ✅✅✅
-    // We create a shorter, but still highly unique, receipt ID.
     const receiptId = `rcpt_${req.user._id.toString().slice(-6)}_${crypto.randomBytes(4).toString('hex')}`;
-
     const options = {
-      amount: amount,
+      amount: price * 100, // Amount in paise
       currency: "INR",
-      receipt: receiptId, // Use the new, shorter ID
+      receipt: receiptId,
     };
 
     const order = await razorpay.orders.create(options);
-    
-    res.json({ 
-        orderId: order.id, 
-        keyId: process.env.RAZORPAY_KEY_ID, 
-        amount: order.amount 
-    });
-
+    res.json({ orderId: order.id, keyId: process.env.RAZORPAY_KEY_ID, amount: order.amount });
   } catch (error) {
     console.error("Razorpay order creation error:", error);
     res.status(500).json({ message: 'Server error while creating payment order.' });
   }
 };
 
-// FUNCTION 2: Verifies the payment is real and then saves the user's schedule.
+// In controllers/userController.js
+
 export const verifyPaymentAndSetSchedule = async (req, res) => {
   try {
     const { 
       razorpay_order_id, 
       razorpay_payment_id, 
       razorpay_signature,
-      // We also receive the schedule data to save it after verification
-      language, level, deliveryTime, whatsapp, timeZone
+      language, level, deliveryTime, whatsapp, timeZone 
     } = req.body;
 
-    const body = razorpay_order_id + "|" + razorpay_payment_id;
-
-    // This is Razorpay's security step to verify the payment is authentic.
-    const expectedSignature = crypto
-      .createHmac('sha256', process.env.RAZORPAY_KEY_SECRET)
-      .update(body.toString())
-      .digest('hex');
+    const body = `${razorpay_order_id}|${razorpay_payment_id}`;
+    const expectedSignature = crypto.createHmac('sha2sha256', process.env.RAZORPAY_KEY_SECRET).update(body).digest('hex');
 
     if (expectedSignature !== razorpay_signature) {
       return res.status(400).json({ message: 'Payment verification failed. Signature mismatch.' });
     }
     
-    // --- Payment is VERIFIED! Now, we save everything. ---
-    
     const user = await User.findById(req.user._id);
+    if (!user) return res.status(404).json({ message: 'User not found.' });
 
-    // Save subscription details
+    // ✅✅✅ THIS IS THE CORRECT LOGIC FOR YOUR SCHEMA ✅✅✅
+    
+    // 1. Mark the user as subscribed
     user.isSubscribed = true;
-    user.subscriptionLevel = level;
+
+    // 2. Set their subscription level
+    // For the bundle, we set the level to "Pro" to grant them full access.
+    if (level === 'Bundle') {
+        user.subscriptionLevel = 'Pro';
+    } else {
+        user.subscriptionLevel = level;
+    }
+    
+    // 3. Save the payment IDs
     user.razorpayOrderId = razorpay_order_id;
     user.razorpayPaymentId = razorpay_payment_id;
 
-    // Save schedule details
-    user.language = language;
-    user.level = level;
+    // 4. Save the schedule details
+    // If it's a bundle, set a default language. The user can change this later.
+    if (level === 'Bundle') {
+        user.language = 'C++';
+        user.level = 'Pro';
+    } else {
+        user.language = language;
+        user.level = level;
+    }
+    
     user.deliveryTime = deliveryTime;
-    user.whatsapp = whatsapp.replace(/[^0-9+]/g, ''); // Clean the number
+    user.whatsapp = whatsapp.replace(/[^0-9+]/g, '');
     user.timeZone = timeZone;
     
-    // Reset progress for the new course
+    // 5. Reset progress for the new course
     user.currentDay = 1;
     user.streakCount = 0;
     user.lastSentDate = null;
@@ -186,10 +156,61 @@ export const verifyPaymentAndSetSchedule = async (req, res) => {
 
     await user.save();
     
-    res.json({ message: 'Payment successful! Your schedule is set and your streak begins now.' });
+    // Send back the full user object so the dashboard can update
+    const userObject = user.toObject();
+    delete userObject.password;
+
+    res.json({ 
+        message: 'Payment successful! Your schedule is set.',
+        user: userObject 
+    });
 
   } catch (error) {
     console.error("Payment verification error:", error);
     res.status(500).json({ message: 'Server error during payment verification.' });
+  }
+};
+// --- ACCOUNT MANAGEMENT ---
+
+// Update just the delivery time
+export const updateTime = async (req, res) => {
+  const { deliveryTime } = req.body;
+  if (!deliveryTime) return res.status(400).json({ message: 'Delivery time is required.' });
+  const user = await User.findByIdAndUpdate(req.user._id, { deliveryTime }, { new: true }).select('-password');
+  res.json({ message: 'Delivery time updated successfully!', user });
+};
+
+// Update just the WhatsApp number
+export const updateNumber = async (req, res) => {
+  const { whatsapp } = req.body;
+  if (!whatsapp) return res.status(400).json({ message: 'WhatsApp number is required.' });
+  const cleanedWhatsapp = whatsapp.replace(/[^0-9+]/g, '');
+  const user = await User.findByIdAndUpdate(req.user._id, { whatsapp: cleanedWhatsapp }, { new: true }).select('-password');
+  res.json({ message: 'WhatsApp number updated successfully!', user });
+};
+
+// Save notes for a completed topic (for Pro Dashboard)
+export const saveTopicNotes = async (req, res) => {
+  try {
+    const { topicOrder, notes } = req.body;
+    const user = await User.findById(req.user._id);
+    const topicToUpdate = user.completedTopics.find(t => t.order === parseInt(topicOrder));
+    if (!topicToUpdate) return res.status(404).json({ message: 'Completed topic not found.' });
+    topicToUpdate.notes = notes;
+    await user.save();
+    res.json({ message: 'Notes saved successfully!' });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error while saving notes.' });
+  }
+};
+
+// Delete the user's account permanently
+export const deleteUser = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    await User.findByIdAndDelete(userId);
+    res.json({ message: 'Account deleted successfully.' });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error while deleting account.' });
   }
 };
