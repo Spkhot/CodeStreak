@@ -144,10 +144,44 @@ export const forgot = async (req, res) => {
     const resetURL = `${req.protocol}://${req.get('host')}/reset.html?token=${resetToken}`;
 
     // ✅✅✅ FIX: Changed HTML to be inside backticks (`) ✅✅✅
+    // In controllers/authController.js, inside the 'forgot' function
+
+    // ✅✅✅ NEW, ATTRACTIVE EMAIL ✅✅✅
     await transporter.sendMail({
       to: email,
-      subject: 'Reset your The Habit Loop password',
-      html: `<p>Click the link below to reset your password:</p><a href="${resetURL}">Reset Password</a>`,
+      subject: '🔑 Reset Your Password for The Habit Loop',
+      html: `
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; max-width: 600px; margin: 20px auto; background-color: #0D1117; color: #E6EDF3; border: 1px solid #30363D; border-radius: 12px; padding: 40px;">
+          
+          <div style="text-align: center; margin-bottom: 30px;">
+            <h1 style="font-size: 24px; font-weight: 700; color: #E6EDF3; margin: 0;">Password Reset Request</h1>
+          </div>
+          
+          <p style="font-size: 16px; line-height: 1.7; color: #8D96A0; margin-bottom: 20px;">
+            Hey there,
+          </p>
+          
+          <p style="font-size: 16px; line-height: 1.7; color: #8D96A0; margin-bottom: 30px;">
+            We received a request to reset the password for your account. No problem! You can set a new password by clicking the button below. This link is valid for one hour.
+          </p>
+          
+          <div style="text-align: center; margin-bottom: 30px;">
+            <a href="${resetURL}" style="display: inline-block; padding: 14px 28px; background-color: #3B82F6; color: #ffffff; text-decoration: none; border-radius: 8px; font-size: 16px; font-weight: 600;">
+              Reset Your Password
+            </a>
+          </div>
+          
+          <p style="font-size: 16px; line-height: 1.7; color: #8D96A0; margin-bottom: 30px;">
+            If you did not request a password reset, you can safely ignore this email. Your account is secure.
+          </p>
+          
+          <p style="font-size: 14px; line-height: 1.7; color: #8D96A0; border-top: 1px solid #30363D; padding-top: 20px;">
+            Thanks,<br>
+            The Habit Loop Team
+          </p>
+          
+        </div>
+      `,
     });
 
     res.json({ message: 'Reset link has been sent to your email.' });
