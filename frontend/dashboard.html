@@ -330,28 +330,39 @@
         renderCurriculum(userCourse, completedDaysSet);
     }
 
-    async function loadDashboard() {
-      try {
-        
-        const res = await fetch('/api/user/me', { headers: { 'Authorization': `Bearer ${token}` } });
-        if (!res.ok) { throw new Error('Session expired or unauthorized.'); }
-        if (data.subscriptions && data.subscriptions.length > 0) {
-            window.location.href = 'pro-dashboard.html';
-            return; // Stop executing the rest of the code on this page
-        }
-        currentUserState = await res.json();
-        if (!currentUserState.language || !currentUserState.level) {
-          alert('Please complete your schedule setup.');
-          window.location.href = 'set-schedule.html';
-          return;
-        }
-        updateDashboardUI(currentUserState);
-      } catch (error) {
-        alert(error.message);
-        localStorage.removeItem('token');
-        window.location.href = 'login.html';
-      }
+    // In dashboard.html <script> tag
+
+async function loadDashboard() {
+  try {
+    const res = await fetch('/api/user/me', { headers: { 'Authorization': `Bearer ${token}` } });
+    if (!res.ok) { throw new Error('Session expired or unauthorized.'); }
+    
+    // ✅✅✅ THE FIX: Read the JSON data FIRST ✅✅✅
+    const data = await res.json();
+    
+    // Now that 'data' exists, we can check the subscription status.
+    if (data.subscriptions && data.subscriptions.length > 0) {
+        window.location.href = 'pro-dashboard.html';
+        return; // Redirect and stop executing this script.
     }
+    
+    // If the user is NOT subscribed, store their data and update the free dashboard.
+    currentUserState = data;
+    
+    if (!currentUserState.language || !currentUserState.level) {
+      alert('Please complete your schedule setup.');
+      window.location.href = 'set-schedule.html';
+      return;
+    }
+    
+    updateDashboardUI(currentUserState);
+
+  } catch (error) {
+    alert(error.message);
+    localStorage.removeItem('token');
+    window.location.href = 'login.html';
+  }
+}
 
     document.addEventListener('DOMContentLoaded', loadDashboard);
     
