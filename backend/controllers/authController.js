@@ -188,3 +188,55 @@ export const reset = async (req, res) => {
     res.status(500).json({ message: 'Something went wrong.' });
   }
 };
+
+// In controllers/authController.js
+
+// ... (after your other functions like reset, etc.)
+
+// ✅✅✅ NEW FUNCTION TO RESEND VERIFICATION EMAIL ✅✅✅
+export const resendVerification = async (req, res) => {
+  try {
+    const { email } = req.body;
+    if (!email) {
+      return res.status(400).json({ message: "Email is required." });
+    }
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: "No account found with that email." });
+    }
+    if (user.isVerified) {
+      return res.status(400).json({ message: "This account has already been verified." });
+    }
+
+    // Generate a new verification token and URL
+    const newVerifyToken = crypto.randomBytes(32).toString('hex');
+    const verifyURL = `${req.protocol}://${req.get('host')}/api/auth/verify?token=${newVerifyToken}`;
+
+    // Update the user's record with the new token
+    user.verifyToken = newVerifyToken;
+    await user.save();
+
+    // Send the new verification email
+    await transporter.sendMail({
+      to: email,
+      subject: '📧 Here is your new verification link for The Habit Loop',
+      html: `
+        <div style="font-family: Arial, sans-serif; color: #0D1117; line-height: 1.6;">
+          <h2 style="color: #3B82F6;">One more step...</h2>
+          <p>Click the link below to verify your email address and activate your account.</p>
+          <p>
+            <a href="${verifyURL}" style="display: inline-block; padding: 12px 24px; background-color: #3B82F6; color: #fff; text-decoration: none; border-radius: 5px; font-weight: bold;">✅ Verify My Email Now</a>
+          </p>
+          <p>This link will be valid for a limited time. If you didn’t request this, you can ignore this email.</p>
+        </div>
+      `
+    });
+
+    res.json({ message: 'A new verification link has been sent to your email.' });
+
+  } catch (error) {
+    console.error("Resend Verification Error:", error);
+    res.status(500).json({ message: "Server error while resending verification." });
+  }
+};

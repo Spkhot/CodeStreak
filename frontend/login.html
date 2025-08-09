@@ -155,12 +155,19 @@
         margin-right: 8px;
     }
 
-    #message {
+        #message {
         text-align: center;
         margin-bottom: 1rem;
-        color: var(--error-color);
         font-weight: 500;
         min-height: 24px; /* Prevents layout shift */
+    }
+    /* ✅ New class for success messages */
+    #message.success {
+        color: var(--success-color);
+    }
+    /* Your existing class for error messages */
+    #message.error {
+        color: var(--error-color);
     }
 
     .form-footer {
@@ -202,7 +209,30 @@
   border-color: var(--primary-blue);
   transform: translateY(-2px);
 }
+    /* ✅✅✅ ADD THESE NEW STYLES ✅✅✅ */
+    .resend-container {
+        text-align: center;
+        margin-bottom: 1rem;
+        transition: opacity 0.3s ease, max-height 0.3s ease;
+        max-height: 0;
+        opacity: 0;
+        overflow: hidden;
+    }
 
+    .resend-container.visible {
+        max-height: 50px; /* Large enough to show the link */
+        opacity: 1;
+    }
+
+    .resend-container a {
+        color: var(--primary-blue);
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    .resend-container a:hover {
+        text-decoration: underline;
+    }
   </style>
 </head>
 <body>
@@ -218,7 +248,9 @@
 </div>
     <form id="loginForm">
       <div id="message"></div>
-      
+      <div id="resend-container" class="resend-container hidden">
+    <a href="#" id="resend-link">Resend verification email</a>
+</div>
       <div class="input-group">
         <label for="email">Email</label>
         <input type="email" id="email" placeholder="you@example.com" required />
@@ -257,6 +289,9 @@
   const loginForm = document.getElementById('loginForm');
   const loginBtn = document.getElementById('loginBtn');
   const messageEl = document.getElementById('message');
+  // ✅✅✅ ADD THESE TWO LINES ✅✅✅
+  const resendContainer = document.getElementById('resend-container');
+  const resendLink = document.getElementById('resend-link');
   const togglePassword = document.getElementById('togglePassword');
   const passwordInput = document.getElementById('password');
 
@@ -274,7 +309,7 @@
     const password = document.getElementById('password').value;
 
     messageEl.textContent = '';
-    loginBtn.disabled = true;
+resendContainer.classList.remove('visible'); // Hide using the class    loginBtn.disabled = true;
     loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging In...';
 
     if (!email || !password) {
@@ -304,6 +339,11 @@
         }
       } else {
         messageEl.textContent = data.message || 'Login failed. Please check your credentials.';
+         // ✅✅✅ ADD THIS 'IF' BLOCK ✅✅✅
+        // Check if the error message is specifically about verification
+        if (data.message && data.message.toLowerCase().includes('not verified')) {
+    resendContainer.classList.add('visible'); // Show using the class
+}
       }
     } catch (error) {
       messageEl.textContent = 'An error occurred. Please try again later.';
@@ -312,6 +352,43 @@
       loginBtn.innerHTML = 'Login';
     }
   });
+  // ✅✅✅ ADD THIS ENTIRE NEW BLOCK OF CODE AT THE END OF YOUR SCRIPT ✅✅✅
+
+resendLink.addEventListener('click', async (e) => {
+    e.preventDefault();
+    const email = document.getElementById('email').value.trim();
+    if (!email) {
+        messageEl.textContent = 'Please enter your email above before resending.';
+        return;
+    }
+
+    resendLink.textContent = 'Sending...';
+    messageEl.textContent = '';
+    messageEl.className = 'message';
+
+    try {
+        const res = await fetch('/api/auth/resend-verify', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email })
+        });
+        const data = await res.json();
+        
+        if (res.ok) {
+            // Use the success class for the message
+            messageEl.textContent = data.message;
+            messageEl.classList.add('success'); // You might need to add a .success style
+resendContainer.classList.remove('visible'); // Hide using the class        } else {
+            messageEl.textContent = data.message || 'Failed to resend email.';
+            messageEl.classList.add('error');
+            resendLink.textContent = 'Resend verification email';
+        }
+    } catch (error) {
+        messageEl.textContent = 'An error occurred. Please try again.';
+        messageEl.classList.add('error');
+        resendLink.textContent = 'Resend verification email';
+    }
+});
 </script>
 
 </body>
