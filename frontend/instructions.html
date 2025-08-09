@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dashboard Guide | The Habit Loop</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <link rel="icon" href="logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <style>
+    :root {
+      --bg-dark: #0D1117;
+      --bg-secondary: #161B22;
+      --primary-blue: #3B82F6;
+      --primary-blue-hover: #60A5FA;
+      --text-light: #E6EDF3;
+      --text-muted: #8D96A0;
+      --border-color: #30363D;
+      --nav-height: 70px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+      line-height: 1.7;
+    }
+
+    .navbar {
+      display: flex; justify-content: space-between; align-items: center; height: var(--nav-height);
+      padding: 0 2rem; position: sticky; top: 0; z-index: 1000;
+      background-color: rgba(13, 17, 23, 0.8); backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border-color);
+    }
+    .logo {
+      font-size: 1.5rem; font-weight: 700; color: var(--text-light); text-decoration: none;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .logo .fa-fire { color: var(--primary-blue); }
+    .btn {
+      padding: 10px 22px; border: 1px solid transparent; border-radius: 8px; font-weight: 600;
+      cursor: pointer; text-decoration: none; display: inline-block; transition: all 0.3s ease;
+    }
+    .btn-primary { background-color: var(--primary-blue); color: white; }
+    .btn-primary:hover { background-color: var(--primary-blue-hover); transform: translateY(-2px); }
+
+    .main-container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 4rem 20px;
+    }
+
+    .page-header {
+        text-align: center;
+        margin-bottom: 4rem;
+    }
+    .page-header .icon {
+        font-size: 3rem;
+        color: var(--primary-blue);
+        margin-bottom: 1rem;
+    }
+    .page-header h1 {
+        font-size: 2.8rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+    }
+    .page-header p {
+        color: var(--text-muted);
+        font-size: 1.1rem;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .instruction-section {
+        margin-bottom: 4rem;
+    }
+    .instruction-section h2 {
+        font-size: 2rem;
+        font-weight: 600;
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--border-color);
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+    .instruction-section h2 i {
+        color: var(--primary-blue);
+    }
+    
+    .instruction-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .instruction-card {
+        background-color: var(--bg-secondary);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 2rem;
+        display: flex;
+        align-items: flex-start;
+        gap: 1.5rem;
+    }
+    .instruction-card .card-icon {
+        font-size: 1.5rem;
+        color: var(--text-muted);
+        width: 40px;
+        flex-shrink: 0;
+        margin-top: 5px;
+    }
+    .instruction-card .card-content h3 {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+    .instruction-card .card-content p {
+        color: var(--text-muted);
+        line-height: 1.8;
+    }
+    .instruction-card .card-content strong {
+        color: var(--primary-blue);
+        font-weight: 600;
+    }
+    .instruction-card code {
+        background-color: var(--bg-dark);
+        border: 1px solid #444;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-family: 'Courier New', Courier, monospace;
+        color: var(--text-light);
+    }
+    
+    footer { padding: 50px 0; text-align: center; border-top: 1px solid var(--border-color); }
+    .copyright { color: var(--text-muted); font-size: 0.9rem; }
+
+    @media (max-width: 768px) {
+        .page-header h1 { font-size: 2.2rem; }
+        .instruction-section h2 { font-size: 1.8rem; }
+        .instruction-card { flex-direction: column; text-align: center; align-items: center; gap: 1rem; }
+        .instruction-card .card-icon { margin-top: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="navbar">
+    <a href="index.html" class="logo"><i class="fa-solid fa-fire"></i>The Habit Loop</a>
+    <a href="dashboard.html" class="btn btn-primary">Go to My Dashboard</a>
+  </header>
+
+  <main class="main-container">
+    <div class="page-header">
+        <div class="icon"><i class="fa-solid fa-circle-question"></i></div>
+        <h1>Dashboard Guide</h1>
+        <p>Welcome! Here’s a quick guide to help you get the most out of your dashboard and all its features.</p>
+    </div>
+
+    <section class="instruction-section">
+      <h2><i class="fa-solid fa-chart-line"></i>Tracking Your Progress</h2>
+      <div class="instruction-grid">
+        <div class="instruction-card">
+          <div class="card-icon"><i class="fa-solid fa-fire"></i></div>
+          <div class="card-content">
+            <h3>Understanding Your Streak</h3>
+            <p>The **Streak Status** card shows your active, unbroken streak of daily completed tasks. If you pause your course, this will reset to <strong>0</strong>, but your course progress will be saved.</p>
+          </div>
+        </div>
+        <div class="instruction-card">
+          <div class="card-icon"><i class="fa-solid fa-list-check"></i></div>
+          <div class="card-content">
+            <h3>Viewing Completed Days</h3>
+            <p>The **Progress Log** shows every topic you have completed. You can click on any day to review the explanation, links, and any notes you've taken (for Pro users).</p>
+          </div>
+        </div>
+        <div class="instruction-card">
+          <div class="card-icon"><i class="fa-solid fa-book-open"></i></div>
+          <div class="card-content">
+            <h3>Exploring the Curriculum</h3>
+            <p>The **Course Curriculum** section at the bottom shows the entire 40-day plan for your selected language. Click any day to see the topic for that day.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="instruction-section">
+      <h2><i class="fa-solid fa-gears"></i>Managing Your Schedule & Account</h2>
+      <div class="instruction-grid">
+        <div class="instruction-card">
+          <div class="card-icon"><i class="fa-solid fa-user-circle"></i></div>
+          <div class="card-content">
+            <h3>How to Edit Time or Number</h3>
+            <p>Click your **profile avatar** (the circle with your initial) in the top-right corner of the navbar. A dropdown menu will appear with options to <strong>Edit Time</strong> and <strong>Edit Number</strong>. This will not reset your streak or progress.</p>
+          </div>
+        </div>
+        <div class="instruction-card">
+          <div class="card-icon"><i class="fa-solid fa-pause-circle"></i></div>
+          <div class="card-content">
+            <h3>Pausing Your Course</h3>
+            <p>In the **Your Coding Setup** card, click the <code>Pause Course</code> button to stop receiving daily messages. When you're ready to start again, the button will change to <code>Resume Course</code>. Note: resuming will reset your **streak** to 0, but your day progress will continue from where you left off.</p>
+          </div>
+        </div>
+        <div class="instruction-card">
+          <div class="card-icon"><i class="fa-solid fa-pen-to-square"></i></div>
+          <div class="card-content">
+            <h3>Editing Your Full Schedule</h3>
+            <p>If you want to change your language or level, click the <code>Edit Schedule (Reset)</code> button. **Warning:** This action is for starting a new learning path and will reset all your progress, including your completed days and streak, back to Day 1.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <footer class="container">
+    <p class="copyright">© 2024 The Habit Loop. All Rights Reserved.</p>
+  </footer>
+
+</body>
+</html>

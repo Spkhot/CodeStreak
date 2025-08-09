@@ -132,6 +132,7 @@
               <div class="dropdown-header"><div class="user-name" id="dropdown-username">...</div></div>
               <a href="index.html" class="dropdown-item"><i class="fa-solid fa-house"></i> Home</a>
               <a href="dashboard.html" class="dropdown-item"><i class="fa-solid fa-table-columns"></i> Dashboard</a>
+              <a href="instructions.html" class="dropdown-item"><i class="fa-solid fa-circle-question"></i> How to Use</a>
               <a href="#" class="dropdown-item" id="editTimeBtn"><i class="fa-solid fa-clock"></i> Edit Time</a>
               <a href="#" class="dropdown-item" id="editNumberBtn"><i class="fa-brands fa-whatsapp"></i> Edit Number</a>
               <a href="#" class="dropdown-item logout" id="deleteAccountBtn"><i class="fa-solid fa-user-slash"></i> Delete Account</a>
@@ -331,9 +332,13 @@
 
     async function loadDashboard() {
       try {
+        
         const res = await fetch('/api/user/me', { headers: { 'Authorization': `Bearer ${token}` } });
         if (!res.ok) { throw new Error('Session expired or unauthorized.'); }
-        
+        if (data.subscriptions && data.subscriptions.length > 0) {
+            window.location.href = 'pro-dashboard.html';
+            return; // Stop executing the rest of the code on this page
+        }
         currentUserState = await res.json();
         if (!currentUserState.language || !currentUserState.level) {
           alert('Please complete your schedule setup.');
