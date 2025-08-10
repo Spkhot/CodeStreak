@@ -87,6 +87,10 @@ const userSchema = new mongoose.Schema({
   razorpayOrderId: String,
   razorpayPaymentId: String,
   isPaused: { type: Boolean, default: false },
+  achievements: {
+    type: [String], // An array of strings, e.g., ["INITIATED", "7_DAY_STREAK"]
+    default: []
+  },
   completedTopics: [
     {
       order: Number,

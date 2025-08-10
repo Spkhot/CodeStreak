@@ -115,6 +115,66 @@
     .btn-save { width: 100%; padding: 12px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; background-color: var(--primary-blue); color: white; transition: background-color 0.2s; }
     .btn-save:hover { background-color: var(--primary-blue-hover); }
     @media (max-width: 768px) { .dashboard-grid { grid-template-columns: 1fr; } .navbar { padding: 0 1rem; } .logo { font-size: 1.2rem; } .streak-counter { font-size: 1rem; padding: 6px 12px;} }
+        /* --- ✅✅✅ NEW ACHIEVEMENT STYLES ✅✅✅ --- */
+    .achievements-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+        gap: 1.5rem;
+    }
+    .badge {
+        text-align: center;
+    }
+    .badge-icon {
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        background-color: var(--bg-dark);
+        border: 3px solid var(--border-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 0.75rem auto;
+        font-size: 2rem;
+        color: var(--border-color); /* Color for locked badges */
+        transition: all 0.3s ease;
+        position: relative;
+    }
+    .badge-icon.unlocked {
+        color: var(--pause-yellow); /* Gold color for unlocked badges */
+        border-color: var(--pause-yellow);
+        box-shadow: 0 0 20px rgba(245, 158, 11, 0.4);
+    }
+    .badge-title {
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: var(--text-muted);
+        transition: color 0.3s ease;
+    }
+    .badge-icon.unlocked + .badge-title {
+        color: var(--text-light); /* Bolder title for unlocked badges */
+    }
+    /* Simple tooltip for description */
+    .badge-icon[data-tooltip]::after {
+        content: attr(data-tooltip);
+        position: absolute;
+        bottom: 110%;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: var(--bg-dark);
+        color: var(--text-light);
+        padding: 8px 12px;
+        border-radius: 6px;
+        font-size: 0.9rem;
+        white-space: nowrap;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.2s, visibility 0.2s;
+        z-index: 10;
+    }
+    .badge-icon:hover::after {
+        opacity: 1;
+        visibility: visible;
+    }  
   </style>
 </head>
 <body>
@@ -166,6 +226,14 @@
             <div class="card-header"><i class="fa-solid fa-list-check"></i><span>Progress Log</span></div>
             <div class="log-grid" id="logList"><p>Loading your progress...</p></div>
           </div>
+        </section>
+        <!-- ✅✅✅ ADD THIS NEW ACHIEVEMENTS SECTION ✅✅✅ -->
+        <section class="card">
+            <div class="card-header"><i class="fa-solid fa-trophy"></i><span>Achievements</span></div>
+            <div class="achievements-grid" id="achievements-grid">
+                <!-- Badges will be dynamically inserted here by JavaScript -->
+                <p>Loading achievements...</p>
+            </div>
         </section>
         <section>
             <div class="card">
@@ -328,6 +396,7 @@
 
         const completedDaysSet = new Set(data.completedTopics.map(t => t.order));
         renderCurriculum(userCourse, completedDaysSet);
+        renderAchievements(data.achievements);
     }
 
     // In dashboard.html <script> tag
@@ -481,6 +550,40 @@ async function loadDashboard() {
             alert('Error: ' + error.message);
         }
     };
+     let progressChart = null; // To hold the chart instance
+
+    // ✅✅✅ 1. DEFINE ALL POSSIBLE BADGES ✅✅✅
+    const allBadges = {
+      'INITIATED': { icon: 'fa-solid fa-play', title: 'Initiated', desc: 'Completed Day 1' },
+      '7_DAY_STREAK': { icon: 'fa-solid fa-fire-flame-curved', title: 'On Fire', desc: 'Maintained a 7-day streak' },
+      '15_DAY_STREAK': { icon: 'fa-solid fa-meteor', title: 'Meteor Shower', desc: 'Maintained a 15-day streak' },
+      'HALF_WAY': { icon: 'fa-solid fa-mountain-sun', title: 'Halfway There', desc: 'Completed Day 20' },
+      'COURSE_COMPLETE': { icon: 'fa-solid fa-crown', title: 'Master Coder', desc: 'Completed all 40 days!' },
+      'WEEKEND_WARRIOR': { icon: 'fa-solid fa-calendar-week', title: 'Weekend Warrior', desc: 'Completed a task on a weekend' }
+    };
+        // ... after the openTopicModal function ...
+
+    // ✅✅✅ 2. CREATE THE FUNCTION TO RENDER BADGES ✅✅✅
+    function renderAchievements(unlockedBadges = []) {
+        const grid = document.getElementById('achievements-grid');
+        grid.innerHTML = '';
+
+        for (const badgeKey in allBadges) {
+            const badge = allBadges[badgeKey];
+            const isUnlocked = unlockedBadges.includes(badgeKey);
+
+            const badgeElement = document.createElement('div');
+            badgeElement.className = 'badge';
+            
+            badgeElement.innerHTML = `
+                <div class="badge-icon ${isUnlocked ? 'unlocked' : ''}" data-tooltip="${badge.desc}">
+                    <i class="${badge.icon}"></i>
+                </div>
+                <div class="badge-title">${badge.title}</div>
+            `;
+            grid.appendChild(badgeElement);
+        }
+    }
   </script>
 </body>
 </html>
