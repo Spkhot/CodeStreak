@@ -462,15 +462,21 @@
         document.getElementById('progress-bar').style.width = `${progressPercent}%`;
         document.getElementById('progress-text').textContent = `${completedDays} of ${totalDays} days complete`;
         
-        const statusDot = document.getElementById('status-dot');
-        const statusText = document.getElementById('status-text');
-        if (data.isPaused) {
-            statusDot.className = 'status-indicator paused';
-            statusText.textContent = 'Paused';
-        } else {
-            statusDot.className = 'status-indicator active';
-            statusText.textContent = 'Active';
-        }
+        // In updateDashboardUI function in dashboard.html
+
+const statusDot = document.getElementById('status-dot');
+const statusText = document.getElementById('status-text');
+
+// ✅✅✅ THE FIX: Check if the elements exist before using them ✅✅✅
+if (statusDot && statusText) {
+    if (data.isPaused) {
+        statusDot.className = 'status-indicator paused';
+        statusText.textContent = 'Paused';
+    } else {
+        statusDot.className = 'status-indicator active';
+        statusText.textContent = 'Active';
+    }
+}
 
         let nextTopic = "Course Complete!";
         if (userCourse && data.currentDay <= totalDays) {
