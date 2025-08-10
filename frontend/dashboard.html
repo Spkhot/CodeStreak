@@ -51,9 +51,8 @@
     .dropdown-item i { margin-right: 10px; width: 20px; text-align: center; }
     .dropdown-item:hover { background-color: var(--bg-dark); color: var(--text-light); }
     .dropdown-item.logout:hover { background-color: rgba(239, 68, 68, 0.1); color: var(--danger-red); }
-    .container { max-width: 1100px; margin: 0 auto; padding: 2.5rem 20px; }
-    .welcome-header { font-size: 2.5rem; font-weight: 700; margin-bottom: 2.5rem; } .dashboard-grid { display: grid; grid-template-columns: 300px 1fr; gap: 2rem; }
-    .right-column-grid { display: flex; flex-direction: column; gap: 2rem; }
+     .container { max-width: 1200px; margin: 0 auto; padding: 2.5rem 20px; }
+    .welcome-header { font-size: 2.5rem; font-weight: 700; margin-bottom: 2.5rem; }.right-column-grid { display: flex; flex-direction: column; gap: 2rem; }
     .card { background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; }
     .card-header { display: flex; align-items: center; gap: 0.75rem; font-size: 1.25rem; font-weight: 600; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border-color); }
     .card-actions { margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 0.75rem; }
@@ -174,10 +173,12 @@
         opacity: 1;
         visibility: visible;
     }  
-     .dashboard-grid {
+     /* ✅✅✅ NEW 3-COLUMN GRID STYLES ✅✅✅ */
+    .dashboard-grid {
         display: grid;
-        grid-template-columns: 280px 1fr 300px;
+        grid-template-columns: 300px 1fr 300px;
         gap: 2rem;
+        margin-bottom: 2rem;
     }
     .left-column, .center-column, .right-column {
         display: flex;
@@ -185,29 +186,52 @@
         gap: 2rem;
     }
 
-    /* --- (All other card, button, and modal styles are unchanged) --- */
-
-    /* ✅✅✅ NEW RESPONSIVE STYLES ✅✅✅ */
+    /* Card Styles (Unchanged) */
+    .card { background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; }
+    .card-header { display: flex; align-items: center; gap: 0.75rem; font-size: 1.25rem; font-weight: 600; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border-color); }
+    
+    /* Specific Card Styles */
+    .settings-list dt { font-weight: 500; color: var(--text-muted); font-size: 0.9rem; margin-top: 1rem; }
+    .settings-list dd { font-weight: 600; font-size: 1rem; }
+    .card-actions { margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 0.75rem; }
+    .streak-highlight { text-align: center; font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem;}
+    .progress-text { text-align: center; font-size: 0.8rem; font-weight: 500; color: var(--text-muted); margin-bottom: 0.5rem; }
+    .progress-bar-container { width: 100%; background-color: var(--bg-dark); border-radius: 5px; height: 10px; overflow: hidden; }
+    .progress-bar-fill { height: 100%; width: 0%; background-color: var(--primary-blue); border-radius: 5px; transition: width 0.5s ease-in-out; }
+    
+    /* ✅✅✅ NEW "NEXT TOPIC" CARD STYLES ✅✅✅ */
+    .next-topic-body .next-day {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--primary-blue);
+        text-transform: uppercase;
+    }
+    .next-topic-body .next-topic-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: var(--text-light);
+    }
+    
+    /* Responsive Styles */
     @media (max-width: 1200px) {
         .dashboard-grid {
-            grid-template-columns: 280px 1fr;
+            grid-template-columns: 300px 1fr; /* Switch to 2 columns */
         }
         .right-column {
-            grid-column: 2 / 3;
+            grid-column: 2 / 3; /* Move right column below center */
         }
     }
     @media (max-width: 992px) {
         .dashboard-grid {
-            grid-template-columns: 1fr;
+            grid-template-columns: 1fr; /* Switch to 1 column */
         }
         .right-column {
-            grid-column: 1 / 2;
+            grid-column: 1 / 2; /* Reset column placement */
         }
     }
     @media (max-width: 768px) {
-        .navbar { padding: 0 1rem; }
-        .logo { font-size: 1.2rem; }
-        .streak-counter { font-size: 1rem; padding: 6px 12px;}
+        .container { padding: 2.5rem 1rem; }
+        .welcome-header { font-size: 2rem; }
     }
   </style>
 </head>
@@ -236,10 +260,10 @@
     </div>
   </nav>
 
-    <main class="container">
+      <main class="container">
     <h1 class="welcome-header">🫡 Welcome, <span id="welcomeName">...</span>!</h1>
     
-    <!-- ✅✅✅ NEW 3-COLUMN GRID STRUCTURE ✅✅✅ -->
+    <!-- ✅✅✅ NEW 3-COLUMN "AT-A-GLANCE" GRID ✅✅✅ -->
     <div class="dashboard-grid">
       
       <!-- COLUMN 1: SETUP & CONTROLS -->
@@ -259,43 +283,45 @@
         </div>
       </aside>
 
-      <!-- COLUMN 2: MAIN CONTENT -->
+      <!-- COLUMN 2: PROGRESS & REWARDS -->
       <div class="center-column">
         <section class="card">
           <div class="card-header"><i class="fa-solid fa-list-check"></i><span>Progress Log</span></div>
           <div class="log-grid" id="logList"><p>Loading your progress...</p></div>
         </section>
         
-        <section id="curriculum-section" class="card">
-            <div class="card-header"><i class="fa-solid fa-book-open"></i><span>Course Curriculum</span></div>
-            <div id="curriculum-container"><p>Loading your curriculum...</p></div>
-        </section>
-      </div>
-      
-      <!-- COLUMN 3: STATUS & REWARDS -->
-      <aside class="right-column">
-        <section class="card">
-            <div class="card-header"><i class="fa-solid fa-chart-line"></i><span>Streak Status</span></div>
-            <div class="status-card-body">
-                <div class="streak-highlight"><i class="fa-solid fa-fire"></i> <span id="streak-card">...</span> Days</div>
-                <div>
-                    <div class="progress-bar-container"><div class="progress-bar-fill" id="progress-bar"></div></div>
-                    <div class="progress-text" id="progress-text">...% Complete</div>
-                </div>
-                <div class="status-details">
-                    <div class="status-item"><div class="status-indicator" id="status-dot"></div><span id="status-text">...</span></div>
-                    <div class="status-item"><i class="fa-solid fa-forward" style="color: var(--text-muted);"></i><span>Next Up: <span id="next-topic">...</span></span></div>
-                </div>
-            </div>
-        </section>
-
         <section class="card">
             <div class="card-header"><i class="fa-solid fa-trophy"></i><span>Achievements</span></div>
             <div class="achievements-grid" id="achievements-grid"><p>Loading achievements...</p></div>
         </section>
-      </aside>
+      </div>
+      
+      <!-- COLUMN 3: STATUS & NEXT UP -->
+      <aside class="right-column">
+        <div class="card">
+            <div class="card-header"><i class="fa-solid fa-chart-line"></i><span>Streak Status</span></div>
+            <div class="status-card-body">
+                <div class="streak-highlight"><i class="fa-solid fa-fire"></i> <span id="streak-card">...</span> Days</div>
+                <div class="progress-text" id="progress-text">... of 40 days complete</div>
+                <div class="progress-bar-container"><div class="progress-bar-fill" id="progress-bar"></div></div>
+            </div>
+        </div>
 
+        <div class="card">
+            <div class="card-header"><i class="fa-solid fa-forward"></i><span>Next Up</span></div>
+            <div class="next-topic-body">
+                <p class="next-day" id="next-day-text">Day ...</p>
+                <h3 class="next-topic-title" id="next-topic">Loading...</h3>
+            </div>
+        </div>
+      </aside>
     </div>
+
+    <!-- ✅✅✅ NEW FULL-WIDTH SECTION FOR CURRICULUM ✅✅✅ -->
+    <section id="curriculum-section" class="card">
+        <div class="card-header"><i class="fa-solid fa-book-open"></i><span>Course Curriculum</span></div>
+        <div id="curriculum-container"><p>Loading your curriculum...</p></div>
+    </section>
   </main>
   
   <div class="modal-overlay" id="timeModal">
@@ -411,12 +437,22 @@
             statusText.textContent = 'Active';
         }
 
+                // ✅✅✅ POPULATE THE NEW "NEXT TOPIC" CARD ✅✅✅
         let nextTopic = "Course Complete!";
+        let nextDayText = `Day ${data.currentDay}`;
+
         if (userCourse && data.currentDay <= totalDays) {
             const allDays = userCourse.levels.flatMap(level => level.days);
             const nextDayTopic = allDays.find(day => day.day === data.currentDay);
-            if (nextDayTopic) { nextTopic = nextDayTopic.topic; }
+            if (nextDayTopic) { 
+                nextTopic = nextDayTopic.topic;
+            }
+        } else {
+            // If course is complete, update the day text as well
+            nextDayText = "Congratulations!";
         }
+        
+        document.getElementById('next-day-text').textContent = nextDayText;
         document.getElementById('next-topic').textContent = nextTopic;
 
         const logList = document.getElementById('logList');
