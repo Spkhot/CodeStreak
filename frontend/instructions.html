@@ -161,10 +161,59 @@
     .animate-on-scroll { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
     .animate-on-scroll.visible { opacity: 1; transform: translateY(0); }
 
-    @media (max-width: 768px) {
-        .page-header h1 { font-size: 2.2rem; }
-        .instruction-section h2 { font-size: 1.8rem; }
-        .instruction-card { flex-direction: column; text-align: center; align-items: center; gap: 1.5rem; }
+   @media (max-width: 768px) {
+    .page-header h1 { font-size: 2.2rem; }
+    .instruction-section h2 { font-size: 1.8rem; }
+    .instruction-card { 
+        flex-direction: column; /* Stacks the icon on top of the text */
+        text-align: center;     /* Centers the content */
+        align-items: center;    /* Centers the icon */
+        gap: 1rem; 
+    }
+    .instruction-card .card-icon { margin-top: 0; }
+}
+       /* ... after .btn-primary:hover rule ... */
+
+    /* ✅✅✅ NEW NAVBAR RESPONSIVE STYLES ✅✅✅ */
+    .nav-menu {
+        display: flex;
+        align-items: center;
+    }
+    .hamburger {
+        display: none; /* Hidden by default on desktop */
+        font-size: 1.5rem;
+        cursor: pointer;
+        z-index: 1001; /* Keep it on top */
+        color: var(--text-light);
+    }
+        @media (max-width: 768px) {
+        /* ... your existing rules for .page-header, etc. ... */
+        
+        /* ✅✅✅ ADD THESE NAVBAR STYLES FOR MOBILE ✅✅✅ */
+        .navbar {
+            padding: 0 1.5rem;
+        }
+        .hamburger {
+            display: block;
+        }
+        .nav-menu {
+            position: fixed;
+            left: -100%; /* Start off-screen */
+            top: 0;
+            flex-direction: column;
+            justify-content: center;
+            background-color: var(--bg-dark);
+            width: 100%;
+            height: 100vh;
+            transition: left 0.3s ease-in-out;
+        }
+        .nav-menu.active {
+            left: 0; /* Slide in */
+        }
+        .nav-menu .btn {
+            font-size: 1.2rem;
+            padding: 14px 28px;
+        }
     }
   </style>
 </head>
@@ -172,7 +221,13 @@
 
   <header class="navbar">
     <a href="index.html" class="logo"><i class="fa-solid fa-fire"></i>The Habit Loop</a>
-    <a href="dashboard.html" class="btn btn-primary">Go to My Dashboard</a>
+    
+    <nav class="nav-menu" id="nav-menu">
+        <a href="dashboard.html" class="btn btn-primary">Go to My Dashboard</a>
+    </nav>
+    <div class="hamburger" id="hamburger">
+        <i class="fa-solid fa-bars"></i>
+    </div>
   </header>
 
   <main class="main-container">
@@ -235,14 +290,56 @@
         </div>
       </div>
     </section>
+        <!-- ✅✅✅ NEW ACHIEVEMENTS GUIDE SECTION ✅✅✅ -->
+    <section class="instruction-section animate-on-scroll" style="transition-delay: 0.3s;">
+      <h2><i class="fa-solid fa-trophy"></i>Unlocking Achievements</h2>
+      <div class="instruction-grid">
+        <div class="instruction-card">
+          <div class="card-icon"><i class="fa-solid fa-play"></i></div>
+          <div class="card-content">
+            <h3>Initiated</h3>
+            <p>Awarded for starting your journey by completing <strong>Day 1</strong>. Every great streak begins with a single step!</p>
+          </div>
+        </div>
+        <div class="instruction-card">
+          <div class="card-icon"><i class="fa-solid fa-fire-flame-curved"></i></div>
+          <div class="card-content">
+            <h3>On Fire</h3>
+            <p>Awarded for maintaining a <strong>7-day streak</strong>. You're building a real, consistent habit. Keep the fire going!</p>
+          </div>
+        </div>
+        <div class="instruction-card">
+          <div class="card-icon"><i class="fa-solid fa-meteor"></i></div>
+          <div class="card-content">
+            <h3>Meteor Shower</h3>
+            <p>Awarded for maintaining an impressive <strong>15-day streak</strong>. Your dedication is shining bright!</p>
+          </div>
+        </div>
+        <div class="instruction-card">
+          <div class="card-icon"><i class="fa-solid fa-calendar-week"></i></div>
+          <div class="card-content">
+            <h3>Weekend Warrior</h3>
+            <p>Awarded the first time you complete a task on a <strong>Saturday or Sunday</strong>, proving your commitment knows no days off.</p>
+          </div>
+        </div>
+        <div class="instruction-card">
+          <div class="card-icon"><i class="fa-solid fa-crown"></i></div>
+          <div class="card-content">
+            <h3>Master Coder</h3>
+            <p>The ultimate achievement! Awarded for completing all <strong>40 days</strong> of a course. You've mastered the habit.</p>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
   
   <footer class="container">
     <p class="copyright">© 2024 The Habit Loop. All Rights Reserved.</p>
   </footer>
 
-  <script>
+    <script>
     document.addEventListener('DOMContentLoaded', () => {
+        // --- Animate on Scroll (unchanged) ---
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -252,6 +349,35 @@
         }, { threshold: 0.1 });
 
         document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+
+        // --- ✅✅✅ NEW JAVASCRIPT FOR RESPONSIVE NAVBAR ✅✅✅ ---
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('nav-menu');
+
+        if (hamburger && navMenu) {
+            const navLinksInMenu = navMenu.querySelectorAll('a');
+
+            const toggleMenu = () => {
+                navMenu.classList.toggle('active');
+                const icon = hamburger.querySelector('i');
+                icon.classList.toggle('fa-bars');
+                icon.classList.toggle('fa-times');
+            };
+
+            const closeMenu = () => {
+                navMenu.classList.remove('active');
+                const icon = hamburger.querySelector('i');
+                icon.classList.add('fa-bars');
+                icon.classList.remove('fa-times');
+            };
+
+            hamburger.addEventListener('click', toggleMenu);
+            
+            // Close menu if a link inside it is clicked
+            navLinksInMenu.forEach(link => {
+                link.addEventListener('click', closeMenu);
+            });
+        }
     });
   </script>
 
