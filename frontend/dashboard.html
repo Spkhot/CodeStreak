@@ -1,20 +1,3 @@
-Of course! I understand. You want to keep the overall layout but make the "Course Curriculum" section itself look more organized and "perfect."
-
-The main issue in the original design is that the day buttons in the last row of each level don't align with the rows above them, which can look a little untidy.
-
-I've made a small but very effective change to the CSS to fix this. By using a CSS Grid for the day buttons, they will now form a perfectly aligned 3-column grid. This means every button will have the same width, and the layout will look clean, balanced, and professional, exactly as you want.
-
-This change only affects the curriculum section and does not alter any other part of the layout or backend code.
-
-Here is the complete, working code with the perfected curriculum layout.
-
-The Final and Complete Code
-code
-Html
-download
-content_copy
-expand_less
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -68,10 +51,9 @@ expand_less
     .dropdown-item i { margin-right: 10px; width: 20px; text-align: center; }
     .dropdown-item:hover { background-color: var(--bg-dark); color: var(--text-light); }
     .dropdown-item.logout:hover { background-color: rgba(239, 68, 68, 0.1); color: var(--danger-red); }
-    .container { max-width: 1200px; margin: 0 auto; padding: 2.5rem 20px; }
-    .welcome-header { font-size: 2.5rem; font-weight: 700; margin-bottom: 2.5rem; }
-    .dashboard-grid { display: grid; grid-template-columns: 300px 1fr 320px; gap: 2rem; align-items: start; }
-    .left-column, .center-column, .right-column { display: flex; flex-direction: column; gap: 2rem; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 2.5rem 20px; }
+    .welcome-header { font-size: 2.5rem; font-weight: 700; margin-bottom: 2.5rem; } .dashboard-grid { display: grid; grid-template-columns: 300px 1fr; gap: 2rem; }
+    .right-column-grid { display: flex; flex-direction: column; gap: 2rem; }
     .card { background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; }
     .card-header { display: flex; align-items: center; gap: 0.75rem; font-size: 1.25rem; font-weight: 600; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border-color); }
     .card-actions { margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 0.75rem; }
@@ -101,49 +83,22 @@ expand_less
     .log-card .day-title { font-weight: 600; margin-top: 0.25rem; }
     .log-card .day-level { font-size: 0.8rem; color: var(--text-muted); }
     #logList p { grid-column: 1 / -1; text-align: center; color: var(--text-muted); padding: 2rem; }
-    
+    #curriculum-section { margin-top: 2rem; }
     .course-level { margin-bottom: 2.5rem; }
     .course-level:last-child { margin-bottom: 0; }
     .course-level h4 { font-size: 1.5rem; font-weight: 600; color: var(--text-light); margin-bottom: 1.2rem; display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
     .course-level h4 .level-title { font-weight: 500; color: var(--text-muted); font-size: 1.1rem; }
     .course-level h4 i { color: var(--primary-blue); }
-    
-    /* --- ✅✅✅ PERFECTED CURRICULUM GRID ✅✅✅ --- */
-    .days {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr); /* Creates a perfect 3-column grid */
-        gap: 0.75rem;
-    }
-    .day-card {
-        background-color: var(--bg-dark);
-        border: 1px solid var(--border-color);
-        padding: 0.75rem 1rem;
-        border-radius: 8px;
-        cursor: pointer;
-        text-align: center;
-        font-weight: 500;
-        /* flex-basis is no longer needed */
-        transition: all 0.2s ease-in-out;
-    }
+    .days { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+    .day-card { background-color: var(--bg-dark); border: 1px solid var(--border-color); padding: 0.75rem 1rem; border-radius: 8px; cursor: pointer; text-align: center; font-weight: 500; flex-basis: 90px; transition: all 0.2s ease-in-out; }
     .day-card:hover { transform: translateY(-4px); border-color: var(--primary-blue); }
     .day-card.active { background-color: var(--primary-blue); border-color: var(--primary-blue); color: white; transform: translateY(-2px); }
     .day-card.completed { background-color: rgba(16, 185, 129, 0.1); border-color: var(--resume-green); color: var(--resume-green); font-weight: 700; }
     .day-card.completed:hover { color: white; background-color: var(--resume-green); }
     .day-card.completed.active { color: white; background-color: var(--primary-blue); border-color: var(--primary-blue); }
-
     .topic-slide-panel { background-color: var(--bg-dark); border: 1px solid var(--border-color); border-top: 3px solid var(--primary-blue); margin-top: 1rem; padding: 1.5rem; border-radius: 8px; overflow: hidden; max-height: 0; opacity: 0; visibility: hidden; transition: all 0.5s ease-in-out; }
     .topic-slide-panel.show { max-height: 200px; opacity: 1; visibility: visible; }
     .topic-slide-panel strong { color: var(--primary-blue); }
-    
-    .achievements-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 1.5rem; }
-    .badge { text-align: center; }
-    .badge-icon { width: 70px; height: 70px; border-radius: 50%; background-color: var(--bg-dark); border: 3px solid var(--border-color); display: flex; align-items: center; justify-content: center; margin: 0 auto 0.75rem auto; font-size: 2rem; color: var(--border-color); transition: all 0.3s ease; position: relative; }
-    .badge-icon.unlocked { color: var(--pause-yellow); border-color: var(--pause-yellow); box-shadow: 0 0 20px rgba(245, 158, 11, 0.4); }
-    .badge-title { font-size: 0.85rem; font-weight: 500; color: var(--text-muted); transition: color 0.3s ease; }
-    .badge-icon.unlocked + .badge-title { color: var(--text-light); }
-    .badge-icon[data-tooltip]::after { content: attr(data-tooltip); position: absolute; bottom: 110%; left: 50%; transform: translateX(-50%); background-color: var(--bg-dark); color: var(--text-light); padding: 8px 12px; border-radius: 6px; font-size: 0.9rem; white-space: nowrap; opacity: 0; visibility: hidden; transition: opacity 0.2s, visibility 0.2s; z-index: 10; }
-    .badge-icon:hover::after { opacity: 1; visibility: visible; }  
-    
     .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); backdrop-filter: blur(5px); display: flex; align-items: center; justify-content: center; z-index: 2000; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s; }
     .modal-overlay.show { opacity: 1; visibility: visible; }
     .modal-content { background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 2rem; width: 100%; max-width: 400px; transform: scale(0.95); transition: transform 0.3s ease; }
@@ -153,23 +108,106 @@ expand_less
     .close-btn { background: none; border: none; font-size: 1.5rem; color: var(--text-muted); cursor: pointer; transition: color 0.2s; }
     .close-btn:hover { color: var(--text-light); }
     .modal-body .input-group { margin-bottom: 1rem; }
-    .modal-body label { display: block; margin-bottom: 0.5rem; font-size: 0.9rem; }
-    .modal-body input { font-size: 1rem; width: 100%; padding: 10px; background-color: var(--bg-dark); border: 1px solid var(--border-color); color: var(--text-light); border-radius: 6px; }
+    .modal-body .input-group label { font-size: 0.9rem; }
+    .modal-body input { font-size: 1rem; }
     .modal-footer { margin-top: 1.5rem; }
     .btn-save { width: 100%; padding: 12px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; background-color: var(--primary-blue); color: white; transition: background-color 0.2s; }
-    .btn-save:hover { background-color: #2563EB; }
-    
+    .btn-save:hover { background-color: var(--primary-blue-hover); }
+    @media (max-width: 768px) { .dashboard-grid { grid-template-columns: 1fr; } .navbar { padding: 0 1rem; } .logo { font-size: 1.2rem; } .streak-counter { font-size: 1rem; padding: 6px 12px;} }
+        /* --- ✅✅✅ NEW ACHIEVEMENT STYLES ✅✅✅ --- */
+    .achievements-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+        gap: 1.5rem;
+    }
+    .badge {
+        text-align: center;
+    }
+    .badge-icon {
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        background-color: var(--bg-dark);
+        border: 3px solid var(--border-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 0.75rem auto;
+        font-size: 2rem;
+        color: var(--border-color); /* Color for locked badges */
+        transition: all 0.3s ease;
+        position: relative;
+    }
+    .badge-icon.unlocked {
+        color: var(--pause-yellow); /* Gold color for unlocked badges */
+        border-color: var(--pause-yellow);
+        box-shadow: 0 0 20px rgba(245, 158, 11, 0.4);
+    }
+    .badge-title {
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: var(--text-muted);
+        transition: color 0.3s ease;
+    }
+    .badge-icon.unlocked + .badge-title {
+        color: var(--text-light); /* Bolder title for unlocked badges */
+    }
+    /* Simple tooltip for description */
+    .badge-icon[data-tooltip]::after {
+        content: attr(data-tooltip);
+        position: absolute;
+        bottom: 110%;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: var(--bg-dark);
+        color: var(--text-light);
+        padding: 8px 12px;
+        border-radius: 6px;
+        font-size: 0.9rem;
+        white-space: nowrap;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.2s, visibility 0.2s;
+        z-index: 10;
+    }
+    .badge-icon:hover::after {
+        opacity: 1;
+        visibility: visible;
+    }  
+     .dashboard-grid {
+        display: grid;
+        grid-template-columns: 280px 1fr 300px;
+        gap: 2rem;
+    }
+    .left-column, .center-column, .right-column {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    /* --- (All other card, button, and modal styles are unchanged) --- */
+
+    /* ✅✅✅ NEW RESPONSIVE STYLES ✅✅✅ */
     @media (max-width: 1200px) {
-        .dashboard-grid { grid-template-columns: 1fr; }
-        .left-column, .center-column, .right-column { grid-column: 1 / -1; }
+        .dashboard-grid {
+            grid-template-columns: 280px 1fr;
+        }
+        .right-column {
+            grid-column: 2 / 3;
+        }
+    }
+    @media (max-width: 992px) {
+        .dashboard-grid {
+            grid-template-columns: 1fr;
+        }
+        .right-column {
+            grid-column: 1 / 2;
+        }
     }
     @media (max-width: 768px) {
         .navbar { padding: 0 1rem; }
         .logo { font-size: 1.2rem; }
         .streak-counter { font-size: 1rem; padding: 6px 12px;}
-    }
-    @media (max-width: 576px) {
-        .days { grid-template-columns: repeat(2, 1fr); } /* Switch to 2 columns on small screens */
     }
   </style>
 </head>
@@ -188,6 +226,7 @@ expand_less
               <div class="dropdown-header"><div class="user-name" id="dropdown-username">...</div></div>
               <a href="index.html" class="dropdown-item"><i class="fa-solid fa-house"></i> Home</a>
               <a href="dashboard.html" class="dropdown-item"><i class="fa-solid fa-table-columns"></i> Dashboard</a>
+              <a href="instructions.html" class="dropdown-item"><i class="fa-solid fa-circle-question"></i> How to Use</a>
               <a href="#" class="dropdown-item" id="editTimeBtn"><i class="fa-solid fa-clock"></i> Edit Time</a>
               <a href="#" class="dropdown-item" id="editNumberBtn"><i class="fa-brands fa-whatsapp"></i> Edit Number</a>
               <a href="#" class="dropdown-item logout" id="deleteAccountBtn"><i class="fa-solid fa-user-slash"></i> Delete Account</a>
@@ -200,8 +239,10 @@ expand_less
     <main class="container">
     <h1 class="welcome-header">🫡 Welcome, <span id="welcomeName">...</span>!</h1>
     
+    <!-- ✅✅✅ NEW 3-COLUMN GRID STRUCTURE ✅✅✅ -->
     <div class="dashboard-grid">
       
+      <!-- COLUMN 1: SETUP & CONTROLS -->
       <aside class="left-column">
         <div class="card">
           <div class="card-header"><i class="fa-solid fa-gears"></i><span>Your Coding Setup</span></div>
@@ -218,18 +259,20 @@ expand_less
         </div>
       </aside>
 
+      <!-- COLUMN 2: MAIN CONTENT -->
       <div class="center-column">
         <section class="card">
           <div class="card-header"><i class="fa-solid fa-list-check"></i><span>Progress Log</span></div>
           <div class="log-grid" id="logList"><p>Loading your progress...</p></div>
         </section>
         
-        <section class="card">
+        <section id="curriculum-section" class="card">
             <div class="card-header"><i class="fa-solid fa-book-open"></i><span>Course Curriculum</span></div>
             <div id="curriculum-container"><p>Loading your curriculum...</p></div>
         </section>
       </div>
       
+      <!-- COLUMN 3: STATUS & REWARDS -->
       <aside class="right-column">
         <section class="card">
             <div class="card-header"><i class="fa-solid fa-chart-line"></i><span>Streak Status</span></div>
@@ -279,10 +322,10 @@ expand_less
   </div>
 
   <script>
-    // --- ALL JAVASCRIPT IS UNCHANGED AND FULLY FUNCTIONAL ---
-    const courses = [ { language: "C++", levels: [ { level: "Beginner", title: "Fundamentals & Syntax", days: [ { day: 1, topic: "Structure of a Simple C++ Program (Hello World, #include, main())" }, { day: 2, topic: "Input and Output (cin, cout, endl, basic formatting)" }, { day: 3, topic: "Variables & Data Types (int, float, char, string, bool)" }, { day: 4, topic: "Operators (Arithmetic, Assignment, Increment/Decrement)" }, { day: 5, topic: "Conditional Statements (if, else, nested if)" }, { day: 6, topic: "Logical Operators & Comparisons" }, { day: 7, topic: "Switch Statements" }, { day: 8, topic: "Loops — while, do-while" }, { day: 9, topic: "Loops — for loop, nested loops" }, { day: 10, topic: "Practice: Basic Patterns & Control Flow Questions" } ] }, { level: "Intermediate", title: "Functions & Arrays", days: [ { day: 11, topic: "Functions — Basics, Declaration & Definition" }, { day: 12, topic: "Function Arguments & Return Types" }, { day: 13, topic: "Recursion Basics" }, { day: 14, topic: "Arrays — 1D Arrays Intro" }, { day: 15, topic: "Arrays — 1D Operations & Questions" }, { day: 16, topic: "2D Arrays — Basics" }, { day: 17, topic: "2D Arrays — Classic Problems (Matrix Transpose, Sum)" }, { day: 18, topic: "Strings — C++ Strings, Basic Operations" }, { day: 19, topic: "Strings — Character Arrays vs string Class" }, { day: 20, topic: "Practice: Functions + Arrays + Strings Combined Problems" } ] }, { level: "Advanced", title: "Classes, OOP & STL", days: [ { day: 21, topic: "Intro to OOP — Classes & Objects" }, { day: 22, topic: "Constructors & Destructors" }, { day: 23, topic: "Member Functions & Data Members" }, { day: 24, topic: "Encapsulation & Access Modifiers" }, { day: 25, topic: "Inheritance — Types & Examples" }, { day: 26, topic: "Polymorphism — Function Overloading" }, { day: 27, topic: "Polymorphism — Operator Overloading" }, { day: 28, topic: "Abstract Classes & Pure Virtual Functions" }, { day: 29, topic: "Intro to Standard Template Library (STL)" }, { day: 30, topic: "STL — Vectors & Iterators" } ] }, { level: "Pro", title: "Advanced Concepts + DSA", days: [ { day: 31, topic: "Pointers — Basics, * and &" }, { day: 32, topic: "Pointers — Arrays & Functions" }, { day: 33, topic: "Dynamic Memory Allocation (new and delete)" }, { day: 34, topic: "Linked Lists — Intro & Implementation" }, { day: 35, topic: "Stacks & Queues (Concepts + STL)" }, { day: 36, topic: "Trees — Basics & Binary Tree" }, { day: 37, topic: "Binary Search & Binary Search Trees" }, { day: 38, topic: "Sorting Algorithms — Bubble, Selection, Insertion" }, { day: 39, topic: "Searching Algorithms — Linear & Binary Search" }, { day: 40, topic: "Final Practice: Mixed Interview Questions (Patterns, STL, DSA)" } ] } ] }, { language: "Java", levels: [ { level: "Beginner", title: "Java Basics & Syntax", days: [ { day: 1, topic: "Intro: How Java Works, JVM, JDK, First Hello World" }, { day: 2, topic: "Variables & Data Types" }, { day: 3, topic: "Input & Output — Scanner" }, { day: 4, topic: "Operators — Arithmetic, Assignment" }, { day: 5, topic: "Conditional Statements — if, else if, else" }, { day: 6, topic: "Logical Operators & Comparisons" }, { day: 7, topic: "Switch Case" }, { day: 8, topic: "Loops — while & do-while" }, { day: 9, topic: "Loops — for loop, nested loops" }, { day: 10, topic: "Practice: Basic Pattern Printing" } ] }, { level: "Intermediate", title: "Methods & Arrays", days: [ { day: 11, topic: "Methods — Definition & Calling" }, { day: 12, topic: "Method Overloading" }, { day: 13, topic: "Recursion Basics" }, { day: 14, topic: "Arrays — 1D Arrays" }, { day: 15, topic: "Arrays — Basic Problems" }, { day: 16, topic: "2D Arrays" }, { day: 17, topic: "2D Array Classic Problems (Transpose, Sum)" }, { day: 18, topic: "Strings — Basics & String Class" }, { day: 19, topic: "String Methods & Immutability" }, { day: 20, topic: "Practice: Arrays + Strings Problems" } ] }, { level: "Advanced", title: "OOP & Advanced Classes", days: [ { day: 21, topic: "OOP Concepts — Classes & Objects" }, { day: 22, topic: "Constructors" }, { day: 23, topic: "Getters & Setters" }, { day: 24, topic: "this Keyword" }, { day: 25, "topic": "Inheritance" }, { day: 26, topic: "super Keyword" }, { day: 27, topic: "Method Overriding" }, { day: 28, topic: "Polymorphism" }, { day: 29, topic: "Abstraction & Interfaces" }, { day: 30, topic: "Encapsulation — Real Example" } ] }, { level: "Pro", title: "Core DSA & Collections", days: [ { day: 31, topic: "Intro to Java Collections" }, { day: 32, topic: "ArrayList — Basics & Operations" }, { day: 33, topic: "LinkedList — Basics & Operations" }, { day: 34, topic: "HashMap — Basics & Use Cases" }, { day: 35, topic: "HashSet — Basics & Differences" }, { day: 36, topic: "Stack & Queue in Java" }, { day: 37, topic: "Sorting Algorithms — Bubble & Selection" }, { day: 38, topic: "Searching — Linear & Binary Search" }, { day: 39, topic: "Trees — Basic Binary Tree Concepts" }, { day: 40, topic: "Practice Day — Mixed DSA Questions" } ] } ] } ];
+    const courses = [ { language: "C++", levels: [ { level: "Beginner", title: "Fundamentals & Syntax", days: [ { day: 1, topic: "Structure of a Simple C++ Program (Hello World, #include, main())" }, { day: 2, topic: "Input and Output (cin, cout, endl, basic formatting)" }, { day: 3, topic: "Variables & Data Types (int, float, char, string, bool)" }, { day: 4, topic: "Operators (Arithmetic, Assignment, Increment/Decrement)" }, { day: 5, topic: "Conditional Statements (if, else, nested if)" }, { day: 6, topic: "Logical Operators & Comparisons" }, { day: 7, topic: "Switch Statements" }, { day: 8, topic: "Loops — while, do-while" }, { day: 9, topic: "Loops — for loop, nested loops" }, { day: 10, topic: "Practice: Basic Patterns & Control Flow Questions" } ] }, { level: "Intermediate", title: "Functions & Arrays", days: [ { day: 11, topic: "Functions — Basics, Declaration & Definition" }, { day: 12, topic: "Function Arguments & Return Types" }, { day: 13, topic: "Recursion Basics" }, { day: 14, topic: "Arrays — 1D Arrays Intro" }, { day: 15, topic: "Arrays — 1D Operations & Questions" }, { day: 16, topic: "2D Arrays — Basics" }, { day: 17, topic: "2D Arrays — Classic Problems (Matrix Transpose, Sum)" }, { day: 18, topic: "Strings — C++ Strings, Basic Operations" }, { day: 19, topic: "Strings — Character Arrays vs string Class" }, { day: 20, topic: "Practice: Functions + Arrays + Strings Combined Problems" } ] }, { level: "Advanced", title: "Classes, OOP & STL", days: [ { day: 21, topic: "Intro to OOP — Classes & Objects" }, { day: 22, topic: "Constructors & Destructors" }, { day: 23, topic: "Member Functions & Data Members" }, { day: 24, topic: "Encapsulation & Access Modifiers" }, { day: 25, topic: "Inheritance — Types & Examples" }, { day: 26, topic: "Polymorphism — Function Overloading" }, { day: 27, topic: "Polymorphism — Operator Overloading" }, { day: 28, topic: "Abstract Classes & Pure Virtual Functions" }, { day: 29, topic: "Intro to Standard Template Library (STL)" }, { day: 30, topic: "STL — Vectors & Iterators" } ] }, { level: "Pro", title: "Advanced Concepts + DSA", days: [ { day: 31, topic: "Pointers — Basics, * and &" }, { day: 32, topic: "Pointers — Arrays & Functions" }, { day: 33, topic: "Dynamic Memory Allocation (new and delete)" }, { day: 34, topic: "Linked Lists — Intro & Implementation" }, { day: 35, topic: "Stacks & Queues (Concepts + STL)" }, { day: 36, topic: "Trees — Basics & Binary Tree" }, { day: 37, topic: "Binary Search & Binary Search Trees" }, { day: 38, topic: "Sorting Algorithms — Bubble, Selection, Insertion" }, { day: 39, topic: "Searching Algorithms — Linear & Binary Search" }, { day: 40, topic: "Final Practice: Mixed Interview Questions (Patterns, STL, DSA)" } ] } ] }, { language: "Java", levels: [ { level: "Beginner", title: "Java Basics & Syntax", days: [ { day: 1, topic: "Intro: How Java Works, JVM, JDK, First Hello World" }, { day: 2, topic: "Variables & Data Types" }, { day: 3, topic: "Input & Output — Scanner" }, { day: 4, topic: "Operators — Arithmetic, Assignment" }, { day: 5, topic: "Conditional Statements — if, else if, else" }, { day: 6, topic: "Logical Operators & Comparisons" }, { day: 7, topic: "Switch Case" }, { day: 8, topic: "Loops — while & do-while" }, { day: 9, topic: "Loops — for loop, nested loops" }, { day: 10, topic: "Practice: Basic Pattern Printing" } ] }, { level: "Intermediate", title: "Methods & Arrays", days: [ { day: 11, topic: "Methods — Definition & Calling" }, { day: 12, topic: "Method Overloading" }, { day: 13, topic: "Recursion Basics" }, { day: 14, topic: "Arrays — 1D Arrays" }, { day: 15, topic: "Arrays — Basic Problems" }, { day: 16, topic: "2D Arrays" }, { day: 17, topic: "2D Array Classic Problems (Transpose, Sum)" }, { day: 18, topic: "Strings — Basics & String Class" }, { day: 19, topic: "String Methods & Immutability" }, { day: 20, topic: "Practice: Arrays + Strings Problems" } ] }, { level: "Advanced", title: "OOP & Advanced Classes", days: [ { day: 21, topic: "OOP Concepts — Classes & Objects" }, { day: 22, topic: "Constructors" }, { day: 23, topic: "Getters & Setters" }, { day: 24, topic: "this Keyword" }, { day: 25, topic: "Inheritance" }, { day: 26, topic: "super Keyword" }, { day: 27, topic: "Method Overriding" }, { day: 28, topic: "Polymorphism" }, { day: 29, topic: "Abstraction & Interfaces" }, { day: 30, topic: "Encapsulation — Real Example" } ] }, { level: "Pro", title: "Core DSA & Collections", days: [ { day: 31, topic: "Intro to Java Collections" }, { day: 32, topic: "ArrayList — Basics & Operations" }, { day: 33, topic: "LinkedList — Basics & Operations" }, { day: 34, topic: "HashMap — Basics & Use Cases" }, { day: 35, topic: "HashSet — Basics & Differences" }, { day: 36, topic: "Stack & Queue in Java" }, { day: 37, topic: "Sorting Algorithms — Bubble & Selection" }, { day: 38, topic: "Searching — Linear & Binary Search" }, { day: 39, topic: "Trees — Basic Binary Tree Concepts" }, { day: 40, topic: "Practice Day — Mixed DSA Questions" } ] } ] } ];
     const token = localStorage.getItem('token');
     if (!token) { window.location.href = 'login.html'; }
+
     let currentUserState = {};
 
     function renderCurriculum(userCourse, completedDaysSet) {
@@ -314,8 +357,8 @@ expand_less
                     }
                     if(activeDayCard) activeDayCard.classList.remove('active');
                     topicSlidePanel.innerHTML = `<strong>Day ${day.day} Topic:</strong> ${day.topic}`;
-                    dayCard.parentElement.after(topicSlidePanel);
-                    setTimeout(() => topicSlidePanel.classList.add('show'), 10);
+                    daysDiv.after(topicSlidePanel);
+                    topicSlidePanel.classList.add('show');
                     dayCard.classList.add('active');
                     activeDayCard = dayCard;
                 });
@@ -337,22 +380,27 @@ expand_less
         const userCourse = courses.find(c => c.language === data.language);
         const streak = data.streakCount || 0;
         const completedDays = data.completedTopics.length;
+
         document.getElementById('welcomeName').textContent = data.name;
         document.getElementById('nav-streak').textContent = streak;
         document.getElementById('profile-avatar').textContent = data.name.charAt(0).toUpperCase();
         document.getElementById('dropdown-username').textContent = data.name;
+        
         document.getElementById('lang').textContent = data.language;
         document.getElementById('level').textContent = data.level;
         document.getElementById('wa').textContent = data.whatsapp;
         document.getElementById('time').textContent = data.deliveryTime;
+        
         const pauseBtn = document.getElementById('pauseBtn');
         pauseBtn.textContent = data.isPaused ? 'Resume Course' : 'Pause Course';
         pauseBtn.className = data.isPaused ? 'btn-action btn-resume' : 'btn-action btn-pause';
+        
         const totalDays = 40;
         const progressPercent = Math.round((completedDays / totalDays) * 100);
         document.getElementById('streak-card').textContent = streak;
         document.getElementById('progress-bar').style.width = `${progressPercent}%`;
         document.getElementById('progress-text').textContent = `${completedDays} of ${totalDays} days complete`;
+        
         const statusDot = document.getElementById('status-dot');
         const statusText = document.getElementById('status-text');
         if (data.isPaused) {
@@ -362,6 +410,7 @@ expand_less
             statusDot.className = 'status-indicator active';
             statusText.textContent = 'Active';
         }
+
         let nextTopic = "Course Complete!";
         if (userCourse && data.currentDay <= totalDays) {
             const allDays = userCourse.levels.flatMap(level => level.days);
@@ -369,6 +418,7 @@ expand_less
             if (nextDayTopic) { nextTopic = nextDayTopic.topic; }
         }
         document.getElementById('next-topic').textContent = nextTopic;
+
         const logList = document.getElementById('logList');
         logList.innerHTML = '';
         if (data.completedTopics && data.completedTopics.length > 0) {
@@ -382,35 +432,49 @@ expand_less
         } else {
           logList.innerHTML = '<p>Your journey begins! Complete your first task to see it here.</p>';
         }
+
         const completedDaysSet = new Set(data.completedTopics.map(t => t.order));
         renderCurriculum(userCourse, completedDaysSet);
         renderAchievements(data.achievements);
     }
+
+    // In dashboard.html <script> tag
+
+async function loadDashboard() {
+  try {
+    const res = await fetch('/api/user/me', { headers: { 'Authorization': `Bearer ${token}` } });
+    if (!res.ok) { throw new Error('Session expired or unauthorized.'); }
     
-    async function loadDashboard() {
-      try {
-        const res = await fetch('/api/user/me', { headers: { 'Authorization': `Bearer ${token}` } });
-        if (!res.ok) { throw new Error('Session expired or unauthorized.'); }
-        const data = await res.json();
-        if (data.subscriptions && data.subscriptions.length > 0) {
-            window.location.href = 'pro-dashboard.html';
-            return;
-        }
-        currentUserState = data;
-        if (!currentUserState.language || !currentUserState.level) {
-          alert('Please complete your schedule setup.');
-          window.location.href = 'set-schedule.html';
-          return;
-        }
-        updateDashboardUI(currentUserState);
-      } catch (error) {
-        alert(error.message);
-        localStorage.removeItem('token');
-        window.location.href = 'login.html';
-      }
+    // ✅✅✅ THE FIX: Read the JSON data FIRST ✅✅✅
+    const data = await res.json();
+    
+    // Now that 'data' exists, we can check the subscription status.
+    if (data.subscriptions && data.subscriptions.length > 0) {
+        window.location.href = 'pro-dashboard.html';
+        return; // Redirect and stop executing this script.
     }
+    
+    // If the user is NOT subscribed, store their data and update the free dashboard.
+    currentUserState = data;
+    
+    if (!currentUserState.language || !currentUserState.level) {
+      alert('Please complete your schedule setup.');
+      window.location.href = 'set-schedule.html';
+      return;
+    }
+    
+    updateDashboardUI(currentUserState);
+
+  } catch (error) {
+    alert(error.message);
+    localStorage.removeItem('token');
+    window.location.href = 'login.html';
+  }
+}
+
     document.addEventListener('DOMContentLoaded', loadDashboard);
     
+    // Dropdown and other buttons
     const profileAvatar = document.getElementById('profile-avatar');
     const profileDropdown = document.getElementById('profile-dropdown');
     profileAvatar.addEventListener('click', (e) => { e.stopPropagation(); profileDropdown.classList.toggle('show'); });
@@ -418,35 +482,44 @@ expand_less
     document.getElementById('editBtn').onclick = () => { if (confirm('Editing your full schedule will reset your course progress to Day 1. Are you sure?')) { window.location.href = 'set-schedule.html'; } };
     document.getElementById('logoutBtn').onclick = () => { localStorage.removeItem('token'); window.location.href = 'index.html'; };
     
+    // ✅✅✅ ALL BUTTON LOGIC CONSOLIDATED HERE ✅✅✅
+    
     document.getElementById('pauseBtn').onclick = async () => {
         const pauseBtn = document.getElementById('pauseBtn');
         pauseBtn.disabled = true;
+        
+        // If user is resuming, we tell the backend to reset the streak
         const isResuming = currentUserState.isPaused;
+        const bodyPayload = isResuming ? { resetStreak: true } : {};
+
         try {
             const res = await fetch('/api/user/pause', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-                body: JSON.stringify({ resetStreak: isResuming })
+                body: JSON.stringify(bodyPayload)
             });
             if (!res.ok) { throw new Error((await res.json()).message || 'Failed to update status.'); }
+            
             const data = await res.json();
             alert(data.message);
-            currentUserState = data.user;
-            updateDashboardUI(currentUserState);
+            currentUserState = data.user; // Update state from server response
+            updateDashboardUI(currentUserState); // Re-render everything
         } catch (error) {
             alert('Error: ' + error.message);
         } finally {
             pauseBtn.disabled = false;
         }
     };
-    
+
     const timeModal = document.getElementById('timeModal');
     const numberModal = document.getElementById('numberModal');
     const editTimeBtn = document.getElementById('editTimeBtn');
     const editNumberBtn = document.getElementById('editNumberBtn');
     const closeButtons = document.querySelectorAll('.close-btn');
+
     const openModal = (modal) => modal.classList.add('show');
     const closeModal = (modal) => modal.classList.remove('show');
+
     editTimeBtn.addEventListener('click', (e) => { e.preventDefault(); openModal(timeModal); });
     editNumberBtn.addEventListener('click', (e) => { e.preventDefault(); openModal(numberModal); });
     closeButtons.forEach(btn => {
@@ -464,12 +537,15 @@ expand_less
                 body: JSON.stringify({ deliveryTime: newTime })
             });
             if (!res.ok) { throw new Error((await res.json()).message || 'Failed to update time.'); }
+            
             const data = await res.json();
             alert(data.message);
             currentUserState = data.user;
             updateDashboardUI(currentUserState);
             closeModal(timeModal);
-        } catch (error) { alert('Error: ' + error.message); }
+        } catch (error) {
+            alert('Error: ' + error.message);
+        }
     });
 
     document.getElementById('numberForm').addEventListener('submit', async (e) => {
@@ -482,18 +558,25 @@ expand_less
                 body: JSON.stringify({ whatsapp: newNumber })
             });
             if (!res.ok) { throw new Error((await res.json()).message || 'Failed to update number.'); }
+
             const data = await res.json();
             alert(data.message);
             currentUserState = data.user;
             updateDashboardUI(currentUserState);
             closeModal(numberModal);
-        } catch (error) { alert('Error: ' + error.message); }
+        } catch (error) {
+            alert('Error: ' + error.message);
+        }
     });
 
     document.getElementById('deleteAccountBtn').onclick = async () => {
-        if (!confirm("Are you sure? This will delete all your data permanently.") || !confirm("Last chance. This action cannot be undone. Delete?")) return;
+        if (!confirm("Are you sure? This will delete all your data permanently.")) return;
+        if (!confirm("Last chance. This action cannot be undone. Delete?")) return;
         try {
-            const res = await fetch('/api/user/delete', { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
+            const res = await fetch('/api/user/delete', {
+                method: 'DELETE',
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
             if (res.ok) {
                 alert('Account deleted.');
                 localStorage.removeItem('token');
@@ -502,9 +585,13 @@ expand_less
                 const data = await res.json();
                 throw new Error(data.message || 'Failed to delete account.');
             }
-        } catch (error) { alert('Error: ' + error.message); }
+        } catch (error) {
+            alert('Error: ' + error.message);
+        }
     };
-    
+     let progressChart = null; // To hold the chart instance
+
+    // ✅✅✅ 1. DEFINE ALL POSSIBLE BADGES ✅✅✅
     const allBadges = {
       'INITIATED': { icon: 'fa-solid fa-play', title: 'Initiated', desc: 'Completed Day 1' },
       '7_DAY_STREAK': { icon: 'fa-solid fa-fire-flame-curved', title: 'On Fire', desc: 'Maintained a 7-day streak' },
@@ -513,17 +600,26 @@ expand_less
       'COURSE_COMPLETE': { icon: 'fa-solid fa-crown', title: 'Master Coder', desc: 'Completed all 40 days!' },
       'WEEKEND_WARRIOR': { icon: 'fa-solid fa-calendar-week', title: 'Weekend Warrior', desc: 'Completed a task on a weekend' }
     };
+        // ... after the openTopicModal function ...
 
+    // ✅✅✅ 2. CREATE THE FUNCTION TO RENDER BADGES ✅✅✅
     function renderAchievements(unlockedBadges = []) {
         const grid = document.getElementById('achievements-grid');
         grid.innerHTML = '';
-        if (!unlockedBadges) { return; }
+
         for (const badgeKey in allBadges) {
             const badge = allBadges[badgeKey];
             const isUnlocked = unlockedBadges.includes(badgeKey);
+
             const badgeElement = document.createElement('div');
             badgeElement.className = 'badge';
-            badgeElement.innerHTML = `<div class="badge-icon ${isUnlocked ? 'unlocked' : ''}" data-tooltip="${badge.desc}"><i class="${badge.icon}"></i></div><div class="badge-title">${badge.title}</div>`;
+            
+            badgeElement.innerHTML = `
+                <div class="badge-icon ${isUnlocked ? 'unlocked' : ''}" data-tooltip="${badge.desc}">
+                    <i class="${badge.icon}"></i>
+                </div>
+                <div class="badge-title">${badge.title}</div>
+            `;
             grid.appendChild(badgeElement);
         }
     }
