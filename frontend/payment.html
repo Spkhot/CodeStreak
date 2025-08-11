@@ -191,7 +191,7 @@
     </div>
   </footer>
 
-  <script>
+    <script>
     const token = localStorage.getItem('token');
     if (!token) {
         alert('You must be logged in to make a purchase.');
@@ -201,21 +201,39 @@
     const payBtn = document.getElementById('payBtn');
     const messageEl = document.getElementById('message');
 
+    // --- ✅✅✅ UPDATED DYNAMIC INFO LOGIC ✅✅✅ ---
     const params = new URLSearchParams(window.location.search);
     const level = params.get('level');
     const language = params.get('language');
+    const priceFromUrl = params.get('price');
 
-    const prices = { 'Advanced': 99, 'Pro': 299 };
-    const price = prices[level];
+    const prices = { 'Advanced': 99, 'Pro': 299, 'Bundle': 199 };
+    const price = prices[level] || priceFromUrl;
     
-    if (!level || !language || !price) {
+    let isValid = false;
+    let displayName = "Invalid Course";
+
+    // Handle the special "Bundle" case
+    if (level === 'Bundle' && price) {
+        displayName = 'Full Access Bundle';
+        document.getElementById('courseName').textContent = displayName;
+        document.getElementById('coursePrice').textContent = `₹${price}`;
+        isValid = true;
+    } 
+    // Handle the standard single course cases
+    else if (level && language && price) {
+        displayName = `${level} ${language}`;
+        document.getElementById('courseName').textContent = displayName;
+        document.getElementById('coursePrice').textContent = `₹${price}`;
+        isValid = true;
+    }
+    
+    if (!isValid) {
         messageEl.textContent = 'Invalid course details. Please go back and select a course.';
         payBtn.disabled = true;
-    } else {
-        document.getElementById('courseName').textContent = `${level} ${language}`;
-        document.getElementById('coursePrice').textContent = `₹${price}`;
     }
 
+    // --- THE REST OF THE SCRIPT IS UNCHANGED ---
     payBtn.addEventListener('click', async () => {
         payBtn.disabled = true;
         payBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processing...';
@@ -244,19 +262,18 @@
                 amount: orderData.amount,
                 currency: "INR",
                 name: "The Habit Loop",
-                description: `Payment for ${level} ${language} Course`,
+                description: `Payment for ${displayName}`,
                 order_id: orderData.orderId,
                 handler: async function (response) {
                     payBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Verifying...';
                     try {
                         const scheduleParams = new URLSearchParams(window.location.search);
-                        // ✅✅✅ THE FIX: Corrected the fetch URL ✅✅✅
                         const verificationRes = await fetch('/api/user/verify-payment', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
                             body: JSON.stringify({
                                 ...response,
-                                language: scheduleParams.get('language'),
+                                language: scheduleParams.get('language'), // Will be null for bundle, backend handles this
                                 level: scheduleParams.get('level'),
                                 deliveryTime: scheduleParams.get('deliveryTime'),
                                 whatsapp: scheduleParams.get('whatsapp'),
@@ -287,16 +304,18 @@
             const rzp = new Razorpay(options);
             rzp.on('payment.failed', (response) => {
                 messageEl.textContent = `Payment Failed: ${response.error.description}`;
+                payBtn.disabled = false;
+                payBtn.innerHTML = '<i class="fa-solid fa-lock"></i> Pay Securely Now';
             });
+
             rzp.open();
+            // After rzp.open() is called, we don't re-enable the button in 'finally'
+            // because the modal is now open. It's handled in the handlers.
             
         } catch (error) {
             messageEl.textContent = `Error: ${error.message}`;
-        } finally {
-            if (!window.rzp) {
-              payBtn.disabled = false;
-              payBtn.innerHTML = '<i class="fa-solid fa-lock"></i> Pay Securely Now';
-            }
+            payBtn.disabled = false;
+            payBtn.innerHTML = '<i class="fa-solid fa-lock"></i> Pay Securely Now';
         }
     });
   </script>
