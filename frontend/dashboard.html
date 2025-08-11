@@ -52,21 +52,19 @@
     .dropdown-item:hover { background-color: var(--bg-dark); color: var(--text-light); }
     .dropdown-item.logout:hover { background-color: rgba(239, 68, 68, 0.1); color: var(--danger-red); }
     
-    .container { max-width: 1400px; margin: 0 auto; padding: 2.5rem 20px; }
-    .welcome-header { font-size: 2.5rem; font-weight: 700; margin-bottom: 0; }
+    .container { max-width: 1300px; margin: 0 auto; padding: 2.5rem 20px; }
+    .welcome-header { font-size: 2.5rem; font-weight: 700; margin-bottom: 2.5rem; }
     
-    /* --- ✅✅✅ NEW LAYOUT STYLES ✅✅✅ --- */
-    .dashboard-grid { 
-        display: grid; 
-        grid-template-columns: 1fr 350px; /* Main content takes up available space, sidebar is fixed width */
-        gap: 2rem; 
-        align-items: start; /* Prevents shorter columns from stretching to match taller ones */
-    }
-    .main-content, .sidebar {
-        display: flex;
-        flex-direction: column;
+    /* --- ✅✅✅ NEW 2x2 GRID LAYOUT STYLES ✅✅✅ --- */
+    .info-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
         gap: 2rem;
-        width: 100%;
+        margin-bottom: 2rem;
+    }
+
+    #curriculum-section {
+        width: 100%; /* Ensures it takes full width below the grid */
     }
     
     .card { background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; }
@@ -99,9 +97,6 @@
     .log-card .day-level { font-size: 0.8rem; color: var(--text-muted); }
     #logList p { grid-column: 1 / -1; text-align: center; color: var(--text-muted); padding: 2rem; }
 
-    #curriculum-container {
-        /* This container is inside a card, so it doesn't need its own margin-top */
-    }
     .course-level { margin-bottom: 2.5rem; }
     .course-level:last-child { margin-bottom: 0; }
     .course-level h4 { font-size: 1.5rem; font-weight: 600; color: var(--text-light); margin-bottom: 1.2rem; display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
@@ -117,6 +112,7 @@
     .topic-slide-panel { background-color: var(--bg-dark); border: 1px solid var(--border-color); border-top: 3px solid var(--primary-blue); margin-top: 1rem; padding: 1.5rem; border-radius: 8px; overflow: hidden; max-height: 0; opacity: 0; visibility: hidden; transition: all 0.5s ease-in-out; }
     .topic-slide-panel.show { max-height: 200px; opacity: 1; visibility: visible; }
     .topic-slide-panel strong { color: var(--primary-blue); }
+    
     .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); backdrop-filter: blur(5px); display: flex; align-items: center; justify-content: center; z-index: 2000; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s; }
     .modal-overlay.show { opacity: 1; visibility: visible; }
     .modal-content { background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 2rem; width: 100%; max-width: 400px; transform: scale(0.95); transition: transform 0.3s ease; }
@@ -130,71 +126,21 @@
     .modal-body input { font-size: 1rem; }
     .modal-footer { margin-top: 1.5rem; }
     .btn-save { width: 100%; padding: 12px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; background-color: var(--primary-blue); color: white; transition: background-color 0.2s; }
-    .btn-save:hover { background-color: #2563eb; } /* Adding hover for primary blue */
+    .btn-save:hover { background-color: #2563eb; }
 
-    .achievements-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-        gap: 1.5rem;
-    }
-    .badge {
-        text-align: center;
-    }
-    .badge-icon {
-        width: 70px;
-        height: 70px;
-        border-radius: 50%;
-        background-color: var(--bg-dark);
-        border: 3px solid var(--border-color);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0 auto 0.75rem auto;
-        font-size: 2rem;
-        color: var(--border-color); /* Color for locked badges */
-        transition: all 0.3s ease;
-        position: relative;
-    }
-    .badge-icon.unlocked {
-        color: var(--pause-yellow); /* Gold color for unlocked badges */
-        border-color: var(--pause-yellow);
-        box-shadow: 0 0 20px rgba(245, 158, 11, 0.4);
-    }
-    .badge-title {
-        font-size: 0.85rem;
-        font-weight: 500;
-        color: var(--text-muted);
-        transition: color 0.3s ease;
-    }
-    .badge-icon.unlocked + .badge-title {
-        color: var(--text-light); /* Bolder title for unlocked badges */
-    }
-    .badge-icon[data-tooltip]::after {
-        content: attr(data-tooltip);
-        position: absolute;
-        bottom: 110%;
-        left: 50%;
-        transform: translateX(-50%);
-        background-color: var(--bg-dark);
-        color: var(--text-light);
-        padding: 8px 12px;
-        border-radius: 6px;
-        font-size: 0.9rem;
-        white-space: nowrap;
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.2s, visibility 0.2s;
-        z-index: 10;
-    }
-    .badge-icon:hover::after {
-        opacity: 1;
-        visibility: visible;
-    }  
+    .achievements-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 1.5rem; }
+    .badge { text-align: center; }
+    .badge-icon { width: 70px; height: 70px; border-radius: 50%; background-color: var(--bg-dark); border: 3px solid var(--border-color); display: flex; align-items: center; justify-content: center; margin: 0 auto 0.75rem auto; font-size: 2rem; color: var(--border-color); transition: all 0.3s ease; position: relative; }
+    .badge-icon.unlocked { color: var(--pause-yellow); border-color: var(--pause-yellow); box-shadow: 0 0 20px rgba(245, 158, 11, 0.4); }
+    .badge-title { font-size: 0.85rem; font-weight: 500; color: var(--text-muted); transition: color 0.3s ease; }
+    .badge-icon.unlocked + .badge-title { color: var(--text-light); }
+    .badge-icon[data-tooltip]::after { content: attr(data-tooltip); position: absolute; bottom: 110%; left: 50%; transform: translateX(-50%); background-color: var(--bg-dark); color: var(--text-light); padding: 8px 12px; border-radius: 6px; font-size: 0.9rem; white-space: nowrap; opacity: 0; visibility: hidden; transition: opacity 0.2s, visibility 0.2s; z-index: 10; }
+    .badge-icon:hover::after { opacity: 1; visibility: visible; }  
     
-    /* --- ✅✅✅ NEW RESPONSIVE STYLES ✅✅✅ --- */
-    @media (max-width: 1100px) {
-        .dashboard-grid {
-            grid-template-columns: 1fr; /* Stack columns on smaller screens */
+    /* --- ✅✅✅ RESPONSIVE STYLES ✅✅✅ --- */
+    @media (max-width: 992px) {
+        .info-grid {
+            grid-template-columns: 1fr; /* Stack the 4 info cards into a single column */
         }
     }
 
@@ -233,64 +179,61 @@
   </nav>
 
     <main class="container">
-    
-    <!-- ✅✅✅ NEW 2-COLUMN GRID STRUCTURE ✅✅✅ -->
-    <div class="dashboard-grid">
-      
-      <!-- COLUMN 1: MAIN CONTENT -->
-      <div class="main-content">
         <h1 class="welcome-header">🫡 Welcome, <span id="welcomeName">...</span>!</h1>
         
+        <!-- ✅✅✅ NEW 2x2 GRID FOR INFO CARDS ✅✅✅ -->
+        <div class="info-grid">
+            <!-- Card 1: Your Coding Setup -->
+            <div class="card">
+                <div class="card-header"><i class="fa-solid fa-gears"></i><span>Your Coding Setup</span></div>
+                <dl class="settings-list">
+                    <dt>Language</dt><dd id="lang"></dd>
+                    <dt>Level</dt><dd id="level"></dd>
+                    <dt>WhatsApp</dt><dd id="wa"></dd>
+                    <dt>Daily Time</dt><dd id="time"></dd>
+                </dl>
+                <div class="card-actions">
+                    <button class="btn-action btn-edit" id="editBtn">Edit Schedule (Reset)</button>
+                    <button class="btn-action" id="pauseBtn">Pause Course</button>
+                </div>
+            </div>
+
+            <!-- Card 2: Streak Status -->
+            <section class="card">
+                <div class="card-header"><i class="fa-solid fa-chart-line"></i><span>Streak Status</span></div>
+                <div class="status-card-body">
+                    <div class="streak-highlight"><i class="fa-solid fa-fire"></i> <span id="streak-card">...</span> Days</div>
+                    <div>
+                        <div class="progress-bar-container"><div class="progress-bar-fill" id="progress-bar"></div></div>
+                        <div class="progress-text" id="progress-text">...% Complete</div>
+                    </div>
+                    <div class="status-details">
+                        <div class="status-item"><div class="status-indicator" id="status-dot"></div><span id="status-text">...</span></div>
+                        <div class="status-item"><i class="fa-solid fa-forward" style="color: var(--text-muted);"></i><span>Next Up: <span id="next-topic">...</span></span></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Card 3: Progress Log -->
+            <section class="card">
+                <div class="card-header"><i class="fa-solid fa-list-check"></i><span>Progress Log</span></div>
+                <div class="log-grid" id="logList"><p>Loading your progress...</p></div>
+            </section>
+
+            <!-- Card 4: Achievements -->
+            <section class="card">
+                <div class="card-header"><i class="fa-solid fa-trophy"></i><span>Achievements</span></div>
+                <div class="achievements-grid" id="achievements-grid"><p>Loading achievements...</p></div>
+            </section>
+        </div>
+      
+        <!-- ✅✅✅ COURSE CURRICULUM CARD AT THE BOTTOM ✅✅✅ -->
         <section id="curriculum-section" class="card">
             <div class="card-header"><i class="fa-solid fa-book-open"></i><span>Course Curriculum</span></div>
             <div id="curriculum-container"><p>Loading your curriculum...</p></div>
         </section>
-      </div>
-      
-      <!-- COLUMN 2: SIDEBAR -->
-      <aside class="sidebar">
-        <div class="card">
-          <div class="card-header"><i class="fa-solid fa-gears"></i><span>Your Coding Setup</span></div>
-          <dl class="settings-list">
-            <dt>Language</dt><dd id="lang"></dd>
-            <dt>Level</dt><dd id="level"></dd>
-            <dt>WhatsApp</dt><dd id="wa"></dd>
-            <dt>Daily Time</dt><dd id="time"></dd>
-          </dl>
-          <div class="card-actions">
-            <button class="btn-action btn-edit" id="editBtn">Edit Schedule (Reset)</button>
-            <button class="btn-action" id="pauseBtn">Pause Course</button>
-          </div>
-        </div>
 
-        <section class="card">
-          <div class="card-header"><i class="fa-solid fa-list-check"></i><span>Progress Log</span></div>
-          <div class="log-grid" id="logList"><p>Loading your progress...</p></div>
-        </section>
-      
-        <section class="card">
-            <div class="card-header"><i class="fa-solid fa-chart-line"></i><span>Streak Status</span></div>
-            <div class="status-card-body">
-                <div class="streak-highlight"><i class="fa-solid fa-fire"></i> <span id="streak-card">...</span> Days</div>
-                <div>
-                    <div class="progress-bar-container"><div class="progress-bar-fill" id="progress-bar"></div></div>
-                    <div class="progress-text" id="progress-text">...% Complete</div>
-                </div>
-                <div class="status-details">
-                    <div class="status-item"><div class="status-indicator" id="status-dot"></div><span id="status-text">...</span></div>
-                    <div class="status-item"><i class="fa-solid fa-forward" style="color: var(--text-muted);"></i><span>Next Up: <span id="next-topic">...</span></span></div>
-                </div>
-            </div>
-        </section>
-
-        <section class="card">
-            <div class="card-header"><i class="fa-solid fa-trophy"></i><span>Achievements</span></div>
-            <div class="achievements-grid" id="achievements-grid"><p>Loading achievements...</p></div>
-        </section>
-      </aside>
-
-    </div>
-  </main>
+    </main>
   
   <div class="modal-overlay" id="timeModal">
       <div class="modal-content">
@@ -419,8 +362,8 @@
         const logList = document.getElementById('logList');
         logList.innerHTML = '';
         if (data.completedTopics && data.completedTopics.length > 0) {
-          data.completedTopics.slice().sort((a, b) => b.order - a.order).forEach(t => { // Sort to show newest first
-            const cardLink = document.createElement('div'); // Changed to div as it's not a link
+          data.completedTopics.slice().sort((a, b) => b.order - a.order).forEach(t => {
+            const cardLink = document.createElement('div');
             cardLink.className = 'log-card';
             cardLink.innerHTML = `<div class="day-number">${t.order}</div><div class="day-title">Day ${t.order}</div><span class="day-level">${data.level}</span>`;
             logList.appendChild(cardLink);
