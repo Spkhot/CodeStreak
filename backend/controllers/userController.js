@@ -337,7 +337,7 @@ export const createOrder = async (req, res) => {
 };
 
 // ✅✅✅ CORRECTED `verifyPayment` to use the new schema ✅✅✅
-export const verifyPayment = async (req, res) => {
+export const verifyPaymentAndSetSchedule = async (req, res) => {
   try {
     const { razorpay_order_id, razorpay_payment_id, razorpay_signature, language, level, deliveryTime, whatsapp, timeZone } = req.body;
     const body = `${razorpay_order_id}|${razorpay_payment_id}`;
