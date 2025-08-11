@@ -8,17 +8,18 @@ import moment from 'moment-timezone';
 const processingUsers = new Set();
 
 // Helper function to determine a user's access level based on their subscription.
-const getUserAccessLevel = (user) => {
-    if (!user.isSubscribed || !user.subscriptionLevel) {
+const getUserAccessLevel = (user, language) => {
+    if (!user.subscriptions || user.subscriptions.length === 0) {
         return 'Free';
     }
-    if (user.subscriptionLevel.includes('Bundle') || user.subscriptionLevel === 'Pro') {
-        return 'Pro';
+    if (user.subscriptions.some(sub => sub.level === 'Bundle')) {
+        return 'Pro'; // Bundle gives Pro access to everything
     }
-    if (user.subscriptionLevel === 'Advanced') {
-        return 'Advanced';
+    const langSub = user.subscriptions.find(sub => sub.language === language);
+    if (!langSub) {
+        return 'Free';
     }
-    return 'Free'; // Default fallback
+    return langSub.level; // Returns "Advanced" or "Pro"
 };
 
 // Helper function to check for and award new achievements.
