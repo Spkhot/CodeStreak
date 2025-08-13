@@ -519,6 +519,13 @@
     height: 100%;
     border: none;
 }
+/* ✅ ADD THIS NEW CSS */
+.btn-workspace-action.run-btn {
+    background-color: var(--resume-green); /* A nice green color */
+}
+.btn-workspace-action.run-btn:hover {
+    opacity: 0.85;
+}
   </style>
 <!-- dashboard.html -> <head> tag -->
 <!-- Add the StackBlitz SDK -->
@@ -707,11 +714,14 @@
  <!-- dashboard.html -> near the end of <body> -->
 
 <!-- ✅✅✅ START: ADD THIS NEW WORKSPACE MODAL ✅✅✅ -->
+<!-- dashboard.html -> near the end of <body> -->
 <div class="modal-overlay workspace-modal" id="workspaceModal">
     <div class="workspace-container">
         <div class="workspace-header">
             <h3><i class="fa-solid fa-terminal"></i> Coding Workspace</h3>
             <div class="workspace-actions">
+                <!-- ✅ ADD THIS NEW "RUN" BUTTON -->
+                <button class="btn-workspace-action run-btn" id="runCodeBtn"><i class="fa-solid fa-play"></i> Run Code</button>
                 <button class="btn-workspace-action" id="saveProjectBtn"><i class="fa-solid fa-floppy-disk"></i> Save Project</button>
                 <button class="close-btn" data-close-modal="workspaceModal">&times;</button>
             </div>
@@ -838,33 +848,29 @@ function renderCodingProfiles(profiles = []) {
 
 // ✅ THIS IS THE FINAL, BEST VERSION of launchWorkspace
 
+// dashboard.html -> <script> tag
+
+// ✅ REPLACE your old launchWorkspace function with this simpler version
 async function launchWorkspace() {
     const workspaceModal = document.getElementById('workspaceModal');
     openModal(workspaceModal);
 
     const ideContainer = document.getElementById('ide-container');
     ideContainer.innerHTML = '<p style="text-align:center; padding: 2rem;">Booting coding environment...</p>';
-
+    
     let projectTemplate = 'node';
+    let openFileName = 'main.cpp';
     let templateFiles = {
-        'hello.cpp': `#include <iostream>\n\nint main() {\n    std::cout << "Hello, World!" << std::endl;\n    return 0;\n}`,
-        // This package.json is the key to automation!
-        'package.json': `{
-            "name": "cpp-project",
-            "scripts": {
-                "install-compiler": "sudo apt-get update && sudo apt-get install -y g++",
-                "compile": "g++ hello.cpp -o myprogram",
-                "run": "./myprogram",
-                "start": "echo 'To run your code, type: npm run compile && npm run run'"
-            }
-        }`
+        'main.cpp': `#include <iostream>\n\nint main() {\n    std::cout << "Hello, World!" << std::endl;\n    return 0;\n}`,
+        'README.md': 'Use the Run Code button to compile and execute your C++ code.'
     };
 
     if (currentUserState.language === 'Java') {
         projectTemplate = 'java';
+        openFileName = 'Main.java';
         templateFiles = {
             'Main.java': `public class Main {\n    public static void main(String[] args) {\n        System.out.println("Hello from The Habit Loop Workspace!");\n    }\n}`,
-            'README.md': 'In the terminal, you can compile with `javac Main.java` and run with `java Main`.'
+            'README.md': 'Use the Run Code button to compile and execute your Java code.'
         };
     }
     
@@ -877,13 +883,75 @@ async function launchWorkspace() {
             files: templateFiles,
         },
         {
-            openFile: currentUserState.language === 'Java' ? 'Main.java' : 'hello.cpp',
-            theme: 'dark',
-            view: 'editor'
+            openFile: openFileName,
+            theme: 'dark'
         }
     );
 }
 
+// ✅ ADD THIS NEW runCode FUNCTION
+async function runCode() {
+    if (!ideVm) {
+        alert('Workspace is not running.');
+        return;
+    }
+
+    const runBtn = document.getElementById('runCodeBtn');
+    runBtn.disabled = true;
+    runBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Running...';
+
+    try {
+        if (currentUserState.language === 'C++') {
+            // This command chain does everything: installs g++, compiles, and runs.
+            const commandToRun = 'sudo apt-get update && sudo apt-get install -y g++ && g++ main.cpp -o myprogram && ./myprogram';
+            await ideVm.cli.run(commandToRun);
+        } else if (currentUserState.language === 'Java') {
+            // Java's command chain is simpler as the tools are already there
+            const commandToRun = 'javac Main.java && java Main';
+            await ideVm.cli.run(commandToRun);
+        }
+    } catch (error) {
+        console.error('Error running code:', error);
+        alert('An error occurred while trying to run the code. Check the terminal for details.');
+    } finally {
+        runBtn.disabled = false;
+        runBtn.innerHTML = '<i class="fa-solid fa-play"></i> Run Code';
+    }
+}
+// ✅ ADD THIS NEW runCode FUNCTION
+async function runCode() {
+    if (!ideVm) {
+        alert('Workspace is not running.');
+        return;
+    }
+
+    const runBtn = document.getElementById('runCodeBtn');
+    runBtn.disabled = true;
+    runBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Running...';
+
+    try {
+        if (currentUserState.language === 'C++') {
+            // This command chain does everything: installs g++, compiles, and runs.
+            const commandToRun = 'sudo apt-get update && sudo apt-get install -y g++ && g++ main.cpp -o myprogram && ./myprogram';
+            await ideVm.cli.run(commandToRun);
+        } else if (currentUserState.language === 'Java') {
+            // Java's command chain is simpler as the tools are already there
+            const commandToRun = 'javac Main.java && java Main';
+            await ideVm.cli.run(commandToRun);
+        }
+    } catch (error) {
+        console.error('Error running code:', error);
+        alert('An error occurred while trying to run the code. Check the terminal for details.');
+    } finally {
+        runBtn.disabled = false;
+        runBtn.innerHTML = '<i class="fa-solid fa-play"></i> Run Code';
+    }
+}
+
+
+// Add event listeners for BOTH workspace buttons
+// ✅ ADD THE EVENT LISTENER FOR THE NEW RUN BUTTON
+document.getElementById('runCodeBtn').addEventListener('click', runCode);
 // ✅ ADD THIS NEW FUNCTION to save the project
 async function saveProject() {
     if (!ideVm) {
