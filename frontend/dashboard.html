@@ -791,11 +791,6 @@ function renderDailyFocusCard(data) {
         launchBtn.addEventListener('click', launchWorkspace);
     }
 }
-// ✅✅✅ END: ADD THIS NEW JAVASCRIPT FUNCTION ✅✅✅
-
-// ... your existing updateDashboardUI function
-
-// ... somewhere before your updateDashboardUI function ...
 
 // ✅✅✅ START: ADD THESE NEW JAVASCRIPT FUNCTIONS ✅✅✅
 function getPlatformIcon(platform) {
@@ -858,7 +853,7 @@ async function launchWorkspace() {
     runBtn.disabled = true;
     runBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Installing...';
     
-    // This part is unchanged
+    // This part is unchanged and correct
     let projectTemplate = 'node';
     let openFileName = 'main.cpp';
     let templateFiles = {
@@ -866,7 +861,6 @@ async function launchWorkspace() {
         '.stackblitzrc': `{"startCommand": "bash ./.setup.sh"}`,
         '.setup.sh': `#!/bin/bash\n# Install C++ compiler (g++)\necho "Installing C++ compiler..."\nsudo apt-get update > /dev/null 2>&1 && sudo apt-get install -y g++ > /dev/null 2>&1\necho "Compiler installed. You can now use the 'Run Code' button."\n`
     };
-
     if (currentUserState.language === 'Java') {
         projectTemplate = 'java';
         openFileName = 'Main.java';
@@ -888,32 +882,31 @@ async function launchWorkspace() {
             }
         );
 
-        // For Java, the environment is ready instantly.
         if (currentUserState.language === 'Java') {
              runBtn.disabled = false;
              runBtn.innerHTML = '<i class="fa-solid fa-play"></i> Run Code';
-             return; // Stop here for Java
+             return;
         }
 
-        // For C++, we listen to the terminal for our confirmation message.
-        console.log('Subscribing to terminal output...');
-        const unsubscribe = ideVm.subscribable.subscribe((data) => {
-            if (data.type === 'vm:output' && data.data.includes('Compiler installed')) {
+        // ✅ THE FIX FOR ERROR 1: Subscribe directly to the 'ideVm' object
+        const unsubscribe = ideVm.subscribe((data) => {
+            if (data.type === 'output' && data.payload.data.includes('Compiler installed')) {
                 console.log('Compiler installation confirmed via terminal output!');
                 runBtn.disabled = false;
                 runBtn.innerHTML = '<i class="fa-solid fa-play"></i> Run Code';
-                unsubscribe(); // Stop listening once we've found our message
+                unsubscribe();
             }
         });
 
     } catch (error) {
         console.error("Failed to embed project:", error);
         ideContainer.innerHTML = '<p style="text-align:center; padding: 2rem; color: var(--danger-red);">Failed to load workspace. Please try again.</p>';
-        runBtn.disabled = false; // Re-enable button on failure
+        runBtn.disabled = false;
         runBtn.innerHTML = '<i class="fa-solid fa-play"></i> Run Code';
     }
 }
-// ✅ ADD THIS NEW runCode FUNCTION
+
+// ✅ REPLACE your old runCode function with this one
 async function runCode() {
     if (!ideVm) { alert('Workspace is not running.'); return; }
 
@@ -922,15 +915,12 @@ async function runCode() {
     runBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Running...';
     
     try {
-        if (currentUserState.language === 'C++') {
-            // No need to install anymore, it's done on startup!
-            const activeFile = await ideVm.getactivefile();
-            
-            // Just compile and run
-            await ideVm.cli.run(`g++ ${activeFile} -o myprogram && ./myprogram`);
+        // ✅ THE FIX FOR ERROR 2: The correct method is vm.editor.getActiveFile()
+        const activeFile = await ideVm.editor.getActiveFile();
 
+        if (currentUserState.language === 'C++') {
+            await ideVm.cli.run(`g++ ${activeFile} -o myprogram && ./myprogram`);
         } else if (currentUserState.language === 'Java') {
-            const activeFile = await ideVm.getactivefile();
             await ideVm.cli.run(`javac ${activeFile} && java ${activeFile.replace('.java', '')}`);
         }
     } catch (error) {
