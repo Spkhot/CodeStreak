@@ -492,29 +492,128 @@
   ]
 };
 
+// ✅✅✅ COPY AND REPLACE YOUR OLD topicResources OBJECT WITH THIS ONE ✅✅✅
+
 const topicResources = {
-  // Keywords from your curriculum topics are the keys here
+  // C++ & Java - Beginner
+  "Hello World": [
+    { title: "GeeksforGeeks: C++ Hello World", url: "https://www.geeksforgeeks.org/c-program-to-print-hello-world/" },
+    { title: "W3Schools: Java Hello World", url: "https://www.w3schools.com/java/java_getstarted.asp" }
+  ],
+  "Input and Output": [
+    { title: "cplusplus.com: C++ Basic I/O (cin/cout)", url: "http://www.cplusplus.com/doc/tutorial/basic_io/" },
+    { title: "Baeldung: Java Scanner Class", url: "https://www.baeldung.com/java-scanner" }
+  ],
+  "Variables & Data Types": [
+    { title: "TutorialsPoint: C++ Data Types", url: "https://www.tutorialspoint.com/cplusplus/cpp_data_types.htm" },
+    { title: "Oracle Docs: Java Primitive Data Types", url: "https://docs.oracle.com/javase/tutorial/java/nutsandbolts/datatypes.html" }
+  ],
+  "Operators": [
+    { title: "GeeksforGeeks: C++ Operators", url: "https://www.geeksforgeeks.org/operators-in-cpp/" },
+    { title: "W3Schools: Java Operators", url: "https://www.w3schools.com/java/java_operators.asp" }
+  ],
+  "Conditional Statements": [
+    { title: "Microsoft Docs: C++ if-else Statement", url: "https://learn.microsoft.com/en-us/cpp/cpp/if-else-statement-cpp" },
+    { title: "DigitalOcean: Java if-else", url: "https://www.digitalocean.com/community/tutorials/java-if-else-statement" }
+  ],
+  "Switch Statements": [
+    { title: "GeeksforGeeks: C++ switch Statement", url: "https://www.geeksforgeeks.org/switch-statement-in-c-cpp/" },
+    { title: "Baeldung: Java switch Statement", url: "https://www.baeldung.com/java-switch" }
+  ],
+  "Loops": [
+    { title: "Programiz: C++ for Loop", url: "https://www.programiz.com/cpp-programming/for-loop" },
+    { title: "Programiz: Java for Loop", url: "https://www.programiz.com/java-programming/for-loop" }
+  ],
+
+  // C++ & Java - Intermediate
+  "Functions": [
+    { title: "W3Schools: C++ Functions", url: "https://www.w3schools.com/cpp/cpp_functions.asp" },
+    { title: "Baeldung: Java Methods", url: "https://www.baeldung.com/java-methods" }
+  ],
+  "Recursion": [
+    { title: "GeeksforGeeks: Recursion in C++", url: "https://www.geeksforgeeks.org/recursion-in-c/" },
+    { title: "Video: Java Recursion Explained", url: "https://www.youtube.com/watch?v=IJDJ0kBx2gw" }
+  ],
+  "Arrays": [
+    { title: "cplusplus.com: C++ Arrays", url: "http://www.cplusplus.com/doc/tutorial/arrays/" },
+    { title: "Oracle Docs: Java Arrays", url: "https://docs.oracle.com/javase/tutorial/java/nutsandbolts/arrays.html" }
+  ],
+  "Strings": [
+    { title: "GeeksforGeeks: C++ string Class", url: "https://www.geeksforgeeks.org/stdstring-class-in-c/" },
+    { title: "Baeldung: Guide to Java String", url: "https://www.baeldung.com/java-string" }
+  ],
+
+  // C++ & Java - Advanced (OOP)
+  "OOP": [
+    { title: "FreeCodeCamp: OOP in C++", url: "https://www.freecodecamp.org/news/object-oriented-programming-in-c/" },
+    { title: "Oracle Docs: OOP Concepts in Java", url: "https://docs.oracle.com/javase/tutorial/java/concepts/index.html" }
+  ],
+  "Classes & Objects": [
+    { title: "GeeksforGeeks: C++ Classes and Objects", url: "https://www.geeksforgeeks.org/c-classes-and-objects/" },
+    { title: "W3Schools: Java Classes/Objects", url: "https://www.w3schools.com/java/java_classes.asp" }
+  ],
+  "Constructors": [
+    { title: "Programiz: C++ Constructors", url: "https://www.programiz.com/cpp-programming/constructors" },
+    { title: "Baeldung: Java Constructors", url: "https://www.baeldung.com/java-constructors" }
+  ],
+  "Inheritance": [
+    { title: "cplusplus.com: C++ Inheritance", url: "http://www.cplusplus.com/doc/tutorial/inheritance/" },
+    { title: "GeeksforGeeks: Inheritance in Java", url: "https://www.geeksforgeeks.org/inheritance-in-java/" }
+  ],
+  "Polymorphism": [
+    { title: "GeeksforGeeks: Polymorphism in C++", url: "https://www.geeksforgeeks.org/polymorphism-in-c/" },
+    { title: "Baeldung: Polymorphism in Java", url: "https://www.baeldung.com/java-polymorphism" }
+  ],
+  "Abstraction": [
+    { title: "TutorialsPoint: C++ Abstraction", url: "https://www.tutorialspoint.com/cplusplus/cpp_data_abstraction.htm" },
+    { title: "W3Schools: Java Abstraction", url: "https://www.w3schools.com/java/java_abstract.asp" }
+  ],
+  "Interfaces": [
+    { title: "GeeksforGeeks: C++ Abstract Class/Interfaces", url: "https://www.geeksforgeeks.org/interfaces-in-c/" },
+    { title: "Oracle Docs: Java Interfaces", url: "https://docs.oracle.com/javase/tutorial/java/IandI/createinterface.html" }
+  ],
+  
+  // Pro Level - Specific Concepts
   "Pointers": [
     { title: "GeeksforGeeks: C++ Pointers", url: "https://www.geeksforgeeks.org/cpp-pointers/" },
     { title: "Video: Pointers in C++ in 15 Mins", url: "https://www.youtube.com/watch?v=EvYmTCasB4A" }
-  ],
-  "OOP": [
-    { title: "TutorialsPoint: C++ OOP", url: "https://www.tutorialspoint.com/cplusplus/cpp_object_oriented.htm" },
-    { title: "FreeCodeCamp: OOP in Java", url: "https://www.freecodecamp.org/news/object-oriented-programming-in-java/" }
-  ],
-  "Arrays": [
-    { title: "Java Arrays Documentation", url: "https://docs.oracle.com/javase/tutorial/java/nutsandbolts/arrays.html" },
-    { title: "Video: C++ Arrays Tutorial", url: "https://www.youtube.com/watch?v=1v_4dL8l8pQ" }
   ],
   "STL": [
       { title: "TopCoder: Power of C++ STL", url: "https://www.topcoder.com/thrive/articles/Power-of-C-Standard-Template-Library-STL" },
       { title: "Video: C++ STL Full Course", url: "https://www.youtube.com/watch?v=s_t0Ua2jA-c" }
   ],
+  "Vectors": [
+    { title: "cplusplus.com: C++ std::vector", url: "https://cplusplus.com/reference/vector/vector/"},
+    { title: "Baeldung: Java ArrayList", url: "https://www.baeldung.com/java-arraylist"}
+  ],
   "Collections": [
       { title: "Baeldung: Guide to Java Collections", url: "https://www.baeldung.com/java-collections" },
       { title: "Video: Java Collections Framework", url: "https://www.youtube.com/watch?v=rzA7UJ-hQn4" }
+  ],
+  "HashMap": [
+    { title: "GeeksforGeeks: C++ std::unordered_map", url: "https://www.geeksforgeeks.org/unordered_map-in-cpp-stl/" },
+    { title: "Baeldung: Java HashMap", url: "https://www.baeldung.com/java-hashmap" }
+  ],
+  "Linked Lists": [
+    { title: "Programiz: C++ Linked List", url: "https://www.programiz.com/dsa/linked-list" },
+    { title: "GeeksforGeeks: Java LinkedList", url: "https://www.geeksforgeeks.org/linked-list-in-java/" }
+  ],
+  "Stacks & Queues": [
+    { title: "GeeksforGeeks: C++ Stack vs Queue", url: "https://www.geeksforgeeks.org/stack-vs-queue/" },
+    { title: "Baeldung: Java Stack and Queue", url: "https://www.baeldung.com/java-stack-queue" }
+  ],
+  "Trees": [
+    { title: "FreeCodeCamp: Tree Data Structure", url: "https://www.freecodecamp.org/news/tree-data-structure-in-c-plus-plus/" },
+    { title: "Baeldung: Binary Tree in Java", url: "https://www.baeldung.com/java-binary-tree" }
+  ],
+  "Sorting Algorithms": [
+    { title: "GeeksforGeeks: C++ Sorting Algorithms", url: "https://www.geeksforgeeks.org/sorting-algorithms-in-c/" },
+    { title: "HackerEarth: Sorting Algorithms in Java", url: "https://www.hackerearth.com/practice/algorithms/sorting/bubble-sort/tutorial/" }
+  ],
+  "Searching Algorithms": [
+    { title: "Programiz: C++ Binary Search", url: "https://www.programiz.com/dsa/binary-search" },
+    { title: "Baeldung: Binary Search in Java", url: "https://www.baeldung.com/java-binary-search" }
   ]
-  // You can add more keywords and links here!
 };
 
 
