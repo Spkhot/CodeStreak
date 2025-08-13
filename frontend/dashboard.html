@@ -847,14 +847,7 @@ function renderCodingProfiles(profiles = []) {
 
 // dashboard.html -> <script> tag
 
-// ✅ THIS IS THE FINAL, BEST VERSION of launchWorkspace
-
-// dashboard.html -> <script> tag
-
-// ✅ REPLACE your old launchWorkspace function with this simpler version
-// dashboard.html -> <script> tag
-
-// ✅ REPLACE your old launchWorkspace function with this one
+// ✅ REPLACE your old launchWorkspace function with this FINAL, event-driven version.
 
 async function launchWorkspace() {
     const workspaceModal = document.getElementById('workspaceModal');
@@ -865,37 +858,21 @@ async function launchWorkspace() {
 
     const runBtn = document.getElementById('runCodeBtn');
     runBtn.disabled = true;
-    runBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Booting...';
+    runBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Installing...';
     
+    // This part is unchanged
     let projectTemplate = 'node';
     let openFileName = 'main.cpp';
     let templateFiles = {
         'main.cpp': `#include <iostream>\n\nint main() {\n    // Your code here!\n    std::cout << "Hello, World!" << std::endl;\n    return 0;\n}`,
-        'README.md': 'Your C++ environment is being set up. The Run button will be enabled shortly.',
-        
-        // This file tells StackBlitz what to do on startup
-        '.stackblitzrc': `{
-            "startCommand": "bash ./.setup.sh"
-        }`,
-        
-        // This is the startup script itself
-        '.setup.sh': `#!/bin/bash
-# Install C++ compiler (g++)
-echo "Installing C++ compiler..."
-sudo apt-get update > /dev/null 2>&1
-sudo apt-get install -y g++ > /dev/null 2>&1
-echo "Compiler installed. You can now use the 'Run Code' button."
-`
+        '.stackblitzrc': `{"startCommand": "bash ./.setup.sh"}`,
+        '.setup.sh': `#!/bin/bash\n# Install C++ compiler (g++)\necho "Installing C++ compiler..."\nsudo apt-get update > /dev/null 2>&1 && sudo apt-get install -y g++ > /dev/null 2>&1\necho "Compiler installed. You can now use the 'Run Code' button."\n`
     };
 
     if (currentUserState.language === 'Java') {
-        // Java setup is simpler and doesn't need custom setup
         projectTemplate = 'java';
         openFileName = 'Main.java';
-        templateFiles = {
-            'Main.java': `public class Main {\n    public static void main(String[] args) {\n        System.out.println("Hello from The Habit Loop Workspace!");\n    }\n}`,
-            'README.md': 'Use the Run Code button to compile and execute your Java code.'
-        };
+        templateFiles = { /* ... your Java files ... */ };
     }
     
     try {
@@ -913,48 +890,28 @@ echo "Compiler installed. You can now use the 'Run Code' button."
             }
         );
 
-        // For C++, we set a timeout to wait for the setup script to finish
-        if (currentUserState.language === 'C++') {
-            setTimeout(() => {
-                isCompilerInstalled = true; // Assume installation is done
-                runBtn.disabled = false;
-                runBtn.innerHTML = '<i class="fa-solid fa-play"></i> Run Code';
-            }, 15000); // Wait 15 seconds for installation. Adjust if needed.
-        } else {
+        // For Java, the environment is ready instantly.
+        if (currentUserState.language === 'Java') {
              runBtn.disabled = false;
              runBtn.innerHTML = '<i class="fa-solid fa-play"></i> Run Code';
+             return; // Stop here for Java
         }
+
+        // For C++, we listen to the terminal for our confirmation message.
+        console.log('Subscribing to terminal output...');
+        const unsubscribe = ideVm.subscribable.subscribe((data) => {
+            if (data.type === 'vm:output' && data.data.includes('Compiler installed')) {
+                console.log('Compiler installation confirmed via terminal output!');
+                runBtn.disabled = false;
+                runBtn.innerHTML = '<i class="fa-solid fa-play"></i> Run Code';
+                unsubscribe(); // Stop listening once we've found our message
+            }
+        });
 
     } catch (error) {
         console.error("Failed to embed project:", error);
         ideContainer.innerHTML = '<p style="text-align:center; padding: 2rem; color: var(--danger-red);">Failed to load workspace. Please try again.</p>';
-    }
-}
-// ✅ ADD THIS NEW runCode FUNCTION
-async function runCode() {
-    if (!ideVm) { alert('Workspace is not running.'); return; }
-
-    const runBtn = document.getElementById('runCodeBtn');
-    runBtn.disabled = true;
-    runBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Running...';
-    
-    try {
-        if (currentUserState.language === 'C++') {
-            // No need to install anymore, it's done on startup!
-            const activeFile = await ideVm.getactivefile();
-            
-            // Just compile and run
-            await ideVm.cli.run(`g++ ${activeFile} -o myprogram && ./myprogram`);
-
-        } else if (currentUserState.language === 'Java') {
-            const activeFile = await ideVm.getactivefile();
-            await ideVm.cli.run(`javac ${activeFile} && java ${activeFile.replace('.java', '')}`);
-        }
-    } catch (error) {
-        console.error('Error running code:', error);
-        alert('An error occurred while trying to run the code. Check the terminal for details.');
-    } finally {
-        runBtn.disabled = false;
+        runBtn.disabled = false; // Re-enable button on failure
         runBtn.innerHTML = '<i class="fa-solid fa-play"></i> Run Code';
     }
 }
