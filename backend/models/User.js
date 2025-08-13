@@ -52,7 +52,13 @@ const userSchema = new mongoose.Schema({
       platform: { type: String, required: true },
       url: { type: String, required: true }
     }
-  ]
+  ],
+   projects: [
+        {
+            day: Number, // The day this project is for
+            files: Object // Stores the file snapshot from StackBlitz
+        }
+    ]
 });
 
 export default mongoose.model('User', userSchema);

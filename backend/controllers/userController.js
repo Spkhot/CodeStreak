@@ -451,3 +451,34 @@ export const deleteCodingProfile = async (req, res) => {
   }
 };
 // ✅ END: ADD THIS NEW FUNCTION
+
+// ✅ START: ADD THIS ENTIRE NEW FUNCTION
+export const saveProject = async (req, res) => {
+    try {
+        const { day, files } = req.body;
+        const user = await User.findById(req.user._id);
+        
+        if (!user) {
+            return res.status(404).json({ message: 'User not found.' });
+        }
+
+        // Check if a project for this day already exists
+        const existingProjectIndex = user.projects.findIndex(p => p.day === day);
+
+        if (existingProjectIndex > -1) {
+            // If it exists, update it
+            user.projects[existingProjectIndex].files = files;
+        } else {
+            // If not, add a new project entry
+            user.projects.push({ day, files });
+        }
+
+        await user.save();
+        res.status(200).json({ message: 'Project saved successfully!' });
+
+    } catch (error) {
+        console.error('Error saving project:', error);
+        res.status(500).json({ message: 'Server error while saving project.' });
+    }
+};
+// ✅ END: ADD THIS NEW FUNCTION
