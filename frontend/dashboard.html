@@ -845,8 +845,6 @@ function renderCodingProfiles(profiles = []) {
     });
 }
 
-// dashboard.html -> <script> tag
-
 // ✅ REPLACE your old launchWorkspace function with this FINAL, event-driven version.
 
 async function launchWorkspace() {
@@ -912,6 +910,34 @@ async function launchWorkspace() {
         console.error("Failed to embed project:", error);
         ideContainer.innerHTML = '<p style="text-align:center; padding: 2rem; color: var(--danger-red);">Failed to load workspace. Please try again.</p>';
         runBtn.disabled = false; // Re-enable button on failure
+        runBtn.innerHTML = '<i class="fa-solid fa-play"></i> Run Code';
+    }
+}
+// ✅ ADD THIS NEW runCode FUNCTION
+async function runCode() {
+    if (!ideVm) { alert('Workspace is not running.'); return; }
+
+    const runBtn = document.getElementById('runCodeBtn');
+    runBtn.disabled = true;
+    runBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Running...';
+    
+    try {
+        if (currentUserState.language === 'C++') {
+            // No need to install anymore, it's done on startup!
+            const activeFile = await ideVm.getactivefile();
+            
+            // Just compile and run
+            await ideVm.cli.run(`g++ ${activeFile} -o myprogram && ./myprogram`);
+
+        } else if (currentUserState.language === 'Java') {
+            const activeFile = await ideVm.getactivefile();
+            await ideVm.cli.run(`javac ${activeFile} && java ${activeFile.replace('.java', '')}`);
+        }
+    } catch (error) {
+        console.error('Error running code:', error);
+        alert('An error occurred while trying to run the code. Check the terminal for details.');
+    } finally {
+        runBtn.disabled = false;
         runBtn.innerHTML = '<i class="fa-solid fa-play"></i> Run Code';
     }
 }
