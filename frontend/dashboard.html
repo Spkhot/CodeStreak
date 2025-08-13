@@ -851,13 +851,23 @@ function renderCodingProfiles(profiles = []) {
 // dashboard.html -> <script> tag
 
 // ✅ REPLACE your old launchWorkspace function with this simpler version
+// dashboard.html -> <script> tag
+
+// ✅ REPLACE your old launchWorkspace function with this one
+
 async function launchWorkspace() {
     const workspaceModal = document.getElementById('workspaceModal');
     openModal(workspaceModal);
 
     const ideContainer = document.getElementById('ide-container');
-    ideContainer.innerHTML = '<p style="text-align:center; padding: 2rem;">Booting coding environment...</p>';
+    ideContainer.innerHTML = '<p style="text-align:center; padding: 2rem;">Booting coding environment, please wait...</p>';
+
+    // ✅ 1. Get the 'Run' button and DISABLE it before we start booting
+    const runBtn = document.getElementById('runCodeBtn');
+    runBtn.disabled = true;
+    runBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Booting...';
     
+    // This part is unchanged
     let projectTemplate = 'node';
     let openFileName = 'main.cpp';
     let templateFiles = {
@@ -874,19 +884,30 @@ async function launchWorkspace() {
         };
     }
     
-    ideVm = await StackBlitzSDK.embedProject(
-        ideContainer,
-        {
-            title: `Day ${currentUserState.currentDay} - ${currentUserState.language}`,
-            description: 'My project for The Habit Loop.',
-            template: projectTemplate, 
-            files: templateFiles,
-        },
-        {
-            openFile: openFileName,
-            theme: 'dark'
-        }
-    );
+    try {
+        // ✅ 2. Await the boot process. This line will PAUSE here until the IDE is ready.
+        ideVm = await StackBlitzSDK.embedProject(
+            ideContainer,
+            {
+                title: `Day ${currentUserState.currentDay} - ${currentUserState.language}`,
+                description: 'My project for The Habit Loop.',
+                template: projectTemplate, 
+                files: templateFiles,
+            },
+            {
+                openFile: openFileName,
+                theme: 'dark'
+            }
+        );
+
+    } catch (error) {
+        console.error("Failed to embed project:", error);
+        ideContainer.innerHTML = '<p style="text-align:center; padding: 2rem; color: var(--danger-red);">Failed to load workspace. Please try again.</p>';
+    } finally {
+        // ✅ 3. Re-enable the 'Run' button now that the IDE is ready (or has failed)
+        runBtn.disabled = false;
+        runBtn.innerHTML = '<i class="fa-solid fa-play"></i> Run Code';
+    }
 }
 
 // ✅ ADD THIS NEW runCode FUNCTION
