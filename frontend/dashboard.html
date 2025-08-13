@@ -31,51 +31,19 @@
     
     <!-- Main Stylesheet -->
     <style>
-        /* --- 1. ROOT VARIABLES & GLOBAL RESETS --- */
         :root {
-          --bg-dark: #0D1117;
-          --bg-secondary: #161B22;
-          --primary-blue: #3B82F6;
-          --text-light: #E6EDF3;
-          --text-muted: #8D96A0;
-          --border-color: #30363D;
-          --pause-yellow: #f59e0b;
-          --resume-green: #10b981;
-          --danger-red: #ef4444;
-          --fire-orange: #f97316;
+          --bg-dark: #0D1117; --bg-secondary: #161B22; --primary-blue: #3B82F6; --text-light: #E6EDF3; --text-muted: #8D96A0;
+          --border-color: #30363D; --pause-yellow: #f59e0b; --resume-green: #10b981; --danger-red: #ef4444; --fire-orange: #f97316;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
-        body { font-family: 'Poppins', sans-serif; color: var(--text-light); }
-        
-        /* --- 2. MAIN DASHBOARD LAYOUT (SIDEBAR + CONTENT) --- */
-        .dashboard-container {
-          display: flex;
-          min-height: 100vh;
-          background-color: var(--bg-dark);
-        }
+        body { font-family: 'Poppins', sans-serif; color: var(--text-light); background-color: var(--bg-dark); }
+        .dashboard-container { display: flex; min-height: 100vh; }
         #app-sidebar {
-          width: 260px;
-          background-color: var(--bg-secondary);
-          border-right: 1px solid var(--border-color);
-          display: flex;
-          flex-direction: column;
-          padding: 1.5rem 1rem;
-          position: fixed; /* Fixed position for a true sidebar */
-          top: 0;
-          left: 0;
-          height: 100%;
-          z-index: 100;
-          transition: transform 0.3s ease-in-out;
+          width: 260px; background-color: var(--bg-secondary); border-right: 1px solid var(--border-color); display: flex; flex-direction: column;
+          padding: 1.5rem 1rem; position: fixed; top: 0; left: 0; height: 100%; z-index: 100; transition: transform 0.3s ease-in-out;
         }
-        #main-content {
-          flex: 1;
-          overflow-y: auto; /* Makes only the content area scrollable */
-          padding: 2.5rem;
-          margin-left: 260px; /* Offset for the fixed sidebar */
-        }
-
-        /* --- 3. SIDEBAR STYLES --- */
+        #main-content { flex: 1; overflow-y: auto; padding: 2.5rem; margin-left: 260px; }
         .sidebar-header .logo { font-size: 1.5rem; font-weight: 700; text-decoration: none; color: var(--text-light); display: flex; align-items: center; gap: 8px; margin-bottom: 2rem; }
         .sidebar-header .logo .fa-fire { color: var(--primary-blue); }
         .sidebar-profile { display: flex; align-items: center; gap: 1rem; padding: 1rem; background-color: var(--bg-dark); border-radius: 10px; margin-bottom: 2rem; }
@@ -83,8 +51,7 @@
         .sidebar-profile .user-name { font-weight: 600; color: var(--text-light); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .sidebar-profile .streak-counter { display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; font-weight: 500; color: var(--text-muted); }
         .sidebar-profile .streak-counter .fa-fire { color: var(--fire-orange); }
-        .sidebar-nav { flex-grow: 1; }
-        .sidebar-nav ul { list-style: none; padding: 0; margin: 0; }
+        .sidebar-nav { flex-grow: 1; } .sidebar-nav ul { list-style: none; padding: 0; margin: 0; }
         .sidebar-nav .nav-item { display: flex; align-items: center; gap: 1rem; padding: 0.9rem 1rem; text-decoration: none; color: var(--text-muted); font-weight: 500; border-radius: 8px; margin-bottom: 0.5rem; transition: all 0.2s ease-in-out; position: relative; }
         .sidebar-nav .nav-item:hover { background-color: var(--bg-dark); color: var(--text-light); }
         .sidebar-nav .nav-item.active { background-color: rgba(59, 130, 246, 0.1); color: var(--primary-blue); font-weight: 600; }
@@ -93,24 +60,16 @@
         .sidebar-action-item { display: flex; align-items: center; gap: 1rem; padding: 0.9rem 1rem; text-decoration: none; color: var(--text-muted); font-weight: 500; border-radius: 8px; transition: all 0.2s ease-in-out; }
         .sidebar-action-item:hover { background-color: var(--bg-dark); color: var(--text-light); }
         .sidebar-action-item.logout:hover { background-color: rgba(239, 68, 68, 0.1); color: var(--danger-red); }
-        
-        /* --- 4. MAIN CONTENT & GRID STYLES --- */
         .welcome-header { font-size: 2.5rem; font-weight: 700; margin-bottom: 2.5rem; }
         .dashboard-grid { display: grid; grid-template-columns: 280px 1fr 300px; gap: 2rem; }
         .left-column, .center-column, .right-column { display: flex; flex-direction: column; gap: 2rem; }
-
-        /* --- 5. CARD & MODAL STYLES --- */
         .card { background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; display: flex; flex-direction: column; }
         .card-header { display: flex; align-items: center; gap: 0.75rem; font-size: 1.25rem; font-weight: 600; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border-color); }
         .card-content { flex-grow: 1; }
         .card-actions { margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 0.75rem; }
         .btn-action { width: 100%; padding: 10px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
-        .btn-action:hover { opacity: 0.85; }
-        .btn-action:disabled { opacity: 0.5; cursor: not-allowed; }
-        .btn-edit { background-color: var(--primary-blue); color: white; }
-        .btn-pause { background-color: var(--pause-yellow); color: white; }
-        .btn-resume { background-color: var(--resume-green); color: white; }
-        
+        .btn-action:hover { opacity: 0.85; } .btn-action:disabled { opacity: 0.5; cursor: not-allowed; }
+        .btn-edit { background-color: var(--primary-blue); color: white; } .btn-pause { background-color: var(--pause-yellow); color: white; } .btn-resume { background-color: var(--resume-green); color: white; }
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); backdrop-filter: blur(5px); display: none; align-items: center; justify-content: center; z-index: 2000; opacity: 0; transition: opacity 0.3s ease; }
         .modal-overlay.show { display: flex; opacity: 1; }
         .modal-content { background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 2rem; width: 100%; max-width: 400px; transform: scale(0.95); transition: transform 0.3s ease; }
@@ -118,32 +77,20 @@
         .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
         .modal-header h2 { font-size: 1.5rem; margin: 0; }
         .close-btn { background: none; border: none; font-size: 1.5rem; color: var(--text-muted); cursor: pointer; transition: color 0.2s; }
-        .modal-body .input-group { margin-bottom: 1rem; }
-        .modal-body label { display: block; margin-bottom: 0.5rem; font-size: 0.9rem; }
+        .modal-body .input-group { margin-bottom: 1rem; } .modal-body label { display: block; margin-bottom: 0.5rem; font-size: 0.9rem; }
         .modal-body input, .modal-body select, .modal-body textarea { width: 100%; padding: 10px; background-color: var(--bg-dark); border: 1px solid var(--border-color); color: var(--text-light); border-radius: 6px; font-size: 1rem; font-family: 'Poppins', sans-serif; }
-        .modal-footer { margin-top: 1.5rem; }
-        .btn-save { width: 100%; padding: 12px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; background-color: var(--primary-blue); color: white; }
-
-        /* --- 6. FEATURE-SPECIFIC STYLES --- */
-        /* Coding Setup Card */
-        .settings-list dt { font-weight: 500; color: var(--text-muted); font-size: 0.9rem; margin-top: 1rem; }
-        .settings-list dd { font-weight: 600; font-size: 1rem; }
-        /* Streak Status Card */
-        .streak-highlight { text-align: center; font-size: 2.5rem; font-weight: 800; }
-        .streak-highlight .fa-fire { color: var(--fire-orange); }
+        .modal-footer { margin-top: 1.5rem; } .btn-save { width: 100%; padding: 12px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; background-color: var(--primary-blue); color: white; }
+        .settings-list dt { font-weight: 500; color: var(--text-muted); font-size: 0.9rem; margin-top: 1rem; } .settings-list dd { font-weight: 600; font-size: 1rem; }
+        .streak-highlight { text-align: center; font-size: 2.5rem; font-weight: 800; } .streak-highlight .fa-fire { color: var(--fire-orange); }
         .progress-bar-container { width: 100%; background-color: var(--bg-dark); border-radius: 5px; height: 10px; overflow: hidden; }
         .progress-bar-fill { height: 100%; width: 0%; background-color: var(--primary-blue); border-radius: 5px; transition: width 0.5s ease-in-out; }
         .progress-text { text-align: center; font-size: 0.8rem; font-weight: 500; color: var(--text-muted); margin-top: 0.5rem; }
         .status-details { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1.25rem; }
-        .status-item { display: flex; align-items: center; gap: 0.75rem; }
-        .status-indicator { width: 10px; height: 10px; border-radius: 50%; }
-        .status-indicator.active { background-color: var(--resume-green); }
-        .status-indicator.paused { background-color: var(--pause-yellow); }
-        /* Curriculum Card */
+        .status-item { display: flex; align-items: center; gap: 0.75rem; } .status-indicator { width: 10px; height: 10px; border-radius: 50%; }
+        .status-indicator.active { background-color: var(--resume-green); } .status-indicator.paused { background-color: var(--pause-yellow); }
         .course-level { margin-bottom: 1.5rem; } .course-level:last-child { margin-bottom: 0; }
         .course-level h4 { font-size: 1.5rem; font-weight: 600; color: var(--text-light); margin-bottom: 1rem; display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
-        .course-level h4 .level-title { font-weight: 500; color: var(--text-muted); font-size: 1.1rem; }
-        .course-level h4 i { color: var(--primary-blue); }
+        .course-level h4 .level-title { font-weight: 500; color: var(--text-muted); font-size: 1.1rem; } .course-level h4 i { color: var(--primary-blue); }
         .days { display: flex; flex-wrap: wrap; gap: 0.75rem; }
         .day-card { background-color: var(--bg-dark); border: 1px solid var(--border-color); padding: 0.75rem 1rem; border-radius: 8px; cursor: pointer; text-align: center; font-weight: 500; flex-basis: 90px; transition: all 0.2s ease-in-out; }
         .day-card:hover { transform: translateY(-4px); border-color: var(--primary-blue); }
@@ -152,17 +99,15 @@
         .day-card.completed:hover { color: white; background-color: var(--resume-green); }
         #curriculum-workspace-btn { background-color: var(--primary-blue); color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; margin-top: 1.5rem; width: 100%; }
         #curriculum-workspace-btn i { margin-right: 8px; }
-        /* Contribution Heatmap */
-        .heatmap-container { padding-top: 1rem; overflow-x: auto; } #cal-heatmap .graph-domain { fill: none; } #cal-heatmap .domain-label { fill: var(--text-muted); font-size: 14px; } #cal-heatmap .subdomain-text { fill: white; font-size: 0; }
+        .placeholder-text { color: var(--text-muted); text-align: center; padding: 1rem 0; font-style: italic; }
+        .heatmap-container { padding-top: 1rem; overflow-x: auto; min-height: 120px; } #cal-heatmap .graph-domain { fill: none; } #cal-heatmap .domain-label { fill: var(--text-muted); font-size: 14px; } #cal-heatmap .subdomain-text { fill: white; font-size: 0; }
         #cal-heatmap rect.q1,#cal-heatmap rect.q2,#cal-heatmap rect.q3,#cal-heatmap rect.q4,#cal-heatmap rect.q5 { stroke: rgba(255, 255, 255, 0.05); } #cal-heatmap .ch-tooltip { background: var(--bg-dark) !important; color: var(--text-light) !important; border: 1px solid var(--border-color) !important; padding: 8px 12px !important; border-radius: 6px !important; }
-        /* Coding Profiles */
         .profiles-list-container { display: flex; flex-direction: column; gap: 0.75rem; }
         .profile-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; background-color: var(--bg-dark); border: 1px solid var(--border-color); border-radius: 8px; }
         .profile-item-platform { display: flex; align-items: center; gap: 10px; font-weight: 600; } .profile-item-platform i { font-size: 1.2rem; color: var(--text-muted); }
         .profile-item-actions { display: flex; align-items: center; gap: 0.75rem; } .profile-item-actions a { text-decoration: none; color: var(--primary-blue); font-weight: 500; }
         .delete-profile-btn { background: none; border: none; color: var(--text-muted); cursor: pointer; padding: 5px; font-size: 0.9rem; border-radius: 4px; transition: all 0.2s ease; } .delete-profile-btn:hover { color: var(--danger-red); background-color: rgba(239, 68, 68, 0.1); }
         .btn-add-profile { background: none; border: 2px dashed var(--border-color); color: var(--text-muted); } .btn-add-profile:hover { background-color: var(--bg-dark); border-color: var(--primary-blue); color: var(--primary-blue); }
-        /* Workspace Modal */
         .workspace-modal { align-items: flex-start; justify-content: center; padding: 2vh; }
         .workspace-container { background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; width: 95vw; height: 96vh; display: flex; flex-direction: column; overflow: hidden; }
         .workspace-header { display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1.5rem; border-bottom: 1px solid var(--border-color); flex-shrink: 0; }
@@ -173,10 +118,8 @@
         .btn-workspace-action:disabled { opacity: 0.5; cursor: not-allowed; }
         .workspace-body { flex-grow: 1; background-color: #1e1e1e; }
         #ide-container, #ide-container > iframe { width: 100%; height: 100%; border: none; }
-
-        /* --- 7. RESPONSIVE STYLES --- */
         #menu-toggle { display: none; position: fixed; top: 15px; left: 15px; z-index: 101; background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-light); width: 40px; height: 40px; border-radius: 8px; font-size: 1.2rem; cursor: pointer; justify-content: center; align-items: center; }
-        @media (max-width: 1200px) { .dashboard-grid { grid-template-columns: minmax(0, 1fr) 300px; } .left-column { grid-column: 1 / 2; } }
+        @media (max-width: 1200px) { .dashboard-grid { grid-template-columns: minmax(0, 1fr) 300px; } .left-column { grid-column: 1 / 3; } }
         @media (max-width: 992px) {
             #app-sidebar { transform: translateX(-100%); }
             #app-sidebar.show { transform: translateX(0); }
@@ -192,17 +135,14 @@
 
     <div class="dashboard-container">
         
-        <!-- This button is only visible on mobile to toggle the sidebar -->
         <button id="menu-toggle"><i class="fa-solid fa-bars"></i></button>
 
-        <!-- The new fixed sidebar -->
         <aside id="app-sidebar">
             <div class="sidebar-header">
                 <a href="index.html" class="logo"><i class="fa-solid fa-fire"></i>The Habit Loop</a>
             </div>
-            
             <div class="sidebar-profile">
-                <div class="profile-avatar" id="sidebar-avatar">S</div>
+                <div class="profile-avatar" id="sidebar-avatar">...</div>
                 <div class="profile-details">
                     <div class="user-name" id="sidebar-username">...</div>
                     <div class="streak-counter">
@@ -211,7 +151,6 @@
                     </div>
                 </div>
             </div>
-
             <nav class="sidebar-nav">
                 <ul>
                     <li><a href="dashboard.html" class="nav-item active"><i class="fa-solid fa-table-columns"></i><span>Dashboard</span></a></li>
@@ -219,7 +158,6 @@
                     <li><a href="instructions.html" class="nav-item"><i class="fa-solid fa-circle-question"></i><span>How to Use</span></a></li>
                 </ul>
             </nav>
-
             <div class="sidebar-actions">
                 <a href="#" class="sidebar-action-item" id="editTimeBtn"><i class="fa-solid fa-clock"></i><span>Edit Time</span></a>
                 <a href="#" class="sidebar-action-item" id="editNumberBtn"><i class="fa-brands fa-whatsapp"></i><span>Edit Number</span></a>
@@ -228,13 +166,11 @@
             </div>
         </aside>
 
-        <!-- The main content area that will scroll -->
         <main id="main-content">
             <h1 class="welcome-header">🫡 Welcome, <span id="welcomeName">...</span>!</h1>
             
             <div class="dashboard-grid">
                 
-                <!-- COLUMN 1: SETUP & PROFILES -->
                 <aside class="left-column">
                     <div class="card">
                         <div class="card-header"><i class="fa-solid fa-gears"></i><span>Your Coding Setup</span></div>
@@ -253,31 +189,27 @@
                     </div>
                     <section class="card">
                         <div class="card-header"><i class="fa-solid fa-address-card"></i><span>Coding Profiles</span></div>
-                        <div class="card-content" id="profiles-list">
-                            <p class="placeholder-text">Add your profiles!</p>
-                        </div>
+                        <div class="card-content" id="profiles-list"></div>
                         <div class="card-actions">
                             <button class="btn-action btn-add-profile" id="addProfileBtn"><i class="fa-solid fa-plus"></i> Add Profile</button>
                         </div>
                     </section>
                 </aside>
                 
-                <!-- COLUMN 2: CURRICULUM & ACTIVITY -->
                 <div class="center-column">
                     <section id="curriculum-section" class="card">
                         <div class="card-header"><i class="fa-solid fa-book-open"></i><span>Course Curriculum</span></div>
-                        <div class="card-content" id="curriculum-container"><p>Loading curriculum...</p></div>
+                        <div class="card-content" id="curriculum-container"><p class="placeholder-text">Loading curriculum...</p></div>
                         <div class="card-actions">
                             <button id="curriculum-workspace-btn" style="display: none;"><i class="fa-solid fa-laptop-code"></i> Launch Workspace for Day <span id="workspace-day-label"></span></button>
                         </div>
                     </section>
                     <section class="card">
                       <div class="card-header"><i class="fa-solid fa-calendar-days"></i><span>Contribution Activity</span></div>
-                      <div class="card-content" id="cal-heatmap"></div>
+                      <div class="card-content heatmap-container" id="cal-heatmap"></div>
                     </section>
                 </div>
                 
-                <!-- COLUMN 3: STATS & REWARDS -->
                 <aside class="right-column">
                     <section class="card">
                         <div class="card-header"><i class="fa-solid fa-chart-line"></i><span>Streak Status</span></div>
@@ -296,458 +228,414 @@
                         <div class="card-content" id="achievements-grid"></div>
                     </section>
                 </aside>
+
             </div>
         </main>
     </div>
 
-    <!-- MODALS: These remain outside the main layout -->
+    <!-- MODALS -->
     <div class="modal-overlay" id="timeModal">
-        <div class="modal-content">
-            <div class="modal-header"><h2>Edit Delivery Time</h2><button class="close-btn" data-close-modal="timeModal">&times;</button></div>
-            <div class="modal-body">
-                <form id="timeForm"><div class="input-group"><label for="newTime">New Time (24h format)</label><input type="time" id="newTime" required></div><div class="modal-footer"><button type="submit" class="btn-save">Save</button></div></form>
-            </div>
-        </div>
+        <div class="modal-content"><div class="modal-header"><h2>Edit Delivery Time</h2><button class="close-btn" data-close-modal="timeModal">&times;</button></div><div class="modal-body"><form id="timeForm"><div class="input-group"><label for="newTime">New Time</label><input type="time" id="newTime" required></div><div class="modal-footer"><button type="submit" class="btn-save">Save</button></div></form></div></div>
     </div>
     <div class="modal-overlay" id="numberModal">
-        <div class="modal-content">
-            <div class="modal-header"><h2>Edit WhatsApp Number</h2><button class="close-btn" data-close-modal="numberModal">&times;</button></div>
-            <div class="modal-body">
-                <form id="numberForm"><div class="input-group"><label for="newNumber">New Number</label><input type="tel" id="newNumber" required></div><div class="modal-footer"><button type="submit" class="btn-save">Save</button></div></form>
-            </div>
-        </div>
+        <div class="modal-content"><div class="modal-header"><h2>Edit WhatsApp Number</h2><button class="close-btn" data-close-modal="numberModal">&times;</button></div><div class="modal-body"><form id="numberForm"><div class="input-group"><label for="newNumber">New Number</label><input type="tel" id="newNumber" required></div><div class="modal-footer"><button type="submit" class="btn-save">Save</button></div></form></div></div>
     </div>
     <div class="modal-overlay" id="profileModal">
-        <div class="modal-content">
-            <div class="modal-header"><h2>Add Coding Profile</h2><button class="close-btn" data-close-modal="profileModal">&times;</button></div>
-            <div class="modal-body">
-                <form id="profileForm"><div class="input-group"><label for="platformName">Platform</label><select id="platformName" required><option value="" disabled selected>Select...</option><option>LinkedIn</option><option>GitHub</option><option>LeetCode</option><option>Portfolio</option><option>Other</option></select></div><div class="input-group"><label for="profileUrl">URL</label><input type="url" id="profileUrl" required></div><div class="modal-footer"><button type="submit" class="btn-save">Save</button></div></form>
-            </div>
-        </div>
+        <div class="modal-content"><div class="modal-header"><h2>Add Coding Profile</h2><button class="close-btn" data-close-modal="profileModal">&times;</button></div><div class="modal-body"><form id="profileForm"><div class="input-group"><label for="platformName">Platform</label><select id="platformName" required><option value="" disabled selected>Select...</option><option>LinkedIn</option><option>GitHub</option><option>LeetCode</option><option>Portfolio</option><option>Other</option></select></div><div class="input-group"><label for="profileUrl">URL</label><input type="url" id="profileUrl" required></div><div class="modal-footer"><button type="submit" class="btn-save">Save</button></div></form></div></div>
     </div>
     <div class="modal-overlay workspace-modal" id="workspaceModal">
-        <div class="workspace-container">
-            <div class="workspace-header">
-                <h3><i class="fa-solid fa-terminal"></i> Coding Workspace</h3>
-                <div class="workspace-actions">
-                    <button class="btn-workspace-action run-btn" id="runCodeBtn"><i class="fa-solid fa-play"></i> Run Code</button>
-                    <button class="btn-workspace-action" id="saveProjectBtn"><i class="fa-solid fa-floppy-disk"></i> Save Project</button>
-                    <button class="close-btn" data-close-modal="workspaceModal">&times;</button>
-                </div>
-            </div>
-            <div class="workspace-body" id="ide-container"></div>
-        </div>
+        <div class="workspace-container"><div class="workspace-header"><h3><i class="fa-solid fa-terminal"></i> Coding Workspace</h3><div class="workspace-actions"><button class="btn-workspace-action run-btn" id="runCodeBtn"><i class="fa-solid fa-play"></i> Run Code</button><button class="btn-workspace-action" id="saveProjectBtn"><i class="fa-solid fa-floppy-disk"></i> Save Project</button><button class="close-btn" data-close-modal="workspaceModal">&times;</button></div></div><div class="workspace-body" id="ide-container"></div></div>
     </div>
 
-    <!-- The SCRIPT tag will go here -->
-  <script>
-    // --- 1. GLOBAL VARIABLES & STATE ---
-    const token = localStorage.getItem('token');
-    let currentUserState = {};
-    let ideVm = null;
-    let cal = null;
-    let selectedWorkspaceDay = null;
+    <script>
+        // --- 1. GLOBAL VARIABLES & STATE ---
+        const token = localStorage.getItem('token');
+        let currentUserState = {};
+        let ideVm = null;
+        let cal = null;
+        let selectedWorkspaceDay = null;
 
-    // --- 2. STATIC DATA (COURSES, TIPS, etc.) ---
-    const courses = [ { language: "C++", levels: [ { level: "Beginner", title: "Fundamentals & Syntax", days: [ { day: 1, topic: "Structure of a Simple C++ Program (Hello World, #include, main())" }, { day: 2, topic: "Input and Output (cin, cout, endl, basic formatting)" }, { day: 3, topic: "Variables & Data Types (int, float, char, string, bool)" }, { day: 4, topic: "Operators (Arithmetic, Assignment, Increment/Decrement)" }, { day: 5, topic: "Conditional Statements (if, else, nested if)" }, { day: 6, topic: "Logical Operators & Comparisons" }, { day: 7, topic: "Switch Statements" }, { day: 8, topic: "Loops — while, do-while" }, { day: 9, topic: "Loops — for loop, nested loops" }, { day: 10, topic: "Practice: Basic Patterns & Control Flow Questions" } ] }, { level: "Intermediate", title: "Functions & Arrays", days: [ { day: 11, topic: "Functions — Basics, Declaration & Definition" }, { day: 12, topic: "Function Arguments & Return Types" }, { day: 13, topic: "Recursion Basics" }, { day: 14, topic: "Arrays — 1D Arrays Intro" }, { day: 15, topic: "Arrays — 1D Operations & Questions" }, { day: 16, topic: "2D Arrays — Basics" }, { day: 17, topic: "2D Arrays — Classic Problems (Matrix Transpose, Sum)" }, { day: 18, topic: "Strings — C++ Strings, Basic Operations" }, { day: 19, topic: "Strings — Character Arrays vs string Class" }, { day: 20, topic: "Practice: Functions + Arrays + Strings Combined Problems" } ] }, { level: "Advanced", title: "Classes, OOP & STL", days: [ { day: 21, topic: "Intro to OOP — Classes & Objects" }, { day: 22, topic: "Constructors & Destructors" }, { day: 23, topic: "Member Functions & Data Members" }, { day: 24, topic: "Encapsulation & Access Modifiers" }, { day: 25, topic: "Inheritance — Types & Examples" }, { day: 26, topic: "Polymorphism — Function Overloading" }, { day: 27, topic: "Polymorphism — Operator Overloading" }, { day: 28, topic: "Abstract Classes & Pure Virtual Functions" }, { day: 29, topic: "Intro to Standard Template Library (STL)" }, { day: 30, topic: "STL — Vectors & Iterators" } ] }, { level: "Pro", title: "Advanced Concepts + DSA", days: [ { day: 31, topic: "Pointers — Basics, * and &" }, { day: 32, topic: "Pointers — Arrays & Functions" }, { day: 33, topic: "Dynamic Memory Allocation (new and delete)" }, { day: 34, topic: "Linked Lists — Intro & Implementation" }, { day: 35, topic: "Stacks & Queues (Concepts + STL)" }, { day: 36, topic: "Trees — Basics & Binary Tree" }, { day: 37, topic: "Binary Search & Binary Search Trees" }, { day: 38, topic: "Sorting Algorithms — Bubble, Selection, Insertion" }, { day: 39, topic: "Searching Algorithms — Linear & Binary Search" }, { day: 40, topic: "Final Practice: Mixed Interview Questions (Patterns, STL, DSA)" } ] } ] }, { language: "Java", levels: [ { level: "Beginner", title: "Java Basics & Syntax", days: [ { day: 1, topic: "Intro: How Java Works, JVM, JDK, First Hello World" }, { day: 2, topic: "Variables & Data Types" }, { day: 3, topic: "Input & Output — Scanner" }, { day: 4, topic: "Operators — Arithmetic, Assignment" }, { day: 5, topic: "Conditional Statements — if, else if, else" }, { day: 6, topic: "Logical Operators & Comparisons" }, { day: 7, topic: "Switch Case" }, { day: 8, topic: "Loops — while & do-while" }, { day: 9, topic: "Loops — for loop, nested loops" }, { day: 10, topic: "Practice: Basic Pattern Printing" } ] }, { level: "Intermediate", title: "Methods & Arrays", days: [ { day: 11, topic: "Methods — Definition & Calling" }, { day: 12, topic: "Method Overloading" }, { day: 13, topic: "Recursion Basics" }, { day: 14, topic: "Arrays — 1D Arrays" }, { day: 15, topic: "Arrays — Basic Problems" }, { day: 16, topic: "2D Arrays" }, { day: 17, topic: "2D Array Classic Problems (Transpose, Sum)" }, { day: 18, topic: "Strings — Basics & String Class" }, { day: 19, topic: "String Methods & Immutability" }, { day: 20, topic: "Practice: Arrays + Strings Problems" } ] }, { level: "Advanced", title: "OOP & Advanced Classes", days: [ { day: 21, topic: "OOP Concepts — Classes & Objects" }, { day: 22, topic: "Constructors" }, { day: 23, topic: "Getters & Setters" }, { day: 24, topic: "this Keyword" }, { day: 25, topic: "Inheritance" }, { day: 26, topic: "super Keyword" }, { day: 27, topic: "Method Overriding" }, { day: 28, topic: "Polymorphism" }, { day: 29, topic: "Abstraction & Interfaces" }, { day: 30, topic: "Encapsulation — Real Example" } ] }, { level: "Pro", title: "Core DSA & Collections", days: [ { day: 31, topic: "Intro to Java Collections" }, { day: 32, topic: "ArrayList — Basics & Operations" }, { day: 33, topic: "LinkedList — Basics & Operations" }, { day: 34, topic: "HashMap — Basics & Use Cases" }, { day: 35, topic: "HashSet — Basics & Differences" }, { day: 36, topic: "Stack & Queue in Java" }, { day: 37, topic: "Sorting Algorithms — Bubble & Selection" }, { day: 38, topic: "Searching — Linear & Binary Search" }, { day: 39, topic: "Trees — Basic Binary Tree Concepts" }, { day: 40, topic: "Practice Day — Mixed DSA Questions" } ] } ] } ];
-    const topicResources = { "Hello World": [ { title: "GeeksforGeeks: C++ Hello World", url: "https://www.geeksforgeeks.org/c-program-to-print-hello-world/" }, { title: "W3Schools: Java Hello World", url: "https://www.w3schools.com/java/java_getstarted.asp" } ], "Input and Output": [ { title: "cplusplus.com: C++ Basic I/O (cin/cout)", url: "http://www.cplusplus.com/doc/tutorial/basic_io/" }, { title: "Baeldung: Java Scanner Class", url: "https://www.baeldung.com/java-scanner" } ], "Variables & Data Types": [ { title: "TutorialsPoint: C++ Data Types", url: "https://www.tutorialspoint.com/cplusplus/cpp_data_types.htm" }, { title: "Oracle Docs: Java Primitive Data Types", url: "https://docs.oracle.com/javase/tutorial/java/nutsandbolts/datatypes.html" } ], "Operators": [ { title: "GeeksforGeeks: C++ Operators", url: "https://www.geeksforgeeks.org/operators-in-cpp/" }, { title: "W3Schools: Java Operators", url: "https://www.w3schools.com/java/java_operators.asp" } ], "Conditional Statements": [ { title: "Microsoft Docs: C++ if-else Statement", url: "https://learn.microsoft.com/en-us/cpp/cpp/if-else-statement-cpp" }, { title: "DigitalOcean: Java if-else", url: "https://www.digitalocean.com/community/tutorials/java-if-else-statement" } ], "Switch Statements": [ { title: "GeeksforGeeks: C++ switch Statement", url: "https://www.geeksforgeeks.org/switch-statement-in-c-cpp/" }, { title: "Baeldung: Java switch Statement", url: "https://www.baeldung.com/java-switch" } ], "Loops": [ { title: "Programiz: C++ for Loop", url: "https://www.programiz.com/cpp-programming/for-loop" }, { title: "Programiz: Java for Loop", url: "https://www.programiz.com/java-programming/for-loop" } ], "Functions": [ { title: "W3Schools: C++ Functions", url: "https://www.w3schools.com/cpp/cpp_functions.asp" }, { title: "Baeldung: Java Methods", url: "https://www.baeldung.com/java-methods" } ], "Recursion": [ { title: "GeeksforGeeks: Recursion in C++", url: "https://www.geeksforgeeks.org/recursion-in-c/" }, { title: "Video: Java Recursion Explained", url: "https://www.youtube.com/watch?v=IJDJ0kBx2gw" } ], "Arrays": [ { title: "cplusplus.com: C++ Arrays", url: "http://www.cplusplus.com/doc/tutorial/arrays/" }, { title: "Oracle Docs: Java Arrays", url: "https://docs.oracle.com/javase/tutorial/java/nutsandbolts/arrays.html" } ], "Strings": [ { title: "GeeksforGeeks: C++ string Class", url: "https://www.geeksforgeeks.org/stdstring-class-in-c/" }, { title: "Baeldung: Guide to Java String", url: "https://www.baeldung.com/java-string" } ], "OOP": [ { title: "FreeCodeCamp: OOP in C++", url: "https://www.freecodecamp.org/news/object-oriented-programming-in-c/" }, { title: "Oracle Docs: OOP Concepts in Java", url: "https://docs.oracle.com/javase/tutorial/java/concepts/index.html" } ], "Classes & Objects": [ { title: "GeeksforGeeks: C++ Classes and Objects", url: "https://www.geeksforgeeks.org/c-classes-and-objects/" }, { title: "W3Schools: Java Classes/Objects", url: "https://www.w3schools.com/java/java_classes.asp" } ], "Constructors": [ { title: "Programiz: C++ Constructors", url: "https://www.programiz.com/cpp-programming/constructors" }, { title: "Baeldung: Java Constructors", url: "https://www.baeldung.com/java-constructors" } ], "Inheritance": [ { title: "cplusplus.com: C++ Inheritance", url: "http://www.cplusplus.com/doc/tutorial/inheritance/" }, { title: "GeeksforGeeks: Inheritance in Java", url: "https://www.geeksforgeeks.org/inheritance-in-java/" } ], "Polymorphism": [ { title: "GeeksforGeeks: Polymorphism in C++", url: "https://www.geeksforgeeks.org/polymorphism-in-c/" }, { title: "Baeldung: Polymorphism in Java", url: "https://www.baeldung.com/java-polymorphism" } ], "Abstraction": [ { title: "TutorialsPoint: C++ Abstraction", url: "https://www.tutorialspoint.com/cplusplus/cpp_data_abstraction.htm" }, { title: "W3Schools: Java Abstraction", url: "https://www.w3schools.com/java/java_abstract.asp" } ], "Interfaces": [ { title: "GeeksforGeeks: C++ Abstract Class/Interfaces", url: "https://www.geeksforgeeks.org/interfaces-in-c/" }, { title: "Oracle Docs: Java Interfaces", url: "https://docs.oracle.com/javase/tutorial/java/IandI/createinterface.html" } ], "Pointers": [ { title: "GeeksforGeeks: C++ Pointers", url: "https://www.geeksforgeeks.org/cpp-pointers/" }, { title: "Video: Pointers in C++ in 15 Mins", url: "https://www.youtube.com/watch?v=EvYmTCasB4A" } ], "STL": [ { title: "TopCoder: Power of C++ STL", url: "https://www.topcoder.com/thrive/articles/Power-of-C-Standard-Template-Library-STL" }, { title: "Video: C++ STL Full Course", url: "https://www.youtube.com/watch?v=s_t0Ua2jA-c" } ], "Vectors": [ { title: "cplusplus.com: C++ std::vector", url: "https://cplusplus.com/reference/vector/vector/"}, { title: "Baeldung: Java ArrayList", url: "https://www.baeldung.com/java-arraylist"} ], "Collections": [ { title: "Baeldung: Guide to Java Collections", url: "https://www.baeldung.com/java-collections" }, { title: "Video: Java Collections Framework", url: "https://www.youtube.com/watch?v=rzA7UJ-hQn4" } ], "HashMap": [ { title: "GeeksforGeeks: C++ std::unordered_map", url: "https://www.geeksforgeeks.org/unordered_map-in-cpp-stl/" }, { title: "Baeldung: Java HashMap", url: "https://www.baeldung.com/java-hashmap" } ], "Linked Lists": [ { title: "Programiz: C++ Linked List", url: "https://www.programiz.com/dsa/linked-list" }, { title: "GeeksforGeeks: Java LinkedList", url: "https://www.geeksforgeeks.org/linked-list-in-java/" } ], "Stacks & Queues": [ { title: "GeeksforGeeks: C++ Stack vs Queue", url: "https://www.geeksforgeeks.org/stack-vs-queue/" }, { title: "Baeldung: Java Stack and Queue", url: "https://www.baeldung.com/java-stack-queue" } ], "Trees": [ { title: "FreeCodeCamp: Tree Data Structure", url: "https://www.freecodecamp.org/news/tree-data-structure-in-c-plus-plus/" }, { title: "Baeldung: Binary Tree in Java", url: "https://www.baeldung.com/java-binary-tree" } ], "Sorting Algorithms": [ { title: "GeeksforGeeks: C++ Sorting Algorithms", url: "https://www.geeksforgeeks.org/sorting-algorithms-in-c/" }, { title: "HackerEarth: Sorting Algorithms in Java", url: "https://www.hackerearth.com/practice/algorithms/sorting/bubble-sort/tutorial/" } ], "Searching Algorithms": [ { title: "Programiz: C++ Binary Search", url: "https://www.programiz.com/dsa/binary-search" }, { title: "Baeldung: Binary Search in Java", url: "https://www.baeldung.com/java-binary-search" } ] };
-    const allBadges = { 'INITIATED': { icon: 'fa-solid fa-play', title: 'Initiated', desc: 'Completed Day 1' }, '7_DAY_STREAK': { icon: 'fa-solid fa-fire-flame-curved', title: 'On Fire', desc: 'Maintained a 7-day streak' }, '15_DAY_STREAK': { icon: 'fa-solid fa-meteor', title: 'Meteor Shower', desc: 'Maintained a 15-day streak' }, 'HALF_WAY': { icon: 'fa-solid fa-mountain-sun', title: 'Halfway There', desc: 'Completed Day 20' }, 'COURSE_COMPLETE': { icon: 'fa-solid fa-crown', title: 'Master Coder', desc: 'Completed all 40 days!' }, 'WEEKEND_WARRIOR': { icon: 'fa-solid fa-calendar-week', title: 'Weekend Warrior', desc: 'Completed a task on a weekend' } };
+        // --- 2. STATIC DATA (COURSES, etc.) ---
+        const courses = [ { language: "C++", levels: [ { level: "Beginner", title: "Fundamentals & Syntax", days: [ { day: 1, topic: "Structure of a Simple C++ Program (Hello World, #include, main())" }, { day: 2, topic: "Input and Output (cin, cout, endl, basic formatting)" }, { day: 3, topic: "Variables & Data Types (int, float, char, string, bool)" }, { day: 4, topic: "Operators (Arithmetic, Assignment, Increment/Decrement)" }, { day: 5, topic: "Conditional Statements (if, else, nested if)" }, { day: 6, topic: "Logical Operators & Comparisons" }, { day: 7, topic: "Switch Statements" }, { day: 8, topic: "Loops — while, do-while" }, { day: 9, topic: "Loops — for loop, nested loops" }, { day: 10, topic: "Practice: Basic Patterns & Control Flow Questions" } ] }, { level: "Intermediate", title: "Functions & Arrays", days: [ { day: 11, topic: "Functions — Basics, Declaration & Definition" }, { day: 12, topic: "Function Arguments & Return Types" }, { day: 13, topic: "Recursion Basics" }, { day: 14, topic: "Arrays — 1D Arrays Intro" }, { day: 15, topic: "Arrays — 1D Operations & Questions" }, { day: 16, topic: "2D Arrays — Basics" }, { day: 17, topic: "2D Arrays — Classic Problems (Matrix Transpose, Sum)" }, { day: 18, topic: "Strings — C++ Strings, Basic Operations" }, { day: 19, topic: "Strings — Character Arrays vs string Class" }, { day: 20, topic: "Practice: Functions + Arrays + Strings Combined Problems" } ] }, { level: "Advanced", title: "Classes, OOP & STL", days: [ { day: 21, topic: "Intro to OOP — Classes & Objects" }, { day: 22, topic: "Constructors & Destructors" }, { day: 23, topic: "Member Functions & Data Members" }, { day: 24, topic: "Encapsulation & Access Modifiers" }, { day: 25, topic: "Inheritance — Types & Examples" }, { day: 26, topic: "Polymorphism — Function Overloading" }, { day: 27, topic: "Polymorphism — Operator Overloading" }, { day: 28, topic: "Abstract Classes & Pure Virtual Functions" }, { day: 29, topic: "Intro to Standard Template Library (STL)" }, { day: 30, topic: "STL — Vectors & Iterators" } ] }, { level: "Pro", title: "Advanced Concepts + DSA", days: [ { day: 31, topic: "Pointers — Basics, * and &" }, { day: 32, topic: "Pointers — Arrays & Functions" }, { day: 33, topic: "Dynamic Memory Allocation (new and delete)" }, { day: 34, topic: "Linked Lists — Intro & Implementation" }, { day: 35, topic: "Stacks & Queues (Concepts + STL)" }, { day: 36, topic: "Trees — Basics & Binary Tree" }, { day: 37, topic: "Binary Search & Binary Search Trees" }, { day: 38, topic: "Sorting Algorithms — Bubble, Selection, Insertion" }, { day: 39, topic: "Searching Algorithms — Linear & Binary Search" }, { day: 40, topic: "Final Practice: Mixed Interview Questions (Patterns, STL, DSA)" } ] } ] }, { language: "Java", levels: [ { level: "Beginner", title: "Java Basics & Syntax", days: [ { day: 1, topic: "Intro: How Java Works, JVM, JDK, First Hello World" }, { day: 2, topic: "Variables & Data Types" }, { day: 3, topic: "Input & Output — Scanner" }, { day: 4, topic: "Operators — Arithmetic, Assignment" }, { day: 5, topic: "Conditional Statements — if, else if, else" }, { day: 6, topic: "Logical Operators & Comparisons" }, { day: 7, topic: "Switch Case" }, { day: 8, topic: "Loops — while & do-while" }, { day: 9, topic: "Loops — for loop, nested loops" }, { day: 10, topic: "Practice: Basic Pattern Printing" } ] }, { level: "Intermediate", title: "Methods & Arrays", days: [ { day: 11, topic: "Methods — Definition & Calling" }, { day: 12, topic: "Method Overloading" }, { day: 13, topic: "Recursion Basics" }, { day: 14, topic: "Arrays — 1D Arrays" }, { day: 15, topic: "Arrays — Basic Problems" }, { day: 16, topic: "2D Arrays" }, { day: 17, topic: "2D Array Classic Problems (Transpose, Sum)" }, { day: 18, topic: "Strings — Basics & String Class" }, { day: 19, topic: "String Methods & Immutability" }, { day: 20, topic: "Practice: Arrays + Strings Problems" } ] }, { level: "Advanced", title: "OOP & Advanced Classes", days: [ { day: 21, topic: "OOP Concepts — Classes & Objects" }, { day: 22, topic: "Constructors" }, { day: 23, topic: "Getters & Setters" }, { day: 24, topic: "this Keyword" }, { day: 25, topic: "Inheritance" }, { day: 26, topic: "super Keyword" }, { day: 27, topic: "Method Overriding" }, { day: 28, topic: "Polymorphism" }, { day: 29, topic: "Abstraction & Interfaces" }, { day: 30, topic: "Encapsulation — Real Example" } ] }, { level: "Pro", title: "Core DSA & Collections", days: [ { day: 31, topic: "Intro to Java Collections" }, { day: 32, topic: "ArrayList — Basics & Operations" }, { day: 33, topic: "LinkedList — Basics & Operations" }, { day: 34, topic: "HashMap — Basics & Use Cases" }, { day: 35, topic: "HashSet — Basics & Differences" }, { day: 36, topic: "Stack & Queue in Java" }, { day: 37, topic: "Sorting Algorithms — Bubble & Selection" }, { day: 38, topic: "Searching — Linear & Binary Search" }, { day: 39, topic: "Trees — Basic Binary Tree Concepts" }, { day: 40, topic: "Practice Day — Mixed DSA Questions" } ] } ] } ];
+        const allBadges = { 'INITIATED': { icon: 'fa-solid fa-play', title: 'Initiated', desc: 'Completed Day 1' }, '7_DAY_STREAK': { icon: 'fa-solid fa-fire-flame-curved', title: 'On Fire', desc: 'Maintained a 7-day streak' }, '15_DAY_STREAK': { icon: 'fa-solid fa-meteor', title: 'Meteor Shower', desc: 'Maintained a 15-day streak' }, 'HALF_WAY': { icon: 'fa-solid fa-mountain-sun', title: 'Halfway There', desc: 'Completed Day 20' }, 'COURSE_COMPLETE': { icon: 'fa-solid fa-crown', title: 'Master Coder', desc: 'Completed all 40 days!' }, 'WEEKEND_WARRIOR': { icon: 'fa-solid fa-calendar-week', title: 'Weekend Warrior', desc: 'Completed a task on a weekend' } };
 
-    // --- 3. CORE LOGIC ---
-    async function loadDashboard() {
-        if (!token) { window.location.href = 'login.html'; return; }
-        try {
-            const res = await fetch('/api/user/me', { headers: { 'Authorization': `Bearer ${token}` } });
-            if (!res.ok) throw new Error('Session expired or unauthorized.');
-            const data = await res.json();
-            
-            currentUserState = data;
-            
-            if (!currentUserState.language || !currentUserState.level) {
-                alert('Please complete your schedule setup.');
-                window.location.href = 'set-schedule.html';
+        // --- 3. CORE LOGIC ---
+        async function loadDashboard() {
+            if (!token) { window.location.href = 'login.html'; return; }
+            try {
+                const res = await fetch('/api/user/me', { headers: { 'Authorization': `Bearer ${token}` } });
+                if (!res.ok) throw new Error('Session expired or unauthorized.');
+                const data = await res.json();
+                
+                currentUserState = data;
+                
+                if (!currentUserState.language || !currentUserState.level) {
+                    alert('Please complete your schedule setup.');
+                    window.location.href = 'set-schedule.html';
+                    return;
+                }
+                
+                updateDashboardUI(currentUserState);
+            } catch (error) {
+                alert(error.message);
+                localStorage.removeItem('token');
+                window.location.href = 'login.html';
+            }
+        }
+
+        // --- 4. UI RENDERING FUNCTIONS ---
+        function updateDashboardUI(data) {
+            document.getElementById('welcomeName').textContent = data.name;
+            document.getElementById('sidebar-avatar').textContent = data.name.charAt(0).toUpperCase();
+            document.getElementById('sidebar-username').textContent = data.name;
+            document.getElementById('nav-streak').textContent = data.streakCount || 0;
+            document.getElementById('lang').textContent = data.language;
+            document.getElementById('level').textContent = data.level;
+            document.getElementById('wa').textContent = data.whatsapp;
+            document.getElementById('time').textContent = data.deliveryTime;
+            const pauseBtn = document.getElementById('pauseBtn');
+            pauseBtn.textContent = data.isPaused ? 'Resume Course' : 'Pause Course';
+            pauseBtn.className = `btn-action ${data.isPaused ? 'btn-resume' : 'btn-pause'}`;
+            renderStreakStatus(data);
+            renderCurriculum(data);
+            renderCodingProfiles(data.codingProfiles);
+            renderAchievements(data.achievements);
+            renderContributionHeatmap(data.completedTopics);
+        }
+        
+        function renderStreakStatus(data) {
+            const streak = data.streakCount || 0;
+            const completedDays = data.completedTopics.length;
+            const totalDays = 40;
+            const progressPercent = Math.round((completedDays / totalDays) * 100);
+            document.getElementById('streak-card').textContent = streak;
+            document.getElementById('progress-bar').style.width = `${progressPercent}%`;
+            document.getElementById('progress-text').textContent = `${completedDays} of ${totalDays} days complete`;
+            document.getElementById('status-dot').className = `status-indicator ${data.isPaused ? 'paused' : 'active'}`;
+            document.getElementById('status-text').textContent = data.isPaused ? 'Paused' : 'Active';
+            document.getElementById('next-day').textContent = data.currentDay > totalDays ? 'Done!' : data.currentDay;
+        }
+
+        function renderCurriculum(data) {
+            const container = document.getElementById('curriculum-container');
+            const userCourse = courses.find(c => c.language === data.language);
+            if (!container || !userCourse) { container.innerHTML = '<p>Could not load.</p>'; return; }
+            container.innerHTML = '';
+            const completedDaysSet = new Set(data.completedTopics.map(t => t.order));
+            userCourse.levels.forEach(level => {
+                const levelDiv = document.createElement('div');
+                levelDiv.className = 'course-level';
+                levelDiv.innerHTML = `<h4><i class="fas fa-layer-group"></i> ${level.level}: <span class="level-title">${level.title}</span></h4>`;
+                const daysDiv = document.createElement('div');
+                daysDiv.className = 'days';
+                level.days.forEach(day => {
+                    const dayCard = document.createElement('div');
+                    dayCard.className = 'day-card';
+                    dayCard.dataset.day = day.day;
+                    dayCard.textContent = `Day ${day.day}`;
+                    if (completedDaysSet.has(day.day)) dayCard.classList.add('completed');
+                    daysDiv.appendChild(dayCard);
+                });
+                levelDiv.appendChild(daysDiv);
+                container.appendChild(levelDiv);
+            });
+        }
+
+        function renderCodingProfiles(profiles = []) {
+            const listContainer = document.getElementById('profiles-list');
+            listContainer.innerHTML = '';
+            if (!profiles || profiles.length === 0) {
+                listContainer.innerHTML = '<p class="placeholder-text">Add your profiles!</p>';
                 return;
             }
+            profiles.forEach(profile => {
+                const item = document.createElement('div');
+                item.className = 'profile-item';
+                item.innerHTML = `<div class="profile-item-platform"><i class="${getPlatformIcon(profile.platform)}"></i><span>${profile.platform}</span></div><div class="profile-item-actions"><a href="${profile.url}" target="_blank">View</a><button class="delete-profile-btn" data-profile-id="${profile._id}"><i class="fa-solid fa-trash-can"></i></button></div>`;
+                listContainer.appendChild(item);
+            });
+            document.querySelectorAll('.delete-profile-btn').forEach(button => {
+                button.addEventListener('click', handleDeleteProfile);
+            });
+        }
+        
+        function getPlatformIcon(platform) {
+            switch (platform.toLowerCase()) {
+                case 'linkedin': return 'fa-brands fa-linkedin'; case 'github': return 'fa-brands fa-github';
+                case 'leetcode': return 'fa-solid fa-keyboard'; case 'portfolio': return 'fa-solid fa-globe';
+                default: return 'fa-solid fa-link';
+            }
+        }
+        
+        function renderAchievements(unlockedBadges = []) {
+            const grid = document.getElementById('achievements-grid');
+            if(!grid) return;
+            grid.innerHTML = '';
+            for (const badgeKey in allBadges) {
+                const badge = allBadges[badgeKey];
+                const isUnlocked = unlockedBadges && unlockedBadges.includes(badgeKey);
+                const badgeElement = document.createElement('div');
+                badgeElement.className = 'badge';
+                badgeElement.innerHTML = `<div class="badge-icon ${isUnlocked ? 'unlocked' : ''}" data-tooltip="${badge.desc}"><i class="${badge.icon}"></i></div><div class="badge-title">${badge.title}</div>`;
+                grid.appendChild(badgeElement);
+            }
+        }
+
+        function renderContributionHeatmap(completedTopics = []) {
+            const container = document.getElementById('cal-heatmap');
+            if(!container) return;
+            if (!completedTopics || completedTopics.length === 0) {
+                container.innerHTML = '<p class="placeholder-text">Complete a day to start your heatmap!</p>';
+                return;
+            }
+            const calendarData = completedTopics.filter(topic => topic.date).map(topic => ({ date: topic.date.split('T')[0], value: 1 }));
+            if (calendarData.length === 0) {
+                container.innerHTML = '<p class="placeholder-text">Your activity will appear here.</p>';
+                return;
+            }
+            if (cal) cal.destroy();
+            cal = new CalHeatmap();
+            cal.paint({ itemSelector: "#cal-heatmap", domain: { type: "month", label: { text: "MMM", textAlign: "start", width: 30 } }, subDomain: { type: "ghDay", width: 15, height: 15, radius: 3 }, range: 6, data: { source: calendarData, x: "date", y: "value" }, scale: { color: { type: "threshold", range: ["#161B22", "#3B82F6"], domain: [1] } } }, [[CalHeatmap.Tooltip, { text: (d, v) => `${v || 'No'} contribution${v !== 1 ? 's' : ''}` } ]]);
+        }
+        
+        // --- 5. INTERACTIVE LOGIC (MODALS, WORKSPACE, API CALLS) ---
+        async function launchWorkspace() {
+            if (!selectedWorkspaceDay) { alert('Please select a day from the curriculum first.'); return; }
+            const workspaceModal = document.getElementById('workspaceModal');
+            openModal(workspaceModal);
+            const ideContainer = document.getElementById('ide-container');
+            ideContainer.innerHTML = '<p style="text-align:center; padding: 2rem;">Booting coding environment...</p>';
+            const runBtn = document.getElementById('runCodeBtn');
+            runBtn.disabled = true;
+            runBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Installing...';
             
-            updateDashboardUI(currentUserState);
-        } catch (error) {
-            alert(error.message);
-            localStorage.removeItem('token');
-            window.location.href = 'login.html';
-        }
-    }
-
-    // --- 4. UI RENDERING FUNCTIONS ---
-    function updateDashboardUI(data) {
-        // Main user info in sidebar
-        document.getElementById('welcomeName').textContent = data.name;
-        document.getElementById('sidebar-avatar').textContent = data.name.charAt(0).toUpperCase();
-        document.getElementById('sidebar-username').textContent = data.name;
-        document.getElementById('nav-streak').textContent = data.streakCount || 0;
-        
-        // Setup card
-        document.getElementById('lang').textContent = data.language;
-        document.getElementById('level').textContent = data.level;
-        document.getElementById('wa').textContent = data.whatsapp;
-        document.getElementById('time').textContent = data.deliveryTime;
-        const pauseBtn = document.getElementById('pauseBtn');
-        pauseBtn.textContent = data.isPaused ? 'Resume Course' : 'Pause Course';
-        pauseBtn.className = `btn-action ${data.isPaused ? 'btn-resume' : 'btn-pause'}`;
-
-        // Call individual component renderers
-        renderStreakStatus(data);
-        renderCurriculum(data);
-        renderCodingProfiles(data.codingProfiles);
-        renderAchievements(data.achievements);
-        renderContributionHeatmap(data.completedTopics);
-        renderTipsAndResources(data);
-    }
-    
-    function renderStreakStatus(data) {
-        const streak = data.streakCount || 0;
-        const completedDays = data.completedTopics.length;
-        const totalDays = 40;
-        const progressPercent = Math.round((completedDays / totalDays) * 100);
-        document.getElementById('streak-card').textContent = streak;
-        document.getElementById('progress-bar').style.width = `${progressPercent}%`;
-        document.getElementById('progress-text').textContent = `${completedDays} of ${totalDays} days complete`;
-        document.getElementById('status-dot').className = `status-indicator ${data.isPaused ? 'paused' : 'active'}`;
-        document.getElementById('status-text').textContent = data.isPaused ? 'Paused' : 'Active';
-        document.getElementById('next-day').textContent = data.currentDay > totalDays ? 'Done!' : data.currentDay;
-    }
-
-    function renderCurriculum(data) {
-        const container = document.getElementById('curriculum-container');
-        const userCourse = courses.find(c => c.language === data.language);
-        if (!container || !userCourse) { container.innerHTML = '<p>Could not load.</p>'; return; }
-        container.innerHTML = '';
-        const completedDaysSet = new Set(data.completedTopics.map(t => t.order));
-        userCourse.levels.forEach(level => {
-            const levelDiv = document.createElement('div');
-            levelDiv.className = 'course-level';
-            levelDiv.innerHTML = `<h4><i class="fas fa-layer-group"></i> ${level.level}: <span class="level-title">${level.title}</span></h4>`;
-            const daysDiv = document.createElement('div');
-            daysDiv.className = 'days';
-            level.days.forEach(day => {
-                const dayCard = document.createElement('div');
-                dayCard.className = 'day-card';
-                dayCard.dataset.day = day.day;
-                dayCard.textContent = `Day ${day.day}`;
-                if (completedDaysSet.has(day.day)) dayCard.classList.add('completed');
-                daysDiv.appendChild(dayCard);
-            });
-            levelDiv.appendChild(daysDiv);
-            container.appendChild(levelDiv);
-        });
-    }
-
-    function renderCodingProfiles(profiles = []) {
-        const listContainer = document.getElementById('profiles-list');
-        listContainer.innerHTML = '';
-        if (!profiles || profiles.length === 0) {
-            listContainer.innerHTML = '<p class="placeholder-text">Add your profiles!</p>';
-            return;
-        }
-        profiles.forEach(profile => {
-            const item = document.createElement('div');
-            item.className = 'profile-item';
-            item.innerHTML = `<div class="profile-item-platform"><i class="${getPlatformIcon(profile.platform)}"></i><span>${profile.platform}</span></div><div class="profile-item-actions"><a href="${profile.url}" target="_blank">View</a><button class="delete-profile-btn" data-profile-id="${profile._id}"><i class="fa-solid fa-trash-can"></i></button></div>`;
-            listContainer.appendChild(item);
-        });
-        document.querySelectorAll('.delete-profile-btn').forEach(button => {
-            button.addEventListener('click', handleDeleteProfile);
-        });
-    }
-    
-    function getPlatformIcon(platform) {
-        switch (platform.toLowerCase()) {
-            case 'linkedin': return 'fa-brands fa-linkedin'; case 'github': return 'fa-brands fa-github';
-            case 'leetcode': return 'fa-solid fa-keyboard'; case 'portfolio': return 'fa-solid fa-globe';
-            default: return 'fa-solid fa-link';
-        }
-    }
-    
-    function renderAchievements(unlockedBadges = []) {
-        const grid = document.getElementById('achievements-grid');
-        grid.innerHTML = '';
-        for (const badgeKey in allBadges) {
-            const badge = allBadges[badgeKey];
-            const isUnlocked = unlockedBadges.includes(badgeKey);
-            const badgeElement = document.createElement('div');
-            badgeElement.className = 'badge';
-            badgeElement.innerHTML = `<div class="badge-icon ${isUnlocked ? 'unlocked' : ''}" data-tooltip="${badge.desc}"><i class="${badge.icon}"></i></div><div class="badge-title">${badge.title}</div>`;
-            grid.appendChild(badgeElement);
-        }
-    }
-
-   // dashboard.html -> <script> tag
-
-// ✅ REPLACE your old renderContributionHeatmap function with this one
-
-function renderContributionHeatmap(completedTopics = []) {
-    // Safety check: If there are no topics, do nothing.
-    if (!completedTopics || completedTopics.length === 0) {
-        document.getElementById('cal-heatmap').innerHTML = '<p class="placeholder-text">Complete your first day to start your heatmap!</p>';
-        return;
-    }
-
-    // New, safer way to process data: FILTER out any topics that don't have a date.
-    const calendarData = completedTopics
-        .filter(topic => topic.date) // This is the crucial line
-        .map(topic => ({
-            date: topic.date.split('T')[0],
-            value: 1
-        }));
-
-    // If, after filtering, there's no data to show, display a message.
-    if (calendarData.length === 0) {
-        document.getElementById('cal-heatmap').innerHTML = '<p class="placeholder-text">Your activity will appear here.</p>';
-        return;
-    }
-
-    if (cal) cal.destroy();
-    cal = new CalHeatmap();
-    cal.paint({
-        itemSelector: "#cal-heatmap",
-        domain: { type: "month", label: { text: "MMM", textAlign: "start", width: 30 } },
-        subDomain: { type: "ghDay", width: 15, height: 15, radius: 3 },
-        range: 6,
-        data: { source: calendarData, x: "date", y: "value" },
-        scale: {
-            color: {
-                type: "threshold",
-                range: ["#161B22", "#3B82F6"],
-                domain: [1],
-            },
-        },
-    }, 
-    [
-      [
-        CalHeatmap.Tooltip,
-        {
-          text: function (date, value, dayjsDate) {
-            return (value ? value : "No") + " contribution" + (value !== 1 ? "s" : "") + " on " + dayjsDate.format("MMMM D, YYYY");
-          },
-        },
-      ],
-    ]);
-}
-
-    function renderTipsAndResources(data) {
-        const lang = data.language;
-        const nextDay = data.currentDay > 40 ? null : data.currentDay;
-        const nextTopic = nextDay ? courses.find(c => c.language === lang).levels.flatMap(l => l.days).find(d => d.day === nextDay)?.topic : "Course Complete";
-        const resourceContainer = document.getElementById('resource-hub-content');
-        resourceContainer.innerHTML = ''; // Not implemented in this version
-        const tipContainer = document.getElementById('quick-tip-text');
-        const tipsForLang = quickTips[lang] || [];
-        if (tipsForLang.length > 0) {
-            tipContainer.textContent = tipsForLang[Math.floor(Math.random() * tipsForLang.length)];
-        } else {
-            tipContainer.textContent = 'No tips available.';
-        }
-    }
-    
-    // --- 5. INTERACTIVE LOGIC (MODALS, WORKSPACE, API CALLS) ---
-    async function launchWorkspace() {
-        if (!selectedWorkspaceDay) { alert('Please select a day from the curriculum first.'); return; }
-        const workspaceModal = document.getElementById('workspaceModal');
-        openModal(workspaceModal);
-        const ideContainer = document.getElementById('ide-container');
-        ideContainer.innerHTML = '<p style="text-align:center; padding: 2rem;">Booting coding environment...</p>';
-        const runBtn = document.getElementById('runCodeBtn');
-        runBtn.disabled = true;
-        runBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Installing...';
-        
-        const savedProject = currentUserState.projects.find(p => p.day === selectedWorkspaceDay);
-        let projectTemplate = 'node';
-        let openFileName = 'main.cpp';
-        let templateFiles = {
-            'main.cpp': `#include <iostream>\n\nint main() {\n    // Day ${selectedWorkspaceDay}: Your code here!\n    std::cout << "Hello, World!" << std::endl;\n    return 0;\n}`,
-            '.stackblitzrc': `{"startCommand": "bash ./.setup.sh"}`,
-            '.setup.sh': `#!/bin/bash\n# Install C++ compiler (g++)\necho "Installing C++ compiler..."\nsudo apt-get update > /dev/null 2>&1 && sudo apt-get install -y g++ > /dev/null 2>&1\necho "Compiler installed. You can now use the 'Run Code' button."\n`
-        };
-
-        if (currentUserState.language === 'Java') {
-            projectTemplate = 'java';
-            openFileName = 'Main.java';
-            templateFiles = { 'Main.java': `public class Main {\n    public static void main(String[] args) {\n        System.out.println("Day ${selectedWorkspaceDay}: Your code here!");\n    }\n}` };
-        }
-        
-        if(savedProject) { templateFiles = savedProject.files; openFileName = Object.keys(savedProject.files)[0] || openFileName; }
-
-        try {
-            ideVm = await StackBlitzSDK.embedProject(
-                ideContainer,
-                { title: `Day ${selectedWorkspaceDay} - ${currentUserState.language}`, description: 'My project for The Habit Loop.', template: projectTemplate, files: templateFiles },
-                { openFile: openFileName, theme: 'dark' }
-            );
-
+            const savedProject = currentUserState.projects.find(p => p.day === selectedWorkspaceDay);
+            let projectTemplate = 'node';
+            let openFileName = 'main.cpp';
+            let templateFiles = {
+                'main.cpp': `#include <iostream>\n\nint main() {\n    // Day ${selectedWorkspaceDay}: Your code here!\n    std::cout << "Hello, World!" << std::endl;\n    return 0;\n}`,
+                '.stackblitzrc': `{"startCommand": "bash ./.setup.sh"}`,
+                '.setup.sh': `#!/bin/bash\n# Install C++ compiler (g++)\necho "Installing C++ compiler..."\nsudo apt-get update > /dev/null 2>&1 && sudo apt-get install -y g++ > /dev/null 2>&1\necho "Compiler installed. You can now use the 'Run Code' button."\n`
+            };
             if (currentUserState.language === 'Java') {
-                 runBtn.disabled = false; runBtn.innerHTML = '<i class="fa-solid fa-play"></i> Run Code'; return;
+                projectTemplate = 'java';
+                openFileName = 'Main.java';
+                templateFiles = { 'Main.java': `public class Main {\n    public static void main(String[] args) {\n        System.out.println("Day ${selectedWorkspaceDay}: Your code here!");\n    }\n}` };
             }
+            if(savedProject && savedProject.files) { templateFiles = savedProject.files; openFileName = Object.keys(savedProject.files)[0] || openFileName; }
 
-            const unsubscribe = ideVm.subscribe((data) => {
-                if (data.type === 'output' && data.payload.data.includes('Compiler installed')) {
-                    runBtn.disabled = false; runBtn.innerHTML = '<i class="fa-solid fa-play"></i> Run Code';
-                    unsubscribe();
+            try {
+                ideVm = await StackBlitzSDK.embedProject(
+                    ideContainer,
+                    { title: `Day ${selectedWorkspaceDay} - ${currentUserState.language}`, description: 'My project', template: projectTemplate, files: templateFiles },
+                    { openFile: openFileName, theme: 'dark' }
+                );
+                if (currentUserState.language === 'Java') {
+                     runBtn.disabled = false; runBtn.innerHTML = '<i class="fa-solid fa-play"></i> Run Code'; return;
                 }
-            });
-        } catch (error) {
-            console.error("Failed to embed project:", error);
-            runBtn.disabled = false; runBtn.innerHTML = '<i class="fa-solid fa-play"></i> Run Code';
-        }
-    }
-
-    async function runCode() {
-        if (!ideVm) { alert('Workspace is not running.'); return; }
-        const runBtn = document.getElementById('runCodeBtn');
-        runBtn.disabled = true; runBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Running...';
-        try {
-            const activeFile = await ideVm.editor.getActiveFile();
-            if (currentUserState.language === 'C++') {
-                await ideVm.cli.run(`g++ ${activeFile} -o myprogram && ./myprogram`);
-            } else if (currentUserState.language === 'Java') {
-                await ideVm.cli.run(`javac ${activeFile} && java ${activeFile.replace('.java', '')}`);
+                const unsubscribe = ideVm.subscribe((data) => {
+                    if (data.type === 'output' && data.payload.data.includes('Compiler installed')) {
+                        runBtn.disabled = false; runBtn.innerHTML = '<i class="fa-solid fa-play"></i> Run Code';
+                        unsubscribe();
+                    }
+                });
+            } catch (error) {
+                console.error("Failed to embed project:", error);
+                runBtn.disabled = false; runBtn.innerHTML = '<i class="fa-solid fa-play"></i> Run Code';
             }
-        } catch (error) {
-            console.error('Error running code:', error);
-            alert('An error occurred. Check terminal for details.');
-        } finally {
-            runBtn.disabled = false; runBtn.innerHTML = '<i class="fa-solid fa-play"></i> Run Code';
         }
-    }
 
-    async function saveProject() {
-        if (!ideVm || !selectedWorkspaceDay) return;
-        const saveBtn = document.getElementById('saveProjectBtn');
-        saveBtn.disabled = true; saveBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
+        async function runCode() {
+            if (!ideVm) { alert('Workspace not running.'); return; }
+            const runBtn = document.getElementById('runCodeBtn');
+            runBtn.disabled = true; runBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Running...';
+            try {
+                const activeFile = await ideVm.editor.getActiveFile();
+                if (currentUserState.language === 'C++') {
+                    await ideVm.cli.run(`g++ ${activeFile} -o myprogram && ./myprogram`);
+                } else if (currentUserState.language === 'Java') {
+                    await ideVm.cli.run(`javac ${activeFile} && java ${activeFile.replace('.java', '')}`);
+                }
+            } catch (error) {
+                console.error('Error running code:', error);
+                alert('An error occurred. Check terminal for details.');
+            } finally {
+                runBtn.disabled = false; runBtn.innerHTML = '<i class="fa-solid fa-play"></i> Run Code';
+            }
+        }
+
+        async function saveProject() {
+            if (!ideVm || !selectedWorkspaceDay) return;
+            const saveBtn = document.getElementById('saveProjectBtn');
+            saveBtn.disabled = true; saveBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
+            try {
+                const files = await ideVm.getFsSnapshot();
+                const res = await fetch('/api/user/project', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                    body: JSON.stringify({ day: selectedWorkspaceDay, files: files })
+                });
+                if (!res.ok) throw new Error('Failed to save project.');
+                const data = await res.json();
+                alert('Project saved successfully!');
+                if(data.user) currentUserState = data.user;
+            } catch (error) {
+                alert('Error: ' + error.message);
+            } finally {
+                saveBtn.disabled = false; saveBtn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Save Project';
+            }
+        }
+
+        async function handleDeleteProfile(event) {
+            const profileId = event.currentTarget.dataset.profileId;
+            if (!confirm('Are you sure?')) return;
+            try {
+                const res = await fetch(`/api/user/profiles/${profileId}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
+                if (!res.ok) throw new Error((await res.json()).message);
+                const data = await res.json();
+                alert(data.message);
+                currentUserState = data.user;
+                updateDashboardUI(currentUserState);
+            } catch (error) { alert('Error: ' + error.message); }
+        }
+        
+        // --- 6. INITIALIZATION & EVENT LISTENERS ---
+        // --- 6. INITIALIZATION & EVENT LISTENERS ---
+document.addEventListener('DOMContentLoaded', () => {
+    loadDashboard();
+
+    // Modal open/close helper functions
+    const openModal = (modal) => modal.classList.add('show');
+    const closeModal = (modal) => modal.classList.remove('show');
+
+    // General Button & Link Listeners
+    document.getElementById('menu-toggle').addEventListener('click', () => document.getElementById('app-sidebar').classList.toggle('show'));
+    document.getElementById('logoutBtn').addEventListener('click', () => { localStorage.removeItem('token'); window.location.href = 'index.html'; });
+    document.getElementById('editBtn').addEventListener('click', () => { if (confirm('This will reset your progress. Are you sure?')) window.location.href = 'set-schedule.html'; });
+    document.getElementById('editTimeBtn').addEventListener('click', (e) => { e.preventDefault(); openModal(document.getElementById('timeModal')); });
+    document.getElementById('editNumberBtn').addEventListener('click', (e) => { e.preventDefault(); openModal(document.getElementById('numberModal')); });
+    document.getElementById('addProfileBtn').addEventListener('click', () => openModal(document.getElementById('profileModal')));
+    document.querySelectorAll('[data-close-modal]').forEach(btn => btn.addEventListener('click', () => closeModal(document.getElementById(btn.dataset.closeModal))));
+    document.getElementById('curriculum-workspace-btn').addEventListener('click', launchWorkspace);
+    document.getElementById('runCodeBtn').addEventListener('click', runCode);
+    document.getElementById('saveProjectBtn').addEventListener('click', saveProject);
+    
+    // Pause/Resume Button Logic
+    document.getElementById('pauseBtn').addEventListener('click', async (e) => {
+        const button = e.currentTarget;
+        button.disabled = true;
+        const isResuming = currentUserState.isPaused;
         try {
-            const files = await ideVm.getFsSnapshot();
-            const res = await fetch('/api/user/project', {
+            const res = await fetch('/api/user/pause', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-                body: JSON.stringify({ day: selectedWorkspaceDay, files: files })
+                body: JSON.stringify({ resetStreak: isResuming })
             });
-            if (!res.ok) throw new Error('Failed to save project.');
-            alert('Project saved successfully!');
-            // Refresh user state to include the new project data
-            const updatedUser = (await res.json()).user;
-            if(updatedUser) currentUserState = updatedUser;
-        } catch (error) {
-            alert('Error: ' + error.message);
-        } finally {
-            saveBtn.disabled = false; saveBtn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Save Project';
-        }
-    }
-
-    async function handleDeleteProfile(event) {
-        const profileId = event.currentTarget.dataset.profileId;
-        if (!confirm('Are you sure you want to delete this profile?')) return;
-        try {
-            const res = await fetch(`/api/user/profiles/${profileId}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
-            if (!res.ok) throw new Error((await res.json()).message || 'Failed to delete profile.');
+            if (!res.ok) throw new Error((await res.json()).message || 'Failed to update status.');
             const data = await res.json();
             alert(data.message);
             currentUserState = data.user;
             updateDashboardUI(currentUserState);
         } catch (error) {
             alert('Error: ' + error.message);
+        } finally {
+            button.disabled = false;
         }
-    }
-    
-    // --- 6. INITIALIZATION & EVENT LISTENERS ---
-    document.addEventListener('DOMContentLoaded', () => {
-        loadDashboard();
-
-        // Modal open/close helper functions
-        const openModal = (modal) => modal.classList.add('show');
-        const closeModal = (modal) => modal.classList.remove('show');
-
-        // General Button & Link Listeners
-        document.getElementById('menu-toggle').addEventListener('click', () => document.getElementById('app-sidebar').classList.toggle('show'));
-        document.getElementById('logoutBtn').addEventListener('click', () => { localStorage.removeItem('token'); window.location.href = 'index.html'; });
-        document.getElementById('editBtn').addEventListener('click', () => { if (confirm('This will reset your progress. Are you sure?')) window.location.href = 'set-schedule.html'; });
-        document.getElementById('editTimeBtn').addEventListener('click', (e) => { e.preventDefault(); openModal(document.getElementById('timeModal')); });
-        document.getElementById('editNumberBtn').addEventListener('click', (e) => { e.preventDefault(); openModal(document.getElementById('numberModal')); });
-        document.getElementById('addProfileBtn').addEventListener('click', () => openModal(document.getElementById('profileModal')));
-        document.querySelectorAll('[data-close-modal]').forEach(btn => btn.addEventListener('click', () => closeModal(document.getElementById(btn.dataset.closeModal))));
-        document.getElementById('curriculum-workspace-btn').addEventListener('click', launchWorkspace);
-        document.getElementById('runCodeBtn').addEventListener('click', runCode);
-        document.getElementById('saveProjectBtn').addEventListener('click', saveProject);
-        
-        document.getElementById('pauseBtn').addEventListener('click', async () => {
-            const isResuming = currentUserState.isPaused;
-            try {
-                const res = await fetch('/api/user/pause', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-                    body: JSON.stringify({ resetStreak: isResuming })
-                });
-                if (!res.ok) throw new Error((await res.json()).message || 'Failed to update status.');
-                const data = await res.json();
-                alert(data.message);
-                currentUserState = data.user;
-                updateDashboardUI(currentUserState);
-            } catch (error) {
-                alert('Error: ' + error.message);
-            }
-        });
-
-        document.getElementById('deleteAccountBtn').addEventListener('click', async () => {
-            if (!confirm("Are you sure? This will delete all your data permanently.")) return;
-            // Add another confirm if you want
-            try {
-                const res = await fetch('/api/user/delete', { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
-                if (res.ok) {
-                    alert('Account deleted.');
-                    localStorage.removeItem('token');
-                    window.location.href = 'index.html';
-                } else {
-                    throw new Error((await res.json()).message || 'Failed to delete account.');
-                }
-            } catch (error) {
-                alert('Error: ' + error.message);
-            }
-        });
-
-        // Form Submissions
-        document.getElementById('timeForm').addEventListener('submit', async (e) => { e.preventDefault(); /* ... PATCH logic ... */ });
-        document.getElementById('numberForm').addEventListener('submit', async (e) => { e.preventDefault(); /* ... PATCH logic ... */ });
-        document.getElementById('profileForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const platform = document.getElementById('platformName').value;
-            const url = document.getElementById('profileUrl').value;
-            try {
-                const res = await fetch('/api/user/profiles', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-                    body: JSON.stringify({ platform, url })
-                });
-                if (!res.ok) throw new Error((await res.json()).message || 'Failed to add profile.');
-                const data = await res.json();
-                alert(data.message);
-                currentUserState = data.user;
-                updateDashboardUI(currentUserState);
-                closeModal(document.getElementById('profileModal'));
-                e.target.reset();
-            } catch (error) {
-                alert('Error: ' + error.message);
-            }
-        });
-
-        // Curriculum Interaction
-        document.getElementById('curriculum-container').addEventListener('click', (e) => {
-            const card = e.target.closest('.day-card');
-            if (!card) return;
-            document.querySelectorAll('.day-card.active').forEach(c => c.classList.remove('active'));
-            card.classList.add('active');
-            selectedWorkspaceDay = parseInt(card.dataset.day);
-            const btn = document.getElementById('curriculum-workspace-btn');
-            document.getElementById('workspace-day-label').textContent = selectedWorkspaceDay;
-            btn.style.display = 'block';
-        });
     });
-</script>
+
+    // Delete Account Button Logic
+    document.getElementById('deleteAccountBtn').addEventListener('click', async () => {
+        if (!confirm("Are you sure? This will delete all your data permanently.")) return;
+        if (!confirm("Last chance. This action cannot be undone. Delete?")) return;
+        try {
+            const res = await fetch('/api/user/delete', { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
+            if (res.ok) {
+                alert('Account deleted.');
+                localStorage.removeItem('token');
+                window.location.href = 'index.html';
+            } else {
+                throw new Error((await res.json()).message || 'Failed to delete account.');
+            }
+        } catch (error) {
+            alert('Error: ' + error.message);
+        }
+    });
+
+    // Form Submission Logic
+    document.getElementById('timeForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const newTime = document.getElementById('newTime').value;
+        try {
+            const res = await fetch('/api/user/update-time', {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                body: JSON.stringify({ deliveryTime: newTime })
+            });
+            if (!res.ok) throw new Error((await res.json()).message || 'Failed to update time.');
+            const data = await res.json();
+            alert(data.message);
+            currentUserState = data.user;
+            updateDashboardUI(currentUserState);
+            closeModal(document.getElementById('timeModal'));
+        } catch (error) {
+            alert('Error: ' + error.message);
+        }
+    });
+
+    document.getElementById('numberForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const newNumber = document.getElementById('newNumber').value;
+        try {
+            const res = await fetch('/api/user/update-number', {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                body: JSON.stringify({ whatsapp: newNumber })
+            });
+            if (!res.ok) throw new Error((await res.json()).message || 'Failed to update number.');
+            const data = await res.json();
+            alert(data.message);
+            currentUserState = data.user;
+            updateDashboardUI(currentUserState);
+            closeModal(document.getElementById('numberModal'));
+        } catch (error) {
+            alert('Error: ' + error.message);
+        }
+    });
+
+    document.getElementById('profileForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const platform = document.getElementById('platformName').value;
+        const url = document.getElementById('profileUrl').value;
+        try {
+            const res = await fetch('/api/user/profiles', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                body: JSON.stringify({ platform, url })
+            });
+            if (!res.ok) throw new Error((await res.json()).message || 'Failed to add profile.');
+            const data = await res.json();
+            alert(data.message);
+            currentUserState = data.user;
+            updateDashboardUI(currentUserState);
+            closeModal(document.getElementById('profileModal'));
+            e.target.reset();
+        } catch (error) {
+            alert('Error: ' + error.message);
+        }
+    });
+
+    // Curriculum Interaction
+    document.getElementById('curriculum-container').addEventListener('click', (e) => {
+        const card = e.target.closest('.day-card');
+        if (!card) return;
+        document.querySelectorAll('.day-card.active').forEach(c => c.classList.remove('active'));
+        card.classList.add('active');
+        selectedWorkspaceDay = parseInt(card.dataset.day);
+        const btn = document.getElementById('curriculum-workspace-btn');
+        document.getElementById('workspace-day-label').textContent = selectedWorkspaceDay;
+        btn.style.display = 'block';
+    });
+});
+    </script>
 </body>
 </html>
