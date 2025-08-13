@@ -184,6 +184,87 @@
         flex-direction: column;
         gap: 2rem;
     }
+    
+
+
+    /* ... a good place is after your .achievements-grid styles ... */
+
+/* --- ✅✅✅ NEW TIPS & RESOURCES STYLES ✅✅✅ --- */
+.card-header .refresh-tip-btn {
+    margin-left: auto; /* Pushes the button to the far right */
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 5px;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s, background-color 0.2s;
+}
+.card-header .refresh-tip-btn:hover {
+    color: var(--text-light);
+    background-color: var(--bg-dark);
+}
+.resource-hub-body {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+#resource-hub-content h5 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: var(--text-light);
+}
+#resource-hub-content ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.resource-link {
+    display: block;
+    text-decoration: none;
+    color: var(--text-muted);
+    font-weight: 500;
+    padding: 8px 12px;
+    border-radius: 6px;
+    background-color: var(--bg-dark);
+    border: 1px solid var(--border-color);
+    transition: all 0.2s ease;
+}
+.resource-link:hover {
+    color: var(--primary-blue);
+    border-color: var(--primary-blue);
+    transform: translateX(4px);
+}
+.resource-link i {
+    margin-right: 8px;
+}
+.tip-of-the-day {
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+}
+.tip-title {
+    font-weight: 600;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+.tip-text {
+    font-style: italic;
+    color: var(--text-light);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+/* --- ✅✅✅ END OF NEW STYLES ✅✅✅ --- */
 
     /* --- (All other card, button, and modal styles are unchanged) --- */
 
@@ -257,6 +338,24 @@
             <button class="btn-action" id="pauseBtn">Pause Course</button>
           </div>
         </div>
+         <section class="card">
+        <div class="card-header">
+            <i class="fa-solid fa-lightbulb"></i>
+            <span>Tips & Resources</span>
+            <button class="refresh-tip-btn" id="refresh-tip-btn" title="Get a new tip">
+                <i class="fa-solid fa-arrows-rotate"></i>
+            </button>
+        </div>
+        <div class="resource-hub-body">
+            <div id="resource-hub-content">
+                <!-- Resource links will be injected here by JS -->
+            </div>
+            <div class="tip-of-the-day">
+                <p class="tip-title">💡 Quick Tip:</p>
+                <p class="tip-text" id="quick-tip-text">Loading tip...</p>
+            </div>
+        </div>
+    </section>
       </aside>
 
       <!-- COLUMN 2: MAIN CONTENT -->
@@ -376,6 +475,49 @@
         });
     }
 
+    const quickTips = {
+  "C++": [
+    "Use `const` whenever possible to prevent accidental modification of variables.",
+    "Prefer `std::vector` over raw C-style arrays for dynamic sizing and safety.",
+    "The 'Rule of Three/Five/Zero' is a key concept for managing resources in classes.",
+    "Always initialize your variables. Uninitialized variables can lead to unpredictable behavior.",
+    "Use `nullptr` instead of `NULL` in modern C++ for type safety."
+  ],
+  "Java": [
+    "Remember that `String` objects in Java are immutable. Use `StringBuilder` for heavy string manipulation.",
+    "The `equals()` method checks for content equality, while `==` checks for object reference equality.",
+    "Use the Enhanced For-Loop (for-each) for cleaner iteration over collections and arrays.",
+    "Always override `hashCode()` when you override `equals()` to maintain the contract.",
+    "Interfaces are a powerful way to achieve abstraction and multiple inheritance of type."
+  ]
+};
+
+const topicResources = {
+  // Keywords from your curriculum topics are the keys here
+  "Pointers": [
+    { title: "GeeksforGeeks: C++ Pointers", url: "https://www.geeksforgeeks.org/cpp-pointers/" },
+    { title: "Video: Pointers in C++ in 15 Mins", url: "https://www.youtube.com/watch?v=EvYmTCasB4A" }
+  ],
+  "OOP": [
+    { title: "TutorialsPoint: C++ OOP", url: "https://www.tutorialspoint.com/cplusplus/cpp_object_oriented.htm" },
+    { title: "FreeCodeCamp: OOP in Java", url: "https://www.freecodecamp.org/news/object-oriented-programming-in-java/" }
+  ],
+  "Arrays": [
+    { title: "Java Arrays Documentation", url: "https://docs.oracle.com/javase/tutorial/java/nutsandbolts/arrays.html" },
+    { title: "Video: C++ Arrays Tutorial", url: "https://www.youtube.com/watch?v=1v_4dL8l8pQ" }
+  ],
+  "STL": [
+      { title: "TopCoder: Power of C++ STL", url: "https://www.topcoder.com/thrive/articles/Power-of-C-Standard-Template-Library-STL" },
+      { title: "Video: C++ STL Full Course", url: "https://www.youtube.com/watch?v=s_t0Ua2jA-c" }
+  ],
+  "Collections": [
+      { title: "Baeldung: Guide to Java Collections", url: "https://www.baeldung.com/java-collections" },
+      { title: "Video: Java Collections Framework", url: "https://www.youtube.com/watch?v=rzA7UJ-hQn4" }
+  ]
+  // You can add more keywords and links here!
+};
+
+
     function updateDashboardUI(data) {
         const userCourse = courses.find(c => c.language === data.language);
         const streak = data.streakCount || 0;
@@ -436,9 +578,49 @@
         const completedDaysSet = new Set(data.completedTopics.map(t => t.order));
         renderCurriculum(userCourse, completedDaysSet);
         renderAchievements(data.achievements);
+         renderTipsAndResources(data.language, nextTopic);
     }
-
+   
     // In dashboard.html <script> tag
+
+        // ✅✅✅ START: ADD THIS NEW JAVASCRIPT FUNCTION ✅✅✅
+function renderTipsAndResources(language, nextTopic) {
+    const tipContainer = document.getElementById('quick-tip-text');
+    const resourceContainer = document.getElementById('resource-hub-content');
+    
+    // --- 1. Render a random Quick Tip ---
+    const tipsForLang = quickTips[language] || [];
+    if (tipsForLang.length > 0) {
+        const randomIndex = Math.floor(Math.random() * tipsForLang.length);
+        tipContainer.textContent = tipsForLang[randomIndex];
+    } else {
+        tipContainer.textContent = 'No tips available for this language yet.';
+    }
+    
+    // --- 2. Render resources based on the next topic ---
+    let resourcesFound = false;
+    let resourceHTML = `<h5><i class="fa-solid fa-book-bookmark"></i> Resources for: ${nextTopic}</h5><ul>`;
+
+    // Loop through our resource keywords
+    for (const keyword in topicResources) {
+        // Check if the next topic string contains our keyword (case-insensitive)
+        if (nextTopic.toLowerCase().includes(keyword.toLowerCase())) {
+            const resources = topicResources[keyword];
+            resources.forEach(resource => {
+                resourceHTML += `<li><a href="${resource.url}" target="_blank" class="resource-link"><i class="fa-solid fa-arrow-up-right-from-square"></i>${resource.title}</a></li>`;
+            });
+            resourcesFound = true;
+            break; // Stop after finding the first matching keyword to avoid duplicates
+        }
+    }
+    
+    if (resourcesFound) {
+        resourceContainer.innerHTML = resourceHTML + '</ul>';
+    } else {
+        resourceContainer.innerHTML = `<h5><i class="fa-solid fa-magnifying-glass"></i> No specific resources found for this topic. Keep exploring!</h5>`;
+    }
+}
+// ✅✅✅ END: ADD THIS NEW JAVASCRIPT FUNCTION ✅✅✅
 
 async function loadDashboard() {
   try {
@@ -483,7 +665,17 @@ async function loadDashboard() {
     document.getElementById('logoutBtn').onclick = () => { localStorage.removeItem('token'); window.location.href = 'index.html'; };
     
     // ✅✅✅ ALL BUTTON LOGIC CONSOLIDATED HERE ✅✅✅
-    
+    document.getElementById('refresh-tip-btn').addEventListener('click', () => {
+        if (currentUserState.language) {
+            // We only need to refresh the tip part.
+            const tipContainer = document.getElementById('quick-tip-text');
+            const tipsForLang = quickTips[currentUserState.language] || [];
+            if (tipsForLang.length > 0) {
+                const randomIndex = Math.floor(Math.random() * tipsForLang.length);
+                tipContainer.textContent = tipsForLang[randomIndex];
+            }
+        }
+    });
     document.getElementById('pauseBtn').onclick = async () => {
         const pauseBtn = document.getElementById('pauseBtn');
         pauseBtn.disabled = true;
