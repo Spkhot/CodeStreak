@@ -380,3 +380,38 @@ export const verifyPaymentAndSetSchedule = async (req, res) => {
     res.status(500).json({ message: 'Server error during verification.' });
   }
 };
+export const addCodingProfile = async (req, res) => {
+  try {
+    const { platform, url } = req.body;
+    
+    // Basic validation
+    if (!platform || !url) {
+      return res.status(400).json({ message: 'Platform and URL are required.' });
+    }
+
+    // Find the user by their ID (which the 'protect' middleware gives us in req.user._id)
+    const user = await User.findById(req.user._id);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Add the new profile to the user's codingProfiles array
+    user.codingProfiles.push({ platform, url });
+
+    // Save the updated user document to the database
+    await user.save();
+    
+    // Send back a success message and the updated user object (without the password)
+    const userObject = user.toObject();
+    delete userObject.password;
+    
+    res.status(201).json({ 
+      message: 'Profile added successfully!', 
+      user: userObject 
+    });
+
+  } catch (error) {
+    console.error('Error adding coding profile:', error);
+    res.status(500).json({ message: 'Server error while adding profile.' });
+  }
+};

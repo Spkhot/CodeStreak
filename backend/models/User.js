@@ -47,6 +47,12 @@ const userSchema = new mongoose.Schema({
       notes: { type: String, default: '' }
     },
   ],
+   codingProfiles: [
+    {
+      platform: { type: String, required: true },
+      url: { type: String, required: true }
+    }
+  ]
 });
 
 export default mongoose.model('User', userSchema);

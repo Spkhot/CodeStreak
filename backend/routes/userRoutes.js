@@ -1,5 +1,5 @@
 import express from 'express';
-import { setSchedule, getMe, togglePause , deleteUser , updateTime, updateNumber , createOrder, verifyPaymentAndSetSchedule} from '../controllers/userController.js';
+import { setSchedule, getMe, togglePause , deleteUser , updateTime, updateNumber , createOrder, verifyPaymentAndSetSchedule ,saveTopicNotes ,addCodingProfile } from '../controllers/userController.js';
 import { protect } from '../middleware/auth.js';
 
 const router = express.Router();
@@ -12,4 +12,6 @@ router.patch('/update-time', protect, updateTime);
 router.patch('/update-number', protect, updateNumber);
 router.post('/create-order', protect, createOrder);
 router.post('/verify-payment', protect, verifyPaymentAndSetSchedule);
+router.patch('/notes', protect, saveTopicNotes);
+router.post('/profiles', protect, addCodingProfile);
 export default router;
