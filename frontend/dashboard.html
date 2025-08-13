@@ -480,13 +480,58 @@
         }
     }
 
-    function renderContributionHeatmap(completedTopics = []) {
-      if (!completedTopics || completedTopics.length === 0) return;
-      const calendarData = completedTopics.map(topic => ({ date: topic.date.split('T')[0], value: 1 }));
-      if (cal) cal.destroy();
-      cal = new CalHeatmap();
-      cal.paint({ itemSelector: "#cal-heatmap", domain: { type: "month", label: { text: "MMM", textAlign: "start", width: 30 } }, subDomain: { type: "ghDay", width: 15, height: 15, radius: 3 }, range: 6, data: { source: calendarData, x: "date", y: "value" }, scale: { color: { type: "threshold", range: ["#161B22", "#3B82F6"], domain: [1] } } }, [[CalHeatmap.Tooltip, { text: (d, v) => `${v || 'No'} contribution${v !== 1 ? 's' : ''}` } ]]);
+   // dashboard.html -> <script> tag
+
+// ✅ REPLACE your old renderContributionHeatmap function with this one
+
+function renderContributionHeatmap(completedTopics = []) {
+    // Safety check: If there are no topics, do nothing.
+    if (!completedTopics || completedTopics.length === 0) {
+        document.getElementById('cal-heatmap').innerHTML = '<p class="placeholder-text">Complete your first day to start your heatmap!</p>';
+        return;
     }
+
+    // New, safer way to process data: FILTER out any topics that don't have a date.
+    const calendarData = completedTopics
+        .filter(topic => topic.date) // This is the crucial line
+        .map(topic => ({
+            date: topic.date.split('T')[0],
+            value: 1
+        }));
+
+    // If, after filtering, there's no data to show, display a message.
+    if (calendarData.length === 0) {
+        document.getElementById('cal-heatmap').innerHTML = '<p class="placeholder-text">Your activity will appear here.</p>';
+        return;
+    }
+
+    if (cal) cal.destroy();
+    cal = new CalHeatmap();
+    cal.paint({
+        itemSelector: "#cal-heatmap",
+        domain: { type: "month", label: { text: "MMM", textAlign: "start", width: 30 } },
+        subDomain: { type: "ghDay", width: 15, height: 15, radius: 3 },
+        range: 6,
+        data: { source: calendarData, x: "date", y: "value" },
+        scale: {
+            color: {
+                type: "threshold",
+                range: ["#161B22", "#3B82F6"],
+                domain: [1],
+            },
+        },
+    }, 
+    [
+      [
+        CalHeatmap.Tooltip,
+        {
+          text: function (date, value, dayjsDate) {
+            return (value ? value : "No") + " contribution" + (value !== 1 ? "s" : "") + " on " + dayjsDate.format("MMMM D, YYYY");
+          },
+        },
+      ],
+    ]);
+}
 
     function renderTipsAndResources(data) {
         const lang = data.language;

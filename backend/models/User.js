@@ -44,7 +44,8 @@ const userSchema = new mongoose.Schema({
       explanation: String,
       leetcode: String,
       youtube: String,
-      notes: { type: String, default: '' }
+      notes: { type: String, default: '' },
+      date: { type: Date, default: Date.now }
     },
   ],
    codingProfiles: [
