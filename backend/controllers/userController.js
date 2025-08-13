@@ -415,3 +415,39 @@ export const addCodingProfile = async (req, res) => {
     res.status(500).json({ message: 'Server error while adding profile.' });
   }
 };
+
+// controllers/userController.js
+
+// ... after your 'addCodingProfile' function ...
+
+// ✅ START: ADD THIS ENTIRE NEW FUNCTION
+export const deleteCodingProfile = async (req, res) => {
+  try {
+    const { profileId } = req.params; // Get the ID from the URL (e.g., /profiles/12345)
+    
+    const user = await User.findById(req.user._id);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Use the $pull operator to remove an element from an array
+    // that matches a specific condition.
+    user.codingProfiles.pull({ _id: profileId });
+
+    // Save the changes to the database
+    await user.save();
+
+    const userObject = user.toObject();
+    delete userObject.password;
+
+    res.json({
+      message: 'Profile deleted successfully!',
+      user: userObject
+    });
+
+  } catch (error) {
+    console.error('Error deleting coding profile:', error);
+    res.status(500).json({ message: 'Server error while deleting profile.' });
+  }
+};
+// ✅ END: ADD THIS NEW FUNCTION

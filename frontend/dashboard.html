@@ -18,7 +18,6 @@
   gtag('config', 'G-47YP5C93M8');
 </script>
   <style>
-    /* --- BASE & ROOT VARIABLES (UNCHANGED) --- */
     :root {
       --bg-dark: #0D1117;
       --bg-secondary: #161B22;
@@ -30,14 +29,10 @@
       --resume-green: #10b981;
       --danger-red: #ef4444;
       --fire-orange: #f97316;
-      --primary-blue-hover: #2563eb; /* Added for button hover */
     }
 
-    /* --- GLOBAL STYLES (UNCHANGED) --- */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: 'Poppins', sans-serif; background-color: var(--bg-dark); color: var(--text-light); }
-    
-    /* --- NAVBAR & PROFILE MENU (UNCHANGED) --- */
     .navbar { display: flex; justify-content: space-between; align-items: center; padding: 0 2rem; height: 70px; background-color: var(--bg-secondary); border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; }
     .logo { font-size: 1.5rem; font-weight: 700; text-decoration: none; color: var(--text-light); display: flex; align-items: center; gap: 8px; }
     .logo .fa-fire { color: var(--primary-blue); }
@@ -56,35 +51,18 @@
     .dropdown-item i { margin-right: 10px; width: 20px; text-align: center; }
     .dropdown-item:hover { background-color: var(--bg-dark); color: var(--text-light); }
     .dropdown-item.logout:hover { background-color: rgba(239, 68, 68, 0.1); color: var(--danger-red); }
-    
-    /* --- MAIN CONTAINER & HEADER (UNCHANGED) --- */
-    .container { max-width: 1400px; margin: 0 auto; padding: 2.5rem 2rem; }
-    .welcome-header { font-size: 2.5rem; font-weight: 700; margin-bottom: 2.5rem; }
-
-    /* --- ✅✅✅ NEW 3-COLUMN DASHBOARD GRID ✅✅✅ --- */
-    .dashboard-grid {
-        display: grid;
-        grid-template-columns: 280px 1fr 320px; /* Left, Center, Right */
-        gap: 2rem;
-    }
-    .left-column, .center-column, .right-column {
-        display: flex;
-        flex-direction: column;
-        gap: 2rem;
-    }
-
-    /* --- GENERAL CARD STYLES (UNCHANGED) --- */
-    .card { background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; display: flex; flex-direction: column; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 2.5rem 20px; }
+    .welcome-header { font-size: 2.5rem; font-weight: 700; margin-bottom: 2.5rem; } .dashboard-grid { display: grid; grid-template-columns: 300px 1fr; gap: 2rem; }
+    .right-column-grid { display: flex; flex-direction: column; gap: 2rem; }
+    .card { background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; }
     .card-header { display: flex; align-items: center; gap: 0.75rem; font-size: 1.25rem; font-weight: 600; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border-color); }
-    .card-actions { margin-top: auto; /* Pushes actions to the bottom */ padding-top: 1.5rem; border-top: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 0.75rem; }
+    .card-actions { margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 0.75rem; }
     .btn-action { width: 100%; padding: 10px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: opacity 0.3s ease; }
     .btn-action:hover { opacity: 0.85; }
     .btn-action:disabled { cursor: not-allowed; opacity: 0.5; }
     .btn-edit { background-color: var(--primary-blue); color: white; }
     .btn-pause { background-color: var(--pause-yellow); color: white; }
     .btn-resume { background-color: var(--resume-green); color: white; }
-
-    /* --- SPECIFIC CARD BODY STYLES (MOSTLY UNCHANGED) --- */
     .settings-list dt { font-weight: 500; color: var(--text-muted); font-size: 0.9rem; margin-top: 1rem; }
     .settings-list dd { font-weight: 600; font-size: 1rem; }
     .status-card-body { display: flex; flex-direction: column; gap: 1.25rem; }
@@ -98,8 +76,6 @@
     .status-indicator { width: 10px; height: 10px; border-radius: 50%; }
     .status-indicator.active { background-color: var(--resume-green); }
     .status-indicator.paused { background-color: var(--pause-yellow); }
-
-    /* --- PROGRESS LOG & CURRICULUM (UNCHANGED) --- */
     .log-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 1rem; }
     .log-card { background-color: var(--bg-dark); border: 1px solid var(--border-color); border-radius: 12px; padding: 1rem; text-align: center; text-decoration: none; color: var(--text-light); transition: transform 0.3s ease, border-color 0.3s ease; }
     .log-card:hover { transform: translateY(-5px); border-color: var(--primary-blue); }
@@ -107,6 +83,7 @@
     .log-card .day-title { font-weight: 600; margin-top: 0.25rem; }
     .log-card .day-level { font-size: 0.8rem; color: var(--text-muted); }
     #logList p { grid-column: 1 / -1; text-align: center; color: var(--text-muted); padding: 2rem; }
+    #curriculum-section { margin-top: 2rem; }
     .course-level { margin-bottom: 2.5rem; }
     .course-level:last-child { margin-bottom: 0; }
     .course-level h4 { font-size: 1.5rem; font-weight: 600; color: var(--text-light); margin-bottom: 1.2rem; display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
@@ -122,51 +99,6 @@
     .topic-slide-panel { background-color: var(--bg-dark); border: 1px solid var(--border-color); border-top: 3px solid var(--primary-blue); margin-top: 1rem; padding: 1.5rem; border-radius: 8px; overflow: hidden; max-height: 0; opacity: 0; visibility: hidden; transition: all 0.5s ease-in-out; }
     .topic-slide-panel.show { max-height: 200px; opacity: 1; visibility: visible; }
     .topic-slide-panel strong { color: var(--primary-blue); }
-    
-    /* --- ✅✅✅ IMPROVED ACHIEVEMENTS STYLES ✅✅✅ --- */
-    .achievements-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 1.5rem; }
-    .badge { text-align: center; }
-    .badge-icon { width: 70px; height: 70px; border-radius: 50%; background-color: var(--bg-dark); border: 3px solid var(--border-color); display: flex; align-items: center; justify-content: center; margin: 0 auto 0.75rem auto; font-size: 2rem; color: var(--border-color); transition: all 0.3s ease; position: relative; }
-    .badge-icon.unlocked { color: var(--pause-yellow); border-color: var(--pause-yellow); box-shadow: 0 0 20px rgba(245, 158, 11, 0.4); } /* Added glow effect */
-    .badge-title { font-size: 0.85rem; font-weight: 500; color: var(--text-muted); transition: color 0.3s ease; }
-    .badge-icon.unlocked + .badge-title { color: var(--text-light); }
-    .badge-icon[data-tooltip]::after { content: attr(data-tooltip); position: absolute; bottom: 110%; left: 50%; transform: translateX(-50%); background-color: var(--bg-dark); color: var(--text-light); padding: 8px 12px; border-radius: 6px; font-size: 0.9rem; white-space: nowrap; opacity: 0; visibility: hidden; transition: opacity 0.2s, visibility 0.2s; z-index: 10; }
-    .badge-icon:hover::after { opacity: 1; visibility: visible; }
-
-    /* --- ✅✅✅ NEW & IMPROVED TIPS & RESOURCES STYLES ✅✅✅ --- */
-    .card-header .refresh-tip-btn { margin-left: auto; background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 1rem; padding: 5px; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; transition: color 0.2s, background-color 0.2s; }
-    .card-header .refresh-tip-btn:hover { color: var(--text-light); background-color: var(--bg-dark); }
-    .resource-hub-body { display: flex; flex-direction: column; gap: 1.5rem; }
-    #resource-hub-content h5 { font-size: 1rem; font-weight: 600; margin-bottom: 0.75rem; color: var(--text-light); }
-    #resource-hub-content ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.5rem; }
-    .resource-link { display: flex; align-items:center; gap: 8px; text-decoration: none; color: var(--text-muted); font-weight: 500; padding: 8px 12px; border-radius: 6px; background-color: var(--bg-dark); border: 1px solid var(--border-color); transition: all 0.2s ease; }
-    .resource-link:hover { color: var(--primary-blue); border-color: var(--primary-blue); transform: translateX(4px); }
-    .tip-of-the-day { padding-top: 1.5rem; border-top: 1px solid var(--border-color); }
-    .tip-title { font-weight: 600; color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.5rem; }
-    .tip-text { font-style: italic; color: var(--text-light); font-size: 0.95rem; line-height: 1.6; }
-
-    /* --- ✅✅✅ NEW & IMPROVED DAILY FOCUS STYLES ✅✅✅ --- */
-    .daily-focus-card { background: linear-gradient(135deg, var(--bg-secondary) 0%, #1a2230 100%); border-top: 3px solid var(--primary-blue); padding: 2rem; }
-    .daily-focus-content { text-align: center; }
-    .daily-focus-content .mission-day { font-size: 1.1rem; font-weight: 600; color: var(--primary-blue); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 1px; }
-    .daily-focus-content .mission-topic { font-size: 1.75rem; font-weight: 700; color: var(--text-light); margin-bottom: 1.5rem; line-height: 1.4; }
-    .daily-focus-content .mission-message { font-size: 1.1rem; font-weight: 400; color: var(--text-muted); line-height: 1.5; }
-    .btn-start-lesson { display: inline-block; background-color: var(--primary-blue); color: white; padding: 14px 28px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 1.1rem; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.2); margin-top: 1rem; }
-    .btn-start-lesson:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4); }
-    .btn-start-lesson i { margin-right: 10px; }
-
-    /* --- ✅✅✅ NEW & IMPROVED CODING PROFILES STYLES ✅✅✅ --- */
-    .profiles-list-container { display: flex; flex-direction: column; gap: 0.75rem; }
-    .profile-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; background-color: var(--bg-dark); border: 1px solid var(--border-color); border-radius: 8px; }
-    .profile-item-platform { display: flex; align-items: center; gap: 10px; font-weight: 600; }
-    .profile-item-platform i { font-size: 1.2rem; color: var(--text-muted); width: 20px; text-align: center; }
-    .profile-item a { text-decoration: none; color: var(--primary-blue); font-weight: 500; transition: color 0.2s; display: flex; align-items: center; gap: 6px; font-size: 0.9rem; }
-    .profile-item a:hover { color: var(--text-light); }
-    .placeholder-text { color: var(--text-muted); text-align: center; padding: 1rem 0; }
-    .btn-add-profile { background: none; border: 2px dashed var(--border-color); color: var(--text-muted); }
-    .btn-add-profile:hover { background-color: var(--bg-dark); border-color: var(--primary-blue); color: var(--primary-blue); }
-
-    /* --- MODAL STYLES (UNCHANGED, BUT WITH SELECT ADDED) --- */
     .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); backdrop-filter: blur(5px); display: flex; align-items: center; justify-content: center; z-index: 2000; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s; }
     .modal-overlay.show { opacity: 1; visibility: visible; }
     .modal-content { background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 2rem; width: 100%; max-width: 400px; transform: scale(0.95); transition: transform 0.3s ease; }
@@ -176,33 +108,337 @@
     .close-btn { background: none; border: none; font-size: 1.5rem; color: var(--text-muted); cursor: pointer; transition: color 0.2s; }
     .close-btn:hover { color: var(--text-light); }
     .modal-body .input-group { margin-bottom: 1rem; }
-    .modal-body .input-group label { display: block; font-size: 0.9rem; margin-bottom: 0.5rem; }
-    .modal-body input, .modal-body select { font-size: 1rem; width: 100%; padding: 10px; background-color: var(--bg-dark); border: 1px solid var(--border-color); color: var(--text-light); border-radius: 6px; font-family: 'Poppins', sans-serif; }
+    .modal-body .input-group label { font-size: 0.9rem; }
+    .modal-body input { font-size: 1rem; }
     .modal-footer { margin-top: 1.5rem; }
     .btn-save { width: 100%; padding: 12px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; background-color: var(--primary-blue); color: white; transition: background-color 0.2s; }
     .btn-save:hover { background-color: var(--primary-blue-hover); }
+    @media (max-width: 768px) { .dashboard-grid { grid-template-columns: 1fr; } .navbar { padding: 0 1rem; } .logo { font-size: 1.2rem; } .streak-counter { font-size: 1rem; padding: 6px 12px;} }
+        /* --- ✅✅✅ NEW ACHIEVEMENT STYLES ✅✅✅ --- */
+    .achievements-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+        gap: 1.5rem;
+    }
+    .badge {
+        text-align: center;
+    }
+    .badge-icon {
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        background-color: var(--bg-dark);
+        border: 3px solid var(--border-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 0.75rem auto;
+        font-size: 2rem;
+        color: var(--border-color); /* Color for locked badges */
+        transition: all 0.3s ease;
+        position: relative;
+    }
+    .badge-icon.unlocked {
+        color: var(--pause-yellow); /* Gold color for unlocked badges */
+        border-color: var(--pause-yellow);
+        box-shadow: 0 0 20px rgba(245, 158, 11, 0.4);
+    }
+    .badge-title {
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: var(--text-muted);
+        transition: color 0.3s ease;
+    }
+    .badge-icon.unlocked + .badge-title {
+        color: var(--text-light); /* Bolder title for unlocked badges */
+    }
+    /* Simple tooltip for description */
+    .badge-icon[data-tooltip]::after {
+        content: attr(data-tooltip);
+        position: absolute;
+        bottom: 110%;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: var(--bg-dark);
+        color: var(--text-light);
+        padding: 8px 12px;
+        border-radius: 6px;
+        font-size: 0.9rem;
+        white-space: nowrap;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.2s, visibility 0.2s;
+        z-index: 10;
+    }
+    .badge-icon:hover::after {
+        opacity: 1;
+        visibility: visible;
+    }  
+     .dashboard-grid {
+        display: grid;
+        grid-template-columns: 280px 1fr 300px;
+        gap: 2rem;
+    }
+    .left-column, .center-column, .right-column {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+    
 
-    /* --- ✅✅✅ NEW RESPONSIVE STYLES FOR 3-COLUMN LAYOUT ✅✅✅ --- */
+
+    /* ... a good place is after your .achievements-grid styles ... */
+
+/* --- ✅✅✅ NEW TIPS & RESOURCES STYLES ✅✅✅ --- */
+.card-header .refresh-tip-btn {
+    margin-left: auto; /* Pushes the button to the far right */
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 5px;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s, background-color 0.2s;
+}
+.card-header .refresh-tip-btn:hover {
+    color: var(--text-light);
+    background-color: var(--bg-dark);
+}
+.resource-hub-body {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+#resource-hub-content h5 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: var(--text-light);
+}
+#resource-hub-content ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.resource-link {
+    display: block;
+    text-decoration: none;
+    color: var(--text-muted);
+    font-weight: 500;
+    padding: 8px 12px;
+    border-radius: 6px;
+    background-color: var(--bg-dark);
+    border: 1px solid var(--border-color);
+    transition: all 0.2s ease;
+}
+.resource-link:hover {
+    color: var(--primary-blue);
+    border-color: var(--primary-blue);
+    transform: translateX(4px);
+}
+.resource-link i {
+    margin-right: 8px;
+}
+.tip-of-the-day {
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+}
+.tip-title {
+    font-weight: 600;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+.tip-text {
+    font-style: italic;
+    color: var(--text-light);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+/* --- ✅✅✅ END OF NEW STYLES ✅✅✅ --- */
+
+    /* --- (All other card, button, and modal styles are unchanged) --- */
+
+    /* ✅✅✅ NEW RESPONSIVE STYLES ✅✅✅ */
+
+    /* ... a good place is after your heatmap styles ... */
+
+/* --- ✅✅✅ NEW DAILY FOCUS STYLES ✅✅✅ --- */
+.daily-focus-card {
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, #1a2230 100%);
+    border-top: 3px solid var(--primary-blue);
+    padding: 2rem;
+}
+.daily-focus-content {
+    text-align: center;
+}
+.daily-focus-content .mission-day {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--primary-blue);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.daily-focus-content .mission-topic {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-light);
+    margin-bottom: 1.5rem;
+    line-height: 1.4;
+}
+.daily-focus-content .mission-message {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--text-muted);
+}
+.btn-start-lesson {
+    display: inline-block;
+    background-color: var(--primary-blue);
+    color: white;
+    padding: 14px 28px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.2);
+}
+.btn-start-lesson:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+}
+.btn-start-lesson i {
+    margin-right: 10px;
+}
+/* --- ✅✅✅ END OF NEW STYLES ✅✅✅ --- */
     @media (max-width: 1200px) {
         .dashboard-grid {
-            grid-template-columns: 280px 1fr; /* Collapse to 2 columns */
+            grid-template-columns: 280px 1fr;
         }
         .right-column {
-            grid-column: 1 / -1; /* Right column now spans both columns and moves below */
+            grid-column: 2 / 3;
         }
     }
     @media (max-width: 992px) {
         .dashboard-grid {
-            grid-template-columns: 1fr; /* Collapse to 1 column */
+            grid-template-columns: 1fr;
+        }
+        .right-column {
+            grid-column: 1 / 2;
         }
     }
     @media (max-width: 768px) {
-        .container { padding: 2.5rem 1rem; }
         .navbar { padding: 0 1rem; }
         .logo { font-size: 1.2rem; }
         .streak-counter { font-size: 1rem; padding: 6px 12px;}
     }
+    /* ... a good place is after your daily focus styles ... */
 
+/* --- ✅✅✅ NEW CODING PROFILES STYLES ✅✅✅ --- */
+.profiles-list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+.profile-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px;
+    background-color: var(--bg-dark);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+}
+.profile-item-platform {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+}
+.profile-item-platform i {
+    font-size: 1.2rem;
+    color: var(--text-muted);
+}
+.profile-item a {
+    text-decoration: none;
+    color: var(--primary-blue);
+    font-weight: 500;
+    transition: color 0.2s;
+}
+.profile-item a:hover {
+    color: var(--text-light);
+}
+.placeholder-text {
+    color: var(--text-muted);
+    text-align: center;
+    padding: 1rem 0;
+}
+.btn-add-profile {
+    background: none;
+    border: 2px dashed var(--border-color);
+    color: var(--text-muted);
+    width: 100%;
+}
+.btn-add-profile:hover {
+    background-color: var(--bg-dark);
+    border-color: var(--primary-blue);
+    color: var(--primary-blue);
+}
+
+/* Modal select style */
+.modal-body select {
+    width: 100%;
+    padding: 10px;
+    background-color: var(--bg-dark);
+    border: 1px solid var(--border-color);
+    color: var(--text-light);
+    border-radius: 6px;
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif;
+}
+/* --- ✅✅✅ END OF NEW STYLES ✅✅✅ --- */
+
+/* A good place is after your .profile-item styles */
+
+/* ✅ ADD THIS NEW CSS */
+.profile-item-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+.profile-item-actions .view-profile-link {
+    text-decoration: none;
+    color: var(--primary-blue);
+    font-weight: 500;
+    transition: color 0.2s;
+}
+.profile-item-actions .view-profile-link:hover {
+    color: var(--text-light);
+}
+.delete-profile-btn {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 5px;
+    font-size: 0.9rem;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+.delete-profile-btn:hover {
+    color: var(--danger-red);
+    background-color: rgba(239, 68, 68, 0.1);
+}
   </style>
 </head>
 <body>
@@ -230,7 +466,7 @@
     </div>
   </nav>
 
-  <main class="container">
+    <main class="container">
     <h1 class="welcome-header">🫡 Welcome, <span id="welcomeName">...</span>!</h1>
     
     <!-- ✅✅✅ NEW 3-COLUMN GRID STRUCTURE ✅✅✅ -->
@@ -251,36 +487,46 @@
             <button class="btn-action" id="pauseBtn">Pause Course</button>
           </div>
         </div>
-
+         <section class="card">
+        <div class="card-header">
+            <i class="fa-solid fa-lightbulb"></i>
+            <span>Tips & Resources</span>
+            <button class="refresh-tip-btn" id="refresh-tip-btn" title="Get a new tip">
+                <i class="fa-solid fa-arrows-rotate"></i>
+            </button>
+        </div>
+        <div class="resource-hub-body">
+            <div id="resource-hub-content">
+                <!-- Resource links will be injected here by JS -->
+            </div>
+            <div class="tip-of-the-day">
+                <p class="tip-title">💡 Quick Tip:</p>
+                <p class="tip-text" id="quick-tip-text">Loading tip...</p>
+            </div>
+        </div>
+    </section>
         <section class="card">
-            <div class="card-header"><i class="fa-solid fa-address-card"></i><span>Coding Profiles</span></div>
-            <div id="profiles-list" class="profiles-list-container">
-                <!-- Profiles will be injected here by JS -->
-                <p class="placeholder-text">Add your profiles to show them off!</p>
-            </div>
-            <div class="card-actions">
-                <button class="btn-action btn-add-profile" id="addProfileBtn"><i class="fa-solid fa-plus"></i> Add New Profile</button>
-            </div>
-        </section>
+        <div class="card-header"><i class="fa-solid fa-address-card"></i><span>Coding Profiles</span></div>
+        <div id="profiles-list" class="profiles-list-container">
+            <!-- User profiles will be injected here by JS -->
+            <p class="placeholder-text">Add your profiles to show them off!</p>
+        </div>
+        <div class="card-actions">
+            <button class="btn-action btn-add-profile" id="addProfileBtn"><i class="fa-solid fa-plus"></i> Add New Profile</button>
+        </div>
+    </section>
       </aside>
 
       <!-- COLUMN 2: MAIN CONTENT -->
       <div class="center-column">
-        <section class="card daily-focus-card">
-            <div id="daily-focus-content">
-                <!-- Daily focus content will be injected by JavaScript -->
-                <p>Loading your mission...</p>
-            </div>
-        </section>
-
-        <section id="curriculum-section" class="card">
-            <div class="card-header"><i class="fa-solid fa-book-open"></i><span>Course Curriculum</span></div>
-            <div id="curriculum-container"><p>Loading your curriculum...</p></div>
-        </section>
-        
         <section class="card">
           <div class="card-header"><i class="fa-solid fa-list-check"></i><span>Progress Log</span></div>
           <div class="log-grid" id="logList"><p>Loading your progress...</p></div>
+        </section>
+        
+        <section id="curriculum-section" class="card">
+            <div class="card-header"><i class="fa-solid fa-book-open"></i><span>Course Curriculum</span></div>
+            <div id="curriculum-container"><p>Loading your curriculum...</p></div>
         </section>
       </div>
       
@@ -300,35 +546,23 @@
                 </div>
             </div>
         </section>
-
          <section class="card">
             <div class="card-header"><i class="fa-solid fa-trophy"></i><span>Achievements</span></div>
             <div class="achievements-grid" id="achievements-grid"><p>Loading achievements...</p></div>
         </section>
-
-        <section class="card">
-            <div class="card-header">
-                <i class="fa-solid fa-lightbulb"></i>
-                <span>Tips & Resources</span>
-                <button class="refresh-tip-btn" id="refresh-tip-btn" title="Get a new tip">
-                    <i class="fa-solid fa-arrows-rotate"></i>
-                </button>
-            </div>
-            <div class="resource-hub-body">
-                <div id="resource-hub-content">
-                    <!-- Resource links will be injected here by JS -->
-                </div>
-                <div class="tip-of-the-day">
-                    <p class="tip-title">💡 Quick Tip:</p>
-                    <p class="tip-text" id="quick-tip-text">Loading tip...</p>
-                </div>
-            </div>
-        </section>
+         <!-- ✅✅✅ START: ADD THIS NEW DAILY FOCUS CARD ✅✅✅ -->
+    <section class="card daily-focus-card">
+        <div id="daily-focus-content">
+            <!-- Content will be injected by JavaScript -->
+            <p>Loading your mission...</p>
+        </div>
+    </section>
+    <!-- ✅✅✅ END: ADD THIS NEW DAILY FOCUS CARD ✅✅✅ -->
       </aside>
+
     </div>
   </main>
   
-  <!-- MODALS (UNCHANGED HTML) -->
   <div class="modal-overlay" id="timeModal">
       <div class="modal-content">
           <div class="modal-header"><h2>Edit Delivery Time</h2><button class="close-btn" data-close-modal="timeModal">&times;</button></div>
@@ -351,7 +585,10 @@
           </div>
       </div>
   </div>
-  <div class="modal-overlay" id="profileModal">
+  <!-- ... Your existing timeModal and numberModal ... -->
+
+<!-- ✅✅✅ START: ADD THIS NEW PROFILE MODAL ✅✅✅ -->
+<div class="modal-overlay" id="profileModal">
     <div class="modal-content">
         <div class="modal-header">
             <h2>Add New Coding Profile</h2>
@@ -382,89 +619,144 @@
             </form>
         </div>
     </div>
-  </div>
-
-  <!-- SCRIPT (ENTIRELY UNCHANGED) -->
+</div>
+<!-- ✅✅✅ END: ADD THIS NEW PROFILE MODAL ✅✅✅ -->
   <script>
     const courses = [ { language: "C++", levels: [ { level: "Beginner", title: "Fundamentals & Syntax", days: [ { day: 1, topic: "Structure of a Simple C++ Program (Hello World, #include, main())" }, { day: 2, topic: "Input and Output (cin, cout, endl, basic formatting)" }, { day: 3, topic: "Variables & Data Types (int, float, char, string, bool)" }, { day: 4, topic: "Operators (Arithmetic, Assignment, Increment/Decrement)" }, { day: 5, topic: "Conditional Statements (if, else, nested if)" }, { day: 6, topic: "Logical Operators & Comparisons" }, { day: 7, topic: "Switch Statements" }, { day: 8, topic: "Loops — while, do-while" }, { day: 9, topic: "Loops — for loop, nested loops" }, { day: 10, topic: "Practice: Basic Patterns & Control Flow Questions" } ] }, { level: "Intermediate", title: "Functions & Arrays", days: [ { day: 11, topic: "Functions — Basics, Declaration & Definition" }, { day: 12, topic: "Function Arguments & Return Types" }, { day: 13, topic: "Recursion Basics" }, { day: 14, topic: "Arrays — 1D Arrays Intro" }, { day: 15, topic: "Arrays — 1D Operations & Questions" }, { day: 16, topic: "2D Arrays — Basics" }, { day: 17, topic: "2D Arrays — Classic Problems (Matrix Transpose, Sum)" }, { day: 18, topic: "Strings — C++ Strings, Basic Operations" }, { day: 19, topic: "Strings — Character Arrays vs string Class" }, { day: 20, topic: "Practice: Functions + Arrays + Strings Combined Problems" } ] }, { level: "Advanced", title: "Classes, OOP & STL", days: [ { day: 21, topic: "Intro to OOP — Classes & Objects" }, { day: 22, topic: "Constructors & Destructors" }, { day: 23, topic: "Member Functions & Data Members" }, { day: 24, topic: "Encapsulation & Access Modifiers" }, { day: 25, topic: "Inheritance — Types & Examples" }, { day: 26, topic: "Polymorphism — Function Overloading" }, { day: 27, topic: "Polymorphism — Operator Overloading" }, { day: 28, topic: "Abstract Classes & Pure Virtual Functions" }, { day: 29, topic: "Intro to Standard Template Library (STL)" }, { day: 30, topic: "STL — Vectors & Iterators" } ] }, { level: "Pro", title: "Advanced Concepts + DSA", days: [ { day: 31, topic: "Pointers — Basics, * and &" }, { day: 32, topic: "Pointers — Arrays & Functions" }, { day: 33, topic: "Dynamic Memory Allocation (new and delete)" }, { day: 34, topic: "Linked Lists — Intro & Implementation" }, { day: 35, topic: "Stacks & Queues (Concepts + STL)" }, { day: 36, topic: "Trees — Basics & Binary Tree" }, { day: 37, topic: "Binary Search & Binary Search Trees" }, { day: 38, topic: "Sorting Algorithms — Bubble, Selection, Insertion" }, { day: 39, topic: "Searching Algorithms — Linear & Binary Search" }, { day: 40, topic: "Final Practice: Mixed Interview Questions (Patterns, STL, DSA)" } ] } ] }, { language: "Java", levels: [ { level: "Beginner", title: "Java Basics & Syntax", days: [ { day: 1, topic: "Intro: How Java Works, JVM, JDK, First Hello World" }, { day: 2, topic: "Variables & Data Types" }, { day: 3, topic: "Input & Output — Scanner" }, { day: 4, topic: "Operators — Arithmetic, Assignment" }, { day: 5, topic: "Conditional Statements — if, else if, else" }, { day: 6, topic: "Logical Operators & Comparisons" }, { day: 7, topic: "Switch Case" }, { day: 8, topic: "Loops — while & do-while" }, { day: 9, topic: "Loops — for loop, nested loops" }, { day: 10, topic: "Practice: Basic Pattern Printing" } ] }, { level: "Intermediate", title: "Methods & Arrays", days: [ { day: 11, topic: "Methods — Definition & Calling" }, { day: 12, topic: "Method Overloading" }, { day: 13, topic: "Recursion Basics" }, { day: 14, topic: "Arrays — 1D Arrays" }, { day: 15, topic: "Arrays — Basic Problems" }, { day: 16, topic: "2D Arrays" }, { day: 17, topic: "2D Array Classic Problems (Transpose, Sum)" }, { day: 18, topic: "Strings — Basics & String Class" }, { day: 19, topic: "String Methods & Immutability" }, { day: 20, topic: "Practice: Arrays + Strings Problems" } ] }, { level: "Advanced", title: "OOP & Advanced Classes", days: [ { day: 21, topic: "OOP Concepts — Classes & Objects" }, { day: 22, topic: "Constructors" }, { day: 23, topic: "Getters & Setters" }, { day: 24, topic: "this Keyword" }, { day: 25, topic: "Inheritance" }, { day: 26, topic: "super Keyword" }, { day: 27, topic: "Method Overriding" }, { day: 28, topic: "Polymorphism" }, { day: 29, topic: "Abstraction & Interfaces" }, { day: 30, topic: "Encapsulation — Real Example" } ] }, { level: "Pro", title: "Core DSA & Collections", days: [ { day: 31, topic: "Intro to Java Collections" }, { day: 32, topic: "ArrayList — Basics & Operations" }, { day: 33, topic: "LinkedList — Basics & Operations" }, { day: 34, topic: "HashMap — Basics & Use Cases" }, { day: 35, topic: "HashSet — Basics & Differences" }, { day: 36, topic: "Stack & Queue in Java" }, { day: 37, topic: "Sorting Algorithms — Bubble & Selection" }, { day: 38, topic: "Searching — Linear & Binary Search" }, { day: 39, topic: "Trees — Basic Binary Tree Concepts" }, { day: 40, topic: "Practice Day — Mixed DSA Questions" } ] } ] } ];
     const token = localStorage.getItem('token');
     if (!token) { window.location.href = 'login.html'; }
    
-    function renderDailyFocusCard(data) {
-        const focusContainer = document.getElementById('daily-focus-content');
-        let contentHTML = '';
+ 
 
-        if (data.isPaused) {
-            contentHTML = `
-                <div class="daily-focus-content">
-                    <p class="mission-day">COURSE PAUSED</p>
-                    <h2 class="mission-topic">Your journey is on hold.</h2>
-                    <p class="mission-message">Click 'Resume Course' in your setup to get back on track!</p>
-                </div>
-            `;
-        } else if (data.currentDay > 40) { // Assuming 40 is the last day
-            contentHTML = `
-                <div class="daily-focus-content">
-                    <p class="mission-day">Congratulations!</p>
-                    <h2 class="mission-topic">You've Completed the Course! 🎉</h2>
-                    <p class="mission-message">You are now a certified master. Well done!</p>
-                </div>
-            `;
-        } else {
-            const userCourse = courses.find(c => c.language === data.language);
-            const allDays = userCourse.levels.flatMap(level => level.days);
-            const currentDayTopic = allDays.find(day => day.day === data.currentDay).topic;
+     // ... somewhere before your updateDashboardUI function ...
 
-            contentHTML = `
-                <div class="daily-focus-content">
-                    <p class="mission-day">Today's Mission: Day ${data.currentDay}</p>
-                    <h2 class="mission-topic">${currentDayTopic}</h2>
-                    <a href="day.html?day=${data.currentDay}" class="btn-start-lesson">
-                        <i class="fa-solid fa-rocket"></i>Start Lesson
-                    </a>
-                </div>
-            `;
-        }
+// ✅✅✅ START: ADD THIS NEW JAVASCRIPT FUNCTION ✅✅✅
+function renderDailyFocusCard(data) {
+    const focusContainer = document.getElementById('daily-focus-content');
+    let contentHTML = '';
 
-        focusContainer.innerHTML = contentHTML;
+    if (data.isPaused) {
+        contentHTML = `
+            <div class="daily-focus-content">
+                <p class="mission-day">COURSE PAUSED</p>
+                <p class="mission-topic">Your journey is on hold.</p>
+                <p class="mission-message">Click 'Resume Course' in your setup to get back on track!</p>
+            </div>
+        `;
+    } else if (data.currentDay > 40) { // Assuming 40 is the last day
+        contentHTML = `
+            <div class="daily-focus-content">
+                <p class="mission-day">Congratulations!</p>
+                <p class="mission-topic">You've Completed the Course! 🎉</p>
+                <p class="mission-message">You are now a certified master. Well done!</p>
+            </div>
+        `;
+    } else {
+        // Find the topic for the current day
+        const userCourse = courses.find(c => c.language === data.language);
+        const allDays = userCourse.levels.flatMap(level => level.days);
+        const currentDayTopic = allDays.find(day => day.day === data.currentDay).topic;
+
+        contentHTML = `
+            <div class="daily-focus-content">
+                <p class="mission-day">Today's Mission: Day ${data.currentDay}</p>
+                <h2 class="mission-topic">${currentDayTopic}</h2>
+                <a href="day.html?day=${data.currentDay}" class="btn-start-lesson">
+                    <i class="fa-solid fa-rocket"></i>Start Lesson
+                </a>
+            </div>
+        `;
     }
 
-    function getPlatformIcon(platform) {
-        switch (platform.toLowerCase()) {
-            case 'linkedin': return 'fa-brands fa-linkedin';
-            case 'github': return 'fa-brands fa-github';
-            case 'leetcode': return 'fa-solid fa-keyboard';
-            case 'codeforces': return 'fa-solid fa-code-compare';
-            case 'hackerrank': return 'fa-brands fa-hackerrank';
-            case 'portfolio': return 'fa-solid fa-globe';
-            default: return 'fa-solid fa-link';
-        }
+    focusContainer.innerHTML = contentHTML;
+}
+// ✅✅✅ END: ADD THIS NEW JAVASCRIPT FUNCTION ✅✅✅
+
+// ... your existing updateDashboardUI function
+
+// ... somewhere before your updateDashboardUI function ...
+
+// ✅✅✅ START: ADD THESE NEW JAVASCRIPT FUNCTIONS ✅✅✅
+function getPlatformIcon(platform) {
+    switch (platform.toLowerCase()) {
+        case 'linkedin': return 'fa-brands fa-linkedin';
+        case 'github': return 'fa-brands fa-github';
+        case 'leetcode': return 'fa-solid fa-keyboard';
+        case 'codeforces': return 'fa-solid fa-code-compare';
+        case 'hackerrank': return 'fa-brands fa-hackerrank';
+        case 'portfolio': return 'fa-solid fa-globe';
+        default: return 'fa-solid fa-link';
+    }
+}
+
+function renderCodingProfiles(profiles = []) {
+    const listContainer = document.getElementById('profiles-list');
+    listContainer.innerHTML = ''; // Clear previous content
+
+    if (profiles.length === 0) {
+        listContainer.innerHTML = '<p class="placeholder-text">Add your profiles to show them off!</p>';
+        return;
     }
 
-    function renderCodingProfiles(profiles = []) {
-        const listContainer = document.getElementById('profiles-list');
-        listContainer.innerHTML = ''; 
+    profiles.forEach(profile => {
+        const item = document.createElement('div');
+        item.className = 'profile-item';
+        
+        // The main change is adding the <button> element
+        item.innerHTML = `
+            <div class="profile-item-platform">
+                <i class="${getPlatformIcon(profile.platform)}"></i>
+                <span>${profile.platform}</span>
+            </div>
+            <div class="profile-item-actions">
+                <a href="${profile.url}" target="_blank" class="view-profile-link">View</a>
+                <button class="delete-profile-btn" data-profile-id="${profile._id}" title="Delete this profile">
+                    <i class="fa-solid fa-trash-can"></i>
+                </button>
+            </div>
+        `;
+        listContainer.appendChild(item);
+    });
 
-        if (profiles.length === 0) {
-            listContainer.innerHTML = '<p class="placeholder-text">Add your profiles to show them off!</p>';
-            return;
-        }
+    // Add event listeners to the new delete buttons
+    document.querySelectorAll('.delete-profile-btn').forEach(button => {
+        button.addEventListener('click', handleDeleteProfile);
+    });
+}
+// ✅✅✅ END: ADD THESE NEW JAVASCRIPT FUNCTIONS ✅✅✅
+// ✅ ADD THIS NEW JAVASCRIPT FUNCTION
+async function handleDeleteProfile(event) {
+    const button = event.currentTarget;
+    const profileId = button.dataset.profileId;
 
-        profiles.forEach(profile => {
-            const item = document.createElement('div');
-            item.className = 'profile-item';
-            
-            item.innerHTML = `
-                <div class="profile-item-platform">
-                    <i class="${getPlatformIcon(profile.platform)}"></i>
-                    <span>${profile.platform}</span>
-                </div>
-                <a href="${profile.url}" target="_blank">View<i class="fa-solid fa-arrow-up-right-from-square"></i></a>
-            `;
-            listContainer.appendChild(item);
+    if (!confirm('Are you sure you want to delete this profile link?')) {
+        return;
+    }
+
+    try {
+        // This is the new backend endpoint we will create
+        const res = await fetch(`/api/user/profiles/${profileId}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
         });
-    }
 
+        if (!res.ok) {
+            throw new Error((await res.json()).message || 'Failed to delete profile.');
+        }
+
+        const data = await res.json();
+        alert(data.message);
+
+        // Update the state and re-render the dashboard to show the change
+        currentUserState = data.user;
+        updateDashboardUI(currentUserState);
+
+    } catch (error) {
+        alert('Error: ' + error.message);
+    }
+}
     let currentUserState = {};
 
     function renderCurriculum(userCourse, completedDaysSet) {
@@ -516,11 +808,146 @@
     }
 
     const quickTips = {
-      "C++": [ "Use `const` whenever possible to prevent accidental modification of variables.", "Prefer `std::vector` over raw C-style arrays for dynamic sizing and safety.", "The 'Rule of Three/Five/Zero' is a key concept for managing resources in classes.", "Always initialize your variables. Uninitialized variables can lead to unpredictable behavior.", "Use `nullptr` instead of `NULL` in modern C++ for type safety." ],
-      "Java": [ "Remember that `String` objects in Java are immutable. Use `StringBuilder` for heavy string manipulation.", "The `equals()` method checks for content equality, while `==` checks for object reference equality.", "Use the Enhanced For-Loop (for-each) for cleaner iteration over collections and arrays.", "Always override `hashCode()` when you override `equals()` to maintain the contract.", "Interfaces are a powerful way to achieve abstraction and multiple inheritance of type." ]
-    };
+  "C++": [
+    "Use `const` whenever possible to prevent accidental modification of variables.",
+    "Prefer `std::vector` over raw C-style arrays for dynamic sizing and safety.",
+    "The 'Rule of Three/Five/Zero' is a key concept for managing resources in classes.",
+    "Always initialize your variables. Uninitialized variables can lead to unpredictable behavior.",
+    "Use `nullptr` instead of `NULL` in modern C++ for type safety."
+  ],
+  "Java": [
+    "Remember that `String` objects in Java are immutable. Use `StringBuilder` for heavy string manipulation.",
+    "The `equals()` method checks for content equality, while `==` checks for object reference equality.",
+    "Use the Enhanced For-Loop (for-each) for cleaner iteration over collections and arrays.",
+    "Always override `hashCode()` when you override `equals()` to maintain the contract.",
+    "Interfaces are a powerful way to achieve abstraction and multiple inheritance of type."
+  ]
+};
 
-    const topicResources = { "Hello World": [ { title: "GeeksforGeeks: C++ Hello World", url: "https://www.geeksforgeeks.org/c-program-to-print-hello-world/" }, { title: "W3Schools: Java Hello World", url: "https://www.w3schools.com/java/java_getstarted.asp" } ], "Input and Output": [ { title: "cplusplus.com: C++ Basic I/O (cin/cout)", url: "http://www.cplusplus.com/doc/tutorial/basic_io/" }, { title: "Baeldung: Java Scanner Class", url: "https://www.baeldung.com/java-scanner" } ], "Variables & Data Types": [ { title: "TutorialsPoint: C++ Data Types", url: "https://www.tutorialspoint.com/cplusplus/cpp_data_types.htm" }, { title: "Oracle Docs: Java Primitive Data Types", url: "https://docs.oracle.com/javase/tutorial/java/nutsandbolts/datatypes.html" } ], "Operators": [ { title: "GeeksforGeeks: C++ Operators", url: "https://www.geeksforgeeks.org/operators-in-cpp/" }, { title: "W3Schools: Java Operators", url: "https://www.w3schools.com/java/java_operators.asp" } ], "Conditional Statements": [ { title: "Microsoft Docs: C++ if-else Statement", url: "https://learn.microsoft.com/en-us/cpp/cpp/if-else-statement-cpp" }, { title: "DigitalOcean: Java if-else", url: "https://www.digitalocean.com/community/tutorials/java-if-else-statement" } ], "Switch Statements": [ { title: "GeeksforGeeks: C++ switch Statement", url: "https://www.geeksforgeeks.org/switch-statement-in-c-cpp/" }, { title: "Baeldung: Java switch Statement", url: "https://www.baeldung.com/java-switch" } ], "Loops": [ { title: "Programiz: C++ for Loop", url: "https://www.programiz.com/cpp-programming/for-loop" }, { title: "Programiz: Java for Loop", url: "https://www.programiz.com/java-programming/for-loop" } ], "Functions": [ { title: "W3Schools: C++ Functions", url: "https://www.w3schools.com/cpp/cpp_functions.asp" }, { title: "Baeldung: Java Methods", url: "https://www.baeldung.com/java-methods" } ], "Recursion": [ { title: "GeeksforGeeks: Recursion in C++", url: "https://www.geeksforgeeks.org/recursion-in-c/" }, { title: "Video: Java Recursion Explained", url: "https://www.youtube.com/watch?v=IJDJ0kBx2gw" } ], "Arrays": [ { title: "cplusplus.com: C++ Arrays", url: "http://www.cplusplus.com/doc/tutorial/arrays/" }, { title: "Oracle Docs: Java Arrays", url: "https://docs.oracle.com/javase/tutorial/java/nutsandbolts/arrays.html" } ], "Strings": [ { title: "GeeksforGeeks: C++ string Class", url: "https://www.geeksforgeeks.org/stdstring-class-in-c/" }, { title: "Baeldung: Guide to Java String", url: "https://www.baeldung.com/java-string" } ], "OOP": [ { title: "FreeCodeCamp: OOP in C++", url: "https://www.freecodecamp.org/news/object-oriented-programming-in-c/" }, { title: "Oracle Docs: OOP Concepts in Java", url: "https://docs.oracle.com/javase/tutorial/java/concepts/index.html" } ], "Classes & Objects": [ { title: "GeeksforGeeks: C++ Classes and Objects", url: "https://www.geeksforgeeks.org/c-classes-and-objects/" }, { title: "W3Schools: Java Classes/Objects", url: "https://www.w3schools.com/java/java_classes.asp" } ], "Constructors": [ { title: "Programiz: C++ Constructors", url: "https://www.programiz.com/cpp-programming/constructors" }, { title: "Baeldung: Java Constructors", url: "https://www.baeldung.com/java-constructors" } ], "Inheritance": [ { title: "cplusplus.com: C++ Inheritance", url: "http://www.cplusplus.com/doc/tutorial/inheritance/" }, { title: "GeeksforGeeks: Inheritance in Java", url: "https://www.geeksforgeeks.org/inheritance-in-java/" } ], "Polymorphism": [ { title: "GeeksforGeeks: Polymorphism in C++", url: "https://www.geeksforgeeks.org/polymorphism-in-c/" }, { title: "Baeldung: Polymorphism in Java", url: "https://www.baeldung.com/java-polymorphism" } ], "Abstraction": [ { title: "TutorialsPoint: C++ Abstraction", url: "https://www.tutorialspoint.com/cplusplus/cpp_data_abstraction.htm" }, { title: "W3Schools: Java Abstraction", url: "https://www.w3schools.com/java/java_abstract.asp" } ], "Interfaces": [ { title: "GeeksforGeeks: C++ Abstract Class/Interfaces", url: "https://www.geeksforgeeks.org/interfaces-in-c/" }, { title: "Oracle Docs: Java Interfaces", url: "https://docs.oracle.com/javase/tutorial/java/IandI/createinterface.html" } ], "Pointers": [ { title: "GeeksforGeeks: C++ Pointers", url: "https://www.geeksforgeeks.org/cpp-pointers/" }, { title: "Video: Pointers in C++ in 15 Mins", url: "https://www.youtube.com/watch?v=EvYmTCasB4A" } ], "STL": [ { title: "TopCoder: Power of C++ STL", url: "https://www.topcoder.com/thrive/articles/Power-of-C-Standard-Template-Library-STL" }, { title: "Video: C++ STL Full Course", url: "https://www.youtube.com/watch?v=s_t0Ua2jA-c" } ], "Vectors": [ { title: "cplusplus.com: C++ std::vector", url: "https://cplusplus.com/reference/vector/vector/"}, { title: "Baeldung: Java ArrayList", url: "https://www.baeldung.com/java-arraylist"} ], "Collections": [ { title: "Baeldung: Guide to Java Collections", url: "https://www.baeldung.com/java-collections" }, { title: "Video: Java Collections Framework", url: "https://www.youtube.com/watch?v=rzA7UJ-hQn4" } ], "HashMap": [ { title: "GeeksforGeeks: C++ std::unordered_map", url: "https://www.geeksforgeeks.org/unordered_map-in-cpp-stl/" }, { title: "Baeldung: Java HashMap", url: "https://www.baeldung.com/java-hashmap" } ], "Linked Lists": [ { title: "Programiz: C++ Linked List", url: "https://www.programiz.com/dsa/linked-list" }, { title: "GeeksforGeeks: Java LinkedList", url: "https://www.geeksforgeeks.org/linked-list-in-java/" } ], "Stacks & Queues": [ { title: "GeeksforGeeks: C++ Stack vs Queue", url: "https://www.geeksforgeeks.org/stack-vs-queue/" }, { title: "Baeldung: Java Stack and Queue", url: "https://www.baeldung.com/java-stack-queue" } ], "Trees": [ { title: "FreeCodeCamp: Tree Data Structure", url: "https://www.freecodecamp.org/news/tree-data-structure-in-c-plus-plus/" }, { title: "Baeldung: Binary Tree in Java", url: "https://www.baeldung.com/java-binary-tree" } ], "Sorting Algorithms": [ { title: "GeeksforGeeks: C++ Sorting Algorithms", url: "https://www.geeksforgeeks.org/sorting-algorithms-in-c/" }, { title: "HackerEarth: Sorting Algorithms in Java", url: "https://www.hackerearth.com/practice/algorithms/sorting/bubble-sort/tutorial/" } ], "Searching Algorithms": [ { title: "Programiz: C++ Binary Search", url: "https://www.programiz.com/dsa/binary-search" }, { title: "Baeldung: Binary Search in Java", url: "https://www.baeldung.com/java-binary-search" } ] };
+// ✅✅✅ COPY AND REPLACE YOUR OLD topicResources OBJECT WITH THIS ONE ✅✅✅
+
+const topicResources = {
+  // C++ & Java - Beginner
+  "Hello World": [
+    { title: "GeeksforGeeks: C++ Hello World", url: "https://www.geeksforgeeks.org/c-program-to-print-hello-world/" },
+    { title: "W3Schools: Java Hello World", url: "https://www.w3schools.com/java/java_getstarted.asp" }
+  ],
+  "Input and Output": [
+    { title: "cplusplus.com: C++ Basic I/O (cin/cout)", url: "http://www.cplusplus.com/doc/tutorial/basic_io/" },
+    { title: "Baeldung: Java Scanner Class", url: "https://www.baeldung.com/java-scanner" }
+  ],
+  "Variables & Data Types": [
+    { title: "TutorialsPoint: C++ Data Types", url: "https://www.tutorialspoint.com/cplusplus/cpp_data_types.htm" },
+    { title: "Oracle Docs: Java Primitive Data Types", url: "https://docs.oracle.com/javase/tutorial/java/nutsandbolts/datatypes.html" }
+  ],
+  "Operators": [
+    { title: "GeeksforGeeks: C++ Operators", url: "https://www.geeksforgeeks.org/operators-in-cpp/" },
+    { title: "W3Schools: Java Operators", url: "https://www.w3schools.com/java/java_operators.asp" }
+  ],
+  "Conditional Statements": [
+    { title: "Microsoft Docs: C++ if-else Statement", url: "https://learn.microsoft.com/en-us/cpp/cpp/if-else-statement-cpp" },
+    { title: "DigitalOcean: Java if-else", url: "https://www.digitalocean.com/community/tutorials/java-if-else-statement" }
+  ],
+  "Switch Statements": [
+    { title: "GeeksforGeeks: C++ switch Statement", url: "https://www.geeksforgeeks.org/switch-statement-in-c-cpp/" },
+    { title: "Baeldung: Java switch Statement", url: "https://www.baeldung.com/java-switch" }
+  ],
+  "Loops": [
+    { title: "Programiz: C++ for Loop", url: "https://www.programiz.com/cpp-programming/for-loop" },
+    { title: "Programiz: Java for Loop", url: "https://www.programiz.com/java-programming/for-loop" }
+  ],
+
+  // C++ & Java - Intermediate
+  "Functions": [
+    { title: "W3Schools: C++ Functions", url: "https://www.w3schools.com/cpp/cpp_functions.asp" },
+    { title: "Baeldung: Java Methods", url: "https://www.baeldung.com/java-methods" }
+  ],
+  "Recursion": [
+    { title: "GeeksforGeeks: Recursion in C++", url: "https://www.geeksforgeeks.org/recursion-in-c/" },
+    { title: "Video: Java Recursion Explained", url: "https://www.youtube.com/watch?v=IJDJ0kBx2gw" }
+  ],
+  "Arrays": [
+    { title: "cplusplus.com: C++ Arrays", url: "http://www.cplusplus.com/doc/tutorial/arrays/" },
+    { title: "Oracle Docs: Java Arrays", url: "https://docs.oracle.com/javase/tutorial/java/nutsandbolts/arrays.html" }
+  ],
+  "Strings": [
+    { title: "GeeksforGeeks: C++ string Class", url: "https://www.geeksforgeeks.org/stdstring-class-in-c/" },
+    { title: "Baeldung: Guide to Java String", url: "https://www.baeldung.com/java-string" }
+  ],
+
+  // C++ & Java - Advanced (OOP)
+  "OOP": [
+    { title: "FreeCodeCamp: OOP in C++", url: "https://www.freecodecamp.org/news/object-oriented-programming-in-c/" },
+    { title: "Oracle Docs: OOP Concepts in Java", url: "https://docs.oracle.com/javase/tutorial/java/concepts/index.html" }
+  ],
+  "Classes & Objects": [
+    { title: "GeeksforGeeks: C++ Classes and Objects", url: "https://www.geeksforgeeks.org/c-classes-and-objects/" },
+    { title: "W3Schools: Java Classes/Objects", url: "https://www.w3schools.com/java/java_classes.asp" }
+  ],
+  "Constructors": [
+    { title: "Programiz: C++ Constructors", url: "https://www.programiz.com/cpp-programming/constructors" },
+    { title: "Baeldung: Java Constructors", url: "https://www.baeldung.com/java-constructors" }
+  ],
+  "Inheritance": [
+    { title: "cplusplus.com: C++ Inheritance", url: "http://www.cplusplus.com/doc/tutorial/inheritance/" },
+    { title: "GeeksforGeeks: Inheritance in Java", url: "https://www.geeksforgeeks.org/inheritance-in-java/" }
+  ],
+  "Polymorphism": [
+    { title: "GeeksforGeeks: Polymorphism in C++", url: "https://www.geeksforgeeks.org/polymorphism-in-c/" },
+    { title: "Baeldung: Polymorphism in Java", url: "https://www.baeldung.com/java-polymorphism" }
+  ],
+  "Abstraction": [
+    { title: "TutorialsPoint: C++ Abstraction", url: "https://www.tutorialspoint.com/cplusplus/cpp_data_abstraction.htm" },
+    { title: "W3Schools: Java Abstraction", url: "https://www.w3schools.com/java/java_abstract.asp" }
+  ],
+  "Interfaces": [
+    { title: "GeeksforGeeks: C++ Abstract Class/Interfaces", url: "https://www.geeksforgeeks.org/interfaces-in-c/" },
+    { title: "Oracle Docs: Java Interfaces", url: "https://docs.oracle.com/javase/tutorial/java/IandI/createinterface.html" }
+  ],
+  
+  // Pro Level - Specific Concepts
+  "Pointers": [
+    { title: "GeeksforGeeks: C++ Pointers", url: "https://www.geeksforgeeks.org/cpp-pointers/" },
+    { title: "Video: Pointers in C++ in 15 Mins", url: "https://www.youtube.com/watch?v=EvYmTCasB4A" }
+  ],
+  "STL": [
+      { title: "TopCoder: Power of C++ STL", url: "https://www.topcoder.com/thrive/articles/Power-of-C-Standard-Template-Library-STL" },
+      { title: "Video: C++ STL Full Course", url: "https://www.youtube.com/watch?v=s_t0Ua2jA-c" }
+  ],
+  "Vectors": [
+    { title: "cplusplus.com: C++ std::vector", url: "https://cplusplus.com/reference/vector/vector/"},
+    { title: "Baeldung: Java ArrayList", url: "https://www.baeldung.com/java-arraylist"}
+  ],
+  "Collections": [
+      { title: "Baeldung: Guide to Java Collections", url: "https://www.baeldung.com/java-collections" },
+      { title: "Video: Java Collections Framework", url: "https://www.youtube.com/watch?v=rzA7UJ-hQn4" }
+  ],
+  "HashMap": [
+    { title: "GeeksforGeeks: C++ std::unordered_map", url: "https://www.geeksforgeeks.org/unordered_map-in-cpp-stl/" },
+    { title: "Baeldung: Java HashMap", url: "https://www.baeldung.com/java-hashmap" }
+  ],
+  "Linked Lists": [
+    { title: "Programiz: C++ Linked List", url: "https://www.programiz.com/dsa/linked-list" },
+    { title: "GeeksforGeeks: Java LinkedList", url: "https://www.geeksforgeeks.org/linked-list-in-java/" }
+  ],
+  "Stacks & Queues": [
+    { title: "GeeksforGeeks: C++ Stack vs Queue", url: "https://www.geeksforgeeks.org/stack-vs-queue/" },
+    { title: "Baeldung: Java Stack and Queue", url: "https://www.baeldung.com/java-stack-queue" }
+  ],
+  "Trees": [
+    { title: "FreeCodeCamp: Tree Data Structure", url: "https://www.freecodecamp.org/news/tree-data-structure-in-c-plus-plus/" },
+    { title: "Baeldung: Binary Tree in Java", url: "https://www.baeldung.com/java-binary-tree" }
+  ],
+  "Sorting Algorithms": [
+    { title: "GeeksforGeeks: C++ Sorting Algorithms", url: "https://www.geeksforgeeks.org/sorting-algorithms-in-c/" },
+    { title: "HackerEarth: Sorting Algorithms in Java", url: "https://www.hackerearth.com/practice/algorithms/sorting/bubble-sort/tutorial/" }
+  ],
+  "Searching Algorithms": [
+    { title: "Programiz: C++ Binary Search", url: "https://www.programiz.com/dsa/binary-search" },
+    { title: "Baeldung: Binary Search in Java", url: "https://www.baeldung.com/java-binary-search" }
+  ]
+};
+
 
     function updateDashboardUI(data) {
         const userCourse = courses.find(c => c.language === data.language);
@@ -587,70 +1014,82 @@
           renderCodingProfiles(data.codingProfiles);
     }
    
-    function renderTipsAndResources(language, nextTopic) {
-        const tipContainer = document.getElementById('quick-tip-text');
-        const resourceContainer = document.getElementById('resource-hub-content');
-        
-        const tipsForLang = quickTips[language] || [];
-        if (tipsForLang.length > 0) {
-            const randomIndex = Math.floor(Math.random() * tipsForLang.length);
-            tipContainer.textContent = tipsForLang[randomIndex];
-        } else {
-            tipContainer.textContent = 'No tips available for this language yet.';
-        }
-        
-        let resourcesFound = false;
-        let resourceHTML = `<h5><i class="fa-solid fa-book-bookmark"></i> Resources for: ${nextTopic}</h5><ul>`;
+    // In dashboard.html <script> tag
 
-        for (const keyword in topicResources) {
-            if (nextTopic.toLowerCase().includes(keyword.toLowerCase())) {
-                const resources = topicResources[keyword];
-                resources.forEach(resource => {
-                    resourceHTML += `<li><a href="${resource.url}" target="_blank" class="resource-link"><i class="fa-solid fa-link"></i>${resource.title}</a></li>`;
-                });
-                resourcesFound = true;
-                break; 
-            }
-        }
-        
-        if (resourcesFound) {
-            resourceContainer.innerHTML = resourceHTML + '</ul>';
-        } else {
-            resourceContainer.innerHTML = `<h5><i class="fa-solid fa-magnifying-glass"></i> No specific resources found for this topic. Keep exploring!</h5>`;
+        // ✅✅✅ START: ADD THIS NEW JAVASCRIPT FUNCTION ✅✅✅
+function renderTipsAndResources(language, nextTopic) {
+    const tipContainer = document.getElementById('quick-tip-text');
+    const resourceContainer = document.getElementById('resource-hub-content');
+    
+    // --- 1. Render a random Quick Tip ---
+    const tipsForLang = quickTips[language] || [];
+    if (tipsForLang.length > 0) {
+        const randomIndex = Math.floor(Math.random() * tipsForLang.length);
+        tipContainer.textContent = tipsForLang[randomIndex];
+    } else {
+        tipContainer.textContent = 'No tips available for this language yet.';
+    }
+    
+    // --- 2. Render resources based on the next topic ---
+    let resourcesFound = false;
+    let resourceHTML = `<h5><i class="fa-solid fa-book-bookmark"></i> Resources for: ${nextTopic}</h5><ul>`;
+
+    // Loop through our resource keywords
+    for (const keyword in topicResources) {
+        // Check if the next topic string contains our keyword (case-insensitive)
+        if (nextTopic.toLowerCase().includes(keyword.toLowerCase())) {
+            const resources = topicResources[keyword];
+            resources.forEach(resource => {
+                resourceHTML += `<li><a href="${resource.url}" target="_blank" class="resource-link"><i class="fa-solid fa-arrow-up-right-from-square"></i>${resource.title}</a></li>`;
+            });
+            resourcesFound = true;
+            break; // Stop after finding the first matching keyword to avoid duplicates
         }
     }
-
-    async function loadDashboard() {
-      try {
-        const res = await fetch('/api/user/me', { headers: { 'Authorization': `Bearer ${token}` } });
-        if (!res.ok) { throw new Error('Session expired or unauthorized.'); }
-        
-        const data = await res.json();
-        
-        if (data.subscriptions && data.subscriptions.length > 0) {
-            window.location.href = 'pro-dashboard.html';
-            return; 
-        }
-        
-        currentUserState = data;
-        
-        if (!currentUserState.language || !currentUserState.level) {
-          alert('Please complete your schedule setup.');
-          window.location.href = 'set-schedule.html';
-          return;
-        }
-        
-        updateDashboardUI(currentUserState);
-
-      } catch (error) {
-        alert(error.message);
-        localStorage.removeItem('token');
-        window.location.href = 'login.html';
-      }
+    
+    if (resourcesFound) {
+        resourceContainer.innerHTML = resourceHTML + '</ul>';
+    } else {
+        resourceContainer.innerHTML = `<h5><i class="fa-solid fa-magnifying-glass"></i> No specific resources found for this topic. Keep exploring!</h5>`;
     }
+}
+// ✅✅✅ END: ADD THIS NEW JAVASCRIPT FUNCTION ✅✅✅
+
+async function loadDashboard() {
+  try {
+    const res = await fetch('/api/user/me', { headers: { 'Authorization': `Bearer ${token}` } });
+    if (!res.ok) { throw new Error('Session expired or unauthorized.'); }
+    
+    // ✅✅✅ THE FIX: Read the JSON data FIRST ✅✅✅
+    const data = await res.json();
+    
+    // Now that 'data' exists, we can check the subscription status.
+    if (data.subscriptions && data.subscriptions.length > 0) {
+        window.location.href = 'pro-dashboard.html';
+        return; // Redirect and stop executing this script.
+    }
+    
+    // If the user is NOT subscribed, store their data and update the free dashboard.
+    currentUserState = data;
+    
+    if (!currentUserState.language || !currentUserState.level) {
+      alert('Please complete your schedule setup.');
+      window.location.href = 'set-schedule.html';
+      return;
+    }
+    
+    updateDashboardUI(currentUserState);
+
+  } catch (error) {
+    alert(error.message);
+    localStorage.removeItem('token');
+    window.location.href = 'login.html';
+  }
+}
 
     document.addEventListener('DOMContentLoaded', loadDashboard);
     
+    // Dropdown and other buttons
     const profileAvatar = document.getElementById('profile-avatar');
     const profileDropdown = document.getElementById('profile-dropdown');
     profileAvatar.addEventListener('click', (e) => { e.stopPropagation(); profileDropdown.classList.toggle('show'); });
@@ -658,8 +1097,10 @@
     document.getElementById('editBtn').onclick = () => { if (confirm('Editing your full schedule will reset your course progress to Day 1. Are you sure?')) { window.location.href = 'set-schedule.html'; } };
     document.getElementById('logoutBtn').onclick = () => { localStorage.removeItem('token'); window.location.href = 'index.html'; };
     
+    // ✅✅✅ ALL BUTTON LOGIC CONSOLIDATED HERE ✅✅✅
     document.getElementById('refresh-tip-btn').addEventListener('click', () => {
         if (currentUserState.language) {
+            // We only need to refresh the tip part.
             const tipContainer = document.getElementById('quick-tip-text');
             const tipsForLang = quickTips[currentUserState.language] || [];
             if (tipsForLang.length > 0) {
@@ -668,40 +1109,50 @@
             }
         }
     });
+    // ... Inside your DOMContentLoaded or with other event listeners ...
+const profileModal = document.getElementById('profileModal');
 
-    const profileModal = document.getElementById('profileModal');
-    document.getElementById('addProfileBtn').addEventListener('click', () => { openModal(profileModal); });
+document.getElementById('addProfileBtn').addEventListener('click', () => {
+    openModal(profileModal);
+});
 
-    document.getElementById('profileForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const platform = document.getElementById('platformName').value;
-        const url = document.getElementById('profileUrl').value;
+// Handle the form submission
+document.getElementById('profileForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const platform = document.getElementById('platformName').value;
+    const url = document.getElementById('profileUrl').value;
 
-        try {
-            const res = await fetch('/api/user/profiles', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-                body: JSON.stringify({ platform, url })
-            });
+    try {
+        // THIS IS WHERE YOU TALK TO YOUR NEW BACKEND ENDPOINT
+        const res = await fetch('/api/user/profiles', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+            body: JSON.stringify({ platform, url })
+        });
 
-            if (!res.ok) { throw new Error((await res.json()).message || 'Failed to add profile.'); }
-            const data = await res.json();
-            alert(data.message); 
-
-            currentUserState = data.user;
-            updateDashboardUI(currentUserState);
-            
-            closeModal(profileModal);
-            document.getElementById('profileForm').reset();
-
-        } catch (error) {
-            alert('Error: ' + error.message);
+        if (!res.ok) {
+            throw new Error((await res.json()).message || 'Failed to add profile.');
         }
-    });
 
+        const data = await res.json();
+        alert(data.message); // e.g., "Profile added successfully!"
+
+        // Update state and re-render the entire dashboard to show the new profile
+        currentUserState = data.user;
+        updateDashboardUI(currentUserState);
+        
+        closeModal(profileModal);
+        document.getElementById('profileForm').reset();
+
+    } catch (error) {
+        alert('Error: ' + error.message);
+    }
+});
     document.getElementById('pauseBtn').onclick = async () => {
         const pauseBtn = document.getElementById('pauseBtn');
         pauseBtn.disabled = true;
+        
+        // If user is resuming, we tell the backend to reset the streak
         const isResuming = currentUserState.isPaused;
         const bodyPayload = isResuming ? { resetStreak: true } : {};
 
@@ -715,8 +1166,8 @@
             
             const data = await res.json();
             alert(data.message);
-            currentUserState = data.user; 
-            updateDashboardUI(currentUserState); 
+            currentUserState = data.user; // Update state from server response
+            updateDashboardUI(currentUserState); // Re-render everything
         } catch (error) {
             alert('Error: ' + error.message);
         } finally {
@@ -786,19 +1237,25 @@
         if (!confirm("Are you sure? This will delete all your data permanently.")) return;
         if (!confirm("Last chance. This action cannot be undone. Delete?")) return;
         try {
-            const res = await fetch('/api/user/delete', { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
+            const res = await fetch('/api/user/delete', {
+                method: 'DELETE',
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
             if (res.ok) {
                 alert('Account deleted.');
                 localStorage.removeItem('token');
                 window.location.href = 'index.html';
             } else {
-                throw new Error((await res.json()).message || 'Failed to delete account.');
+                const data = await res.json();
+                throw new Error(data.message || 'Failed to delete account.');
             }
         } catch (error) {
             alert('Error: ' + error.message);
         }
     };
+     let progressChart = null; // To hold the chart instance
 
+    // ✅✅✅ 1. DEFINE ALL POSSIBLE BADGES ✅✅✅
     const allBadges = {
       'INITIATED': { icon: 'fa-solid fa-play', title: 'Initiated', desc: 'Completed Day 1' },
       '7_DAY_STREAK': { icon: 'fa-solid fa-fire-flame-curved', title: 'On Fire', desc: 'Maintained a 7-day streak' },
@@ -807,7 +1264,9 @@
       'COURSE_COMPLETE': { icon: 'fa-solid fa-crown', title: 'Master Coder', desc: 'Completed all 40 days!' },
       'WEEKEND_WARRIOR': { icon: 'fa-solid fa-calendar-week', title: 'Weekend Warrior', desc: 'Completed a task on a weekend' }
     };
-    
+        // ... after the openTopicModal function ...
+
+    // ✅✅✅ 2. CREATE THE FUNCTION TO RENDER BADGES ✅✅✅
     function renderAchievements(unlockedBadges = []) {
         const grid = document.getElementById('achievements-grid');
         grid.innerHTML = '';
