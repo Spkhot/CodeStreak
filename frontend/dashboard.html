@@ -861,22 +861,35 @@ async function launchWorkspace() {
     openModal(workspaceModal);
 
     const ideContainer = document.getElementById('ide-container');
-    ideContainer.innerHTML = '<p style="text-align:center; padding: 2rem;">Booting coding environment, please wait...</p>';
+    ideContainer.innerHTML = '<p style="text-align:center; padding: 2rem;">Booting coding environment and installing tools...</p>';
 
-    // ✅ 1. Get the 'Run' button and DISABLE it before we start booting
     const runBtn = document.getElementById('runCodeBtn');
     runBtn.disabled = true;
     runBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Booting...';
     
-    // This part is unchanged
     let projectTemplate = 'node';
     let openFileName = 'main.cpp';
     let templateFiles = {
-        'main.cpp': `#include <iostream>\n\nint main() {\n    std::cout << "Hello, World!" << std::endl;\n    return 0;\n}`,
-        'README.md': 'Use the Run Code button to compile and execute your C++ code.'
+        'main.cpp': `#include <iostream>\n\nint main() {\n    // Your code here!\n    std::cout << "Hello, World!" << std::endl;\n    return 0;\n}`,
+        'README.md': 'Your C++ environment is being set up. The Run button will be enabled shortly.',
+        
+        // This file tells StackBlitz what to do on startup
+        '.stackblitzrc': `{
+            "startCommand": "bash ./.setup.sh"
+        }`,
+        
+        // This is the startup script itself
+        '.setup.sh': `#!/bin/bash
+# Install C++ compiler (g++)
+echo "Installing C++ compiler..."
+sudo apt-get update > /dev/null 2>&1
+sudo apt-get install -y g++ > /dev/null 2>&1
+echo "Compiler installed. You can now use the 'Run Code' button."
+`
     };
 
     if (currentUserState.language === 'Java') {
+        // Java setup is simpler and doesn't need custom setup
         projectTemplate = 'java';
         openFileName = 'Main.java';
         templateFiles = {
@@ -886,7 +899,6 @@ async function launchWorkspace() {
     }
     
     try {
-        // ✅ 2. Await the boot process. This line will PAUSE here until the IDE is ready.
         ideVm = await StackBlitzSDK.embedProject(
             ideContainer,
             {
@@ -901,22 +913,26 @@ async function launchWorkspace() {
             }
         );
 
+        // For C++, we set a timeout to wait for the setup script to finish
+        if (currentUserState.language === 'C++') {
+            setTimeout(() => {
+                isCompilerInstalled = true; // Assume installation is done
+                runBtn.disabled = false;
+                runBtn.innerHTML = '<i class="fa-solid fa-play"></i> Run Code';
+            }, 15000); // Wait 15 seconds for installation. Adjust if needed.
+        } else {
+             runBtn.disabled = false;
+             runBtn.innerHTML = '<i class="fa-solid fa-play"></i> Run Code';
+        }
+
     } catch (error) {
         console.error("Failed to embed project:", error);
         ideContainer.innerHTML = '<p style="text-align:center; padding: 2rem; color: var(--danger-red);">Failed to load workspace. Please try again.</p>';
-    } finally {
-        // ✅ 3. Re-enable the 'Run' button now that the IDE is ready (or has failed)
-        runBtn.disabled = false;
-        runBtn.innerHTML = '<i class="fa-solid fa-play"></i> Run Code';
     }
 }
-
 // ✅ ADD THIS NEW runCode FUNCTION
 async function runCode() {
-    if (!ideVm) {
-        alert('Workspace is not running.');
-        return;
-    }
+    if (!ideVm) { alert('Workspace is not running.'); return; }
 
     const runBtn = document.getElementById('runCodeBtn');
     runBtn.disabled = true;
@@ -924,23 +940,11 @@ async function runCode() {
     
     try {
         if (currentUserState.language === 'C++') {
-            
-            // Step 1: Install the compiler if it hasn't been installed in this session
-            if (!isCompilerInstalled) {
-                runBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Installing...';
-                await ideVm.cli.run('sudo apt-get update && sudo apt-get install -y g++');
-                isCompilerInstalled = true; // Remember that we've installed it
-            }
-
-            // Step 2: Compile the code
-            runBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Compiling...';
-            // We need to get the active file name to compile the correct one
+            // No need to install anymore, it's done on startup!
             const activeFile = await ideVm.getactivefile();
-            await ideVm.cli.run(`g++ ${activeFile} -o myprogram`);
-
-            // Step 3: Run the compiled program
-            runBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Executing...';
-            await ideVm.cli.run('./myprogram');
+            
+            // Just compile and run
+            await ideVm.cli.run(`g++ ${activeFile} -o myprogram && ./myprogram`);
 
         } else if (currentUserState.language === 'Java') {
             const activeFile = await ideVm.getactivefile();
@@ -948,7 +952,6 @@ async function runCode() {
         }
     } catch (error) {
         console.error('Error running code:', error);
-        // This is the alert you are seeing. The error details will be in the browser's DevTools console.
         alert('An error occurred while trying to run the code. Check the terminal for details.');
     } finally {
         runBtn.disabled = false;
