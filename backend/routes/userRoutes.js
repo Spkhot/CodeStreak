@@ -14,5 +14,5 @@ router.post('/create-order', protect, createOrder);
 router.post('/verify-payment', protect, verifyPaymentAndSetSchedule);
 router.patch('/notes', protect, saveTopicNotes);
 router.post('/profiles', protect, addCodingProfile);
-router.post('/profiles', protect, addCodingProfile);
+router.delete('/profiles/:profileId', protect, deleteCodingProfile);
 export default router;
