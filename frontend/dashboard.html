@@ -269,6 +269,58 @@
     /* --- (All other card, button, and modal styles are unchanged) --- */
 
     /* ✅✅✅ NEW RESPONSIVE STYLES ✅✅✅ */
+
+    /* ... a good place is after your heatmap styles ... */
+
+/* --- ✅✅✅ NEW DAILY FOCUS STYLES ✅✅✅ --- */
+.daily-focus-card {
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, #1a2230 100%);
+    border-top: 3px solid var(--primary-blue);
+    padding: 2rem;
+}
+.daily-focus-content {
+    text-align: center;
+}
+.daily-focus-content .mission-day {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--primary-blue);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.daily-focus-content .mission-topic {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-light);
+    margin-bottom: 1.5rem;
+    line-height: 1.4;
+}
+.daily-focus-content .mission-message {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--text-muted);
+}
+.btn-start-lesson {
+    display: inline-block;
+    background-color: var(--primary-blue);
+    color: white;
+    padding: 14px 28px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.2);
+}
+.btn-start-lesson:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+}
+.btn-start-lesson i {
+    margin-right: 10px;
+}
+/* --- ✅✅✅ END OF NEW STYLES ✅✅✅ --- */
     @media (max-width: 1200px) {
         .dashboard-grid {
             grid-template-columns: 280px 1fr;
@@ -387,11 +439,18 @@
                 </div>
             </div>
         </section>
-
-        <section class="card">
+         <section class="card">
             <div class="card-header"><i class="fa-solid fa-trophy"></i><span>Achievements</span></div>
             <div class="achievements-grid" id="achievements-grid"><p>Loading achievements...</p></div>
         </section>
+         <!-- ✅✅✅ START: ADD THIS NEW DAILY FOCUS CARD ✅✅✅ -->
+    <section class="card daily-focus-card">
+        <div id="daily-focus-content">
+            <!-- Content will be injected by JavaScript -->
+            <p>Loading your mission...</p>
+        </div>
+    </section>
+    <!-- ✅✅✅ END: ADD THIS NEW DAILY FOCUS CARD ✅✅✅ -->
       </aside>
 
     </div>
@@ -424,6 +483,54 @@
     const courses = [ { language: "C++", levels: [ { level: "Beginner", title: "Fundamentals & Syntax", days: [ { day: 1, topic: "Structure of a Simple C++ Program (Hello World, #include, main())" }, { day: 2, topic: "Input and Output (cin, cout, endl, basic formatting)" }, { day: 3, topic: "Variables & Data Types (int, float, char, string, bool)" }, { day: 4, topic: "Operators (Arithmetic, Assignment, Increment/Decrement)" }, { day: 5, topic: "Conditional Statements (if, else, nested if)" }, { day: 6, topic: "Logical Operators & Comparisons" }, { day: 7, topic: "Switch Statements" }, { day: 8, topic: "Loops — while, do-while" }, { day: 9, topic: "Loops — for loop, nested loops" }, { day: 10, topic: "Practice: Basic Patterns & Control Flow Questions" } ] }, { level: "Intermediate", title: "Functions & Arrays", days: [ { day: 11, topic: "Functions — Basics, Declaration & Definition" }, { day: 12, topic: "Function Arguments & Return Types" }, { day: 13, topic: "Recursion Basics" }, { day: 14, topic: "Arrays — 1D Arrays Intro" }, { day: 15, topic: "Arrays — 1D Operations & Questions" }, { day: 16, topic: "2D Arrays — Basics" }, { day: 17, topic: "2D Arrays — Classic Problems (Matrix Transpose, Sum)" }, { day: 18, topic: "Strings — C++ Strings, Basic Operations" }, { day: 19, topic: "Strings — Character Arrays vs string Class" }, { day: 20, topic: "Practice: Functions + Arrays + Strings Combined Problems" } ] }, { level: "Advanced", title: "Classes, OOP & STL", days: [ { day: 21, topic: "Intro to OOP — Classes & Objects" }, { day: 22, topic: "Constructors & Destructors" }, { day: 23, topic: "Member Functions & Data Members" }, { day: 24, topic: "Encapsulation & Access Modifiers" }, { day: 25, topic: "Inheritance — Types & Examples" }, { day: 26, topic: "Polymorphism — Function Overloading" }, { day: 27, topic: "Polymorphism — Operator Overloading" }, { day: 28, topic: "Abstract Classes & Pure Virtual Functions" }, { day: 29, topic: "Intro to Standard Template Library (STL)" }, { day: 30, topic: "STL — Vectors & Iterators" } ] }, { level: "Pro", title: "Advanced Concepts + DSA", days: [ { day: 31, topic: "Pointers — Basics, * and &" }, { day: 32, topic: "Pointers — Arrays & Functions" }, { day: 33, topic: "Dynamic Memory Allocation (new and delete)" }, { day: 34, topic: "Linked Lists — Intro & Implementation" }, { day: 35, topic: "Stacks & Queues (Concepts + STL)" }, { day: 36, topic: "Trees — Basics & Binary Tree" }, { day: 37, topic: "Binary Search & Binary Search Trees" }, { day: 38, topic: "Sorting Algorithms — Bubble, Selection, Insertion" }, { day: 39, topic: "Searching Algorithms — Linear & Binary Search" }, { day: 40, topic: "Final Practice: Mixed Interview Questions (Patterns, STL, DSA)" } ] } ] }, { language: "Java", levels: [ { level: "Beginner", title: "Java Basics & Syntax", days: [ { day: 1, topic: "Intro: How Java Works, JVM, JDK, First Hello World" }, { day: 2, topic: "Variables & Data Types" }, { day: 3, topic: "Input & Output — Scanner" }, { day: 4, topic: "Operators — Arithmetic, Assignment" }, { day: 5, topic: "Conditional Statements — if, else if, else" }, { day: 6, topic: "Logical Operators & Comparisons" }, { day: 7, topic: "Switch Case" }, { day: 8, topic: "Loops — while & do-while" }, { day: 9, topic: "Loops — for loop, nested loops" }, { day: 10, topic: "Practice: Basic Pattern Printing" } ] }, { level: "Intermediate", title: "Methods & Arrays", days: [ { day: 11, topic: "Methods — Definition & Calling" }, { day: 12, topic: "Method Overloading" }, { day: 13, topic: "Recursion Basics" }, { day: 14, topic: "Arrays — 1D Arrays" }, { day: 15, topic: "Arrays — Basic Problems" }, { day: 16, topic: "2D Arrays" }, { day: 17, topic: "2D Array Classic Problems (Transpose, Sum)" }, { day: 18, topic: "Strings — Basics & String Class" }, { day: 19, topic: "String Methods & Immutability" }, { day: 20, topic: "Practice: Arrays + Strings Problems" } ] }, { level: "Advanced", title: "OOP & Advanced Classes", days: [ { day: 21, topic: "OOP Concepts — Classes & Objects" }, { day: 22, topic: "Constructors" }, { day: 23, topic: "Getters & Setters" }, { day: 24, topic: "this Keyword" }, { day: 25, topic: "Inheritance" }, { day: 26, topic: "super Keyword" }, { day: 27, topic: "Method Overriding" }, { day: 28, topic: "Polymorphism" }, { day: 29, topic: "Abstraction & Interfaces" }, { day: 30, topic: "Encapsulation — Real Example" } ] }, { level: "Pro", title: "Core DSA & Collections", days: [ { day: 31, topic: "Intro to Java Collections" }, { day: 32, topic: "ArrayList — Basics & Operations" }, { day: 33, topic: "LinkedList — Basics & Operations" }, { day: 34, topic: "HashMap — Basics & Use Cases" }, { day: 35, topic: "HashSet — Basics & Differences" }, { day: 36, topic: "Stack & Queue in Java" }, { day: 37, topic: "Sorting Algorithms — Bubble & Selection" }, { day: 38, topic: "Searching — Linear & Binary Search" }, { day: 39, topic: "Trees — Basic Binary Tree Concepts" }, { day: 40, topic: "Practice Day — Mixed DSA Questions" } ] } ] } ];
     const token = localStorage.getItem('token');
     if (!token) { window.location.href = 'login.html'; }
+   
+ 
+
+     // ... somewhere before your updateDashboardUI function ...
+
+// ✅✅✅ START: ADD THIS NEW JAVASCRIPT FUNCTION ✅✅✅
+function renderDailyFocusCard(data) {
+    const focusContainer = document.getElementById('daily-focus-content');
+    let contentHTML = '';
+
+    if (data.isPaused) {
+        contentHTML = `
+            <div class="daily-focus-content">
+                <p class="mission-day">COURSE PAUSED</p>
+                <p class="mission-topic">Your journey is on hold.</p>
+                <p class="mission-message">Click 'Resume Course' in your setup to get back on track!</p>
+            </div>
+        `;
+    } else if (data.currentDay > 40) { // Assuming 40 is the last day
+        contentHTML = `
+            <div class="daily-focus-content">
+                <p class="mission-day">Congratulations!</p>
+                <p class="mission-topic">You've Completed the Course! 🎉</p>
+                <p class="mission-message">You are now a certified master. Well done!</p>
+            </div>
+        `;
+    } else {
+        // Find the topic for the current day
+        const userCourse = courses.find(c => c.language === data.language);
+        const allDays = userCourse.levels.flatMap(level => level.days);
+        const currentDayTopic = allDays.find(day => day.day === data.currentDay).topic;
+
+        contentHTML = `
+            <div class="daily-focus-content">
+                <p class="mission-day">Today's Mission: Day ${data.currentDay}</p>
+                <h2 class="mission-topic">${currentDayTopic}</h2>
+                <a href="day.html?day=${data.currentDay}" class="btn-start-lesson">
+                    <i class="fa-solid fa-rocket"></i>Start Lesson
+                </a>
+            </div>
+        `;
+    }
+
+    focusContainer.innerHTML = contentHTML;
+}
+// ✅✅✅ END: ADD THIS NEW JAVASCRIPT FUNCTION ✅✅✅
+
+// ... your existing updateDashboardUI function
 
     let currentUserState = {};
 
@@ -678,6 +785,7 @@ const topicResources = {
         renderCurriculum(userCourse, completedDaysSet);
         renderAchievements(data.achievements);
          renderTipsAndResources(data.language, nextTopic);
+         renderDailyFocusCard(data);
     }
    
     // In dashboard.html <script> tag
