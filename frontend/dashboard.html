@@ -841,15 +841,16 @@ async function launchWorkspace() {
     const ideContainer = document.getElementById('ide-container');
     ideContainer.innerHTML = '<p style="text-align:center; padding: 2rem;">Booting coding environment...</p>';
 
-    // TODO: Later, we will load saved files from the user's data.
-    // For now, we start a fresh project.
-
+    // This part is unchanged
     let templateFiles = {
         'main.cpp': `#include <iostream>\n\nint main() {\n    std::cout << "Hello from The Habit Loop Workspace!" << std::endl;\n    return 0;\n}`,
         'README.md': 'My notes for today\'s task.'
     };
-
+    
+    // Determine the correct template and files based on the user's language
+    let projectTemplate = 'node'; // Default to 'node'
     if (currentUserState.language === 'Java') {
+        projectTemplate = 'java'; // 'java' is a valid template
         templateFiles = {
             'Main.java': `public class Main {\n    public static void main(String[] args) {\n        System.out.println("Hello from The Habit Loop Workspace!");\n    }\n}`,
             'README.md': 'My notes for today\'s task.'
@@ -861,7 +862,10 @@ async function launchWorkspace() {
         {
             title: `Day ${currentUserState.currentDay} - ${currentUserState.language}`,
             description: 'My project for The Habit Loop.',
-            template: currentUserState.language === 'Java' ? 'java' : 'cpp',
+            
+            // ✅ THE FIX IS HERE: We use the 'projectTemplate' variable
+            template: projectTemplate, 
+            
             files: templateFiles,
         },
         {
