@@ -1764,29 +1764,26 @@ document.getElementById('profileForm').addEventListener('submit', async (e) => {
             grid.appendChild(badgeElement);
         }
     }
-    // ✅ PASTE THIS NEW JAVASCRIPT BLOCK IN ITS PLACE ✅
-document.addEventListener('DOMContentLoaded', () => {
-    // --- Existing Dashboard Code ---
-    // Make sure your `loadDashboard();` call is still inside here!
-    loadDashboard(); 
+     document.addEventListener('DOMContentLoaded', () => {
+        const menuToggleBtn = document.getElementById('menu-toggle-btn');
+        loadDashboard(); // This is important, it loads all your user data.
 
-    // --- New Sidebar Logic ---
-    const menuToggleBtn = document.getElementById('menu-toggle-btn');
-    const sidebarCloseBtn = document.getElementById('sidebar-close-btn');
-    const mainContent = document.getElementById('main-content');
+    // --- PART 2: Add the new sidebar logic ---
+    const sidebarCloseBtn = document.getElementById('sidebar-close-btn'); // New
+    const mainContent = document.getElementById('main-content');       // New
     const body = document.body;
-
-    // 1. Open sidebar with hamburger button
+    
+    // This is the updated logic for opening the sidebar
     menuToggleBtn.addEventListener('click', () => {
         body.classList.add('sidebar-open');
     });
 
-    // 2. Close sidebar with the 'X' button
+    // This is the new logic for the 'X' button
     sidebarCloseBtn.addEventListener('click', () => {
         body.classList.remove('sidebar-open');
     });
 
-    // 3. Close sidebar by clicking on the main content area
+    // This is the new logic for clicking the main content to close
     mainContent.addEventListener('click', () => {
         if (body.classList.contains('sidebar-open')) {
             body.classList.remove('sidebar-open');
