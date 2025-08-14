@@ -526,13 +526,111 @@
 .btn-workspace-action.run-btn:hover {
     opacity: 0.85;
 }
+#app-sidebar {
+    width: 250px; /* Sidebar width */
+    position: fixed; /* Keeps it in place while scrolling */
+    top: 0;
+    left: 0;
+    height: 100vh; /* Full height of the viewport */
+    background-color: var(--bg-secondary);
+    border-right: 1px solid var(--border-color);
+    padding: 1.5rem 1rem;
+    display: flex;
+    flex-direction: column;
+    z-index: 1001; /* Higher than the navbar to be on top */
+    transition: transform 0.3s ease-in-out;
+}
+
+#app-sidebar .sidebar-header {
+    margin-bottom: 2rem;
+}
+
+#app-sidebar .logo {
+    font-size: 1.4rem;
+    font-weight: 700;
+    text-decoration: none;
+    color: var(--text-light);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+#app-sidebar .logo .fa-fire {
+    color: var(--primary-blue);
+}
+
+#app-sidebar .sidebar-nav {
+    flex-grow: 1; /* Pushes the actions to the bottom */
+}
+
+#app-sidebar .sidebar-item {
+    display: flex;
+    align-items: center;
+    padding: 0.9rem 1rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+#app-sidebar .sidebar-item i {
+    margin-right: 1rem;
+    width: 20px;
+    text-align: center;
+}
+#app-sidebar .sidebar-item:hover {
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+}
+#app-sidebar .sidebar-item.active {
+    background-color: var(--primary-blue);
+    color: white;
+}
+#app-sidebar .sidebar-item.logout:hover {
+    background-color: rgba(239, 68, 68, 0.1);
+    color: var(--danger-red);
+}
+
+#app-sidebar .sidebar-actions {
+    border-top: 1px solid var(--border-color);
+    padding-top: 1rem;
+}
+
+/* This is the key part: Push your main content to the right */
+/* We target the existing elements and add a margin */
+.navbar, .container {
+    margin-left: 250px; /* This MUST match the sidebar width */
+    width: calc(100% - 250px); /* Adjust width to account for margin */
+}
   </style>
 <!-- dashboard.html -> <head> tag -->
 <!-- Add the StackBlitz SDK -->
 <script src="https://unpkg.com/@stackblitz/sdk/bundles/sdk.umd.js"></script>
 </head>
 <body>
+   <aside id="app-sidebar">
+        <div class="sidebar-header">
+            <a href="index.html" class="logo">
+                <i class="fa-solid fa-fire"></i>
+                <span>The Habit Loop</span>
+            </a>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <!-- These are the links you wanted -->
+            <a href="index.html" class="sidebar-item"><i class="fa-solid fa-house"></i> Home</a>
+            <a href="dashboard.html" class="sidebar-item active"><i class="fa-solid fa-table-columns"></i> Dashboard</a>
+            <a href="instructions.html" class="sidebar-item"><i class="fa-solid fa-circle-question"></i> How to Use</a>
+        </nav>
 
+        <div class="sidebar-actions">
+            <a href="#" class="sidebar-item" id="editTimeBtnSidebar"><i class="fa-solid fa-clock"></i> Edit Time</a>
+            <a href="#" class="sidebar-item" id="editNumberBtnSidebar"><i class="fa-brands fa-whatsapp"></i> Edit Number</a>
+            <a href="#" class="sidebar-item logout" id="deleteAccountBtnSidebar"><i class="fa-solid fa-user-slash"></i> Delete Account</a>
+            <a href="#" class="sidebar-item logout" id="logoutBtnSidebar"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
+        </div>
+    </aside>
+    <!-- ✅✅✅ END: ADD THIS NEW SIDEBAR BLOCK ✅✅✅ -->
   <nav class="navbar">
     <a href="index.html" class="logo"><i class="fa-solid fa-fire"></i>The Habit Loop</a>
     <div class="nav-actions">
