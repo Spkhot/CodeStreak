@@ -112,9 +112,7 @@
     .modal-body input { font-size: 1rem; }
     .modal-footer { margin-top: 1.5rem; }
     .btn-save { width: 100%; padding: 12px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; background-color: var(--primary-blue); color: white; transition: background-color 0.2s; }
-    .btn-save:hover { background-color: var(--primary-blue-hover); }
-    @media (max-width: 768px) { .dashboard-grid { grid-template-columns: 1fr; } .navbar { padding: 0 1rem; } .logo { font-size: 1.2rem; } .streak-counter { font-size: 1rem; padding: 6px 12px;} }
-        /* --- ✅✅✅ NEW ACHIEVEMENT STYLES ✅✅✅ --- */
+    .btn-save:hover { background-color: var(--primary-blue-hover); }        /* --- ✅✅✅ NEW ACHIEVEMENT STYLES ✅✅✅ --- */
     .achievements-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
@@ -320,74 +318,6 @@
 .btn-start-lesson i {
     margin-right: 10px;
 }
-/* --- ✅✅✅ END OF NEW STYLES ✅✅✅ --- */
-    @media (max-width: 1200px) {
-        .dashboard-grid {
-            grid-template-columns: 280px 1fr;
-        }
-        .right-column {
-            grid-column: 2 / 3;
-        }
-    }
-    @media (max-width: 992px) {
-        .dashboard-grid {
-            grid-template-columns: 1fr;
-        }
-        .right-column {
-            grid-column: 1 / 2;
-        }
-    }
-    /* ======================================= */
-/* ✅ NEW RESPONSIVE SIDEBAR STYLES ✅ */
-/* ======================================= */
-
-/* 1. Style the new menu button */
-#menu-toggle-btn {
-    display: none; /* Hide it on desktop */
-    background: none;
-    border: none;
-    color: var(--text-light);
-    font-size: 1.5rem;
-    cursor: pointer;
-    margin-right: 1rem;
-    z-index: 1002; /* Make sure it's clickable */
-}
-
-/* 2. This is the main media query for tablets and phones */
-@media (max-width: 992px) {
-    
-    /* Show the hamburger button */
-    #menu-toggle-btn {
-        display: block; 
-    }
-
-    /* Hide the sidebar by pushing it off the left side of the screen */
-    #app-sidebar {
-        transform: translateX(-100%);
-        box-shadow: 5px 0 15px rgba(0,0,0,0.2);
-    }
-    
-    /* When sidebar is open, slide it back into view */
-    body.sidebar-open #app-sidebar {
-        transform: translateX(0);
-    }
-    
-    /* Make the logo in the top navbar disappear, since it's in the sidebar */
-    .navbar > .logo {
-        display: none;
-    }
-     #main-content {
-        margin-left: 0;
-    }
-}
-
-    @media (max-width: 768px) {
-        .navbar { padding: 0 1rem; }
-        .logo { font-size: 1.2rem; }
-        .streak-counter { font-size: 1rem; padding: 6px 12px;}
-    }
-    /* ... a good place is after your daily focus styles ... */
-
 /* --- ✅✅✅ NEW CODING PROFILES STYLES ✅✅✅ --- */
 .profiles-list-container {
     display: flex;
@@ -584,7 +514,15 @@
     z-index: 1001; /* Higher than the navbar to be on top */
     transition: transform 0.3s ease-in-out;
 }
-
+/* ✅ PASTE THE CUT CODE RIGHT HERE ✅ */
+#main-content {
+    margin-left: 250px; 
+    transition: margin-left 0.3s ease-in-out;
+}
+.navbar, .container {
+    width: 100%;
+    margin-left: 0;
+}
 #app-sidebar .sidebar-header {
     margin-bottom: 2rem;
 }
@@ -639,20 +577,68 @@
     border-top: 1px solid var(--border-color);
     padding-top: 1rem;
 }
-/* ✅ ADD THIS NEW RULE FOR THE WRAPPER */
-#main-content {
-    margin-left: 250px; /* This pushes the content over on desktop */
-    transition: margin-left 0.3s ease-in-out; /* This makes it slide smoothly! */
+/* ========================================================= */
+/* ✅ FINAL & CORRECT RESPONSIVE LAYOUT - PASTE AT END OF CSS ✅ */
+/* ========================================================= */
+
+/* --- RESPONSIVE BREAKPOINTS --- */
+
+/* For large tablets and smaller desktops */
+@media (max-width: 1200px) {
+    .dashboard-grid {
+        grid-template-columns: 280px 1fr;
+    }
+    .right-column {
+        grid-column: 2 / 3;
+    }
 }
 
-/* Make sure the navbar and container inside it are full width of the wrapper */
-.navbar, .container {
-    width: 100%;
-    margin-left: 0; /* Reset any old margin */
+/* For tablets and mobile phones */
+@media (max-width: 992px) {
+    /* --- Main Layout Changes --- */
+    #main-content {
+        margin-left: 0;
+    }
+
+    #app-sidebar {
+        transform: translateX(-100%);
+        box-shadow: 5px 0 15px rgba(0,0,0,0.2);
+    }
+    
+    body.sidebar-open #app-sidebar {
+        transform: translateX(0);
+    }
+    
+    /* --- UI Element Changes --- */
+    #menu-toggle-btn {
+        display: block; 
+    }
+
+    .navbar > .logo {
+        display: none;
+    }
+
+    /* --- Grid Collapse --- */
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+    .right-column {
+        grid-column: 1 / 2;
+    }
 }
-  </style>
-<!-- dashboard.html -> <head> tag -->
-<!-- Add the StackBlitz SDK -->
+
+/* For smaller mobile phones */
+@media (max-width: 768px) {
+    .navbar { 
+        padding: 0 1rem; 
+    }
+    .streak-counter { 
+        font-size: 1rem; 
+        padding: 6px 12px;
+    }
+}
+/* --- ✅✅✅ END OF NEW STYLES ✅✅✅ --- */
+</style>
 <script src="https://unpkg.com/@stackblitz/sdk/bundles/sdk.umd.js"></script>
 </head>
 <body>
