@@ -12,6 +12,16 @@ const PORT = process.env.PORT || 5000;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+// --- ✅✅✅ ADD THE MIDDLEWARE BLOCK HERE ✅✅✅ ---
+// This applies the headers to ALL routes, including static files.
+app.use('/workspace', (req, res, next) => {
+  res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
+  res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
+  next();
+});
+// --- ✅✅✅ END OF NEW MIDDLEWARE BLOCK ✅✅✅ ---
+
+
 // Serve the static files from the 'frontend' folder
 app.use(express.static(path.join(__dirname, '../frontend')));
 
