@@ -1562,10 +1562,7 @@ async function loadDashboard() {
     localStorage.removeItem('token');
     window.location.href = 'login.html';
   }
-}
-
-    document.addEventListener('DOMContentLoaded', loadDashboard);
-    
+}    
     // Dropdown and other buttons
     const profileAvatar = document.getElementById('profile-avatar');
     const profileDropdown = document.getElementById('profile-dropdown');
@@ -1764,16 +1761,36 @@ document.getElementById('profileForm').addEventListener('submit', async (e) => {
             grid.appendChild(badgeElement);
         }
     }
-     document.addEventListener('DOMContentLoaded', () => {
-        const menuToggleBtn = document.getElementById('menu-toggle-btn');
-        const body = document.body;
-        
-        // Listen for a click on the hamburger button
-        menuToggleBtn.addEventListener('click', () => {
-            // Add or remove the 'sidebar-open' class on the body
-            body.classList.toggle('sidebar-open');
-        });
+    // ✅ TO THIS COMPLETE BLOCK ✅
+document.addEventListener('DOMContentLoaded', () => {
+    
+    // --- PART 1: Load all your dashboard data ---
+    loadDashboard(); 
+
+    // --- PART 2: Set up all the sidebar buttons ---
+    const menuToggleBtn = document.getElementById('menu-toggle-btn');
+    const sidebarCloseBtn = document.getElementById('sidebar-close-btn');
+    const mainContent = document.getElementById('main-content');
+    const body = document.body;
+
+    // Open sidebar with hamburger button
+    menuToggleBtn.addEventListener('click', (e) => {
+        e.stopPropagation(); // Prevents the mainContent click from firing immediately
+        body.classList.add('sidebar-open');
     });
+
+    // Close sidebar with the 'X' button
+    sidebarCloseBtn.addEventListener('click', () => {
+        body.classList.remove('sidebar-open');
+    });
+
+    // Close sidebar by clicking on the main content area
+    mainContent.addEventListener('click', () => {
+        if (body.classList.contains('sidebar-open')) {
+            body.classList.remove('sidebar-open');
+        }
+    });
+});
   </script>
 </body>
 </html>
