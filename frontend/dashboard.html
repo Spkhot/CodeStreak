@@ -337,53 +337,12 @@
             grid-column: 1 / 2;
         }
     }
-     /* dashboard.html -> <style> tag */
-
-/* --- ✅ REPLACE ALL YOUR @media queries with this block --- */
-
-@media (max-width: 992px) {
-    /* 1. Slide the sidebar off-screen by default on tablets and phones */
-    #app-sidebar {
-        transform: translateX(-100%);
-    }
-
-    /* 2. Create a '.show' class to slide it back into view */
-    #app-sidebar.show {
-        transform: translateX(0);
-    }
-    
-    /* 3. Make the main content and navbar full-width */
-    #main-content, .navbar {
-        margin-left: 0;
-        width: 100%;
-    }
-
-    /* 4. Show the hamburger menu button on the top right */
-    #menu-toggle {
-        display: flex;
-    }
-
-    /* Optional: Adjust other elements for smaller screens */
-    .container {
-        padding: 1.5rem;
-    }
-    .dashboard-grid {
-        grid-template-columns: 1fr;
-    }
-    .left-column, .right-column, .center-column {
-        grid-column: 1 / -1;
-    }
-    .welcome-header {
-        font-size: 2rem;
-    }
-    .navbar .streak-counter {
-        display: none; /* Hide the streak counter in the navbar on mobile */
-    }
-    .main-header {
-         /* Add padding to prevent the welcome text from going under the menu button */
-        padding-right: 55px;
-    }
+    @media (max-width: 790px) {
+  #app-sidebar {
+    display: none !important;
+  }
 }
+
     @media (max-width: 768px) {
         .navbar { padding: 0 1rem; }
         .logo { font-size: 1.2rem; }
