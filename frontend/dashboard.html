@@ -337,13 +337,51 @@
             grid-column: 1 / 2;
         }
     }
-    @media (max-width: 790px) {
-  #app-sidebar {
-    display: none;
-  }
-    #app-container {
-    grid-template-columns: 1fr; /* full width for content */
-  }
+    /* ======================================= */
+/* ✅ NEW RESPONSIVE SIDEBAR STYLES ✅ */
+/* ======================================= */
+
+/* 1. Style the new menu button */
+#menu-toggle-btn {
+    display: none; /* Hide it on desktop */
+    background: none;
+    border: none;
+    color: var(--text-light);
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin-right: 1rem;
+    z-index: 1002; /* Make sure it's clickable */
+}
+
+/* 2. This is the main media query for tablets and phones */
+@media (max-width: 992px) {
+    
+    /* Show the hamburger button */
+    #menu-toggle-btn {
+        display: block; 
+    }
+
+    /* Hide the sidebar by pushing it off the left side of the screen */
+    #app-sidebar {
+        transform: translateX(-100%);
+        box-shadow: 5px 0 15px rgba(0,0,0,0.2);
+    }
+    
+    /* When sidebar is open, slide it back into view */
+    body.sidebar-open #app-sidebar {
+        transform: translateX(0);
+    }
+
+    /* Make the navbar and content take up the FULL screen width */
+    .navbar, .container {
+        margin-left: 0;
+        width: 100%;
+    }
+    
+    /* Make the logo in the top navbar disappear, since it's in the sidebar */
+    .navbar > .logo {
+        display: none;
+    }
 }
 
     @media (max-width: 768px) {
@@ -640,9 +678,13 @@
         </div>
     </aside>
     <!-- ✅✅✅ END: ADD THIS NEW SIDEBAR BLOCK ✅✅✅ -->
-  <nav class="navbar">
+    <nav class="navbar">
+    <!-- ✅ ADD THIS BUTTON -->
+    <button id="menu-toggle-btn">
+        <i class="fa-solid fa-bars"></i>
+    </button>
     <a href="index.html" class="logo"><i class="fa-solid fa-fire"></i>The Habit Loop</a>
-    <div class="nav-actions">
+      <div class="nav-actions">
       <div class="streak-counter">
         <i class="fa-solid fa-fire"></i>
         <span>Streak: <span id="nav-streak">...</span></span>
@@ -1712,6 +1754,16 @@ document.getElementById('profileForm').addEventListener('submit', async (e) => {
             grid.appendChild(badgeElement);
         }
     }
+     document.addEventListener('DOMContentLoaded', () => {
+        const menuToggleBtn = document.getElementById('menu-toggle-btn');
+        const body = document.body;
+        
+        // Listen for a click on the hamburger button
+        menuToggleBtn.addEventListener('click', () => {
+            // Add or remove the 'sidebar-open' class on the body
+            body.classList.toggle('sidebar-open');
+        });
+    });
   </script>
 </body>
 </html>
