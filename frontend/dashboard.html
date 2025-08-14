@@ -382,6 +382,9 @@
     .navbar > .logo {
         display: none;
     }
+     #main-content {
+        margin-left: 0;
+    }
 }
 
     @media (max-width: 768px) {
@@ -642,12 +645,16 @@
     border-top: 1px solid var(--border-color);
     padding-top: 1rem;
 }
+/* ✅ ADD THIS NEW RULE FOR THE WRAPPER */
+#main-content {
+    margin-left: 250px; /* This pushes the content over on desktop */
+    transition: margin-left 0.3s ease-in-out; /* This makes it slide smoothly! */
+}
 
-/* This is the key part: Push your main content to the right */
-/* We target the existing elements and add a margin */
+/* Make sure the navbar and container inside it are full width of the wrapper */
 .navbar, .container {
-    margin-left: 250px; /* This MUST match the sidebar width */
-    width: calc(100% - 250px); /* Adjust width to account for margin */
+    width: 100%;
+    margin-left: 0; /* Reset any old margin */
 }
   </style>
 <!-- dashboard.html -> <head> tag -->
@@ -678,6 +685,7 @@
         </div>
     </aside>
     <!-- ✅✅✅ END: ADD THIS NEW SIDEBAR BLOCK ✅✅✅ -->
+<div id="main-content">
     <nav class="navbar">
     <!-- ✅ ADD THIS BUTTON -->
     <button id="menu-toggle-btn">
@@ -801,7 +809,7 @@
 
     </div>
   </main>
-  
+</div>
   <div class="modal-overlay" id="timeModal">
       <div class="modal-content">
           <div class="modal-header"><h2>Edit Delivery Time</h2><button class="close-btn" data-close-modal="timeModal">&times;</button></div>
