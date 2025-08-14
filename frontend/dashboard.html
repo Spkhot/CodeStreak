@@ -665,7 +665,7 @@
    <aside id="app-sidebar">
         <div class="sidebar-header">
             <a href="index.html" class="logo">
-               <i class="fa-sharp fa-solid fa-bullseye-arrow" style="color: #FFD43B;"></i>                <span>Keep Going</span>
+               <i class="fa-solid fa-bullseye-pointer" style="color: #FFD43B;"></i><span>Keep Going</span>
             </a>
             <button id="sidebar-close-btn">
                 <i class="fa-solid fa-xmark"></i>
@@ -1764,37 +1764,16 @@ document.getElementById('profileForm').addEventListener('submit', async (e) => {
             grid.appendChild(badgeElement);
         }
     }
-     // ✅ PASTE THIS NEW, COMBINED BLOCK AT THE END OF YOUR SCRIPT ✅
-
-document.addEventListener('DOMContentLoaded', () => {
-    
-    // --- PART 1: Load all your dashboard data ---
-    loadDashboard(); 
-
-    // --- PART 2: Set up all the sidebar buttons ---
-    const menuToggleBtn = document.getElementById('menu-toggle-btn');
-    const sidebarCloseBtn = document.getElementById('sidebar-close-btn');
-    const mainContent = document.getElementById('main-content');
-    const body = document.body;
-
-    // Open sidebar with hamburger button
-    menuToggleBtn.addEventListener('click', () => {
-        body.classList.add('sidebar-open');
+     document.addEventListener('DOMContentLoaded', () => {
+        const menuToggleBtn = document.getElementById('menu-toggle-btn');
+        const body = document.body;
+        
+        // Listen for a click on the hamburger button
+        menuToggleBtn.addEventListener('click', () => {
+            // Add or remove the 'sidebar-open' class on the body
+            body.classList.toggle('sidebar-open');
+        });
     });
-
-    // Close sidebar with the 'X' button
-    sidebarCloseBtn.addEventListener('click', () => {
-        body.classList.remove('sidebar-open');
-    });
-
-    // Close sidebar by clicking on the main content area
-    mainContent.addEventListener('click', () => {
-        if (body.classList.contains('sidebar-open')) {
-            body.classList.remove('sidebar-open');
-        }
-    });
-
-});
   </script>
 </body>
 </html>
