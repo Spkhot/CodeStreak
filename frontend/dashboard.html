@@ -580,7 +580,25 @@
 /* ========================================================= */
 /* ✅ FINAL & CORRECT RESPONSIVE LAYOUT - PASTE AT END OF CSS ✅ */
 /* ========================================================= */
+#app-sidebar .sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+/* ✅ ADD THIS NEW RULE FOR THE BUTTON */
+#sidebar-close-btn {
+    display: none; /* Hidden on desktop by default */
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1.8rem;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
 
+#sidebar-close-btn:hover {
+    color: var(--text-light);
+}
 /* --- RESPONSIVE BREAKPOINTS --- */
 
 /* For large tablets and smaller desktops */
@@ -625,6 +643,9 @@
     .right-column {
         grid-column: 1 / 2;
     }
+     #sidebar-close-btn {
+        display: block;
+    }
 }
 
 /* For smaller mobile phones */
@@ -637,7 +658,6 @@
         padding: 6px 12px;
     }
 }
-/* --- ✅✅✅ END OF NEW STYLES ✅✅✅ --- */
 </style>
 <script src="https://unpkg.com/@stackblitz/sdk/bundles/sdk.umd.js"></script>
 </head>
@@ -645,9 +665,11 @@
    <aside id="app-sidebar">
         <div class="sidebar-header">
             <a href="index.html" class="logo">
-                <i class="fa-solid fa-fire"></i>
-                <span>Keep Going</span>
+               <i class="fa-sharp fa-solid fa-bullseye-arrow" style="color: #FFD43B;"></i>                <span>Keep Going</span>
             </a>
+            <button id="sidebar-close-btn">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
         </div>
         
         <nav class="sidebar-nav">
@@ -1742,16 +1764,35 @@ document.getElementById('profileForm').addEventListener('submit', async (e) => {
             grid.appendChild(badgeElement);
         }
     }
-     document.addEventListener('DOMContentLoaded', () => {
-        const menuToggleBtn = document.getElementById('menu-toggle-btn');
-        const body = document.body;
-        
-        // Listen for a click on the hamburger button
-        menuToggleBtn.addEventListener('click', () => {
-            // Add or remove the 'sidebar-open' class on the body
-            body.classList.toggle('sidebar-open');
-        });
+    // ✅ PASTE THIS NEW JAVASCRIPT BLOCK IN ITS PLACE ✅
+document.addEventListener('DOMContentLoaded', () => {
+    // --- Existing Dashboard Code ---
+    // Make sure your `loadDashboard();` call is still inside here!
+    loadDashboard(); 
+
+    // --- New Sidebar Logic ---
+    const menuToggleBtn = document.getElementById('menu-toggle-btn');
+    const sidebarCloseBtn = document.getElementById('sidebar-close-btn');
+    const mainContent = document.getElementById('main-content');
+    const body = document.body;
+
+    // 1. Open sidebar with hamburger button
+    menuToggleBtn.addEventListener('click', () => {
+        body.classList.add('sidebar-open');
     });
+
+    // 2. Close sidebar with the 'X' button
+    sidebarCloseBtn.addEventListener('click', () => {
+        body.classList.remove('sidebar-open');
+    });
+
+    // 3. Close sidebar by clicking on the main content area
+    mainContent.addEventListener('click', () => {
+        if (body.classList.contains('sidebar-open')) {
+            body.classList.remove('sidebar-open');
+        }
+    });
+});
   </script>
 </body>
 </html>
