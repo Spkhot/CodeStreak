@@ -904,29 +904,32 @@ async function launchWorkspace() {
 
 // ✅ REPLACE your old runCode function with this one
 async function runCode() {
-    if (!ideVm) { alert('Workspace is not running.'); return; }
+  if (!ideVm) { 
+    alert('Workspace is not running.'); 
+    return; 
+  }
 
-    const runBtn = document.getElementById('runCodeBtn');
-    runBtn.disabled = true;
-    runBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Running...';
-    
-    try {
-        // ✅ THE FIX FOR ERROR 2: The correct method is vm.editor.getActiveFile()
-        const activeFile = await ideVm.editor.getActiveFile();
+  const runBtn = document.getElementById('runCodeBtn');
+  runBtn.disabled = true;
+  runBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Running...';
 
-        if (currentUserState.language === 'C++') {
-            await ideVm.cli.run(`g++ ${activeFile} -o myprogram && ./myprogram`);
-        } else if (currentUserState.language === 'Java') {
-            await ideVm.cli.run(`javac ${activeFile} && java ${activeFile.replace('.java', '')}`);
-        }
-    } catch (error) {
-        console.error('Error running code:', error);
-        alert('An error occurred while trying to run the code. Check the terminal for details.');
-    } finally {
-        runBtn.disabled = false;
-        runBtn.innerHTML = '<i class="fa-solid fa-play"></i> Run Code';
+  try {
+    const activeFile = currentUserState.language === 'C++' ? 'main.cpp' : 'Main.java';
+
+    if (currentUserState.language === 'C++') {
+      await ideVm.runCommand({ command: `g++ ${activeFile} -o myprogram && ./myprogram` });
+    } else if (currentUserState.language === 'Java') {
+      await ideVm.runCommand({ command: `javac ${activeFile} && java ${activeFile.replace('.java', '')}` });
     }
+  } catch (error) {
+    console.error('Error running code:', error);
+    alert('An error occurred while trying to run the code. Check the terminal for details.');
+  } finally {
+    runBtn.disabled = false;
+    runBtn.innerHTML = '<i class="fa-solid fa-play"></i> Run Code';
+  }
 }
+
 // Add event listeners for BOTH workspace buttons
 // ✅ ADD THE EVENT LISTENER FOR THE NEW RUN BUTTON
 document.getElementById('runCodeBtn').addEventListener('click', runCode);
