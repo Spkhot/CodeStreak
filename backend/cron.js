@@ -108,7 +108,7 @@ cron.schedule('* * * * *', async () => {
 
           if (!shouldSend && dayToSend <= 40) {
             console.log(`-|> User ${user.name} has hit the paywall.`);
-            const upgradeMessage = `Hey ${user.name}! You've completed all content for your current plan. To unlock Day ${dayToSend} and continue your journey, please upgrade your subscription on our website!\n\nhttps://thehabitloop.onrender.com/#pricing`;
+            const upgradeMessage = `Hey ${user.name}! You've completed all content for your current plan. To unlock Day ${dayToSend} and continue your journey, please upgrade your subscription on our website!\n\nhttps://thehabitloopv1.onrender.com/#pricing`;
             await twilio.messages.create({ body: upgradeMessage, from: process.env.TWILIO_PHONE_NUMBER, to: `whatsapp:${user.whatsapp}` });
             user.isPaused = true;
             user.lastSentDate = todayInUserTz;
